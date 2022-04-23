@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>Sorry, you are not registered <a href = "login-form.jsp">try again</a></h1>
+<h1 align = "center">Sorry, you are not registered <a href = "login-form.jsp">try again</a></h1>
 
 </body>
 </html>
