@@ -16,25 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `datiProdotto`
+-- Table structure for table `gusto`
 --
 
-DROP TABLE IF EXISTS `datiProdotto`;
+DROP TABLE IF EXISTS `gusto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `datiProdotto` (
-  `peso` double NOT NULL,
-  PRIMARY KEY (`peso`)
+CREATE TABLE `gusto` (
+  `nome` varchar(30) NOT NULL,
+  `colore` varchar(20) NOT NULL,
+  `descrizione` tinytext,
+  `quantitaResidua` double NOT NULL,
+  PRIMARY KEY (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `datiProdotto`
+-- Dumping data for table `gusto`
 --
 
-LOCK TABLES `datiProdotto` WRITE;
-/*!40000 ALTER TABLE `datiProdotto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `datiProdotto` ENABLE KEYS */;
+LOCK TABLES `gusto` WRITE;
+/*!40000 ALTER TABLE `gusto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gusto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -46,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-22  2:06:29
+-- Dump completed on 2022-04-23 16:18:25

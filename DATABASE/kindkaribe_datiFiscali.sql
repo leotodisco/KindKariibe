@@ -16,26 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `categoria`
+-- Table structure for table `datiFiscali`
 --
 
-DROP TABLE IF EXISTS `categoria`;
+DROP TABLE IF EXISTS `datiFiscali`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `categoria` (
-  `nome` varchar(40) NOT NULL,
-  `descrizione` tinytext,
-  PRIMARY KEY (`nome`)
+CREATE TABLE `datiFiscali` (
+  `idDatiFiscali` int NOT NULL AUTO_INCREMENT,
+  `metodoPagamento` int NOT NULL,
+  `numeroFattura` varchar(15) NOT NULL,
+  `via` varchar(45) NOT NULL,
+  `nCivico` int NOT NULL,
+  `provincia` varchar(2) NOT NULL,
+  `CAP` int NOT NULL,
+  `citta` varchar(45) NOT NULL,
+  PRIMARY KEY (`idDatiFiscali`),
+  KEY `_metodoPagamento_idx` (`metodoPagamento`),
+  CONSTRAINT `_metodoPagamento` FOREIGN KEY (`metodoPagamento`) REFERENCES `metodoPagamento` (`idMetodoPagamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `categoria`
+-- Dumping data for table `datiFiscali`
 --
 
-LOCK TABLES `categoria` WRITE;
-/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
+LOCK TABLES `datiFiscali` WRITE;
+/*!40000 ALTER TABLE `datiFiscali` DISABLE KEYS */;
+/*!40000 ALTER TABLE `datiFiscali` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -47,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-22  2:06:27
+-- Dump completed on 2022-04-23 16:18:25

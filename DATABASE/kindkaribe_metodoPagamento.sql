@@ -16,33 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `prodotto`
+-- Table structure for table `metodoPagamento`
 --
 
-DROP TABLE IF EXISTS `prodotto`;
+DROP TABLE IF EXISTS `metodoPagamento`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `prodotto` (
-  `nome` varchar(30) NOT NULL,
-  `categoria` varchar(40) DEFAULT NULL,
-  `tipo` enum('Vaschetta','Pasticceria') NOT NULL,
-  `prezzo` double NOT NULL,
-  `descrizione` tinytext,
-  `quantitaDisponibili` double NOT NULL,
-  `IVA` double NOT NULL,
-  PRIMARY KEY (`nome`),
-  KEY `appartenenzaCategoria_idx` (`categoria`),
-  CONSTRAINT `appartenenzaCategoria` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`nome`)
+CREATE TABLE `metodoPagamento` (
+  `idMetodoPagamento` int NOT NULL AUTO_INCREMENT,
+  `tipo` enum('Carta','Bonifico') NOT NULL,
+  `nomeIntestatario` varchar(70) NOT NULL,
+  `numeroCarta` varchar(16) DEFAULT NULL,
+  `meseScadenza` int DEFAULT NULL,
+  `annoScadenza` int DEFAULT NULL,
+  `IBAN` varchar(27) DEFAULT NULL,
+  `causale` varchar(45) DEFAULT NULL,
+  `circuito` enum('Paypal','Mastercard','Postepay') DEFAULT NULL,
+  `dataPagamento` datetime NOT NULL,
+  `CVV` int DEFAULT NULL,
+  PRIMARY KEY (`idMetodoPagamento`),
+  UNIQUE KEY `numeroCarta_UNIQUE` (`numeroCarta`),
+  UNIQUE KEY `IBAN_UNIQUE` (`IBAN`),
+  UNIQUE KEY `CVV_UNIQUE` (`CVV`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `prodotto`
+-- Dumping data for table `metodoPagamento`
 --
 
-LOCK TABLES `prodotto` WRITE;
-/*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
+LOCK TABLES `metodoPagamento` WRITE;
+/*!40000 ALTER TABLE `metodoPagamento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `metodoPagamento` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-22  2:06:28
+-- Dump completed on 2022-04-23 16:18:26

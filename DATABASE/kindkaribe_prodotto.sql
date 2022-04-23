@@ -16,29 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `costituzione`
+-- Table structure for table `prodotto`
 --
 
-DROP TABLE IF EXISTS `costituzione`;
+DROP TABLE IF EXISTS `prodotto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `costituzione` (
-  `gusto` varchar(30) NOT NULL,
-  `prodotto` varchar(30) NOT NULL,
-  PRIMARY KEY (`gusto`,`prodotto`),
-  KEY `product_idx` (`prodotto`),
-  CONSTRAINT `gusto` FOREIGN KEY (`gusto`) REFERENCES `gusto` (`nome`),
-  CONSTRAINT `product` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`)
+CREATE TABLE `prodotto` (
+  `nome` varchar(30) NOT NULL,
+  `categoria` varchar(40) DEFAULT NULL,
+  `tipo` enum('Vaschetta','Pasticceria') NOT NULL,
+  `prezzo` double NOT NULL,
+  `descrizione` tinytext,
+  `quantitaDisponibili` double NOT NULL,
+  `IVA` double NOT NULL,
+  PRIMARY KEY (`nome`),
+  KEY `appartenenzaCategoria_idx` (`categoria`),
+  CONSTRAINT `appartenenzaCategoria` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `costituzione`
+-- Dumping data for table `prodotto`
 --
 
-LOCK TABLES `costituzione` WRITE;
-/*!40000 ALTER TABLE `costituzione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `costituzione` ENABLE KEYS */;
+LOCK TABLES `prodotto` WRITE;
+/*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-22  2:06:27
+-- Dump completed on 2022-04-23 16:18:25

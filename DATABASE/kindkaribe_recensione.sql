@@ -16,32 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `composizione`
+-- Table structure for table `recensione`
 --
 
-DROP TABLE IF EXISTS `composizione`;
+DROP TABLE IF EXISTS `recensione`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `composizione` (
+CREATE TABLE `recensione` (
+  `idRecensione` int NOT NULL AUTO_INCREMENT,
   `prodotto` varchar(30) NOT NULL,
-  `ordine` int NOT NULL,
-  `IVA` double NOT NULL,
-  `prezzo` double NOT NULL,
-  `quantita` int NOT NULL DEFAULT '1',
-  PRIMARY KEY (`prodotto`,`ordine`),
-  KEY `ordineReference_idx` (`ordine`),
-  CONSTRAINT `ordineReference` FOREIGN KEY (`ordine`) REFERENCES `ordine` (`idOrdine`),
-  CONSTRAINT `prodottoOrdine` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`)
+  `utente` varchar(16) NOT NULL,
+  `voto` int NOT NULL,
+  `testo` tinytext,
+  PRIMARY KEY (`idRecensione`),
+  KEY `prodotto_idx` (`prodotto`),
+  KEY `user_idx` (`utente`),
+  CONSTRAINT `prodotto` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`),
+  CONSTRAINT `user` FOREIGN KEY (`utente`) REFERENCES `utente` (`codiceFiscale`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `composizione`
+-- Dumping data for table `recensione`
 --
 
-LOCK TABLES `composizione` WRITE;
-/*!40000 ALTER TABLE `composizione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `composizione` ENABLE KEYS */;
+LOCK TABLES `recensione` WRITE;
+/*!40000 ALTER TABLE `recensione` DISABLE KEYS */;
+/*!40000 ALTER TABLE `recensione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-22  2:06:29
+-- Dump completed on 2022-04-23 16:18:26

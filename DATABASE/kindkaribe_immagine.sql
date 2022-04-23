@@ -16,29 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `possessoImmagine`
+-- Table structure for table `immagine`
 --
 
-DROP TABLE IF EXISTS `possessoImmagine`;
+DROP TABLE IF EXISTS `immagine`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `possessoImmagine` (
-  `prodotto` varchar(30) NOT NULL,
-  `immagine` int NOT NULL,
-  PRIMARY KEY (`prodotto`,`immagine`),
-  KEY `immagine_idx` (`immagine`),
-  CONSTRAINT `immagine` FOREIGN KEY (`immagine`) REFERENCES `immagine` (`idImmagine`),
-  CONSTRAINT `ImmagineProdotto` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`) ON DELETE CASCADE
+CREATE TABLE `immagine` (
+  `idImmagine` int NOT NULL AUTO_INCREMENT,
+  `altezza` double NOT NULL,
+  `lunghezza` double NOT NULL,
+  `URL` varchar(45) NOT NULL,
+  `nome` varchar(25) NOT NULL,
+  `testoALT` varchar(20) NOT NULL,
+  PRIMARY KEY (`idImmagine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `possessoImmagine`
+-- Dumping data for table `immagine`
 --
 
-LOCK TABLES `possessoImmagine` WRITE;
-/*!40000 ALTER TABLE `possessoImmagine` DISABLE KEYS */;
-/*!40000 ALTER TABLE `possessoImmagine` ENABLE KEYS */;
+LOCK TABLES `immagine` WRITE;
+/*!40000 ALTER TABLE `immagine` DISABLE KEYS */;
+/*!40000 ALTER TABLE `immagine` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-22  2:06:29
+-- Dump completed on 2022-04-23 16:18:26

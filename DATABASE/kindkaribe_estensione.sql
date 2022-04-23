@@ -16,27 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `corriere`
+-- Table structure for table `estensione`
 --
 
-DROP TABLE IF EXISTS `corriere`;
+DROP TABLE IF EXISTS `estensione`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `corriere` (
-  `idCorriere` int NOT NULL AUTO_INCREMENT,
-  `nTelefono` varchar(10) NOT NULL,
-  `azienda` varchar(45) NOT NULL,
-  PRIMARY KEY (`idCorriere`)
+CREATE TABLE `estensione` (
+  `prodotto` varchar(30) NOT NULL,
+  `peso` double NOT NULL,
+  PRIMARY KEY (`prodotto`,`peso`),
+  KEY `peso_idx` (`peso`),
+  CONSTRAINT `peso` FOREIGN KEY (`peso`) REFERENCES `datiProdotto` (`peso`),
+  CONSTRAINT `prodotto_` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `corriere`
+-- Dumping data for table `estensione`
 --
 
-LOCK TABLES `corriere` WRITE;
-/*!40000 ALTER TABLE `corriere` DISABLE KEYS */;
-/*!40000 ALTER TABLE `corriere` ENABLE KEYS */;
+LOCK TABLES `estensione` WRITE;
+/*!40000 ALTER TABLE `estensione` DISABLE KEYS */;
+/*!40000 ALTER TABLE `estensione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-22  2:06:29
+-- Dump completed on 2022-04-23 16:18:26
