@@ -41,6 +41,9 @@ public class UserDAO implements ModelInterface<UserBean> {
 			preparedStatement.setString(8, bean.getCitta());
 			preparedStatement.setString(9, bean.getCAP());
 			preparedStatement.setString(10, bean.getProvincia());
+			preparedStatement.setString(11, bean.getnCivico());
+			preparedStatement.setString(12, bean.getSesso());
+			preparedStatement.setDate(13, (java.sql.Date) bean.getDataNascita());
 
 			preparedStatement.executeUpdate();
 
