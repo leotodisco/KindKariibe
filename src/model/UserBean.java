@@ -11,7 +11,7 @@ public class UserBean {
 	private String via;
 	private String citta;
 	private String CAP;
-	private String provincia;
+	private String provincia; //provincia di residenza del cliente
 	
 	
 	public UserBean() {
