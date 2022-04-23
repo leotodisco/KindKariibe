@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 
 		try {
 			User = model.doRetriveByEmail(username);
-			if(User == null)
+			if(User.getEmail() == null)
 			{
 				RequestDispatcher fail = request.getRequestDispatcher("LoginFailed.jsp");
 				fail.include(request, response);
