@@ -66,10 +66,10 @@ public class UserDAO implements ModelInterface<UserBean> {
 		String sql = "DELETE FROM utente WHERE codiceFiscale = ?";
 
 		try(Connection connection = DriverManagerConnectionPool.getConnection()){
-			PreparedStatement preparedStatement = null;
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, codiceFiscale);
-			return preparedStatement.execute();	
+			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+				preparedStatement.setString(1, codiceFiscale);
+				return preparedStatement.execute();	
+			}
 		}
 	}
 
@@ -127,25 +127,27 @@ public class UserDAO implements ModelInterface<UserBean> {
 
 
 		try(Connection connection = DriverManagerConnectionPool.getConnection()){
-			PreparedStatement preparedStatement = null;
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, order);
-			ResultSet rs = preparedStatement.executeQuery();
-			while(rs.next()) {
-				bean.setCodiceFiscale(rs.getString("codiceFiscale"));
-				bean.setNome(rs.getString("nome"));
-				bean.setCognome(rs.getString("cognome"));
-				bean.setEmail(rs.getString("nTelefono"));
-				bean.setPassword(rs.getString("password"));
-				bean.setVia(rs.getString("via"));
-				bean.setCitta(rs.getString("citta"));
-				bean.setCAP(rs.getString("CAP"));
-				bean.setProvincia(rs.getString("provincia"));
-				bean.setnCivico(rs.getString("numCivico"));
-				bean.setDataNascita(rs.getDate("dataNascita"));
-				bean.setSesso(rs.getString("genere"));	
-				//manca nTelefono
-				listaUtenti.add(bean);
+
+			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+				preparedStatement.setString(1, order);
+				ResultSet rs = preparedStatement.executeQuery();
+				while(rs.next()) {
+					bean.setCodiceFiscale(rs.getString("codiceFiscale"));
+					bean.setNome(rs.getString("nome"));
+					bean.setCognome(rs.getString("cognome"));
+					bean.setEmail(rs.getString("nTelefono"));
+					bean.setPassword(rs.getString("password"));
+					bean.setVia(rs.getString("via"));
+					bean.setCitta(rs.getString("citta"));
+					bean.setCAP(rs.getString("CAP"));
+					bean.setProvincia(rs.getString("provincia"));
+					bean.setnCivico(rs.getString("numCivico"));
+					bean.setDataNascita(rs.getDate("dataNascita"));
+					bean.setSesso(rs.getString("genere"));	
+					bean.setnTelefono(rs.getString("nTelefono"));
+
+					listaUtenti.add(bean);
+				}
 			}
 		}
 
@@ -184,26 +186,26 @@ public class UserDAO implements ModelInterface<UserBean> {
 		String selectSQL = "SELECT * FROM utente WHERE email = ?";
 
 		try (Connection connection = DriverManagerConnectionPool.getConnection()){
-			PreparedStatement preparedStatement = null;
-			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setString(1, email);
+			try(PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)){
+				preparedStatement.setString(1, email);
 
-			ResultSet rs = preparedStatement.executeQuery();
+				ResultSet rs = preparedStatement.executeQuery();
 
-			while (rs.next()) {
-				bean.setCodiceFiscale(rs.getString("CodiceFiscale"));
-				bean.setNome(rs.getString("nome"));
-				bean.setCognome(rs.getString("cognome"));
-				bean.setEmail(rs.getString("nTelefono"));
-				bean.setPassword(rs.getString("password"));
-				bean.setVia(rs.getString("via"));
-				bean.setCitta(rs.getString("citta"));
-				bean.setCAP(rs.getString("CAP"));
-				bean.setProvincia(rs.getString("provincia"));
-				bean.setnCivico(rs.getString("numCivico"));
-				bean.setDataNascita(rs.getDate("dataNascita"));
-				bean.setSesso(rs.getString("genere"));	
-
+				while (rs.next()) {
+					bean.setCodiceFiscale(rs.getString("CodiceFiscale"));
+					bean.setNome(rs.getString("nome"));
+					bean.setCognome(rs.getString("cognome"));
+					bean.setEmail(rs.getString("nTelefono"));
+					bean.setPassword(rs.getString("password"));
+					bean.setVia(rs.getString("via"));
+					bean.setCitta(rs.getString("citta"));
+					bean.setCAP(rs.getString("CAP"));
+					bean.setProvincia(rs.getString("provincia"));
+					bean.setnCivico(rs.getString("numCivico"));
+					bean.setDataNascita(rs.getDate("dataNascita"));
+					bean.setSesso(rs.getString("genere"));	
+					bean.setnTelefono(rs.getString("nTelefono"));
+				}
 			}
 		}
 		return bean;
