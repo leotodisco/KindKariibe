@@ -6,9 +6,9 @@ import java.util.Collection;
 public interface ModelInterface<T> {
 	public void doSave(T bean) throws SQLException;
 
-	public boolean doDelete(String codiceFiscale) throws SQLException;
+	public boolean doDelete(String arg) throws SQLException;
 
-	public T doRetrieveByKey(String codiceFiscale) throws Exception;
+	public T doRetrieveByKey(String arg) throws Exception;
 	
 	public Collection<T> doRetrieveAll(String order) throws Exception;
 	
