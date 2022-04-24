@@ -22,7 +22,7 @@ public class CategoriaBean {
 
 	@Override
 	public String toString() {
-		return "CategoriaBean [nome=" + nome + ", descrizione=" + descrizione + "]";
+		return "CategoriaBean [nome=" + nome + ", descrizione=" + descrizione + "]<<<";
 	}
 	
 	
