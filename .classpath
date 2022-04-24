@@ -8,10 +8,14 @@
 		</attributes>
 	</classpathentry>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/Users/leopoldotodisco/Desktop/TSW/repository/mysql-connector-java-8.0.19.jar">
 =======
 	<classpathentry kind="lib" path="C:/Users/albge/eclipse-tsw/Login/mysql-connector-java-8.0.19.jar">
 >>>>>>> 0b1e9714cb19757dacdc57791081325bf112253e
+=======
+	<classpathentry kind="lib" path="C:/Users/albge/eclipse-tsw/Login/mysql-connector-java-8.0.19.jar">
+>>>>>>> 292c4ef81d8f736e5f16ac5c79af8c51028f9faf
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
