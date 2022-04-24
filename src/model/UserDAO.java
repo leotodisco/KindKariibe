@@ -13,11 +13,13 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import beans.UserBean;
+
 public class UserDAO implements ModelInterface<UserBean> {
-	
+
 	public UserDAO()
 	{
-		
+
 	}
 
 	@Override
@@ -56,13 +58,13 @@ public class UserDAO implements ModelInterface<UserBean> {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
-		
+
 	}
 
 	@Override
 	public boolean doDelete(String codiceFiscale) throws SQLException {
 		String sql = "DELETE FROM utente WHERE codiceFiscale = ?";
-		
+
 		try(Connection connection = DriverManagerConnectionPool.getConnection()){
 			PreparedStatement preparedStatement = null;
 			preparedStatement = connection.prepareStatement(sql);
@@ -71,7 +73,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 		}
 	}
 
-	
+
 
 	@Override
 	public UserBean doRetrieveByKey(String codiceFiscale) throws Exception {
@@ -117,13 +119,13 @@ public class UserDAO implements ModelInterface<UserBean> {
 
 	@Override
 	public Collection<UserBean> doRetrieveAll(String order) throws Exception {
-		
+
 		String sql = "SELECT * FROM utente ORDER BY ?";
 		order = order.isEmpty() ? "cognome" : order;
 		List<UserBean> listaUtenti = new ArrayList();
 		UserBean bean = new UserBean();
-	
-		
+
+
 		try(Connection connection = DriverManagerConnectionPool.getConnection()){
 			PreparedStatement preparedStatement = null;
 			preparedStatement = connection.prepareStatement(sql);
@@ -141,7 +143,8 @@ public class UserDAO implements ModelInterface<UserBean> {
 				bean.setProvincia(rs.getString("provincia"));
 				bean.setnCivico(rs.getString("numCivico"));
 				bean.setDataNascita(rs.getDate("dataNascita"));
-				bean.setSesso(rs.getString("genere"));				
+				bean.setSesso(rs.getString("genere"));	
+				//manca nTelefono
 				listaUtenti.add(bean);
 			}
 		}
@@ -152,31 +155,30 @@ public class UserDAO implements ModelInterface<UserBean> {
 	@Override
 	public void doUpdate(UserBean bean) throws SQLException {
 		String sql = "UPDATE utente SET codiceFiscale = ?,nome = ?,cognome = ?,genere = ?,via = ?," +
-					 "numCivico = ?,CAP = ?, citta = ?,provincia = ?, dataNascita = ?, email = ?, password =?,"+
-					 "nTelefono = ?";
-		
+				"numCivico = ?,CAP = ?, citta = ?,provincia = ?, dataNascita = ?, email = ?, password =?,"+
+				"nTelefono = ?";
+
 		try(Connection connection = DriverManagerConnectionPool.getConnection()){
-			PreparedStatement preparedStatement = null;
-			preparedStatement = connection.prepareStatement(sql);
-			
-			preparedStatement.setString(1, bean.getCodiceFiscale());
-			preparedStatement.setString(2, bean.getNome());
-			preparedStatement.setString(3, bean.getCognome());
-			preparedStatement.setString(4, bean.getSesso());
-			preparedStatement.setString(5, bean.getVia());
-			preparedStatement.setString(6, bean.getnCivico());
-			preparedStatement.setString(7, bean.getCAP());
-			preparedStatement.setString(8, bean.getCitta());
-			preparedStatement.setString(9, bean.getProvincia());
-			preparedStatement.setDate(10, (java.sql.Date) bean.getDataNascita());
-			preparedStatement.setString(11, bean.getEmail());
-			preparedStatement.setString(12, bean.getPassword());
-			preparedStatement.setString(13, bean.getnTelefono());
-			
-			preparedStatement.execute();
+			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){	
+				preparedStatement.setString(1, bean.getCodiceFiscale());
+				preparedStatement.setString(2, bean.getNome());
+				preparedStatement.setString(3, bean.getCognome());
+				preparedStatement.setString(4, bean.getSesso());
+				preparedStatement.setString(5, bean.getVia());
+				preparedStatement.setString(6, bean.getnCivico());
+				preparedStatement.setString(7, bean.getCAP());
+				preparedStatement.setString(8, bean.getCitta());
+				preparedStatement.setString(9, bean.getProvincia());
+				preparedStatement.setDate(10, (java.sql.Date) bean.getDataNascita());
+				preparedStatement.setString(11, bean.getEmail());
+				preparedStatement.setString(12, bean.getPassword());
+				preparedStatement.setString(13, bean.getnTelefono());
+
+				preparedStatement.execute();
+			}
 		}
 	}
-	
+
 	public UserBean doRetriveByEmail(String email) throws NumberFormatException, Exception{
 		UserBean bean = new UserBean();
 		String selectSQL = "SELECT * FROM utente WHERE email = ?";
@@ -201,7 +203,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 				bean.setnCivico(rs.getString("numCivico"));
 				bean.setDataNascita(rs.getDate("dataNascita"));
 				bean.setSesso(rs.getString("genere"));	
-				
+
 			}
 		}
 		return bean;
