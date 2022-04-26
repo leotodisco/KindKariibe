@@ -43,4 +43,5 @@ nb-configuration.xml
 # Mac
 .DS_Store
 
-WebContent/META-INF/
+WebContent/META-INF/context.xml
+WebContent/META-INF/MANIFEST.MF
