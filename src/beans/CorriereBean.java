@@ -5,6 +5,10 @@ public class CorriereBean {
 	private String nTelefono;
 	private String azienda;
 	
+	public CorriereBean() {
+		
+	}
+	
 	public Integer getId() {
 		return id;
 	}
