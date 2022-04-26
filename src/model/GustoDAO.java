@@ -15,7 +15,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 	private static final String TABLE_NAME = "gusto";
 	
 	@Override
-	public void doSave(CorriereBean bean) throws SQLException {
+	public void doSave(GustoBean bean) throws SQLException {
 	String sql = "INSERT INTO " + TABLE_NAME + "('nome','colore','descrizione',quantitaResidua) VALUES (?,?,?,?))";
 		
 		try(Connection con = DriverManagerConnectionPool.getConnection()){
@@ -23,7 +23,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 				ps.setString(1, String.valueOf(bean.getNome()));
 				ps.setString(2, bean.getColore());
 				ps.setString(3, bean.getDescrizione());
-				ps.setString(4, bean.getquantitaInMagazzino());
+				ps.setString(4, String.valueOf(bean.getquantitaInMagazzino()));
 				ps.execute();
 			}
 		}
@@ -43,8 +43,8 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 	}
 	
 	@Override
-	public CorriereBean doRetrieveByKey(String id) throws Exception {
-		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE idCorriere = ?";
+	public GustoBean doRetrieveByKey(String id) throws Exception {
+		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE nome = ?";
 		GustoBean bean = new GustoBean();
 		
 		try(Connection conn = DriverManagerConnectionPool.getConnection()){
@@ -68,19 +68,21 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 	@Override
 	public Collection<GustoBean> doRetrieveAll(String order) throws Exception {
 		List<GustoBean> gusti = new ArrayList<>();
-		CorriereBean buffer = new CorriereBean();
-		String sql = "SELECT * FROM " + TABLE_NAME;
+		GustoBean buffer = new GustoBean();
+		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY = ?";
 
 		try(Connection conn = DriverManagerConnectionPool.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				ResultSet rs = statement.executeQuery();
-
+				order = order.isEmpty() ? "nome" : order;
+				statement.setString(1, order);
+				
 				while(rs.next()) {
 					buffer.setNome(rs.getString("idCorriere"));
 					buffer.setColore(rs.getString("colore"));
 					buffer.setDescrizione(rs.getString("descrizione"));
 					buffer.setquantitaInMagazzino(Integer.valueOf(rs.getString("quantitaResidua")));
-					corrieri.add(buffer);
+					gusti.add(buffer);
 				}
 			}	
 		}
@@ -97,7 +99,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 				statement.setString(1, bean.getColore());
 				statement.setString(2, bean.getDescrizione());
 				statement.setString(3, String.valueOf(bean.getquantitaInMagazzino()));
-				statement.setString(4, bean.getNome);
+				statement.setString(4, bean.getNome());
 				statement.executeUpdate();
 			}	
 		}

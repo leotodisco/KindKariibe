@@ -3,7 +3,7 @@ package beans;
 public class GustoBean{
 	
 	private String nome,descrizione,colore;
-	private int quantitaInMagazzino;
+	private Double quantitaInMagazzino;
 	
 	public GustoBean() {
 		
@@ -21,7 +21,7 @@ public class GustoBean{
 		return colore;
 	}
 	
-	public int getquantitaInMagazzino() {
+	public Double getquantitaInMagazzino() {
 		return this.quantitaInMagazzino;
 	}
 	
@@ -37,14 +37,14 @@ public class GustoBean{
 		this.colore = colore;
 	}
 	
-	public void setquantitaInMagazzino(int quantita) {
+	public void setquantitaInMagazzino(double quantita) {
 		this.quantitaInMagazzino = quantita;
 	}
 	
 
 	@Override
 	public String toString() {
-		return "GustoBean [nome=" + nome + ", descrizione=" + descrizione + ", colore=" + colore + ", quantità in magazzino ="
+		return "GustoBean [nome=" + nome + ", descrizione=" + descrizione + ", colore=" + colore + ", quantitï¿½ in magazzino ="
 	+quantitaInMagazzino+"]";
 	}
 	
