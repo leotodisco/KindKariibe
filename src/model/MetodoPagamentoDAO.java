@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import beans.CorriereBean;
 import beans.MetodoPagamentoBean;
 
 
@@ -21,7 +22,7 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 	private static final String TABLE_NAME = "metodopagamento";
 	
 	@Override
-	public void doSave(MetodoPagamentobean bean) throws SQLException {
+	public void doSave(MetodoPagamentoBean bean) throws SQLException {
 		String sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario','numeroCarta','meseScadenza','annoScadenza','iban','causale') "
 				+ "VALUES (?,?,?,?,?,?,?,?)";
 		
@@ -56,7 +57,7 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 	
 	
 	@Override
-	public MetodoPagamentoBean doRetrieveByKey(int id) throws Exception {
+	public MetodoPagamentoBean doRetrieveByKey(String id) throws Exception {
 		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE idMetodoPagamento = ?";
 		MetodoPagamentoBean bean = new MetodoPagamentoBean();
 		
@@ -86,34 +87,40 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 	
 	@Override
 	public Collection<MetodoPagamentoBean> doRetrieveAll(String order) throws Exception {
-		List<CorriereBean> metodi = new ArrayList<>();
-		MetodoPagamentoBean buffer = new MetodoPagamentoBean();
-		String sql = "SELECT * FROM " + TABLE_NAME;
+		List<MetodoPagamentoBean> metodi = new ArrayList<>();
+		MetodoPagamentoBean bean = new MetodoPagamentoBean();
+		String sql = "SELECT * FROM " + TABLE_NAME + "Order by" + order;
 
 		try(Connection conn = DriverManagerConnectionPool.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				ResultSet rs = statement.executeQuery();
-
-				while(rs.next()) {
-					buffer.setidMetodoPagamento(Integer. valueOf(rs.getString("idMetodoPagamento")));
-					buffer.setTipo(rs.getString("tipo"));
-					buffer.setNomeIntestatario(rs.getString("nomeIntestatario"));
-					buffer.setNumeroCarta(Integer. valueOf(rs.getString("numeroCarta")));
-					buffer.setMeseScadenza(Integer. valueOf(rs.getString("meseScadenza")));
-					buffer.setAnnoScadenza(Integer. valueOf(rs.getString("annoScadenza")));
-					buffer.setIban(rs.getString("iban"));
-					buffer.setCausale(rs.getString("causale"));
+				
+				
+				while(rs.next())
+				{
+					bean.setidMetodoPagamento(Integer. valueOf(rs.getString("idMetodoPagamento")));
+					bean.setTipo(rs.getString("tipo"));
+					bean.setNomeIntestatario(rs.getString("nomeIntestatario"));
+					bean.setNumeroCarta(Integer. valueOf(rs.getString("numeroCarta")));
+					bean.setMeseScadenza(Integer. valueOf(rs.getString("meseScadenza")));
+					bean.setAnnoScadenza(Integer. valueOf(rs.getString("annoScadenza")));
+					bean.setIban(rs.getString("iban"));
+					bean.setCausale(rs.getString("causale"));
 					
-					metodi.add(buffer);
+					metodi.add(bean);
 				}
-			}	
+			}
 		}
-
+		
+		
+		
+		
 		return metodi;
+
 	}
 	
 	@Override
-	public void doUpdate(CorriereBean bean) throws SQLException {
+	public void doUpdate( MetodoPagamentoBean bean) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+"SET 'tipo' = ?,'nomeIntestatario' = ?, 'numeroCarta' = ?, 'meseScadenza' = ?, 'annoScadenza' = ?, 'iban' =?, 'causale' = ?"
 				+ " WHERE idMetodoPagamento = ?";
 		

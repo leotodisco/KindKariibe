@@ -20,7 +20,7 @@ public class MetodoPagamentoBean {
 	}
 	
 	public void setidMetodoPagamento(int id) {
-		this.idMetodoPagamento = metodo;
+		this.idMetodoPagamento = id;
 	}
 	
 	public String getTipo() {
@@ -55,28 +55,28 @@ public class MetodoPagamentoBean {
 		this.meseScadenza = mese;
 	}
 	
-	public void getAnnoScadenza() {
+	public int getAnnoScadenza() {
 		return annoScadenza;
 	}
 	
 	public int setAnnoScadenza(int anno) {
-		this.annoScadenza = anno;
+		return this.annoScadenza = anno;
 	}
 	
-	public void getIban() {
+	public String getIban() {
 		return iban;
 	}
 	
 	public String setIban(String iban) {
-		this.iban = iban;
+		return this.iban = iban;
 	}
 	
-	public void getCausale() {
+	public String getCausale() {
 		return causale;
 	}
 	
 	public String setCausale(String causale) {
-		this.causale = causale;
+		return this.causale = causale;
 	}
 	
 	@Override

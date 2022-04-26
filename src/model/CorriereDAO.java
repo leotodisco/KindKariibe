@@ -67,7 +67,7 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 	public Collection<CorriereBean> doRetrieveAll(String order) throws Exception {
 		List<CorriereBean> corrieri = new ArrayList<>();
 		CorriereBean buffer = new CorriereBean();
-		String sql = "SELECT * FROM " + TABLE_NAME;
+		String sql = "SELECT * FROM " + TABLE_NAME + "Order by" + order;
 
 		try(Connection conn = DriverManagerConnectionPool.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
