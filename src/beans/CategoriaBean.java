@@ -4,6 +4,10 @@ public class CategoriaBean {
 	private String nome;
 	private String descrizione;
 	
+	public CategoriaBean() {
+		
+	}
+	
 	public String getNome() {
 		return nome;
 	}

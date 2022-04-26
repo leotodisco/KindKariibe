@@ -11,12 +11,12 @@ import java.util.List;
 import beans.CategoriaBean;
 import beans.CorriereBean;
 
-public class corriereDAO implements ModelInterface<CorriereBean> {
+public class CorriereDAO implements ModelInterface<CorriereBean> {
 	private static final String TABLE_NAME = "corriere";
 
 	@Override
 	public void doSave(CorriereBean bean) throws SQLException {
-	String sql = "INSERT INTO " + TABLE_NAME + "('idCorriere','azienda',nTelefono) VALUES (?,?,))";
+	String sql = "INSERT INTO " + TABLE_NAME + "('idCorriere','azienda',nTelefono) VALUES (?,?,?))";
 		
 		try(Connection con = DriverManagerConnectionPool.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	
