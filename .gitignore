@@ -44,3 +44,4 @@ nb-configuration.xml
 .DS_Store
 
 WebContent/META-INF/context.xml
+WebContent/META-INF/MANIFEST.MF
