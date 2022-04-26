@@ -1,7 +1,6 @@
 package beans;
 
 public class MetodoPagamentoBean {
-	
 	private int idMetodoPagamento;
 	private String tipo;
 	private String nomeIntestatario;
@@ -10,7 +9,44 @@ public class MetodoPagamentoBean {
 	private int annoScadenza;
 	private String iban;
 	private String causale;
+	private String circuito;
+	private java.util.Date dataPagamento;
+	private String CVV;
 	
+	
+	
+	public int getIdMetodoPagamento() {
+		return idMetodoPagamento;
+	}
+
+	public void setIdMetodoPagamento(int idMetodoPagamento) {
+		this.idMetodoPagamento = idMetodoPagamento;
+	}
+
+	public String getCircuito() {
+		return circuito;
+	}
+
+	public void setCircuito(String circuito) {
+		this.circuito = circuito;
+	}
+
+	public java.util.Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(java.util.Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public String getCVV() {
+		return CVV;
+	}
+
+	public void setCVV(String cVV) {
+		CVV = cVV;
+	}
+
 	public MetodoPagamentoBean() {
 		
 	}

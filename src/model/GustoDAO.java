@@ -70,12 +70,12 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 		List<GustoBean> gusti = new ArrayList<>();
 		GustoBean buffer = new GustoBean();
 		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY = ?";
+		order = order.isEmpty() ? "nome" : order;
 
 		try(Connection conn = DriverManagerConnectionPool.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
-				ResultSet rs = statement.executeQuery();
-				order = order.isEmpty() ? "nome" : order;
 				statement.setString(1, order);
+				ResultSet rs = statement.executeQuery();
 				
 				while(rs.next()) {
 					buffer.setNome(rs.getString("idCorriere"));
