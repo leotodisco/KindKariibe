@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 		UserBean User;
 
 		try {
-			User = model.doRetriveByEmail(username);
+			User = model.doRetriveByEmail(username); //prendo il cliente con l'email
 			
 			if(User.getEmail() == null)
 			{
