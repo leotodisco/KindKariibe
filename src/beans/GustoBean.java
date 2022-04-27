@@ -5,6 +5,7 @@ public class GustoBean{
 	private String nome,descrizione,colore;
 	private Double quantitaInMagazzino;
 	
+	
 	public GustoBean() {
 		
 	}
