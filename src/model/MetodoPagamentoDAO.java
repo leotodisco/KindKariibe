@@ -1,25 +1,33 @@
 package model;
 
 import java.sql.Connection;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import beans.CorriereBean;
 import beans.MetodoPagamentoBean;
 
 
 public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
-	
+	private static DataSource ds;
 	private static final String TABLE_NAME = "metodoPagamento";
+	
+	static {
+		try {
+			Context initCtx = new InitialContext();
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			ds = (DataSource) envCtx.lookup("jdbc/kindkaribe");
+		} catch (NamingException e) {
+			System.out.println("Error:" + e.getMessage());
+		}
+	}
 	
 	@Override
 	public void doSave(MetodoPagamentoBean bean) throws SQLException {
@@ -86,7 +94,6 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 				}
 			}	
 		}
-		
 		return bean;
 	}
 	

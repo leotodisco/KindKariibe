@@ -7,13 +7,30 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import javax.naming.Context;
+import javax.sql.DataSource;
 
 import beans.GustoBean;
 
 public class GustoDAO implements ModelInterface<GustoBean>{
-	
+	private static DataSource ds;
 	private static final String TABLE_NAME = "gusto";
 	
+
+	static {
+		try {
+			Context initCtx = new InitialContext();
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			ds = (DataSource) envCtx.lookup("jdbc/kindkaribe");
+		} catch (NamingException e) {
+			System.out.println("Error:" + e.getMessage());
+		}
+	}
+
 	@Override
 	public void doSave(GustoBean bean) throws SQLException {
 	String sql = "INSERT INTO " + TABLE_NAME + "('nome','colore','descrizione',quantitaResidua) VALUES (?,?,?,?))";

@@ -8,11 +8,27 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import beans.CategoriaBean;
 
 public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 	private static final String TABLE_NAME = "categoria";
-
+	private static DataSource ds;
+	
+	static {
+		try {
+			Context initCtx = new InitialContext();
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			ds = (DataSource) envCtx.lookup("jdbc/kindkaribe");
+		} catch (NamingException e) {
+			System.out.println("Error:" + e.getMessage());
+		}
+	}
+	
 	@Override
 	public void doSave(CategoriaBean bean) throws SQLException {
 		String sql = "INSERT INTO " + TABLE_NAME + "('nome','descrizione') VALUES (?,?)";

@@ -16,23 +16,25 @@ import javax.sql.DataSource;
 import beans.UserBean;
 
 public class UserDAO implements ModelInterface<UserBean> {
-
-	public UserDAO()
-	{
-
+	private static DataSource ds;
+	
+	static {
+		try {
+			Context initCtx = new InitialContext();
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			ds = (DataSource) envCtx.lookup("jdbc/kindkaribe");
+		} catch (NamingException e) {
+			System.out.println("Error:" + e.getMessage());
+		}
 	}
 
 	@Override
 	public void doSave(UserBean bean) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
 		String insertSQL = "INSERT INTO utente" 
 				+ " (codiceFiscale, nome, cognome, email, nTelefono, password, via, citta, CAP, privincia ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		try {
-			connection = DriverManagerConnectionPool.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
+		try (Connection con = ds.getConnection()){
+			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
 			preparedStatement.setString(1, bean.getCodiceFiscale());
 			preparedStatement.setString(2, bean.getNome());
 			preparedStatement.setString(3, bean.getCognome());
@@ -48,24 +50,16 @@ public class UserDAO implements ModelInterface<UserBean> {
 			preparedStatement.setDate(13, (java.sql.Date) bean.getDataNascita());
 
 			preparedStatement.executeUpdate();
-
-			connection.commit();
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				DriverManagerConnectionPool.releaseConnection(connection);
+			con.commit();
 			}
 		}
-
 	}
 
 	@Override
 	public boolean doDelete(String codiceFiscale) throws SQLException {
 		String sql = "DELETE FROM utente WHERE codiceFiscale = ?";
 
-		try(Connection connection = DriverManagerConnectionPool.getConnection()){
+		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
 				preparedStatement.setString(1, codiceFiscale);
 				return preparedStatement.execute();	
@@ -85,7 +79,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 		String selectSQL = "SELECT * FROM utente WHERE codiceFiscale = ?";
 
 		try {
-			connection = DriverManagerConnectionPool.getConnection();
+			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
 			preparedStatement.setString(1, codiceFiscale);
 
@@ -126,8 +120,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 		UserBean bean = new UserBean();
 
 
-		try(Connection connection = DriverManagerConnectionPool.getConnection()){
-
+		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
 				preparedStatement.setString(1, order);
 				ResultSet rs = preparedStatement.executeQuery();
@@ -160,7 +153,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 				"numCivico = ?,CAP = ?, citta = ?,provincia = ?, dataNascita = ?, email = ?, password =?,"+
 				"nTelefono = ?";
 
-		try(Connection connection = DriverManagerConnectionPool.getConnection()){
+		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){	
 				preparedStatement.setString(1, bean.getCodiceFiscale());
 				preparedStatement.setString(2, bean.getNome());
@@ -185,7 +178,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 		UserBean bean = new UserBean();
 		String selectSQL = "SELECT * FROM utente WHERE email = ?";
 
-		try (Connection connection = DriverManagerConnectionPool.getConnection()){
+		try (Connection connection = ds.getConnection()){
 			try(PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)){
 				preparedStatement.setString(1, email);
 
