@@ -3,16 +3,16 @@ package beans;
 import java.util.ArrayList;
 
 public class MetodoPagamentoBean {
-	private int idMetodoPagamento;
+	private Integer idMetodoPagamento;
 	private String tipo;
 	private String nomeIntestatario;
-	private int numeroCarta;
+	private String numeroCarta;
 	private int meseScadenza;
 	private int annoScadenza;
 	private String iban;
 	private String causale;
 	private String circuito;
-	private String CVV;
+	private Integer CVV;
 	private ArrayList<String> utenti = new ArrayList<>();
 
 
@@ -33,11 +33,11 @@ public class MetodoPagamentoBean {
 		this.circuito = circuito;
 	}
 
-	public String getCVV() {
+	public Integer getCVV() {
 		return CVV;
 	}
 
-	public void setCVV(String cVV) {
+	public void setCVV(Integer cVV) {
 		CVV = cVV;
 	}
 
@@ -69,11 +69,11 @@ public class MetodoPagamentoBean {
 		this.nomeIntestatario = nome;
 	}
 
-	public int getNumeroCarta() {
+	public String getNumeroCarta() {
 		return numeroCarta;
 	}
 
-	public void setNumeroCarta(int numero) {
+	public void setNumeroCarta(String numero) {
 		this.numeroCarta = numero;
 	}
 
