@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class UserBean {
@@ -17,8 +18,19 @@ public class UserBean {
 	private String sesso; //puo valere F o M
 	private String nCivico;
 	private Date dataNascita;
+	private ArrayList<Integer> elencoMetodiPagamento = new ArrayList<>();
 	
 	
+	public ArrayList<Integer> getElencoMetodiPagamento() {
+		return elencoMetodiPagamento;
+	}
+
+
+	public void setElencoMetodiPagamento(ArrayList<Integer> elencoMetodiPagamento) {
+		this.elencoMetodiPagamento = elencoMetodiPagamento;
+	}
+
+
 	public UserBean() {
 
 	}
