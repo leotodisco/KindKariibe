@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.ArrayList;
+
 public class MetodoPagamentoBean {
 	private int idMetodoPagamento;
 	private String tipo;
@@ -11,9 +13,10 @@ public class MetodoPagamentoBean {
 	private String causale;
 	private String circuito;
 	private String CVV;
-	
-	
-	
+	private ArrayList<String> utenti = new ArrayList<>();
+
+
+
 	public int getIdMetodoPagamento() {
 		return idMetodoPagamento;
 	}
@@ -39,77 +42,86 @@ public class MetodoPagamentoBean {
 	}
 
 	public MetodoPagamentoBean() {
-		
+
 	}
-	
+
 	public int getidMetodoPagamento() {
 		return idMetodoPagamento;
 	}
-	
+
 	public void setidMetodoPagamento(int id) {
 		this.idMetodoPagamento = id;
 	}
-	
+
 	public String getTipo() {
 		return tipo;
 	}
-	
+
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	public String getNomeIntestatario() {
 		return nomeIntestatario;
 	}
-	
+
 	public void setNomeIntestatario(String nome) {
 		this.nomeIntestatario = nome;
 	}
-	
+
 	public int getNumeroCarta() {
 		return numeroCarta;
 	}
-	
+
 	public void setNumeroCarta(int numero) {
 		this.numeroCarta = numero;
 	}
-	
+
 	public int getMeseScadenza() {
 		return meseScadenza;
 	}
-	
+
 	public void setMeseScadenza(int mese) {
 		this.meseScadenza = mese;
 	}
-	
+
 	public int getAnnoScadenza() {
 		return annoScadenza;
 	}
-	
+
 	public int setAnnoScadenza(int anno) {
 		return this.annoScadenza = anno;
 	}
-	
+
 	public String getIban() {
 		return iban;
 	}
-	
+
 	public String setIban(String iban) {
 		return this.iban = iban;
 	}
-	
+
 	public String getCausale() {
 		return causale;
 	}
-	
+
 	public String setCausale(String causale) {
 		return this.causale = causale;
 	}
-	
+
+
+	public ArrayList<String> getUtenti() {
+		return utenti;
+	}
+
+	public void setUtenti(ArrayList<String> utenti) {
+		this.utenti = utenti;
+	}
+
 	@Override
 	public String toString() {
 		return "MetodoPagamento [id=" + idMetodoPagamento + ", tipo=" + tipo + ", nomeIntestatario=" + nomeIntestatario + ", numeroCarta="
 				+ numeroCarta + ", meseScadenza=" + meseScadenza + ", annoScadenza=" + annoScadenza + ", iban=" + iban + ", causale=" + causale+  "]";
 	}
-	
+
 }
