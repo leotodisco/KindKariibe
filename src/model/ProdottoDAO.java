@@ -160,7 +160,6 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C "
 				+ "ON categoria = C.nome ";
 		order = order.isEmpty() ? "C.nome" : order;
-		ProdottoBean bean = new ProdottoBean();
 		CategoriaBean buffer = new CategoriaBean();
 		ArrayList<ProdottoBean> result = new ArrayList<>();
 
@@ -170,6 +169,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 				ResultSet rs = statement.executeQuery();
 				while(rs.next()) {
+					ProdottoBean bean = new ProdottoBean();
 					bean.setNome(rs.getString("nome"));
 					buffer.setNome(rs.getString("Cnome"));
 					buffer.setDescrizione(rs.getString("Cdesc"));
@@ -180,15 +180,20 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
-					ArrayList<String> elencoPathImmagini = new ArrayList<>();
-					String sqlImmagini = "SELECT url FROM possessoImmagine PI JOIN immagine"
-							+ " ON PI.prodotto = ?;";
+					
+					String sqlImmagini = "SELECT url \r\n" + 
+							"FROM possessoImmagine JOIN immagine\r\n" + 
+							"on idImmagine = immagine\r\n" + 
+							"where prodotto = ?;";
 					//ottieni url immagini
 					try(PreparedStatement stmt = conn.prepareStatement(sqlImmagini)){
 						stmt.setString(1, bean.getNome());
 						ResultSet images = stmt.executeQuery();
+						ArrayList<String> elencoPathImmagini = new ArrayList<>();
 						while(images.next()) {
 							elencoPathImmagini.add(images.getString("url"));
+							System.out.println(bean.getNome());
+							System.out.println(images.getString("url"));
 						}
 						bean.setPathImage(elencoPathImmagini);
 					}

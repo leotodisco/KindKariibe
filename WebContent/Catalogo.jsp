@@ -18,18 +18,29 @@
     <th>Descrizione</th>
   </tr>
   <% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
+  				
   				for(ProdottoBean prodotto : ListaProdotti)
-  				{ %>
+  				{
+  				%>
   					<tr>
-  					<td><img src = <%= prodotto.getPathImage() %>></td>
+  					<td><img src = "<%= prodotto.getPathImage().get(0) %>"usemap = #dettagli></td>
   					<td><%= prodotto.getNome() %></td>
   					<td><%= prodotto.getPrezzo() %></td>
   					<td><%= prodotto.getDescrizione() %></td>
   					</tr>
-  			<% }%>
+  					
+  					
+  				<%}%>
+  			
+  		
+  			
   			
 </table> 
 
+	<map name="dettagli">
+	<area shape="default" alt="dettagli"  href="DettagliProdotto.jsp">
+
+	</map>	
 
 </body>
 </html>
