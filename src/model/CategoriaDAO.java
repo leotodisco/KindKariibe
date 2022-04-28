@@ -33,7 +33,7 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 	public void doSave(CategoriaBean bean) throws SQLException {
 		String sql = "INSERT INTO " + TABLE_NAME + "('nome','descrizione') VALUES (?,?)";
 		
-		try(Connection con = DriverManagerConnectionPool.getConnection()){
+		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	
 				ps.setString(1, bean.getNome());
 				ps.setString(2, bean.getDescrizione());
@@ -48,7 +48,7 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 	public boolean doDelete(String nome) throws SQLException {
 		String sql = "DELETE FROM "+ TABLE_NAME +" WHERE `nome`= ? ";
 
-		try(Connection con = DriverManagerConnectionPool.getConnection()){
+		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				ps.setString(1, nome);
 				return ps.execute();
@@ -61,7 +61,7 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE nome = " + nome;
 		CategoriaBean result = new CategoriaBean();
 
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				ResultSet rs = statement.executeQuery();
 
@@ -81,7 +81,7 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 		CategoriaBean buffer = new CategoriaBean();
 		String sql = "SELECT * FROM " + TABLE_NAME;
 
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				ResultSet rs = statement.executeQuery();
 
@@ -100,7 +100,7 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 	public void doUpdate(CategoriaBean bean) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+"SET 'descrizione' = ? WHERE nome = "+bean.getNome();
 
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				statement.setString(1, bean.getDescrizione());
 				statement.executeUpdate();

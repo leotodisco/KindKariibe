@@ -29,12 +29,12 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 			System.out.println("Error:" + e.getMessage());
 		}
 	}
-	
+
 	@Override
 	public void doSave(CorriereBean bean) throws SQLException {
-	String sql = "INSERT INTO " + TABLE_NAME + "('idCorriere','azienda',nTelefono) VALUES (?,?,?))";
-		
-		try(Connection con = DriverManagerConnectionPool.getConnection()){
+		String sql = "INSERT INTO " + TABLE_NAME + "('idCorriere','azienda',nTelefono) VALUES (?,?,?))";
+
+		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	
 				ps.setString(1, String.valueOf(bean.getId()));
 				ps.setString(2, bean.getAzienda());
@@ -42,14 +42,14 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 				ps.execute();
 			}
 		}
-		
+
 	}
 
 	@Override
 	public boolean doDelete(String arg) throws SQLException {
 		String sql = "DELETE FROM "+ TABLE_NAME +" WHERE `idCorriere`= ? ";
 
-		try(Connection con = DriverManagerConnectionPool.getConnection()){
+		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				ps.setString(1, arg);
 				return ps.execute();
@@ -61,11 +61,11 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 	public CorriereBean doRetrieveByKey(String id) throws Exception {
 		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE idCorriere = ?";
 		CorriereBean bean = new CorriereBean();
-		
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				statement.setString(1, id);
-				
+
 				ResultSet rs = statement.executeQuery();
 
 				if(rs.next()) {
@@ -75,7 +75,7 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 				}
 			}	
 		}
-		
+
 		return bean;
 	}
 
@@ -86,7 +86,7 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 		order = order.isEmpty() ? "nome" : order;
 		String sql = "SELECT * FROM " + TABLE_NAME + "Order by" + order;
 
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				ResultSet rs = statement.executeQuery();
 
@@ -105,8 +105,8 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 	@Override
 	public void doUpdate(CorriereBean bean) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+"SET 'azienda' = ?,'nTelefono' = ? WHERE idCorriere = ?";
-		
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				statement.setString(1, bean.getAzienda());
 				statement.setString(2, bean.getnTelefono());
@@ -114,7 +114,9 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 				statement.executeUpdate();
 			}	
 		}
-		
+
 	}
 
 }
+
+

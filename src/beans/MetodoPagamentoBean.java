@@ -10,7 +10,6 @@ public class MetodoPagamentoBean {
 	private String iban;
 	private String causale;
 	private String circuito;
-	private java.util.Date dataPagamento;
 	private String CVV;
 	
 	
@@ -29,14 +28,6 @@ public class MetodoPagamentoBean {
 
 	public void setCircuito(String circuito) {
 		this.circuito = circuito;
-	}
-
-	public java.util.Date getDataPagamento() {
-		return dataPagamento;
-	}
-
-	public void setDataPagamento(java.util.Date dataPagamento) {
-		this.dataPagamento = dataPagamento;
 	}
 
 	public String getCVV() {

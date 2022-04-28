@@ -19,7 +19,7 @@ import beans.GustoBean;
 public class GustoDAO implements ModelInterface<GustoBean>{
 	private static DataSource ds;
 	private static final String TABLE_NAME = "gusto";
-	
+
 
 	static {
 		try {
@@ -33,9 +33,9 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 
 	@Override
 	public void doSave(GustoBean bean) throws SQLException {
-	String sql = "INSERT INTO " + TABLE_NAME + "('nome','colore','descrizione',quantitaResidua) VALUES (?,?,?,?))";
-		
-		try(Connection con = DriverManagerConnectionPool.getConnection()){
+		String sql = "INSERT INTO " + TABLE_NAME + "('nome','colore','descrizione',quantitaResidua) VALUES (?,?,?,?))";
+
+		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	
 				ps.setString(1, String.valueOf(bean.getNome()));
 				ps.setString(2, bean.getColore());
@@ -44,30 +44,30 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 				ps.execute();
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean doDelete(String arg) throws SQLException {
 		String sql = "DELETE FROM "+ TABLE_NAME +" WHERE `nome`= ? ";
 
-		try(Connection con = DriverManagerConnectionPool.getConnection()){
+		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				ps.setString(1, arg);
 				return ps.execute();
 			}
 		}
 	}
-	
+
 	@Override
 	public GustoBean doRetrieveByKey(String id) throws Exception {
 		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE nome = ?";
 		GustoBean bean = new GustoBean();
-		
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				statement.setString(1, id);
-				
+
 				ResultSet rs = statement.executeQuery();
 
 				if(rs.next()) {
@@ -78,10 +78,10 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 				}
 			}	
 		}
-		
+
 		return bean;
 	}
-	
+
 	@Override
 	public Collection<GustoBean> doRetrieveAll(String order) throws Exception {
 		List<GustoBean> gusti = new ArrayList<>();
@@ -89,11 +89,11 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY = ?";
 		order = order.isEmpty() ? "nome" : order;
 
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				statement.setString(1, order);
 				ResultSet rs = statement.executeQuery();
-				
+
 				while(rs.next()) {
 					buffer.setNome(rs.getString("idCorriere"));
 					buffer.setColore(rs.getString("colore"));
@@ -105,12 +105,12 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 		}
 		return gusti;
 	}
-	
+
 	@Override
 	public void doUpdate(GustoBean bean) throws SQLException {
 		String sql = "UPDATE "+TABLE_NAME+"SET 'colore' = ?,'descrizione' = ?,'quantitaResidua'= ?  WHERE nome = ?";
-		
-		try(Connection conn = DriverManagerConnectionPool.getConnection()){
+
+		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				statement.setString(1, bean.getColore());
 				statement.setString(2, bean.getDescrizione());
@@ -119,9 +119,9 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 				statement.executeUpdate();
 			}	
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 }
