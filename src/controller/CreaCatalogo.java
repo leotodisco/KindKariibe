@@ -35,18 +35,42 @@ public class CreaCatalogo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ProdottoDAO Dao = new ProdottoDAO();
-		ArrayList<ProdottoBean> ListaProdotti = null;
+		
+		String azioni = request.getParameter("action");
+		
+		if(azioni == null)
+		{
+			ProdottoDAO Dao = new ProdottoDAO();
+			ArrayList<ProdottoBean> ListaProdotti = null;
+			try {
+				ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
+				request.setAttribute("prodotti", ListaProdotti);
+				RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+				view.include(request, response);
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(azioni.equals("details"))
+		{
+		
+		ProdottoDAO Dao = new ProdottoDAO();	
+		
+		ProdottoBean prodotto;
 		try {
-			ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
-			request.setAttribute("prodotti", ListaProdotti);
-			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+			prodotto = Dao.doRetrieveByKey(request.getParameter("id"));
+			request.setAttribute("prodotto", prodotto);
+			RequestDispatcher view = request.getRequestDispatcher("DettagliProdotto.jsp");
 			view.include(request, response);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}	
 		}
+
 	}
 
 	/**
@@ -56,5 +80,6 @@ public class CreaCatalogo extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
+	
+	
 }

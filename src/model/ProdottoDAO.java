@@ -94,8 +94,10 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 	@Override
 	public ProdottoBean doRetrieveByKey(String nome) throws Exception {
-		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C ON categoria = C.nome"
-				+ "WHERE nome = ?;";
+		String sql = "SELECT prodotto.*, categoria.nome as Cnome, categoria.descrizione as Cdesc "
+				+ "FROM prodotto JOIN categoria "
+				+"ON categoria.nome = prodotto.categoria "
+				+ "where prodotto.nome = ?";
 		ProdottoBean bean = new ProdottoBean();
 		CategoriaBean buffer = new CategoriaBean();
 
@@ -132,9 +134,12 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					//ottieni peso
 					String sqlPeso = "SELECT peso FROM estensione WHERE prodotto = ?;";
 					try(PreparedStatement statement2 = conn.prepareStatement(sqlPeso)){
-						statement.setString(1, nome);
+						statement2.setString(1, nome);
 						ResultSet weight = statement2.executeQuery();
-						bean.setPeso(weight.getDouble("peso"));
+						while(weight.next())
+						{
+							bean.setPeso(weight.getDouble("peso"));						
+						}
 					}
 
 					//ottieni gusti
