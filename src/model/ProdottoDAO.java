@@ -114,7 +114,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setIVA(rs.getDouble("IVA"));
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
-					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibile"));
+					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					String sqlImmagini = "SELECT url FROM possessoImmagine PI JOIN immagine"
 							+ " ON PI.prodotto = ?;";
@@ -157,16 +157,16 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 	@Override
 	public Collection<ProdottoBean> doRetrieveAll(String order) throws Exception {
-		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C"
-				+ "ON categoria = C.nome ORDER BY ?;";
-		order = order.isEmpty() ? "nome" : order;
+		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C "
+				+ "ON categoria = C.nome ";
+		order = order.isEmpty() ? "C.nome" : order;
 		ProdottoBean bean = new ProdottoBean();
 		CategoriaBean buffer = new CategoriaBean();
 		ArrayList<ProdottoBean> result = new ArrayList<>();
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
-				statement.setString(1, order);
+				//statement.setString(1, order);
 
 				ResultSet rs = statement.executeQuery();
 				while(rs.next()) {
@@ -179,7 +179,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setIVA(rs.getDouble("IVA"));
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
-					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibile"));
+					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					String sqlImmagini = "SELECT url FROM possessoImmagine PI JOIN immagine"
 							+ " ON PI.prodotto = ?;";
@@ -195,9 +195,12 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					//ottieni peso
 					String sqlPeso = "SELECT peso FROM estensione WHERE prodotto = ?;";
 					try(PreparedStatement statement2 = conn.prepareStatement(sqlPeso)){
-						statement.setString(1, bean.getNome());
+						statement2.setString(1, bean.getNome());
 						ResultSet weight = statement2.executeQuery();
-						bean.setPeso(weight.getDouble("peso"));
+						if(weight.next())
+						{
+							bean.setPeso(weight.getDouble("peso"));						
+						}
 					}
 
 					//ottieni gusti
