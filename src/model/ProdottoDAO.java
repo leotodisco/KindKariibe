@@ -118,8 +118,10 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
-					String sqlImmagini = "SELECT url FROM possessoImmagine PI JOIN immagine"
-							+ " ON PI.prodotto = ?;";
+					String sqlImmagini = "SELECT url \r\n" + 
+							"FROM possessoImmagine JOIN immagine\r\n" + 
+							"on idImmagine = immagine\r\n" + 
+							"where prodotto = ?;";
 
 					//ottieni url immagini
 					try(PreparedStatement stmt = conn.prepareStatement(sqlImmagini)){
@@ -129,6 +131,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 							elencoPathImmagini.add(images.getString("url"));
 						}
 						bean.setPathImage(elencoPathImmagini);
+						System.out.println(bean.getPathImage().get(0));
 					}
 
 					//ottieni peso
@@ -197,8 +200,6 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 						ArrayList<String> elencoPathImmagini = new ArrayList<>();
 						while(images.next()) {
 							elencoPathImmagini.add(images.getString("url"));
-							System.out.println(bean.getNome());
-							System.out.println(images.getString("url"));
 						}
 						bean.setPathImage(elencoPathImmagini);
 					}
