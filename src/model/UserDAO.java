@@ -202,8 +202,10 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setSesso(rs.getString("genere"));	
 					bean.setnTelefono(rs.getString("nTelefono"));
 					ArrayList<Integer> idMetodiPagamento = new ArrayList<>();
-					String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = " + bean.getCodiceFiscale();
+					String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = ?";
+					
 					try(PreparedStatement ps = connection.prepareStatement(sqlPagamenti)){
+						ps.setString(1, bean.getCodiceFiscale());
 						ResultSet metodi = ps.executeQuery();
 						while(metodi.next()) {
 							idMetodiPagamento.add(metodi.getInt("metodo"));
