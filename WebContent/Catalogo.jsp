@@ -27,8 +27,10 @@
   				for(ProdottoBean prodotto : ListaProdotti)
   				{
   				%>
+  				
+  			
   					<tr>
-  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img src = "<%= prodotto.getPathImage().get(0) %>"></a></td>
+  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img src = "./images/<%= prodotto.getPathImage().get(0) %>"></a></td>
   					<td><%= prodotto.getNome() %></td>
   					<td><%= prodotto.getPrezzo() %></td>
   					<td><%= prodotto.getDescrizione() %></td>
