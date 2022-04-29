@@ -19,6 +19,10 @@
     <th>Descrizione</th>
   </tr>
   <% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
+	if(ListaProdotti == null) {
+		response.sendRedirect("./CreaCatalogo");	
+		return;
+	}
   				
   				for(ProdottoBean prodotto : ListaProdotti)
   				{
@@ -41,13 +45,20 @@
 	
 	<%  UserBean utente = (UserBean) request.getAttribute("utente"); 
 	
+		if(utente == null)
+		{
+			utente = (UserBean) getServletContext().getAttribute("utente");
+		}
+	
 		if(utente.getAdmin())
 		{
+			ServletContext c = getServletContext();
+			c.setAttribute("utente", utente);
 		%>
 		
 			<h2>Inserisci</h2>
-	<form action="inserire" method="post">
-		<input type="hidden" name="action" value="insert"> <label
+	<form action="AdminServlet" method="post">
+		<input type="hidden" name="operazione" value="inserire"> <label
 			for="nome">Nome:</label><br> <input name="nome" type="text"
 			maxlength="20" required placeholder="inserire nome..."><br>
 
@@ -66,8 +77,8 @@
 	</form>
 
 	<h2>Rimuovi elemento</h2>
-	<form action="rimuovi" method="post">
-		<input type="hidden" name="action" value="insert"> <label
+	<form action="AdminServlet" method="post">
+		<input type="hidden" name="operazione" value="rimuovi"> <label
 			for="nome">Nome:</label><br> <input name="nome" type="text"
 			maxlength="20" required placeholder="inserire nome..."><br>
 
@@ -77,8 +88,8 @@
 	</form>
 
 	<h2>Aggiorna prodotto</h2>
-	<form action="inserire" method="post">
-		<input type="hidden" name="action" value="insert"> <label
+	<form action="AdminServlet" method="post">
+		<input type="hidden" name="operazione" value="aggiorna"> <label
 			for="nome">Nome:</label><br> <input name="nome" type="text"
 			maxlength="20" required placeholder="inserire nome..."><br>
 
