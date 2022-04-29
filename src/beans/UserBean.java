@@ -19,6 +19,7 @@ public class UserBean {
 	private String nCivico;
 	private Date dataNascita;
 	private ArrayList<Integer> elencoMetodiPagamento = new ArrayList<>();
+	private Boolean admin;
 	
 	
 	public ArrayList<Integer> getElencoMetodiPagamento() {
@@ -129,6 +130,16 @@ public class UserBean {
 	
 	public void setDataNascita(Date data) {
 		this.dataNascita = data;
+	}
+
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+
+	public void setAdmin(boolean b) {
+		this.admin = b;
 	}
 	
 	
