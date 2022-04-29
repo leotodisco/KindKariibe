@@ -76,7 +76,7 @@
 
 	</form>
 
-	<h2>Rimuovi elemento</h2>
+	<h2>Rimuovi Elemento</h2>
 	<form action="AdminServlet" method="post">
 		<input type="hidden" name="operazione" value="rimuovi"> <label
 			for="nome">Nome:</label><br> <input name="nome" type="text"
