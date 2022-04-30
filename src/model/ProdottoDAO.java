@@ -94,8 +94,10 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 	@Override
 	public ProdottoBean doRetrieveByKey(String nome) throws Exception {
-		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C ON categoria = C.nome"
-				+ "WHERE nome = ?;";
+		String sql = "SELECT prodotto.*, categoria.nome as Cnome, categoria.descrizione as Cdesc "
+				+ "FROM prodotto JOIN categoria "
+				+"ON categoria.nome = prodotto.categoria "
+				+ "where prodotto.nome = ?";
 		ProdottoBean bean = new ProdottoBean();
 		CategoriaBean buffer = new CategoriaBean();
 
@@ -114,7 +116,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setIVA(rs.getDouble("IVA"));
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
-					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibile"));
+					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					String sqlImmagini = "SELECT url FROM possessoImmagine PI JOIN immagine"
 							+ " ON PI.prodotto = ?;";
@@ -132,9 +134,12 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					//ottieni peso
 					String sqlPeso = "SELECT peso FROM estensione WHERE prodotto = ?;";
 					try(PreparedStatement statement2 = conn.prepareStatement(sqlPeso)){
-						statement.setString(1, nome);
+						statement2.setString(1, nome);
 						ResultSet weight = statement2.executeQuery();
-						bean.setPeso(weight.getDouble("peso"));
+						while(weight.next())
+						{
+							bean.setPeso(weight.getDouble("peso"));						
+						}
 					}
 
 					//ottieni gusti
@@ -157,19 +162,19 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 	@Override
 	public Collection<ProdottoBean> doRetrieveAll(String order) throws Exception {
-		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C"
-				+ "ON categoria = C.nome ORDER BY ?;";
-		order = order.isEmpty() ? "nome" : order;
-		ProdottoBean bean = new ProdottoBean();
+		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C "
+				+ "ON categoria = C.nome ";
+		order = order.isEmpty() ? "C.nome" : order;
 		CategoriaBean buffer = new CategoriaBean();
 		ArrayList<ProdottoBean> result = new ArrayList<>();
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
-				statement.setString(1, order);
+				//statement.setString(1, order);
 
 				ResultSet rs = statement.executeQuery();
 				while(rs.next()) {
+					ProdottoBean bean = new ProdottoBean();
 					bean.setNome(rs.getString("nome"));
 					buffer.setNome(rs.getString("Cnome"));
 					buffer.setDescrizione(rs.getString("Cdesc"));
@@ -179,25 +184,33 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setIVA(rs.getDouble("IVA"));
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
-					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibile"));
-					ArrayList<String> elencoPathImmagini = new ArrayList<>();
-					String sqlImmagini = "SELECT url FROM possessoImmagine PI JOIN immagine"
-							+ " ON PI.prodotto = ?;";
+					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
+					
+					String sqlImmagini = "SELECT url \r\n" + 
+							"FROM possessoImmagine JOIN immagine\r\n" + 
+							"on idImmagine = immagine\r\n" + 
+							"where prodotto = ?;";
 					//ottieni url immagini
 					try(PreparedStatement stmt = conn.prepareStatement(sqlImmagini)){
 						stmt.setString(1, bean.getNome());
 						ResultSet images = stmt.executeQuery();
+						ArrayList<String> elencoPathImmagini = new ArrayList<>();
 						while(images.next()) {
 							elencoPathImmagini.add(images.getString("url"));
+							System.out.println(bean.getNome());
+							System.out.println(images.getString("url"));
 						}
 						bean.setPathImage(elencoPathImmagini);
 					}
 					//ottieni peso
 					String sqlPeso = "SELECT peso FROM estensione WHERE prodotto = ?;";
 					try(PreparedStatement statement2 = conn.prepareStatement(sqlPeso)){
-						statement.setString(1, bean.getNome());
+						statement2.setString(1, bean.getNome());
 						ResultSet weight = statement2.executeQuery();
-						bean.setPeso(weight.getDouble("peso"));
+						if(weight.next())
+						{
+							bean.setPeso(weight.getDouble("peso"));						
+						}
 					}
 
 					//ottieni gusti
