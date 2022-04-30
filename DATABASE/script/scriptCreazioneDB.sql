@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `kindkaribe` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `kindkaribe`;
--- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.27, for macos11 (x86_64)
 --
 -- Host: localhost    Database: kindkaribe
 -- ------------------------------------------------------
@@ -32,15 +32,6 @@ CREATE TABLE `categoria` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `categoria`
---
-
-LOCK TABLES `categoria` WRITE;
-/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `composizione`
 --
 
@@ -61,15 +52,6 @@ CREATE TABLE `composizione` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `composizione`
---
-
-LOCK TABLES `composizione` WRITE;
-/*!40000 ALTER TABLE `composizione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `composizione` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `corriere`
 --
 
@@ -81,17 +63,8 @@ CREATE TABLE `corriere` (
   `nTelefono` varchar(10) NOT NULL,
   `azienda` varchar(45) NOT NULL,
   PRIMARY KEY (`idCorriere`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `corriere`
---
-
-LOCK TABLES `corriere` WRITE;
-/*!40000 ALTER TABLE `corriere` DISABLE KEYS */;
-/*!40000 ALTER TABLE `corriere` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `costituzione`
@@ -111,15 +84,6 @@ CREATE TABLE `costituzione` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `costituzione`
---
-
-LOCK TABLES `costituzione` WRITE;
-/*!40000 ALTER TABLE `costituzione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `costituzione` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `datiFiscali`
 --
 
@@ -129,7 +93,6 @@ DROP TABLE IF EXISTS `datiFiscali`;
 CREATE TABLE `datiFiscali` (
   `idDatiFiscali` int NOT NULL AUTO_INCREMENT,
   `metodoPagamento` int NOT NULL,
-  `numeroFattura` varchar(15) NOT NULL,
   `via` varchar(45) NOT NULL,
   `nCivico` int NOT NULL,
   `provincia` varchar(2) NOT NULL,
@@ -138,17 +101,8 @@ CREATE TABLE `datiFiscali` (
   PRIMARY KEY (`idDatiFiscali`),
   KEY `_metodoPagamento_idx` (`metodoPagamento`),
   CONSTRAINT `_metodoPagamento` FOREIGN KEY (`metodoPagamento`) REFERENCES `metodoPagamento` (`idMetodoPagamento`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `datiFiscali`
---
-
-LOCK TABLES `datiFiscali` WRITE;
-/*!40000 ALTER TABLE `datiFiscali` DISABLE KEYS */;
-/*!40000 ALTER TABLE `datiFiscali` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `datiPagamento`
@@ -168,15 +122,6 @@ CREATE TABLE `datiPagamento` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `datiPagamento`
---
-
-LOCK TABLES `datiPagamento` WRITE;
-/*!40000 ALTER TABLE `datiPagamento` DISABLE KEYS */;
-/*!40000 ALTER TABLE `datiPagamento` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `datiProdotto`
 --
 
@@ -188,15 +133,6 @@ CREATE TABLE `datiProdotto` (
   PRIMARY KEY (`peso`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `datiProdotto`
---
-
-LOCK TABLES `datiProdotto` WRITE;
-/*!40000 ALTER TABLE `datiProdotto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `datiProdotto` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `estensione`
@@ -216,15 +152,6 @@ CREATE TABLE `estensione` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `estensione`
---
-
-LOCK TABLES `estensione` WRITE;
-/*!40000 ALTER TABLE `estensione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `estensione` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `gusto`
 --
 
@@ -241,15 +168,6 @@ CREATE TABLE `gusto` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gusto`
---
-
-LOCK TABLES `gusto` WRITE;
-/*!40000 ALTER TABLE `gusto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gusto` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `immagine`
 --
 
@@ -264,17 +182,8 @@ CREATE TABLE `immagine` (
   `nome` varchar(25) NOT NULL,
   `testoALT` varchar(20) NOT NULL,
   PRIMARY KEY (`idImmagine`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `immagine`
---
-
-LOCK TABLES `immagine` WRITE;
-/*!40000 ALTER TABLE `immagine` DISABLE KEYS */;
-/*!40000 ALTER TABLE `immagine` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `metodoPagamento`
@@ -293,23 +202,13 @@ CREATE TABLE `metodoPagamento` (
   `IBAN` varchar(27) DEFAULT NULL,
   `causale` varchar(45) DEFAULT NULL,
   `circuito` enum('Paypal','Mastercard','Postepay') DEFAULT NULL,
-  `dataPagamento` datetime NOT NULL,
   `CVV` int DEFAULT NULL,
   PRIMARY KEY (`idMetodoPagamento`),
   UNIQUE KEY `numeroCarta_UNIQUE` (`numeroCarta`),
   UNIQUE KEY `IBAN_UNIQUE` (`IBAN`),
   UNIQUE KEY `CVV_UNIQUE` (`CVV`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `metodoPagamento`
---
-
-LOCK TABLES `metodoPagamento` WRITE;
-/*!40000 ALTER TABLE `metodoPagamento` DISABLE KEYS */;
-/*!40000 ALTER TABLE `metodoPagamento` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ordine`
@@ -320,7 +219,7 @@ DROP TABLE IF EXISTS `ordine`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ordine` (
   `idOrdine` int NOT NULL AUTO_INCREMENT,
-  `datiFiscali` int DEFAULT NULL,
+  `datiFiscali` int NOT NULL,
   `corriere` int NOT NULL,
   `utente` varchar(16) NOT NULL,
   `costoTotale` double NOT NULL,
@@ -328,6 +227,7 @@ CREATE TABLE `ordine` (
   `dataEvasione` date NOT NULL,
   `dataPartenza` datetime DEFAULT NULL,
   `dataArrivo` datetime DEFAULT NULL,
+  `urlPdf` varchar(100) NOT NULL,
   PRIMARY KEY (`idOrdine`),
   KEY `fiscali_idx` (`datiFiscali`),
   KEY `spedizione_idx` (`corriere`),
@@ -335,17 +235,8 @@ CREATE TABLE `ordine` (
   CONSTRAINT `_user` FOREIGN KEY (`utente`) REFERENCES `utente` (`codiceFiscale`),
   CONSTRAINT `fiscali` FOREIGN KEY (`datiFiscali`) REFERENCES `datiFiscali` (`idDatiFiscali`),
   CONSTRAINT `spedizione` FOREIGN KEY (`corriere`) REFERENCES `corriere` (`idCorriere`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ordine`
---
-
-LOCK TABLES `ordine` WRITE;
-/*!40000 ALTER TABLE `ordine` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ordine` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `possessoImmagine`
@@ -363,15 +254,6 @@ CREATE TABLE `possessoImmagine` (
   CONSTRAINT `ImmagineProdotto` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `possessoImmagine`
---
-
-LOCK TABLES `possessoImmagine` WRITE;
-/*!40000 ALTER TABLE `possessoImmagine` DISABLE KEYS */;
-/*!40000 ALTER TABLE `possessoImmagine` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `prodotto`
@@ -395,15 +277,6 @@ CREATE TABLE `prodotto` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `prodotto`
---
-
-LOCK TABLES `prodotto` WRITE;
-/*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `recensione`
 --
 
@@ -423,15 +296,6 @@ CREATE TABLE `recensione` (
   CONSTRAINT `user` FOREIGN KEY (`utente`) REFERENCES `utente` (`codiceFiscale`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `recensione`
---
-
-LOCK TABLES `recensione` WRITE;
-/*!40000 ALTER TABLE `recensione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `recensione` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `utente`
@@ -459,16 +323,6 @@ CREATE TABLE `utente` (
   UNIQUE KEY `nTelefono_UNIQUE` (`nTelefono`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `utente`
---
-
-LOCK TABLES `utente` WRITE;
-/*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES ('DNNGLI01R51A717E','Giulia','Donnarumma','2001-10-11','gi.donnarumma@gmail.com','3318899543','giDonna8','Giuseppe Mazzini','Battipaglia',84091,'SA',12,'F'),('GNVLRT01R10F924V','Alberto','Genovese','2001-10-10','alb.genovese@gmail.com','3342524079','Gengar10?','Dei Gigli','Tufino',80030,'NA',11,'M'),('RSSMRA96A01F839E','Mario','Rossi','1996-01-01','mario.rossi@gmail.com','3338899210','marioRossi','Brombeis','Napoli',80121,'NA',12,'M'),('SFODGL02M46H703Y','Sofia','De Angelis','2002-08-06','sofia.deangelis02@gmail.com','3331122345','sofia!','Lungomare Trieste','Salerno',84122,'SA',56,'F'),('TDSLLD00E18C129Y','Leopoldo','Todisco','2000-05-18','leopoldo.todiscozte@gmail.com','3887868300','le0p0ld0','Casa Russo','Sant\'Antonio Abate',80057,'NA',77,'M');
-/*!40000 ALTER TABLE `utente` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -479,4 +333,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-23 16:19:45
+-- Dump completed on 2022-04-30 13:02:58
