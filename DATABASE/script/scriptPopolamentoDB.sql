@@ -113,7 +113,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `immagine` WRITE;
 /*!40000 ALTER TABLE `immagine` DISABLE KEYS */;
-INSERT INTO `immagine` VALUES (2,1206,1280,'mono_mimosa.jpg','mimosa','festa della donna'),(3,960,1280,'torta_amarena.jpg','torta amarena','torta'),(4,1024,1280,'torta_cereali.jpg','torta cereali','torta'),(5,960,1280,'gelato_pistacchio','vaschetta bigusto','vaschetta');
+INSERT INTO `immagine` VALUES (1,1206,1280,'tronchetto.jpg','Tronchetto Amarena','buono'),(2,1206,1280,'mono_mimosa.jpg','mimosa','festa della donna'),(3,960,1280,'torta_amarena.jpg','torta amarena','torta'),(4,1024,1280,'torta_cereali.jpg','torta cereali','torta'),(5,960,1280,'gelato_pistacchio','vaschetta bigusto','vaschetta');
 /*!40000 ALTER TABLE `immagine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +143,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `possessoImmagine` WRITE;
 /*!40000 ALTER TABLE `possessoImmagine` DISABLE KEYS */;
-INSERT INTO `possessoImmagine` VALUES ('Mimosa',2),('Torta amarena',3),('Torta cereali',4),('vaschetta bigusto',5);
+INSERT INTO `possessoImmagine` VALUES ('Tronchetto Amarena',1),('Mimosa',2),('Torta amarena',3),('Torta cereali',4),('vaschetta bigusto',5);
 /*!40000 ALTER TABLE `possessoImmagine` ENABLE KEYS */;
 UNLOCK TABLES;
 
