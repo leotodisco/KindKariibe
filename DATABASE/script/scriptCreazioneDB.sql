@@ -318,6 +318,7 @@ CREATE TABLE `utente` (
   `provincia` varchar(2) NOT NULL,
   `numCivico` int NOT NULL,
   `genere` enum('F','M') DEFAULT 'M',
+  `admin`  TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`codiceFiscale`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `nTelefono_UNIQUE` (`nTelefono`)
