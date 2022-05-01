@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.CategoriaBean;
 import beans.ProdottoBean;
+import model.CategoriaDAO;
 import model.ProdottoDAO;
 
 /**
@@ -48,12 +51,31 @@ public class AdminServlet extends HttpServlet {
 			String description = request.getParameter("descrizione");
 			Double price = Double.parseDouble(request.getParameter("prezzo"));
 			Double quantity = Double.parseDouble(request.getParameter("quantita"));
-
+			String catNome = request.getParameter("categoria");
+			Double iva = Double.parseDouble(request.getParameter("IVA"));
+			Double peso = Double.parseDouble(request.getParameter("peso"));
+			String immagine = request.getParameter("immagine");
+			String tipo = request.getParameter("tipo");
+			
+			CategoriaDAO buffer = new CategoriaDAO();
+			Optional<CategoriaBean> cat;
 			ProdottoBean bean = new ProdottoBean();
-			bean.setNome(name);
-			bean.setDescrizione(description);
-			bean.setPrezzo(price);
-			bean.setQuantitaResidua(quantity);
+			try {
+				cat = Optional.of(buffer.doRetrieveByKey(catNome));
+				bean.setNome(name);
+				bean.setDescrizione(description);
+				bean.setPrezzo(price);
+				bean.setQuantitaResidua(quantity);
+				bean.setCategoria(cat);
+				bean.setIVA(iva);
+				bean.addImmagine(immagine);
+				bean.setPeso(peso);
+				bean.setTipo(tipo);
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			try {
 				prod.doSave(bean);
@@ -81,12 +103,39 @@ public class AdminServlet extends HttpServlet {
 			String description = request.getParameter("descrizione");
 			Double price = Double.parseDouble(request.getParameter("prezzo"));
 			Double quantity = Double.parseDouble(request.getParameter("quantita"));
-
+			String catNome = request.getParameter("categoria");
+			Double iva = Double.parseDouble(request.getParameter("IVA"));
+			Double peso = Double.parseDouble(request.getParameter("peso"));
+			String immagine = request.getParameter("immagine");
+			String tipo = request.getParameter("tipo");
+			
+			CategoriaDAO buffer = new CategoriaDAO();
+			Optional<CategoriaBean> cat;
+			ProdottoDAO dao = new ProdottoDAO();
 			ProdottoBean bean = new ProdottoBean();
-			bean.setNome(name);
-			bean.setDescrizione(description);
-			bean.setPrezzo(price);
-			bean.setQuantitaResidua(quantity);
+			try {
+				bean = dao.doRetrieveByKey(name);
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			try {
+				cat = Optional.of(buffer.doRetrieveByKey(catNome));
+				bean.setNome(name);
+				bean.setDescrizione(description);
+				bean.setPrezzo(price);
+				bean.setQuantitaResidua(quantity);
+				bean.setCategoria(cat);
+				bean.setIVA(iva);
+				bean.addImmaginePrimaPosizione(immagine); //in prima posizione della lista c'è l'immagine del catalogo
+				bean.setPeso(peso);
+				bean.setTipo(tipo);
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 
 			try {
 				prod.doUpdate(bean);

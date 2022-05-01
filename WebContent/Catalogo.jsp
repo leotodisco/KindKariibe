@@ -23,12 +23,9 @@
 		response.sendRedirect("./CreaCatalogo");	
 		return;
 	}
-  				
   				for(ProdottoBean prodotto : ListaProdotti)
   				{
   				%>
-  				
-  			
   					<tr>
   					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img src = "./images/<%= prodotto.getPathImage().get(0) %>"></a></td>
   					<td><%= prodotto.getNome() %></td>
@@ -60,16 +57,35 @@
 		
 			<h2>Inserisci</h2>
 	<form action="AdminServlet" method="post">
-		<input type="hidden" name="operazione" value="inserire"> <label
-			for="nome">Nome:</label><br> <input name="nome" type="text"
+		<input type="hidden" name="operazione" value="inserire">
+		 <label	for="nome">Nome:</label><br> <input name="nome" type="text"
 			maxlength="20" required placeholder="inserire nome..."><br>
+			
+			<label for="categoria">Categoria:</label><br>
+		<textarea name="categoria" maxlength="100" rows="3" 
+			placeholder="inserire categoria..."></textarea>
+			
+				<label for="tipo">Tipo:</label><br>
+		<textarea name="tipo" maxlength="100" rows="3" 
+			placeholder="inserire tipo..."></textarea>
 
 		<label for="descrizione">Descrizione:</label><br>
 		<textarea name="descrizione" maxlength="100" rows="3" required
 			placeholder="inserire descrizione..."></textarea>
+			
+				<label for="immagine">Immagine:</label><br>
+		<textarea name="immagine" maxlength="100" rows="3" required
+			placeholder="inserire nome immagine..."></textarea>
+			
 		<br> <label for="prezzo">Prezzo:</label><br> <input
 			name="prezzo" type="number" min="0" value="0" required><br>
 
+		<br> <label for="IVA">IVA:</label><br> <input
+			name="IVA" type="number" min="0" value="10" required><br>
+		
+			<br> <label for="peso">Peso:</label><br> <input
+			name="peso" type="number" min="0" value="10" required><br>
+		
 		<label for="quantita">Quantità:</label><br> <input
 			name="quantita" type="number" min="1" value="1" required><br>
 
@@ -91,22 +107,41 @@
 
 	<h2>Aggiorna prodotto</h2>
 	<form action="AdminServlet" method="post">
-		<input type="hidden" name="operazione" value="aggiorna"> <label
-			for="nome">Nome:</label><br> <input name="nome" type="text"
+		<input type="hidden" name="operazione" value="aggiorna"> 
+		
+				 <label	for="nome">Nome:</label><br> <input name="nome" type="text"
 			maxlength="20" required placeholder="inserire nome..."><br>
+			
+			<label for="categoria">Categoria:</label><br>
+		<textarea name="categoria" maxlength="100" rows="3" 
+			placeholder="inserire categoria..."></textarea>
+			
+				<label for="tipo">Tipo:</label><br>
+		<textarea name="tipo" maxlength="100" rows="3" 
+			placeholder="inserire tipo..."></textarea>
 
 		<label for="descrizione">Descrizione:</label><br>
-		<textarea name="descrizione" maxlength="100" rows="3" required
+		<textarea name="descrizione" maxlength="100" rows="3" 
 			placeholder="inserire descrizione..."></textarea>
+			
+				<label for="immagine">Immagine:</label><br>
+		<textarea name="immagine" maxlength="100" rows="3" 
+			placeholder="inserire nome immagine..."></textarea>
+			
 		<br> <label for="prezzo">Prezzo:</label><br> <input
-			name="prezzo" type="number" min="0" value="0" required><br>
+			name="prezzo" type="number" min="0" value="0"><br>
 
+		<br> <label for="IVA">IVA:</label><br> <input
+			name="IVA" type="number" min="0" value="10"><br>
+		
+			<br> <label for="peso">Peso:</label><br> <input
+			name="peso" type="number" min="0" value="10" ><br>
+		
 		<label for="quantita">Quantità:</label><br> <input
-			name="quantita" type="number" min="1" value="1" required><br>
-
-		<input type="submit" value="Aggiungi"><input type="reset"
+			name="quantita" type="number" min="1" value="1" ><br>
+			
+			<input type="submit" value="Aggiorna"><input type="reset"
 			value="Reset">
-
 	</form>
 		
 		
