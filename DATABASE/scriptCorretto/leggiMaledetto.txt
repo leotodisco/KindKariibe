@@ -1,0 +1,3 @@
+per importare per bene fare:
+server->data import->selezionare il file database.sql e in default target schema premere new e inserire kindkaribe!!!!!!!!!!!!!
+<3
