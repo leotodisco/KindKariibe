@@ -148,7 +148,9 @@
 		
 		<% } %>
 	
-
+<form action="LogoutServlet" method="get" > 
+     <input type="submit" value="Logout"/>
+</form> 
 
 
 </body>

@@ -104,7 +104,7 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 
 	@Override
 	public void doUpdate(CorriereBean bean) throws SQLException {
-		String sql = "UPDATE "+TABLE_NAME+"SET 'azienda' = ?,'nTelefono' = ? WHERE idCorriere = ?";
+		String sql = "UPDATE "+TABLE_NAME+" SET 'azienda' = ?,'nTelefono' = ? WHERE idCorriere = ?";
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
