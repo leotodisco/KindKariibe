@@ -58,12 +58,14 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 
 	@Override
 	public CategoriaBean doRetrieveByKey(String nome) throws Exception {
-		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE nome = " + nome;
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE `nome`= ? ";
 		CategoriaBean result = new CategoriaBean();
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
+				statement.setString(1, nome);
 				ResultSet rs = statement.executeQuery();
+				System.out.println("QUI\n\n\n\n\n\n");
 
 				if(rs.next()) {
 					result.setNome(rs.getString("nome"));
@@ -71,7 +73,8 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 				}
 			}	
 		}
-
+		
+		System.out.println("\n\n\n"+result+"\n\n\n");
 		return result;
 	}
 
