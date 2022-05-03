@@ -1,32 +1,73 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import beans.ProdottoBean;
 
 public class Carrello {
 
-	private List<ProdottoBean> products;
+	private HashMap<ProdottoBean,Integer> products;
 	
 	public Carrello() {
-		products = new ArrayList<ProdottoBean>();
+		products = new HashMap<>();
 	}
 	
 	public void addProduct(ProdottoBean product) {
-		products.add(product);
+		
+		boolean flag = false;
+		
+			for(ProdottoBean prodotto : products.keySet())
+			{
+				if(prodotto.getNome().equals(product.getNome()))
+				{
+					flag = true;
+					products.replace(prodotto, products.get(prodotto) + 1);
+				}
+			
+			}
+			
+			if(!flag)
+			{
+				products.put(product, 1);
+			}
+			
+		
 	}
 	
 	public void deleteProduct(ProdottoBean product) {
-		for(ProdottoBean prod : products) {
-			if(prod.getNome() == product.getNome()) {
-				products.remove(prod);
-				break;
+		
+		for(ProdottoBean prodotto : products.keySet())
+		{
+			if(prodotto.getNome().equals(product.getNome()))
+			{
+				if(products.get(prodotto) == 1)
+				{
+					products.remove(prodotto);
+				}
+				else
+				{
+					products.replace(prodotto, products.get(prodotto) - 1);
+				}
+				
+				
 			}
 		}
- 	}
-	
-	public List<ProdottoBean> getProducts() {
+		
+	}
+		
+	public HashMap<ProdottoBean, Integer> getProducts() {
 		return  products;
 	}
+
+	@Override
+	public String toString() {
+		return products.toString() ;
+	}
+	
+	
+	
+	
+	
 }

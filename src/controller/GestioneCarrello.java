@@ -35,7 +35,6 @@ public class GestioneCarrello extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String id = request.getParameter("id");
 		String azione = request.getParameter("action");
 		HttpSession sessione = request.getSession(true);
 		Carrello cart = (Carrello) sessione.getAttribute("Carrello"); 
@@ -44,7 +43,9 @@ public class GestioneCarrello extends HttpServlet {
 		if(azione.equals("aggiungi"))
 		{
 			ProdottoDAO dao = new ProdottoDAO();
-			try {
+			try {	
+				
+				String id = request.getParameter("id");
 				ProdottoBean prodotto = dao.doRetrieveByKey(id);
 				if(cart == null)
 				{
@@ -68,6 +69,26 @@ public class GestioneCarrello extends HttpServlet {
 		else if(azione.equals("acquista"))
 		{
 			
+			
+			
+			
+			
+		}
+		else if(azione.equals("rimuovi"))
+		{
+			String id = request.getParameter("id");
+			ProdottoDAO dao = new ProdottoDAO();
+			ProdottoBean prodotto;
+			try {
+				prodotto = dao.doRetrieveByKey(id);
+				cart.deleteProduct(prodotto);
+				
+				System.out.println(cart);
+				sessione.setAttribute("Carrello", cart);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 			

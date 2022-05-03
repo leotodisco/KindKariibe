@@ -166,10 +166,10 @@
 		else
 		{
 		
-			for(ProdottoBean prodotto : cart.getProducts())
+			for(ProdottoBean prodotto : cart.getProducts().keySet())
 			{%>
 			
-				<h1><%= prodotto.toString() %></h1>
+				<h1><%= prodotto.getNome() %>    X <%= cart.getProducts().get(prodotto) %> <a href= "GestioneCarrello?action=rimuovi&id=<%=prodotto.getNome()%>"> rimuovi</a></h1>
 				
 			<%}
 		%>
