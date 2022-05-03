@@ -5,20 +5,8 @@ html {
 	margin: 10px auto;
 }
 
-h2 {
-	text-align: center;
-}
 
-a:link {
-	color: blue;
-	font-weight: bold;
-}
 
-/* visited link */
-a:visited {
-	color: blue;
-	font-weight: bold;
-}
 
 /* mouse over link */
 a:hover {
@@ -27,7 +15,6 @@ a:hover {
 }
 
 a:active {
-	color: blue;
 	font-weight: bold;
 }
 
