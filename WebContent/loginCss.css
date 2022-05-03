@@ -1,0 +1,65 @@
+@charset "utf-8";
+body  
+{  
+    margin: 0;  
+    padding: 0;  
+    background-color:  #fcda97;  
+    font-family: 'Arial';  
+}  
+.login{  
+        width: 382px;  
+        overflow: hidden;  
+        margin: auto;  
+       margin-top: 69px; 
+        padding: 80px;  
+        background: #fcda97;  
+        border-radius: 15px ;  
+        text-align: center;  
+}  
+h2{  
+    text-align: center;  
+    color: #2f2f2f;
+}  
+label{  
+    color: #2f2f2f;  
+    font-size: 17px;  
+    align-items: center;
+}  
+#Uname{  
+    width: 300px;  
+    height: 30px;  
+    border-color: #2f2f2f;  
+    background-color: #ffe5b3;
+    border-radius: 17px;  
+    padding-left: 8px;  
+}  
+#Pass{  
+    width: 300px;  
+    height: 30px;  
+    border-color: #2f2f2f;
+    background-color: #ffe5b3;
+    border-radius: 17px;  
+    padding-left: 8px;  
+      
+}  
+#log{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 17px;  
+    padding-left: 7px;  
+    color: #2f2f2f;
+    background-color: #fcda97;  
+    font-size:17px;
+  
+  
+}  
+span{  
+    color: #2f2f2f;  
+    font-size: 17px;  
+}  
+a{   
+    color: #2f2f2f;
+    text-decoration: none;  
+    
+}  

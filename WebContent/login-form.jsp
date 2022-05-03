@@ -2,26 +2,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="loginCss.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login form</title>
 </head>
-<body>
-<form action="LoginServlet" method="post"> 
-<fieldset>
-     <legend>Login</legend>
-     <label for="email">email</label>
-     <input id="email" type="text" name="email" placeholder="enter email"> 
-     <br>   
-     <label for="password">Password</label>
-     <input id="password" type="password" name="password" placeholder="enter password"> 
-     <br>
-     <input type="submit" value="Login"/>
-     <input type="reset" value="Reset"/>
-</fieldset>
-</form> 
+<body>  
+    <br>    
+    <div class="login">  
+        <div>
+            <h2>Accedi</h2>
+        </div>  
+        <br>
+    <form id="login" method="post" action="LoginServlet"> 
 
-
+        <label for="email"></label> 
+        <input type="text" name="email" id="Uname" placeholder="Email">    
+        <br><br>    
+        <label for="password"></label>
+             <input id="Pass" type="password" name="password" placeholder="enter password">             
+        <br><br>   
+        <input type="submit" value="Login" id="log"/>       
+        <br><br>     
+        <span>
+            <a href="#">Password dimenticata</a>
+        </span>        
+            
+    </form>     
+</div>    
 
 </body>
-<jsp:include page="footer.jsp" />
 </html>
