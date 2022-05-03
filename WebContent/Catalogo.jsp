@@ -8,8 +8,8 @@
 <title>Catalogo prodotti</title>
 </head>
 <body>
-	
-	<h1 align = "center">Prodotti in vendita</h1>
+	<jsp:include page="header.jsp" />
+	<h1 >Prodotti in vendita</h1>
 	
  <table>
   <tr>
