@@ -1,4 +1,11 @@
-*{ 
+@font-face{
+    font-family:"archia-regular";
+    src:url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("truetype");
+  }
+  
+  *{ 
     margin: 0; 
     padding: 0; 
     box-sizing: border-box; 
@@ -22,6 +29,7 @@ footer{
     text-align: center; 
 } 
 .footer-content h3{ 
+    font-family: "archia regular";
     font-size: 2.1rem; 
     font-weight: 500; 
     text-transform: capitalize; 
