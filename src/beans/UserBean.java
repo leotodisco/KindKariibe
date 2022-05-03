@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class UserBean {
@@ -17,8 +18,20 @@ public class UserBean {
 	private String sesso; //puo valere F o M
 	private String nCivico;
 	private Date dataNascita;
+	private ArrayList<Integer> elencoMetodiPagamento = new ArrayList<>();
+	private Boolean admin;
 	
 	
+	public ArrayList<Integer> getElencoMetodiPagamento() {
+		return elencoMetodiPagamento;
+	}
+
+
+	public void setElencoMetodiPagamento(ArrayList<Integer> elencoMetodiPagamento) {
+		this.elencoMetodiPagamento = elencoMetodiPagamento;
+	}
+
+
 	public UserBean() {
 
 	}
@@ -117,6 +130,16 @@ public class UserBean {
 	
 	public void setDataNascita(Date data) {
 		this.dataNascita = data;
+	}
+
+
+	public Boolean getAdmin() {
+		return admin;
+	}
+
+
+	public void setAdmin(boolean b) {
+		this.admin = b;
 	}
 	
 	

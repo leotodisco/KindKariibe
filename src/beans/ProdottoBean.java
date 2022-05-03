@@ -18,27 +18,55 @@ public class ProdottoBean {
 	private Double IVA;
 	private Double peso;
 	private CategoriaBean categoria; //può essere null
-	private ArrayList<String> pathImage; //path immagini
-	private ArrayList<String> gusti; //id gusti
+	private ArrayList<String> pathImage = new ArrayList<>(); //path immagini
+	private ArrayList<String> gusti = new ArrayList<>(); //id gusti
 	
+	
+	
+	
+	@Override
+	public String toString() {
+		return "ProdottoBean [nome=" + nome + ", tipo=" + tipo + ", descrizione=" + descrizione + ", quantitaResidua="
+				+ quantitaResidua + ", prezzo=" + prezzo + ", IVA=" + IVA + ", peso=" + peso + ", categoria="
+				+ categoria + ", pathImage=" + pathImage + "]";
+	}
+	public void addImmagine(String s) {
+		this.pathImage.add(s);
+	}
+	
+	/*
+	 * metodo che prende in input l'URL dell'immagine e la mette in prima posizione
+	 * poichè la vetrina del catalogo prende sempre la prima immagine presente in lista
+	 * */
+	public void addImmaginePrimaPosizione(String s) {
+		if(s.equals(pathImage.get(0))) //se la foto non è stata modificata
+			return;
+			
+		this.pathImage.add(0,s);
+	}
+	
+	//RELAZIONE ESTENSIONE 
 	public Double getPeso() {
 		return peso;
 	}
 	public void setPeso(Double peso) {
 		this.peso = peso;
 	}
+	//URL IMMAGINE - RELAZIONE "possessoImmagine"
 	public ArrayList<String> getPathImage() {
 		return pathImage;
 	}
 	public void setPathImage(ArrayList<String> pathImage) {
 		this.pathImage = pathImage;
 	}
+	
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public String getTipo() {
 		return tipo;
 	}
@@ -83,6 +111,8 @@ public class ProdottoBean {
 	public void setGusti(Optional<ArrayList<String>> gusti) {
 		this.gusti = gusti.orElse(null);
 	}
+	
+	
 	
 	
 	

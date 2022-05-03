@@ -31,26 +31,48 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 
 	@Override
 	public void doSave(MetodoPagamentoBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario','numeroCarta','meseScadenza',"
-				+ "'annoScadenza','IBAN','causale',"
-				+ "'circuito','CVV') "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+		String sql = new String();
+		
+		if(bean.getTipo().equals("Carta")) {
+			sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario','numeroCarta','meseScadenza',"
+					+ "'annoScadenza','IBAN',',"
+					+ "'circuito','CVV') "
+					+ "VALUES (?,?,?,?,?,?,?,?,?)";
 
-		try(Connection con = ds.getConnection()){
-			try(PreparedStatement ps = con.prepareStatement(sql)){	
-				ps.setString(1, String.valueOf(bean.getidMetodoPagamento()));
-				ps.setString(2, bean.getTipo());
-				ps.setString(3, bean.getNomeIntestatario());
-				ps.setString(4,String.valueOf(bean.getNumeroCarta()));
-				ps.setString(5, String.valueOf(bean.getMeseScadenza()));
-				ps.setString(6, String.valueOf(bean.getAnnoScadenza()));
-				ps.setString(7, bean.getIban());
-				ps.setString(8,bean.getCausale());
-				ps.setString(9, bean.getCircuito());
-				ps.setInt(10, Integer.parseInt(bean.getCVV()));
+			try(Connection con = ds.getConnection()){
+				try(PreparedStatement ps = con.prepareStatement(sql)){	
+					ps.setInt(1, bean.getidMetodoPagamento());
+					ps.setString(2, bean.getTipo());
+					ps.setString(3, bean.getNomeIntestatario());
+					ps.setString(4, bean.getNumeroCarta());
+					ps.setInt(5, bean.getMeseScadenza());
+					ps.setInt(6, bean.getAnnoScadenza());
+					ps.setString(7, bean.getIban());
+					ps.setString(8, bean.getCircuito());
+					ps.setInt(9, bean.getCVV());
 
-				ps.execute();
+					ps.execute();
+				}
 			}
+		}
+		
+		else { //se il metodo è bonifico
+			sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario',"
+					+ "'IBAN','causale',)"
+					+ "VALUES (?,?,?,?,?)";
+
+			try(Connection con = ds.getConnection()){
+				try(PreparedStatement ps = con.prepareStatement(sql)){	
+					ps.setInt(1, bean.getidMetodoPagamento());
+					ps.setString(2, bean.getTipo());
+					ps.setString(3, bean.getNomeIntestatario());
+					ps.setString(4, bean.getIban());
+					ps.setString(5, bean.getCausale());
+
+					ps.execute();
+				}
+			}
+			
 		}
 	}
 
@@ -82,13 +104,13 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 					bean.setidMetodoPagamento(Integer. valueOf(rs.getString("idMetodoPagamento")));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setNomeIntestatario(rs.getString("nomeIntestatario"));
-					bean.setNumeroCarta(Integer. valueOf(rs.getString("numeroCarta")));
-					bean.setMeseScadenza(Integer. valueOf(rs.getString("meseScadenza")));
-					bean.setAnnoScadenza(Integer. valueOf(rs.getString("annoScadenza")));
-					bean.setIban(rs.getString("iban"));
+					bean.setNumeroCarta(rs.getString("numeroCarta"));
+					bean.setMeseScadenza(rs.getInt("meseScadenza"));
+					bean.setAnnoScadenza(rs.getInt("annoScadenza"));
+					bean.setIban(rs.getString("IBAN"));
 					bean.setCausale(rs.getString("causale"));
 					bean.setCircuito(rs.getString("circuito"));
-					bean.setCVV(rs.getString("CVV"));
+					bean.setCVV(rs.getInt("CVV"));
 				}
 			}	
 		}
@@ -98,7 +120,6 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 	@Override
 	public Collection<MetodoPagamentoBean> doRetrieveAll(String order) throws Exception {
 		List<MetodoPagamentoBean> metodi = new ArrayList<>();
-		MetodoPagamentoBean bean = new MetodoPagamentoBean();
 		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY ?";
 		order = order.isEmpty() ? "nome" : order;
 
@@ -109,16 +130,17 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 
 				while(rs.next())
 				{
+					MetodoPagamentoBean bean = new MetodoPagamentoBean();
 					bean.setidMetodoPagamento(Integer. valueOf(rs.getString("idMetodoPagamento")));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setNomeIntestatario(rs.getString("nomeIntestatario"));
-					bean.setNumeroCarta(Integer. valueOf(rs.getString("numeroCarta")));
-					bean.setMeseScadenza(Integer. valueOf(rs.getString("meseScadenza")));
-					bean.setAnnoScadenza(Integer. valueOf(rs.getString("annoScadenza")));
-					bean.setIban(rs.getString("iban"));
+					bean.setNumeroCarta(rs.getString("numeroCarta"));
+					bean.setMeseScadenza(rs.getInt("meseScadenza"));
+					bean.setAnnoScadenza(rs.getInt("annoScadenza"));
+					bean.setIban(rs.getString("IBAN"));
 					bean.setCausale(rs.getString("causale"));
 					bean.setCircuito(rs.getString("circuito"));
-					bean.setCVV(rs.getString("CVV"));
+					bean.setCVV(rs.getInt("CVV"));
 
 					metodi.add(bean);
 				}
@@ -129,21 +151,28 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 
 	@Override
 	public void doUpdate( MetodoPagamentoBean bean) throws SQLException {
-		String sql = "UPDATE "+TABLE_NAME+"SET 'tipo' = ?,'nomeIntestatario' = ?, 'numeroCarta' = ?, 'meseScadenza' = ?, 'annoScadenza' = ?, 'iban' =?, 'causale' = ?"
-				+ " WHERE idMetodoPagamento = ?";
+		String sql = new String();
+		
+		sql = bean.getTipo().equals("Carta") 
+				? "UPDATE " +TABLE_NAME+ "SET 'tipo' = ?,'nomeIntestatario' = ?, 'numeroCarta' = ?, 'meseScadenza' = ?, 'annoScadenza' = ?,"
+				+ " 'iban' =?, 'causale' = ?, 'circuito' = ?, 'CVV' = ?"
+				+ " WHERE idMetodoPagamento = ?"
+				
+				: "UPDATE " +TABLE_NAME+ "SET 'tipo' = ?,'nomeIntestatario' = ?,"
+				+ " 'IBAN' = ?, 'causale' = ?;";
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				statement.setString(1, bean.getTipo());
 				statement.setString(2, bean.getNomeIntestatario());
-				statement.setString(3,String.valueOf(bean.getNumeroCarta()));
-				statement.setString(4, String.valueOf(bean.getMeseScadenza()));
-				statement.setString(5, String.valueOf(bean.getAnnoScadenza()));
+				statement.setString(3, bean.getNumeroCarta());
+				statement.setInt(4, bean.getMeseScadenza());
+				statement.setInt(5, bean.getAnnoScadenza());
 				statement.setString(6, bean.getIban());
 				statement.setString(7,bean.getCausale());
 				statement.setString(8, bean.getCircuito());
-				statement.setInt(10, Integer.parseInt(bean.getCVV()));
-				statement.setString(11, String.valueOf(bean.getidMetodoPagamento()));
+				statement.setInt(9, bean.getCVV());
+				statement.setInt(10, bean.getidMetodoPagamento());
 
 				statement.executeUpdate();
 			}	

@@ -11,7 +11,6 @@
 
 <h1>hello <%= utente.getNome()%> <%= utente.getCognome() %></h1>
 
-
 	<jsp:forward page="/CreaCatalogo" />
 
 </body>
