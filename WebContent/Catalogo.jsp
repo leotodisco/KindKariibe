@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "java.util.*" import = "beans.*"%>
+    pageEncoding="ISO-8859-1" import = "java.util.*" import = "beans.*" import = "model.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,6 +153,33 @@
 <form action="LogoutServlet" method="get" > 
      <input type="submit" value="Logout"/>
 </form> 
+<h1>Carrello</h1>
+	<% HttpSession sessione = request.getSession();
+	
+		Carrello cart = (Carrello) sessione.getAttribute("Carrello");
+		
+		if(cart == null)
+		{%>
+			<p>Carrello vuoto</p>
+			
+	  <%}
+		else
+		{%>
+			
+			<table border="1">
+		<tr>
+			<th>NomeProdotto</th>
+			<th>Azione</th>
+		</tr>
+			
+			
+			</table>
+		<%}
+			%>
+
+
+
+
 
 
 </body>
