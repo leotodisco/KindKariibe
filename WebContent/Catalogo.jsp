@@ -17,6 +17,7 @@
     <th>Nome</th>
     <th>Prezzo</th>
     <th>Descrizione</th>
+    <th>Azioni</th>
   </tr>
   <% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
 	if(ListaProdotti == null) {
@@ -31,6 +32,7 @@
   					<td><%= prodotto.getNome() %></td>
   					<td><%= prodotto.getPrezzo() %></td>
   					<td><%= prodotto.getDescrizione() %></td>
+  					<td><a href = "GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a></td>
   					</tr>
   					
   					
