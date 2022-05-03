@@ -6,7 +6,6 @@
 <title>Login form</title>
 </head>
 <body>
-
 <form action="LoginServlet" method="post"> 
 <fieldset>
      <legend>Login</legend>
@@ -22,4 +21,5 @@
 </form> 
 
 </body>
+<jsp:include page="footer.jsp" />
 </html>
