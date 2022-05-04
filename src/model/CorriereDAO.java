@@ -32,7 +32,7 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 
 	@Override
 	public void doSave(CorriereBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "('idCorriere','azienda',nTelefono) VALUES (?,?,?))";
+		String sql = "INSERT INTO " + TABLE_NAME + " ('idCorriere','azienda',nTelefono) VALUES (?,?,?))";
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	
@@ -59,7 +59,7 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 
 	@Override
 	public CorriereBean doRetrieveByKey(String id) throws Exception {
-		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE idCorriere = ?";
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE idCorriere = ?";
 		CorriereBean bean = new CorriereBean();
 
 		try(Connection conn = ds.getConnection()){
@@ -84,7 +84,7 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 		List<CorriereBean> corrieri = new ArrayList<>();
 		CorriereBean buffer = new CorriereBean();
 		order = order.isEmpty() ? "nome" : order;
-		String sql = "SELECT * FROM " + TABLE_NAME + "Order by" + order;
+		String sql = "SELECT * FROM " + TABLE_NAME + " Order by" + order;
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){

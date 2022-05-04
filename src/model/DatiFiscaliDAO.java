@@ -30,31 +30,28 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 			System.out.println("Error:" + e.getMessage());
 		}
 	}
+	
+	
+	
 	@Override
 	public void doSave(DatiFiscaliBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "('idDatiFiscali','metodoPagamento','via','nCivico','provincia','CAP','citta') VALUES (?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO " + TABLE_NAME + " (idDatiFiscali, metodoPagamento, indirizzo) VALUES (?,?,?)";
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				ps.setInt(1, bean.getIdDatiFiscali());
 				ps.setInt(2, bean.getMetodoPagamento().getidMetodoPagamento());
-				ps.setString(3, bean.getVia());
-				ps.setInt(4,bean.getnCivico());
-				ps.setString(5, bean.getProvincia());
-				ps.setInt(6, bean.getCAP());
-				ps.setString(7, bean.getCitta());
+				ps.setInt(3, bean.getIdIndirizzoFatturazione());
 
 				ps.execute();
 
 			}
 		}
-
-
 	}
 
 	@Override
 	public boolean doDelete(String arg) throws SQLException {
-		String sql ="DELETE FROM " +TABLE_NAME+ "WHERE idDatiFiscali = ?";
+		String sql ="DELETE FROM " +TABLE_NAME+ " WHERE idDatiFiscali = ?";
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
@@ -66,7 +63,7 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 
 	@Override
 	public DatiFiscaliBean doRetrieveByKey(String arg) throws Exception {
-		String sql = "SELECT * FROM " +TABLE_NAME+ "WHERE idDatiFiscali = ?";
+		String sql = "SELECT * FROM " +TABLE_NAME+ " WHERE idDatiFiscali = ?";
 		DatiFiscaliBean dt = new DatiFiscaliBean();
 
 		try(Connection con = ds.getConnection()){
@@ -76,11 +73,7 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 
 				if(rs.next()) {
 					dt.setIdDatiFiscali(rs.getInt("idDatiFiscali"));
-					dt.setVia(rs.getString("via"));
-					dt.setnCivico(rs.getInt("nCivico"));
-					dt.setProvincia(rs.getString("provincia"));
-					dt.setCAP(rs.getInt("CAP"));
-					dt.setCitta(rs.getString("citta"));
+					dt.setIdIndirizzoFatturazione(rs.getInt("indirizzo"));
 				}
 
 				MetodoPagamentoBean metodo = new MetodoPagamentoBean();
@@ -100,7 +93,7 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 		List<DatiFiscaliBean> dati = new ArrayList<>();
 		
 		
-		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY ?";
+		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY ?";
 		order = order.isEmpty() ? "nome" : order;
 		
 		try(Connection con = ds.getConnection()){
@@ -114,11 +107,8 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 				while(rs.next()) {
 					DatiFiscaliBean dt = new DatiFiscaliBean();
 					dt.setIdDatiFiscali(rs.getInt("idDatiFiscali"));
-					dt.setVia(rs.getString("via"));
-					dt.setnCivico(rs.getInt("nCivico"));
-					dt.setProvincia(rs.getString("provincia"));
-					dt.setCAP(rs.getInt("CAP"));
-					dt.setCitta(rs.getString("citta"));
+					dt.setIdIndirizzoFatturazione(rs.getInt("indirizzo"));
+					
 					metodo = metodoDao.doRetrieveByKey(String.valueOf(rs.getInt("metodoPagamento")));
 					dt.setMetodoPagamento(metodo);
 					dati.add(dt);
@@ -132,18 +122,14 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 
 	@Override
 	public void doUpdate(DatiFiscaliBean bean) throws SQLException {
-		String sql = "UPDATE " +TABLE_NAME+ "WHERE idDatiFiscali = ?";
+		String sql = "UPDATE " +TABLE_NAME+ " SET metodoPagamento = ?, indirizzo = ?"
+				+ " WHERE idDatiFiscali = ?";
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
-
-				ps.setInt(1, bean.getIdDatiFiscali());
-				ps.setInt(2, bean.getMetodoPagamento().getidMetodoPagamento());
-				ps.setString(3, bean.getVia());
-				ps.setInt(4,bean.getnCivico());
-				ps.setString(5, bean.getProvincia());
-				ps.setInt(6, bean.getCAP());
-				ps.setString(7, bean.getCitta());
+				ps.setInt(1, bean.getMetodoPagamento().getidMetodoPagamento());
+				ps.setInt(2, bean.getIdIndirizzoFatturazione());
+				ps.setInt(3, bean.getIdDatiFiscali());
 
 				ps.executeUpdate();
 			}

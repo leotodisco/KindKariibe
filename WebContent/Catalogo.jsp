@@ -13,8 +13,8 @@
 <title>Catalogo prodotti</title>
 </head>
 <body>
-	
-	<h1 align = "center">Prodotti in vendita</h1>
+	<jsp:include page="header.jsp" />
+	<h1 >Prodotti in vendita</h1>
 	
  <table>
   <tr>
@@ -33,19 +33,20 @@
   				{
   				%>
   					<tr>
-  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img src = "./images/<%= prodotto.getPathImage().get(0)  %>"></a></td>
+  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img class = "images" src  = "./immagini/<%= prodotto.getPathImage().get(0)  %>" ></a></td>
   					<td><%= prodotto.getNome() %></td>
   					<td><%= prodotto.getPrezzo() %></td>
   					<td><%= prodotto.getDescrizione() %></td>
+<<<<<<< HEAD
+  					</tr>		
+=======
   					<td><a href = "GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a></td>
   					</tr>
   					
   					
+>>>>>>> 6c81bbf095cf0714a954bb3b553d374814d4ee7c
   				<%}%>
-  			
-  		
-  			
-  			
+ 			
 </table> 
 	
 	
@@ -70,19 +71,19 @@
 			
 			<label for="categoria">Categoria:</label><br>
 		<textarea name="categoria" maxlength="100" rows="3" 
-			placeholder="inserire categoria..."></textarea>
+			placeholder="inserire categoria..."></textarea><br>
 			
 				<label for="tipo">Tipo:</label><br>
 		<textarea name="tipo" maxlength="100" rows="3" 
-			placeholder="inserire tipo..."></textarea>
+			placeholder="inserire tipo..."></textarea><br>
 
 		<label for="descrizione">Descrizione:</label><br>
 		<textarea name="descrizione" maxlength="100" rows="3" required
-			placeholder="inserire descrizione..."></textarea>
+			placeholder="inserire descrizione..."></textarea><br>
 			
 				<label for="immagine">Immagine:</label><br>
 		<textarea name="immagine" maxlength="100" rows="3" required
-			placeholder="inserire nome immagine..."></textarea>
+			placeholder="inserire nome immagine..."></textarea><br>
 			
 		<br> <label for="prezzo">Prezzo:</label><br> <input
 			name="prezzo" type="number" min="0" value="0" required><br>
@@ -151,8 +152,6 @@
 			value="Reset">
 	</form>
 		
-		
-		
 		<% } %>
 	
 <form action="LogoutServlet" method="get" > 
@@ -189,5 +188,4 @@
 
 
 </body>
-<jsp:include page="footer.jsp" />
 </html>
