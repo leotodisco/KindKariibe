@@ -48,13 +48,13 @@
 	
 		if(utente == null)
 		{
-			utente = (UserBean) getServletContext().getAttribute("utente");
+			utente = (UserBean) request.getSession(true).getAttribute("utente");
 		}
 	
 		if(utente.getAdmin())
 		{
-			ServletContext c = getServletContext();
-			c.setAttribute("utente", utente);
+			HttpSession sessione = request.getSession(true);
+			sessione.setAttribute("utente", utente);
 		%>
 		
 			<h2>Inserisci</h2>
@@ -153,7 +153,7 @@
 <form action="LogoutServlet" method="get" > 
      <input type="submit" value="Logout"/>
 </form> 
-<h1>Carrello</h1> <p><a href = "GestioneCarrello?action=svuota">svuot a</a></p><p><a href = "GestioneCarrello?action=acquista">acquista</a></p> 
+<h1>Carrello</h1> <p><a href = "GestioneCarrello?action=svuota">svuota</a></p><p><a href = "GestioneCarrello?action=acquista">acquista</a></p> 
 	<% HttpSession sessione = request.getSession();
 	
 		Carrello cart = (Carrello) sessione.getAttribute("Carrello");

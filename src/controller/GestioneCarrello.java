@@ -83,7 +83,6 @@ public class GestioneCarrello extends HttpServlet {
 				prodotto = dao.doRetrieveByKey(id);
 				cart.deleteProduct(prodotto);
 				
-				System.out.println(cart);
 				sessione.setAttribute("Carrello", cart);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

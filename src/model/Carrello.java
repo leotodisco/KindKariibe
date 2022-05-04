@@ -1,9 +1,6 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import beans.ProdottoBean;
 
 public class Carrello {
@@ -63,7 +60,7 @@ public class Carrello {
 
 	@Override
 	public String toString() {
-		return products.toString() ;
+		return products.keySet().toString() ;
 	}
 	
 	
