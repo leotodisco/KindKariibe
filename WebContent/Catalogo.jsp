@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="ISO-8859-1" import = "java.util.*" import = "beans.*"%>
-=======
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import = "java.util.*" import = "beans.*" import = "model.*"%>
->>>>>>> 2e43ce5039603c222b9ee43199d13641a6abe4d0
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,14 +32,9 @@
   					<td><%= prodotto.getNome() %></td>
   					<td><%= prodotto.getPrezzo() %></td>
   					<td><%= prodotto.getDescrizione() %></td>
-<<<<<<< HEAD
-  					</tr>		
-=======
   					<td><a href = "GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a></td>
   					</tr>
   					
-  					
->>>>>>> 6c81bbf095cf0714a954bb3b553d374814d4ee7c
   				<%}%>
  			
 </table> 
