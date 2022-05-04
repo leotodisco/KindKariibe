@@ -27,18 +27,13 @@
   				{
   				%>
   					<tr>
-  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img src = "./images/<%= prodotto.getPathImage().get(0)  %>"></a></td>
+  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img class = "images" src  = "./immagini/<%= prodotto.getPathImage().get(0)  %>" ></a></td>
   					<td><%= prodotto.getNome() %></td>
   					<td><%= prodotto.getPrezzo() %></td>
   					<td><%= prodotto.getDescrizione() %></td>
-  					</tr>
-  					
-  					
+  					</tr>		
   				<%}%>
-  			
-  		
-  			
-  			
+ 			
 </table> 
 	
 	
@@ -63,19 +58,19 @@
 			
 			<label for="categoria">Categoria:</label><br>
 		<textarea name="categoria" maxlength="100" rows="3" 
-			placeholder="inserire categoria..."></textarea>
+			placeholder="inserire categoria..."></textarea><br>
 			
 				<label for="tipo">Tipo:</label><br>
 		<textarea name="tipo" maxlength="100" rows="3" 
-			placeholder="inserire tipo..."></textarea>
+			placeholder="inserire tipo..."></textarea><br>
 
 		<label for="descrizione">Descrizione:</label><br>
 		<textarea name="descrizione" maxlength="100" rows="3" required
-			placeholder="inserire descrizione..."></textarea>
+			placeholder="inserire descrizione..."></textarea><br>
 			
 				<label for="immagine">Immagine:</label><br>
 		<textarea name="immagine" maxlength="100" rows="3" required
-			placeholder="inserire nome immagine..."></textarea>
+			placeholder="inserire nome immagine..."></textarea><br>
 			
 		<br> <label for="prezzo">Prezzo:</label><br> <input
 			name="prezzo" type="number" min="0" value="0" required><br>
@@ -154,5 +149,4 @@
 
 
 </body>
-<jsp:include page="footer.jsp" />
 </html>

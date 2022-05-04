@@ -1,13 +1,5 @@
 @CHARSET "UTF-8";
 
-html {
-	width: 500px;
-	margin: 10px auto;
-}
-
-
-
-
 /* mouse over link */
 a:hover {
 	color: red;
@@ -41,10 +33,17 @@ form input[type=text], form input[type=number], form input[type=password],
 	form input[type=url], form input[type=time], form input[list] {
 	width: 500px;
 	font-size: 1em;
+	border: 1px solid black;
 }
 
 textarea {
 	width: 500px;
 	height: 60px;
 	font-size: 1em;
+	border: 1px solid black;
+}
+
+.images{
+	height: 50px;
+	width: 50px;
 }
