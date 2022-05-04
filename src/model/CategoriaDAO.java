@@ -65,7 +65,6 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
 				statement.setString(1, nome);
 				ResultSet rs = statement.executeQuery();
-				System.out.println("QUI\n\n\n\n\n\n");
 
 				if(rs.next()) {
 					result.setNome(rs.getString("nome"));
