@@ -4,12 +4,7 @@ public class DatiFiscaliBean {
 	
 	private Integer idDatiFiscali;
 	private MetodoPagamentoBean metodoPagamento;
-	private String via;
-	private Integer nCivico;
-	private String provincia;
-	private Integer CAP;
-	private String citta;
-	
+	private Integer idIndirizzoFatturazione;
 	
 	public DatiFiscaliBean() {
 	}
@@ -34,54 +29,13 @@ public class DatiFiscaliBean {
 		this.metodoPagamento = metodoPagamento;
 	}
 
-
-	public String getVia() {
-		return via;
+	public Integer getIdIndirizzoFatturazione() {
+		return idIndirizzoFatturazione;
 	}
 
 
-	public void setVia(String via) {
-		this.via = via;
-	}
-
-
-	public Integer getnCivico() {
-		return nCivico;
-	}
-
-
-	public void setnCivico(Integer nCivico) {
-		this.nCivico = nCivico;
-	}
-
-
-	public String getProvincia() {
-		return provincia;
-	}
-
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
-
-
-	public Integer getCAP() {
-		return CAP;
-	}
-
-
-	public void setCAP(Integer cAP) {
-		CAP = cAP;
-	}
-
-
-	public String getCitta() {
-		return citta;
-	}
-
-
-	public void setCitta(String citta) {
-		this.citta = citta;
+	public void setIdIndirizzoFatturazione(Integer idIndirizzoFatturazione) {
+		this.idIndirizzoFatturazione = idIndirizzoFatturazione;
 	}
 	
 	
