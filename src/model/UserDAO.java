@@ -32,8 +32,8 @@ public class UserDAO implements ModelInterface<UserBean> {
 	public void doSave(UserBean bean) throws SQLException {
 		//TO DO query inserimento dati pagamento 
 		String insertSQL = "INSERT INTO utente" 
-				+ " (codiceFiscale, nome, cognome, email, nTelefono, password, via, citta, CAP, privincia ) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ " (codiceFiscale, nome, cognome, email, nTelefono, password ) "
+				+ "VALUES (?, ?, ?, ?, ?, ?)";
 
 		try (Connection con = ds.getConnection()){
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
@@ -43,11 +43,6 @@ public class UserDAO implements ModelInterface<UserBean> {
 				preparedStatement.setString(4, bean.getEmail());
 				preparedStatement.setString(5, bean.getnTelefono());
 				preparedStatement.setString(6, bean.getPassword());
-				preparedStatement.setString(7, bean.getVia());
-				preparedStatement.setString(8, bean.getCitta());
-				preparedStatement.setString(9, bean.getCAP());
-				preparedStatement.setString(10, bean.getProvincia());
-				preparedStatement.setString(11, bean.getnCivico());
 				preparedStatement.setString(12, bean.getSesso());
 				preparedStatement.setDate(13, (java.sql.Date) bean.getDataNascita());
 
@@ -86,11 +81,6 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setCognome(rs.getString("cognome"));
 					bean.setEmail(rs.getString("nTelefono"));
 					bean.setPassword(rs.getString("password"));
-					bean.setVia(rs.getString("via"));
-					bean.setCitta(rs.getString("citta"));
-					bean.setCAP(rs.getString("CAP"));
-					bean.setProvincia(rs.getString("provincia"));
-					bean.setnCivico(rs.getString("numCivico"));
 					bean.setDataNascita(rs.getDate("dataNascita"));
 					bean.setSesso(rs.getString("genere"));	
 					ArrayList<Integer> idMetodiPagamento = new ArrayList<>();
@@ -112,7 +102,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 	public Collection<UserBean> doRetrieveAll(String order) throws Exception {
 		String sql = "SELECT * FROM utente ORDER BY ?";
 		order = order.isEmpty() ? "cognome" : order;
-		List<UserBean> listaUtenti = new ArrayList();
+		List<UserBean> listaUtenti = new ArrayList<>();
 
 		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
@@ -125,11 +115,6 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setCognome(rs.getString("cognome"));
 					bean.setEmail(rs.getString("nTelefono"));
 					bean.setPassword(rs.getString("password"));
-					bean.setVia(rs.getString("via"));
-					bean.setCitta(rs.getString("citta"));
-					bean.setCAP(rs.getString("CAP"));
-					bean.setProvincia(rs.getString("provincia"));
-					bean.setnCivico(rs.getString("numCivico"));
 					bean.setDataNascita(rs.getDate("dataNascita"));
 					bean.setSesso(rs.getString("genere"));	
 					bean.setnTelefono(rs.getString("nTelefono"));
@@ -162,11 +147,6 @@ public class UserDAO implements ModelInterface<UserBean> {
 				preparedStatement.setString(2, bean.getNome());
 				preparedStatement.setString(3, bean.getCognome());
 				preparedStatement.setString(4, bean.getSesso());
-				preparedStatement.setString(5, bean.getVia());
-				preparedStatement.setString(6, bean.getnCivico());
-				preparedStatement.setString(7, bean.getCAP());
-				preparedStatement.setString(8, bean.getCitta());
-				preparedStatement.setString(9, bean.getProvincia());
 				preparedStatement.setDate(10, (java.sql.Date) bean.getDataNascita());
 				preparedStatement.setString(11, bean.getEmail());
 				preparedStatement.setString(12, bean.getPassword());
@@ -193,11 +173,6 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setCognome(rs.getString("cognome"));
 					bean.setEmail(rs.getString("nTelefono"));
 					bean.setPassword(rs.getString("password"));
-					bean.setVia(rs.getString("via"));
-					bean.setCitta(rs.getString("citta"));
-					bean.setCAP(rs.getString("CAP"));
-					bean.setProvincia(rs.getString("provincia"));
-					bean.setnCivico(rs.getString("numCivico"));
 					bean.setDataNascita(rs.getDate("dataNascita"));
 					bean.setSesso(rs.getString("genere"));	
 					bean.setnTelefono(rs.getString("nTelefono"));

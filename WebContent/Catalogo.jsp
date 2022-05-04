@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="ISO-8859-1" import = "java.util.*" import = "beans.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import = "java.util.*" import = "beans.*" import = "model.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +17,7 @@
     <th>Nome</th>
     <th>Prezzo</th>
     <th>Descrizione</th>
+    <th>Azioni</th>
   </tr>
   <% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
 	if(ListaProdotti == null) {
@@ -31,7 +32,9 @@
   					<td><%= prodotto.getNome() %></td>
   					<td><%= prodotto.getPrezzo() %></td>
   					<td><%= prodotto.getDescrizione() %></td>
-  					</tr>		
+  					<td><a href = "GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a></td>
+  					</tr>
+  					
   				<%}%>
  			
 </table> 
@@ -41,13 +44,13 @@
 	
 		if(utente == null)
 		{
-			utente = (UserBean) getServletContext().getAttribute("utente");
+			utente = (UserBean) request.getSession(true).getAttribute("utente");
 		}
 	
 		if(utente.getAdmin())
 		{
-			ServletContext c = getServletContext();
-			c.setAttribute("utente", utente);
+			HttpSession sessione = request.getSession(true);
+			sessione.setAttribute("utente", utente);
 		%>
 		
 			<h2>Inserisci</h2>
@@ -144,6 +147,34 @@
 <form action="LogoutServlet" method="get" > 
      <input type="submit" value="Logout"/>
 </form> 
+<h1>Carrello</h1> <p><a href = "GestioneCarrello?action=svuota">svuota</a></p><p><a href = "GestioneCarrello?action=acquista">acquista</a></p> 
+	<% HttpSession sessione = request.getSession();
+	
+		Carrello cart = (Carrello) sessione.getAttribute("Carrello");
+		
+		if(cart == null)
+		{%>
+			<p>Carrello vuoto </p>
+			
+	  <%}
+		else
+		{
+		
+			for(ProdottoBean prodotto : cart.getProducts().keySet())
+			{%>
+			
+				<h1><%= prodotto.getNome() %>    X <%= cart.getProducts().get(prodotto) %> <a href= "GestioneCarrello?action=rimuovi&id=<%=prodotto.getNome()%>"> rimuovi</a></h1>
+				
+			<%}
+		%>
+			
+		
+		<%}
+			%>
+
+
+
+
 
 
 </body>
