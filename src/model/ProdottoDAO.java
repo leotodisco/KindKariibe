@@ -172,7 +172,6 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 							elencoPathImmagini.add(images.getString("url"));
 						}
 						bean.setPathImage(elencoPathImmagini);
-						System.out.println(bean.getPathImage().get(0));
 					}
 
 					//ottieni peso
