@@ -78,17 +78,7 @@ public class RegistrazioneServlet extends HttpServlet {
 		utente.setEmail(email);
 		utente.setnTelefono(nTelefono);
 		utente.setPassword(Password);
-		utente.setVia(via);
-		utente.setCitta(citta);
-		utente.setCAP(CAP);
-		utente.setProvincia(provincia);
 		utente.setSesso(sesso);
-		try {
-			utente.setnCivico(nCivico);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		try {
 			dao.doSave(utente);

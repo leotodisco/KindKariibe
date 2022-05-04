@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 import beans.CorriereBean;
 import beans.DatiFiscaliBean;
 import beans.OrdineBean;
+import beans.ProdottoBean;
 import beans.UserBean;
 
 public class OrdineDAO implements ModelInterface<OrdineBean>{
@@ -36,24 +37,53 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 
 	@Override
 	public void doSave(OrdineBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "( 'idOrdine','datiFiscali','corriere','utente',"
-				+ "'costoTotale','codiceSconto','dataEvasione','dataPartenza','dataArrivo','urlPdf') VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO " + TABLE_NAME + "('datiFiscali','corriere','utente',"
+				+ "'costoTotale','codiceSconto','dataEvasione','dataPartenza','dataArrivo','urlPdf') VALUES(?,?,?,?,?,?,?,?,?)";
 
+		String sql2 = "INSERT INTO " + "composizione" + " ('prodotto','ordine','IVA','prezzo','quantita')"
+		+ "VALUES(?,?,?,?,?)";
+		
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
-				ps.setInt(1, bean.getIdOrdine());
-				ps.setInt(2, bean.getDatiFiscali().getIdDatiFiscali());
-				ps.setInt(3, bean.getCorriere().getId());
-				ps.setString(4, bean.getUtente().getCodiceFiscale());
-				ps.setDouble(5, bean.getCostoTotale());
-				ps.setString(6, bean.getCodiceSconto());
-				ps.setDate(7, (Date) bean.getDataEvasione());
-				ps.setDate(8, (Date) bean.getDataPartenza());
-				ps.setDate(9, (Date) bean.getDataArrivo());
-				ps.setString(10, bean.getUrlPdf());
+				ps.setInt(1, bean.getDatiFiscali().getIdDatiFiscali());
+				ps.setInt(2, bean.getCorriere().getId());
+				ps.setString(3, bean.getUtente().getCodiceFiscale());
+				ps.setDouble(4, bean.getCostoTotale());
+				ps.setString(5, bean.getCodiceSconto());
+				ps.setDate(6, (Date) bean.getDataEvasione());
+				ps.setDate(7, (Date) bean.getDataPartenza());
+				ps.setDate(8, (Date) bean.getDataArrivo());
+				ps.setString(9, bean.getUrlPdf());
 
 				ps.execute();
 			}
+			
+			try(PreparedStatement ps = con.prepareStatement("select idOrdine from ordine order by idOrdine DISC"))
+			{
+				ResultSet set = ps.executeQuery();
+				
+				set.next();
+				
+				int idOrdine = set.getInt(1);
+				
+				try(PreparedStatement ps1 = con.prepareStatement(sql2))
+				{
+					for(ProdottoBean products : bean.getProducts().keySet())
+					{
+						ps1.setString(1, products.getNome());
+						ps1.setInt(2, idOrdine);
+						ps1.setDouble(3, products.getIVA());
+						ps1.setDouble(4, products.getPrezzo());
+						ps1.setInt(5, bean.getProducts().get(products));
+						
+						ps1.execute();
+						
+					}
+				}
+				
+			}
+			
+			
 		}
 
 	}

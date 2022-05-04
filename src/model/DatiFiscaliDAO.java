@@ -108,6 +108,9 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 				ps.setInt(1, Integer.valueOf(order));
 				ResultSet rs = ps.executeQuery();
 
+				MetodoPagamentoBean metodo = new MetodoPagamentoBean();
+				MetodoPagamentoDAO metodoDao = new MetodoPagamentoDAO();
+				
 				while(rs.next()) {
 					DatiFiscaliBean dt = new DatiFiscaliBean();
 					dt.setIdDatiFiscali(rs.getInt("idDatiFiscali"));
@@ -116,8 +119,6 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 					dt.setProvincia(rs.getString("provincia"));
 					dt.setCAP(rs.getInt("CAP"));
 					dt.setCitta(rs.getString("citta"));
-					MetodoPagamentoBean metodo = new MetodoPagamentoBean();
-					MetodoPagamentoDAO metodoDao = new MetodoPagamentoDAO();
 					metodo = metodoDao.doRetrieveByKey(String.valueOf(rs.getInt("metodoPagamento")));
 					dt.setMetodoPagamento(metodo);
 					dati.add(dt);

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.OrdineBean;
 import beans.ProdottoBean;
 import model.Carrello;
 import model.ProdottoDAO;
@@ -68,7 +69,7 @@ public class GestioneCarrello extends HttpServlet {
 		}
 		else if(azione.equals("acquista"))
 		{
-			
+			OrdineBean ordine = new OrdineBean();
 			
 			
 			

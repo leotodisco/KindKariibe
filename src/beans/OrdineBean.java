@@ -1,6 +1,7 @@
 package beans;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class OrdineBean {
 	
@@ -12,6 +13,7 @@ public class OrdineBean {
 	private String codiceSconto;
 	private Date dataPartenza,dataEvasione,dataArrivo;
 	private String urlPdf;
+	private HashMap<ProdottoBean,Integer> products;
 	
 	
 	public OrdineBean() {
@@ -118,6 +120,58 @@ public class OrdineBean {
 		this.urlPdf = urlPdf;
 	}
 	
+	public void addProduct(ProdottoBean product) {
+		
+		boolean flag = false;
+		
+			for(ProdottoBean prodotto : products.keySet())
+			{
+				if(prodotto.getNome().equals(product.getNome()))
+				{
+					flag = true;
+					products.replace(prodotto, products.get(prodotto) + 1);
+				}
+			
+			}
+			
+			if(!flag)
+			{
+				products.put(product, 1);
+			}
+			
+		
+	}
+	
+	public void deleteProduct(ProdottoBean product) {
+		
+		for(ProdottoBean prodotto : products.keySet())
+		{
+			if(prodotto.getNome().equals(product.getNome()))
+			{
+				if(products.get(prodotto) == 1)
+				{
+					products.remove(prodotto);
+				}
+				else
+				{
+					products.replace(prodotto, products.get(prodotto) - 1);
+				}
+				
+				
+			}
+		}
+		
+	}
+
+
+	public HashMap<ProdottoBean, Integer> getProducts() {
+		return products;
+	}
+
+
+	public void setProducts(HashMap<ProdottoBean, Integer> products) {
+		this.products = products;
+	}
 	
 	
 	
