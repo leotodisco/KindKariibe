@@ -139,8 +139,6 @@
 			value="Reset">
 	</form>
 		
-		
-		
 		<% } %>
 	
 <form action="LogoutServlet" method="get" > 
