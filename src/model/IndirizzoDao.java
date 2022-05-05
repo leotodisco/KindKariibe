@@ -6,14 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import beans.CategoriaBean;
 import beans.IndirizzoBean;
 
 public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
@@ -116,8 +114,21 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 
 	@Override
 	public void doUpdate(IndirizzoBean bean) throws SQLException {
-
+		String sql = "UPDATE utente SET via = ?,citta = ?, provincia = ?, CAP = ?, " +
+				" numCivico = ? WHERE id = ?" ;
 		
+		try(Connection connection = ds.getConnection()){
+			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){	
+				preparedStatement.setString(1, bean.getVia());
+				preparedStatement.setString(2, bean.getCitta());
+				preparedStatement.setString(3, bean.getProvincia());
+				preparedStatement.setString(4, bean.getCAP());
+				preparedStatement.setString(5, bean.getnCivico());
+				preparedStatement.setInt(6, bean.getId());
+				
+				preparedStatement.execute();
+			}
+		}
 	}
 
 }

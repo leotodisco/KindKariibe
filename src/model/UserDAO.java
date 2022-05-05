@@ -31,10 +31,9 @@ public class UserDAO implements ModelInterface<UserBean> {
 
 	@Override
 	public void doSave(UserBean bean) throws SQLException {
-		//TO DO query inserimento dati pagamento 
 		String insertSQL = "INSERT INTO utente" 
-				+ " (codiceFiscale, nome, cognome, email, nTelefono, password ) "
-				+ "VALUES (?, ?, ?, ?, ?, ?)";
+				+ " (codiceFiscale, nome, cognome, email, nTelefono, password, genere, dataNascita ) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection con = ds.getConnection()){
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
@@ -44,12 +43,18 @@ public class UserDAO implements ModelInterface<UserBean> {
 				preparedStatement.setString(4, bean.getEmail());
 				preparedStatement.setString(5, bean.getnTelefono());
 				preparedStatement.setString(6, bean.getPassword());
-				preparedStatement.setString(12, bean.getSesso());
-				preparedStatement.setDate(13, (java.sql.Date) bean.getDataNascita());
+				preparedStatement.setString(7, bean.getSesso());
+				preparedStatement.setDate(8, (java.sql.Date) bean.getDataNascita());
 
 				preparedStatement.executeUpdate();
 				con.commit();
 			}
+		}
+		
+		//
+		MetodoPagamentoDAO metodo = new MetodoPagamentoDAO();
+		for( MetodoPagamentoBean p : bean.getElencoMetodiPagamento()) {			
+			metodo.doSave(p);
 		}
 	}
 
@@ -143,20 +148,20 @@ public class UserDAO implements ModelInterface<UserBean> {
 
 	@Override
 	public void doUpdate(UserBean bean) throws SQLException {
-		String sql = "UPDATE utente SET codiceFiscale = ?,nome = ?,cognome = ?,genere = ?,via = ?," +
-				"numCivico = ?,CAP = ?, citta = ?,provincia = ?, dataNascita = ?, email = ?, password =?,"+
-				"nTelefono = ?";
+		String sql = "UPDATE utente SET nome = ?, cognome = ?, genere = ? " +
+				" dataNascita = ?, email = ?, password =?, "+
+				" nTelefono = ? WHERE codiceFiscale = ? ";
 
 		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){	
-				preparedStatement.setString(1, bean.getCodiceFiscale());
-				preparedStatement.setString(2, bean.getNome());
-				preparedStatement.setString(3, bean.getCognome());
-				preparedStatement.setString(4, bean.getSesso());
-				preparedStatement.setDate(10, (java.sql.Date) bean.getDataNascita());
-				preparedStatement.setString(11, bean.getEmail());
-				preparedStatement.setString(12, bean.getPassword());
-				preparedStatement.setString(13, bean.getnTelefono());
+				preparedStatement.setString(1, bean.getNome());
+				preparedStatement.setString(2, bean.getCognome());
+				preparedStatement.setString(3, bean.getSesso());
+				preparedStatement.setDate(4, (java.sql.Date) bean.getDataNascita());
+				preparedStatement.setString(5, bean.getEmail());
+				preparedStatement.setString(6, bean.getPassword());
+				preparedStatement.setString(7, bean.getnTelefono());
+				preparedStatement.setString(8, bean.getCodiceFiscale());
 
 				preparedStatement.execute();
 			}
@@ -183,8 +188,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setSesso(rs.getString("genere"));	
 					bean.setnTelefono(rs.getString("nTelefono"));
 					bean.setAdmin(rs.getBoolean("admin"));
-					ArrayList<Integer> idMetodiPagamento = new ArrayList<>();
-
+					
 					String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = " + bean.getCodiceFiscale();
 					ArrayList<MetodoPagamentoBean> MetodiPagamento = new ArrayList<>();
 					MetodoPagamentoDAO metodiDAO = new MetodoPagamentoDAO();
