@@ -22,7 +22,7 @@
     <th>Gusti</th>
   </tr>
     					<tr>
-  					<td><img src = "<%=bean.getPathImage().get(0)%>"></td>
+  					<td><img src = "<%=bean.getPathImage().get(0)%>" alt = "immagine"></td>
   					<td><%= bean.getNome() %></td>
   					<td><%= bean.getPrezzo() %></td>
   					<td><%= bean.getIVA().intValue() %> %</td>
@@ -31,12 +31,12 @@
   					<td><%for(String gusto : bean.getGusti())
   							{%>
   								<%= gusto %> <br>
-  						
-  						
   							<%}%> </td>
   					</tr>
   </table>
 	
+	
+	<a href ="./GestioneCarrello?action=aggiungi&id=<%= bean.getNome()%>">Acquista</a>
 
 
 </body>

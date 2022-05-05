@@ -34,10 +34,10 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 		String sql = new String();
 		
 		if(bean.getTipo().equals("Carta")) {
-			sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario','numeroCarta','meseScadenza',"
-					+ "'annoScadenza','IBAN',',"
-					+ "'circuito','CVV') "
-					+ "VALUES (?,?,?,?,?,?,?,?,?)";
+			sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario','numeroCarta','meseScadenza', "
+					+ " 'annoScadenza','IBAN',', "
+					+ " 'circuito','CVV') "
+					+ " VALUES (?,?,?,?,?,?,?,?,?)";
 
 			try(Connection con = ds.getConnection()){
 				try(PreparedStatement ps = con.prepareStatement(sql)){	
@@ -57,9 +57,9 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 		}
 		
 		else { //se il metodo è bonifico
-			sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario',"
-					+ "'IBAN','causale',)"
-					+ "VALUES (?,?,?,?,?)";
+			sql = "INSERT INTO " + TABLE_NAME + " ('idMetodoPagamento','tipo','nomeIntestatario', "
+					+ "'IBAN','causale',) "
+					+ " VALUES (?,?,?,?,?) ";
 
 			try(Connection con = ds.getConnection()){
 				try(PreparedStatement ps = con.prepareStatement(sql)){	
@@ -91,7 +91,7 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 
 	@Override
 	public MetodoPagamentoBean doRetrieveByKey(String id) throws Exception {
-		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE idMetodoPagamento = ?";
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE idMetodoPagamento = ?";
 		MetodoPagamentoBean bean = new MetodoPagamentoBean();
 
 		try(Connection conn = ds.getConnection()){
@@ -120,7 +120,7 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 	@Override
 	public Collection<MetodoPagamentoBean> doRetrieveAll(String order) throws Exception {
 		List<MetodoPagamentoBean> metodi = new ArrayList<>();
-		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY ?";
+		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY ?";
 		order = order.isEmpty() ? "nome" : order;
 
 		try(Connection conn = ds.getConnection()){
@@ -155,10 +155,10 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 		
 		sql = bean.getTipo().equals("Carta") 
 				? "UPDATE " +TABLE_NAME+ "SET 'tipo' = ?,'nomeIntestatario' = ?, 'numeroCarta' = ?, 'meseScadenza' = ?, 'annoScadenza' = ?,"
-				+ " 'iban' =?, 'causale' = ?, 'circuito' = ?, 'CVV' = ?"
+				+ " 'iban' =?, 'causale' = ?, 'circuito' = ?, 'CVV' = ? "
 				+ " WHERE idMetodoPagamento = ?"
 				
-				: "UPDATE " +TABLE_NAME+ "SET 'tipo' = ?,'nomeIntestatario' = ?,"
+				: "UPDATE " +TABLE_NAME+ "SET 'tipo' = ?,'nomeIntestatario' = ?, "
 				+ " 'IBAN' = ?, 'causale' = ?;";
 
 		try(Connection conn = ds.getConnection()){
