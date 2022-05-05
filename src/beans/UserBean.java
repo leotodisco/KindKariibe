@@ -55,11 +55,6 @@ public class UserBean {
 	}
 
 
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
-	}
-
-
 	@Override
 	public String toString() {
 		return "UserBean [nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale + ", email="
