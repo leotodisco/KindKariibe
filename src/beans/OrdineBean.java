@@ -14,8 +14,19 @@ public class OrdineBean {
 	private Date dataPartenza,dataEvasione,dataArrivo;
 	private String urlPdf;
 	private HashMap<ProdottoBean,Integer> products;
+	private IndirizzoBean indirizzoSpedizione;
 	
 	
+	public IndirizzoBean getIndirizzoSpedizione() {
+		return indirizzoSpedizione;
+	}
+
+
+	public void setIndirizzoSpedizione(IndirizzoBean indirizzoSpedizione) {
+		this.indirizzoSpedizione = indirizzoSpedizione;
+	}
+
+
 	public OrdineBean() {
 		
 	}

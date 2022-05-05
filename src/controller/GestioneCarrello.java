@@ -70,7 +70,7 @@ public class GestioneCarrello extends HttpServlet {
 		else if(azione.equals("acquista"))
 		{
 			OrdineBean ordine = new OrdineBean();
-			
+			// DA COMPLETARE	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 			
 			
 			

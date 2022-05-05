@@ -38,7 +38,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 	@Override
 	public void doSave(OrdineBean bean) throws SQLException {
 		String sql = "INSERT INTO " + TABLE_NAME + "('datiFiscali','corriere','utente',"
-				+ "'costoTotale','codiceSconto','dataEvasione','dataPartenza','dataArrivo','urlPdf') VALUES(?,?,?,?,?,?,?,?,?)";
+				+ "'costoTotale','codiceSconto','dataEvasione','dataPartenza','dataArrivo','urlPdf', 'indirizzoSpedizione') VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 		String sql2 = "INSERT INTO " + "composizione" + " ('prodotto','ordine','IVA','prezzo','quantita')"
 		+ "VALUES(?,?,?,?,?)";
@@ -54,6 +54,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				ps.setDate(7, (Date) bean.getDataPartenza());
 				ps.setDate(8, (Date) bean.getDataArrivo());
 				ps.setString(9, bean.getUrlPdf());
+				ps.setInt(10, bean.getIndirizzoSpedizione().getId());
 
 				ps.execute();
 			}
@@ -119,6 +120,8 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					ordine.setDataEvasione(rs.getDate("dataEvasione"));
 					ordine.setDataPartenza(rs.getDate("dataPartenza"));
 					ordine.setDataArrivo(rs.getDate("dataArrivo"));
+					
+					
 				}
 
 				UserBean usr = new UserBean();
@@ -135,7 +138,9 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				DatiFiscaliDAO datiFis = new DatiFiscaliDAO();
 				df = datiFis.doRetrieveByKey(String.valueOf(rs.getInt("datiFiscali")));
 				ordine.setDatiFiscali(df);
-
+				
+				IndirizzoDao ind= new IndirizzoDao();
+				ordine.setIndirizzoSpedizione(ind.doRetrieveByKey(rs.getString("indirizzoSpedizione")));
 			}
 		}
 		return ordine;
@@ -177,6 +182,9 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					DatiFiscaliDAO datiFis = new DatiFiscaliDAO();
 					df = datiFis.doRetrieveByKey(String.valueOf(rs.getInt("datiFiscali")));
 					ordine.setDatiFiscali(df);
+					
+					IndirizzoDao ind= new IndirizzoDao();
+					ordine.setIndirizzoSpedizione(ind.doRetrieveByKey(rs.getString("indirizzoSpedizione")));
 					
 					ordini.add(ordine);
 					

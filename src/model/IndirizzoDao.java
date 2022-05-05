@@ -48,6 +48,32 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 		}
 		
 	}
+	
+	
+	public ArrayList<IndirizzoBean> doRetriveByUtente(String codiceFiscale) throws SQLException{
+		String sql= "SELECT * FROM indirizzo INNER JOIN possessoIndirizzo ON indirizzo= id WHERE utente= '"+ codiceFiscale+"'";
+		
+		try(Connection con= ds.getConnection()){
+			try(PreparedStatement ps= con.prepareStatement(sql)){
+				ResultSet rs= ps.executeQuery();
+				ArrayList<IndirizzoBean> indirizzi= new ArrayList<>();
+				
+				while(rs.next()) {
+					IndirizzoBean indirizzo=new IndirizzoBean();
+					
+					indirizzo.setId(rs.getInt("id"));
+					indirizzo.setVia(rs.getString("via"));
+					indirizzo.setCitta(rs.getString("citta"));
+					indirizzo.setProvincia(rs.getString("provincia"));
+					indirizzo.setnCivico(rs.getString("numCivico"));
+					indirizzo.setCAP(rs.getString("CAP"));
+					
+					indirizzi.add(indirizzo);
+				}
+				return indirizzi;
+			}
+		}
+	}
 
 	@Override
 	public boolean doDelete(String arg) throws SQLException {
