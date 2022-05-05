@@ -14,17 +14,41 @@ public class UserBean {
 	private String sesso; //puo valere F o M
 	private Date dataNascita;
 	private ArrayList<MetodoPagamentoBean> elencoMetodiPagamento = new ArrayList<>();
+	private IndirizzoBean indirizzoFatturazione;
+	private ArrayList<IndirizzoBean> indirizziSpedizione;
 	private Boolean admin;
 	
 	public UserBean() {
 
 	}
 	
-
 	public ArrayList<MetodoPagamentoBean> getElencoMetodiPagamento() {
-		return elencoMetodiPagamento;
+    return elencoMetodiPagamento;
+}
+	
+	public IndirizzoBean getIndirizzoFatturazione() {
+		return indirizzoFatturazione;
 	}
 
+
+	public void setIndirizzoFatturazione(IndirizzoBean indirizzoFatturazione) {
+		this.indirizzoFatturazione = indirizzoFatturazione;
+	}
+
+
+	public ArrayList<IndirizzoBean> getIndirizziSpedizione() {
+		return indirizziSpedizione;
+	}
+
+
+	public void setIndirizziSpedizione(ArrayList<IndirizzoBean> indirizziSpedizione) {
+		this.indirizziSpedizione = indirizziSpedizione;
+	}
+
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
 
 	public void setElencoMetodiPagamento(ArrayList<MetodoPagamentoBean> elencoMetodiPagamento) {
 		this.elencoMetodiPagamento = elencoMetodiPagamento;

@@ -13,7 +13,6 @@ public class MetodoPagamentoBean {
 	private String causale;
 	private String circuito;
 	private Integer CVV;
-	private ArrayList<String> utenti = new ArrayList<>();
 
 
 
@@ -107,15 +106,6 @@ public class MetodoPagamentoBean {
 
 	public String setCausale(String causale) {
 		return this.causale = causale;
-	}
-
-
-	public ArrayList<String> getUtenti() {
-		return utenti;
-	}
-
-	public void setUtenti(ArrayList<String> utenti) {
-		this.utenti = utenti;
 	}
 
 	@Override
