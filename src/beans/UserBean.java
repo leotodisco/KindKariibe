@@ -13,12 +13,18 @@ public class UserBean {
 	private String password;
 	private String sesso; //puo valere F o M
 	private Date dataNascita;
+	private ArrayList<MetodoPagamentoBean> elencoMetodiPagamento = new ArrayList<>();
 	private IndirizzoBean indirizzoFatturazione;
 	private ArrayList<IndirizzoBean> indirizziSpedizione;
-	private ArrayList<Integer> elencoMetodiPagamento = new ArrayList<>();
 	private Boolean admin;
 	
+	public UserBean() {
+
+	}
 	
+	public ArrayList<MetodoPagamentoBean> getElencoMetodiPagamento() {
+    return elencoMetodiPagamento;
+}
 	
 	public IndirizzoBean getIndirizzoFatturazione() {
 		return indirizzoFatturazione;
@@ -44,21 +50,15 @@ public class UserBean {
 		this.admin = admin;
 	}
 
-
-	public ArrayList<Integer> getElencoMetodiPagamento() {
-		return elencoMetodiPagamento;
-	}
-
-
-	public void setElencoMetodiPagamento(ArrayList<Integer> elencoMetodiPagamento) {
+	public void setElencoMetodiPagamento(ArrayList<MetodoPagamentoBean> elencoMetodiPagamento) {
 		this.elencoMetodiPagamento = elencoMetodiPagamento;
 	}
 
 
-	public UserBean() {
-
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
-	
+
 
 	@Override
 	public String toString() {

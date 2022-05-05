@@ -34,7 +34,7 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 	
 	@Override
 	public void doSave(IndirizzoBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "('via','citta', 'CAP','nCivico', 'provincia') "
+		String sql = "INSERT INTO " + TABLE_NAME + " ('via', 'citta', 'CAP', 'nCivico', 'provincia') "
 				+ "VALUES (?,?,?,?,?)";
 		
 		try(Connection con = ds.getConnection()){
@@ -111,10 +111,6 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 		}
 
 		return categorie;
-		
-		
-		
-		
 		
 	}
 
