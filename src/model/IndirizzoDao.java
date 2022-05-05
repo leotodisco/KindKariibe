@@ -34,7 +34,7 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 	
 	@Override
 	public void doSave(IndirizzoBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + " ('via', 'citta', 'CAP', 'nCivico', 'provincia') "
+		String sql = "INSERT INTO " + TABLE_NAME + " ('via', 'citta', 'CAP', 'numCivico', 'provincia') "
 				+ "VALUES (?,?,?,?,?)";
 		
 		try(Connection con = ds.getConnection()){
@@ -79,7 +79,7 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 					result.setVia(rs.getString("via"));
 					result.setCitta(rs.getString("citta"));
 					result.setCAP(rs.getString("CAP"));
-					result.setnCivico(rs.getString("nCivico"));
+					result.setnCivico(rs.getString("numCivico"));
 					result.setProvincia(rs.getString("provincia"));
 				}
 			}
@@ -103,7 +103,7 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 					result.setVia(rs.getString("via"));
 					result.setCitta(rs.getString("citta"));
 					result.setCAP(rs.getString("CAP"));
-					result.setnCivico(rs.getString("nCivico"));
+					result.setnCivico(rs.getString("numCivico"));
 					result.setProvincia(rs.getString("provincia"));
 					categorie.add(result);
 				}
