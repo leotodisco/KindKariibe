@@ -33,7 +33,7 @@ public class Carrello {
 		
 	}
 	
-	public void deleteProduct(ProdottoBean product) {
+	public synchronized void deleteProduct(ProdottoBean product) {
 		
 		for(ProdottoBean prodotto : products.keySet())
 		{

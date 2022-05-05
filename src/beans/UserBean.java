@@ -13,10 +13,38 @@ public class UserBean {
 	private String password;
 	private String sesso; //puo valere F o M
 	private Date dataNascita;
+	private IndirizzoBean indirizzoFatturazione;
+	private ArrayList<IndirizzoBean> indirizziSpedizione;
 	private ArrayList<Integer> elencoMetodiPagamento = new ArrayList<>();
 	private Boolean admin;
 	
 	
+	
+	public IndirizzoBean getIndirizzoFatturazione() {
+		return indirizzoFatturazione;
+	}
+
+
+	public void setIndirizzoFatturazione(IndirizzoBean indirizzoFatturazione) {
+		this.indirizzoFatturazione = indirizzoFatturazione;
+	}
+
+
+	public ArrayList<IndirizzoBean> getIndirizziSpedizione() {
+		return indirizziSpedizione;
+	}
+
+
+	public void setIndirizziSpedizione(ArrayList<IndirizzoBean> indirizziSpedizione) {
+		this.indirizziSpedizione = indirizziSpedizione;
+	}
+
+
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
+
+
 	public ArrayList<Integer> getElencoMetodiPagamento() {
 		return elencoMetodiPagamento;
 	}
