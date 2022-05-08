@@ -1,43 +1,59 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import = "beans.*" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" import = "beans.*" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title><% ProdottoBean bean = (ProdottoBean) request.getAttribute("prodotto"); %>
-<%= bean.getNome() %></title>
+<link href = "paginaDettaglio.css" rel = "stylesheet">
+<meta charset="utf-8">
+<% ProdottoBean bean = (ProdottoBean) request.getAttribute("prodotto"); %>
+
+<title>
+<%= bean.getNome()%></title>
 </head>
 <body>
 
-	<h1 align = "center"><%= bean.getNome() %></h1>
-	
-	 <table>
-  <tr>
-    <th>Prodotto</th>
-    <th>Nome</th>
-    <th>Prezzo</th>
-    <th>IVA</th>
-    <th>Descrizione</th>
-    <th>QuantitàDisponibile</th>
-    <th>Gusti</th>
-  </tr>
-    					<tr>
-  					<td><img src = "<%=bean.getPathImage().get(0)%>" alt = "immagine"></td>
-  					<td><%= bean.getNome() %></td>
-  					<td><%= bean.getPrezzo() %></td>
-  					<td><%= bean.getIVA().intValue() %> %</td>
-  					<td><%= bean.getDescrizione() %></td>
-  					<td><%= bean.getQuantitaResidua().intValue() %></td>
-  					<td><%for(String gusto : bean.getGusti())
-  							{%>
-  								<%= gusto %> <br>
-  							<%}%> </td>
-  					</tr>
-  </table>
-	
-	
-	<a href ="./GestioneCarrello?action=aggiungi&id=<%= bean.getNome()%>">Acquista</a>
+<jsp:include page="header.jsp" />
 
+	      <div class = "container">
+            <div class ="item">
+             <img src = "./immagini/<%=bean.getPathImage().get(0)%>" alt = "immagine" class ="image">
+            </div>
+            <div class="item-descrizione">
+                <p class = "product-title"><b><%= bean.getNome() %></b></p>
+                <p class = "categoria"><%= bean.getTipo()%></p>
+                <p class = "descrizione"><%= bean.getDescrizione()%></p>
+                <p class = "product-title">$<%= bean.getPrezzo()%></p>
+                <p class = "container-bottone">
+                <button class="aggiungi"><a href="./GestioneCarrello?action=aggiungi&id=<%=bean.getNome()%>">Aggiungi al carrello</a></button>
+                </p>
+            </div>
+        </div>
 
+        <div class="consigliati">
+            <div class = "item-consigliato">
+                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
+                <p>testo</p>
+            </div>
+            
+            <div class = "item-consigliato">
+                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
+                <p>testo</p>
+            </div>
+
+            <div class = "item-consigliato">
+                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
+                <p>testo</p>
+            </div>
+
+            <div class = "item-consigliato">
+                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
+                <p>testo</p>
+            </div>
+
+            <div class = "item-consigliato">
+                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
+                <p>testo</p>
+            </div>
+        </div>
 </body>
 </html>

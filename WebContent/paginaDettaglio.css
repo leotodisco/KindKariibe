@@ -1,0 +1,204 @@
+@font-face{
+    font-family:"archia-regular";
+    src:url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("truetype");
+  }
+
+
+  *{
+    margin: 0;
+    padding: 0;
+}
+
+
+body{
+    background-color: #FCEFD4;
+}
+
+.container{
+    margin-top: 6rem;
+    display: flex;
+    justify-content: center;
+   	gap: 10%;
+}
+
+.item{
+    display: inline-block;
+    height: 450px;
+    width: 450px;
+    background: transparent;
+}
+
+.item-descrizione{
+    display: inline-block;
+    flex-direction: column;
+    background: transparent;
+}
+
+.image{
+    height: 450px;
+    width: 460px;
+    border-radius: 25px;
+}
+
+.descrizione{
+    text-align:left;
+    margin-top: 5%;
+    font-family:"archia-regular";
+    font-size: 1.3rem;
+    height: auto;
+    width: auto;
+}
+
+.product-title{
+    font-family: "archia-regular";
+    font-size: 3rem;
+}
+
+.categoria{
+    text-align: center;
+    text-decoration: none;
+    align-items: center;
+    height: 22px;
+    width: 100px;
+    background-color: #DDB892;
+    border-radius: 5px;
+}
+
+.aggiungi{
+    font-family: "archia-regular";
+    font-size: 28px;
+    color: #2f2f2f;
+    cursor: pointer;
+    float: left;
+    border: 3px solid #9d7955;
+    border-color: #9d7955;
+    border-radius: 30px;
+    width: 336px;
+    height: 60px;
+}
+
+.aggiungi:hover{
+        font-family: "archia-regular";
+        font-size: 28px;
+        color: #2f2f2f;
+        cursor: pointer;
+        float: left;
+        border: 3px solid #9d7955;
+        border-color: #9d7955;
+        border-radius: 30px;
+        width: 336px;
+        height: 60px;
+}
+
+.container-bottone{
+    margin-top: 5rem;
+    text-align: center;
+    align-items: center;
+}
+
+.consigliati{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 5rem;
+}
+
+.item-consigliato{
+    margin-top: 2rem;
+    display: inline-block;
+    border-radius: 25px;
+    height: auto;
+    width: auto;
+    text-align: center;
+    justify-content: center;
+}
+
+.immagine-item-consigliato{
+    display: inline-block;
+    border-radius: 25px;
+    border: 3px solid #9d7955;
+}
+
+a{
+	text-decoration: none;
+	color: #2f2f2f;
+}
+@media (max-width: 800px) {
+    .container-bottone{
+        margin-top: 5rem;
+        text-align: center;
+        align-items: center;
+    }
+
+    .container{
+        margin-top: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 20%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .item{
+        display: inline-block;
+        background: transparent;
+        justify-content: center;
+        text-align: center;  
+        padding-left: 0;
+    }
+    
+    .item-descrizione{
+        display: inline-block;
+        flex-direction: column;
+        padding-left: 10px;
+    }
+
+    .image{
+        display: inline-block;
+        height: 70%;
+        width: 70%;
+        border-radius: 25px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .product-title{
+        font-family: "archia-regular";
+        font-size: 2rem;
+    }
+
+    .consigliati{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 5rem;
+        height: 70%;
+    }
+
+    .aggiungi{
+        font-family: "archia-regular";
+        font-size: 18px;
+        color: #2f2f2f;
+        cursor: pointer;
+        float: left;
+        border: 3px solid #9d7955;
+        border-color: #9d7955;
+        border-radius: 30px;
+        width: 50%;
+    }
+
+    .aggiungi:hover{
+        font-family: "archia-regular";
+        font-size: 18px;
+        color: #2f2f2f;
+        cursor: pointer;
+        float: left;
+        border: 3px solid #9d7955;
+        border-color: #9d7955;
+        border-radius: 30px;
+        width: 50%;
+}
+}

@@ -7,9 +7,9 @@
 <title>Login Succesfull</title>
 </head>
 <body>
-<% UserBean utente = (UserBean) request.getAttribute("utente"); %>
-
-<h1>hello <%= utente.getNome()%> <%= utente.getCognome() %></h1>
+<% UserBean utente = (UserBean) request.getAttribute("utente");
+pageContext.setAttribute("user",utente.getNome(),PageContext.SESSION_SCOPE);
+%>
 
 	<jsp:forward page="/CreaCatalogo" />
 
