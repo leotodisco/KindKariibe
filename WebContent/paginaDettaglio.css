@@ -6,7 +6,7 @@
   }
 
 
-  *{
+ *{
     margin: 0;
     padding: 0;
 }
@@ -43,12 +43,12 @@ body{
 }
 
 .descrizione{
+    display: inline-block;
     text-align:left;
     margin-top: 5%;
     font-family:"archia-regular";
     font-size: 1.3rem;
-    height: auto;
-    width: auto;
+    max-width: 600px;
 }
 
 .product-title{
@@ -125,6 +125,7 @@ a{
 	text-decoration: none;
 	color: #2f2f2f;
 }
+
 @media (max-width: 800px) {
     .container-bottone{
         margin-top: 5rem;
