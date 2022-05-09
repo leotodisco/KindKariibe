@@ -1,33 +1,45 @@
 @charset "utf-8";
-
 @font-face{
     font-family:"archia-regular";
     src:url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("woff"),
     url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("opentype"),
     url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("truetype");
-  }
+}
 
+
+@font-face {
+    font-family: 'intro_script_demomedium';
+    src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+  }
 
 body {
 	margin: 0;
 	padding: 0;
 	background-color: #FCEFD4;
-	font-size: 2rem;
-	font-family: 'archia-regular';
 }
 
 .login {
+    display: flex;
+    flex-direction: column;
 	width: 382px;
 	overflow: hidden;
 	margin: auto;
-	margin-top: 69px;
-	padding: 80px;
+	margin-top: 150px;
 	background-color: #FCEFD4;
 	border-radius: 15px;
 	text-align: center;
 }
 
+.scritta{
+    display: inline-block;
+    padding-bottom: 20px;
+    font-family: 'intro_script_demomedium';
+}
+
+
 h2 {
+	    font-size: 3rem;
+    font-family:'intro_script_demomedium'; 
 	text-align: center;
 	color: #2f2f2f;
 }
@@ -38,25 +50,29 @@ label {
 	align-items: center;
 }
 
-#Uname {
+.uname {
 	width: 300px;
 	height: 30px;
 	border-color: #2f2f2f;
-	background-color: #ffe5b3;
+    border: 2px solid #2f2f2f;
+    background-color: #FCEFD4;
 	border-radius: 17px;
 	padding-left: 8px;
 }
 
-#Pass {
+.pass {
+    font-family: 'archia-regular';
 	width: 300px;
 	height: 30px;
+    border: 2px solid #2f2f2f;
+    background-color: #FCEFD4;
 	border-color: #2f2f2f;
-	background-color: #ffe5b3;
 	border-radius: 17px;
 	padding-left: 8px;
 }
 
 #log {
+    font-family: 'archia-regular';
 	width: 300px;
 	height: 30px;
 	border: none;
@@ -68,11 +84,16 @@ label {
 }
 
 span {
+    font-family: 'archia-regular';
 	color: #2f2f2f;
 	font-size: 17px;
 }
 
 a {
+    font-size: 0.8rem;
+	font-family: 'archia-regular';
 	color: #2f2f2f;
 	text-decoration: none;
 }
+
+

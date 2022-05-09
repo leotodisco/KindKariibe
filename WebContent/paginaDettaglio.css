@@ -158,7 +158,7 @@ a{
 
     .image{
         display: inline-block;
-        height: 70%;
+        height: auto;
         width: 70%;
         border-radius: 25px;
         text-align: center;

@@ -18,13 +18,13 @@
     <form id="login" method="post" action="LoginServlet"> 
 
         <label for="email"></label> 
-        <input type="text" name="email" id="Uname" placeholder="Email">    
+        <input type="text" name="email" class = "uname" placeholder="Email">    
         <br><br>    
         <label for="password"></label>
-             <input id="Pass" type="password" name="password" placeholder="enter password">             
+             <input class = "pass" type="password" name="password" placeholder="Password">             
         <br><br>   
         <input type="submit" value="Login" id="log"/>       
-        <br><br>     
+        <br><br> 
         <span>
             <a href="#">Password dimenticata</a>
         </span>        
