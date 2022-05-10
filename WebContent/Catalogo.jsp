@@ -40,18 +40,16 @@
 </table> 
 	
 	
-	<%  UserBean utente = (UserBean) request.getAttribute("utente"); 
+	<%  UserBean utente = (UserBean) request.getSession(true).getAttribute("utente"); 
 	
-		if(utente == null)
+		if(utente != null)
 		{
-			utente = (UserBean) request.getSession(true).getAttribute("utente");
-		}
-	
-		if(utente.getAdmin())
-		{
-			HttpSession sessione = request.getSession(true);
-			sessione.setAttribute("utente", utente);
-		%>
+			if(utente.getAdmin())
+			{
+				HttpSession sessione = request.getSession(true);
+				sessione.setAttribute("utente", utente);
+				%>
+		
 		
 			<h2>Inserisci</h2>
 	<form action="AdminServlet" method="post">
@@ -142,7 +140,9 @@
 			value="Reset">
 	</form>
 		
-		<% } %>
+		<% }
+		}
+		%>
 	
 <form action="LogoutServlet" method="get" > 
      <input type="submit" value="Logout"/>

@@ -15,8 +15,7 @@
 </head>
 
 <body>     
-<% UserBean utente = (UserBean) request.getAttribute("utente");%>
-<% String nome = (String) pageContext.getAttribute("user",PageContext.SESSION_SCOPE);  %>
+<% UserBean utente = (UserBean) request.getSession().getAttribute("utente");%>
    <header class = "mediaQuery">
     <div id="hamburger" class="hamburger" onclick="animazione()">
         <span class="hamburger__top-bun"></span>
@@ -49,7 +48,7 @@
 				}
 				%>
             <div class = "parte-destra-header">
-			<span class = "item-dx">Ciao, <%= nome %>  </span>
+			<span class = "item-dx">Ciao, <%= utente.getNome() %>  </span>
                 <img src = "carrello.png" alt="cart" class = "item-dx">
 		</div>
         </header>

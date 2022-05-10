@@ -46,7 +46,7 @@ public class CreaCatalogo extends HttpServlet {
 				ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
 				request.setAttribute("prodotti", ListaProdotti);
 				RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
-				view.include(request, response);
+				view.forward(request, response);
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
