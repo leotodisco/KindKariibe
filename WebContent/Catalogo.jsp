@@ -30,7 +30,7 @@
   					<tr>
   					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img class = "images" src  = "./immagini/<%= prodotto.getPathImage().get(0)  %>" ></a></td>
   					<td><%= prodotto.getNome() %></td>
-  					<td><%= prodotto.getPrezzo() %></td>
+  					<td>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></td>
   					<td><%= prodotto.getDescrizione() %></td>
   					<td><a href = "GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a></td>
   					</tr>
