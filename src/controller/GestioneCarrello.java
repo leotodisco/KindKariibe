@@ -47,15 +47,9 @@ public class GestioneCarrello extends HttpServlet {
 		
 		if(Objects.isNull(utente))
 		{
-			System.out.println(path);
-			String address = path + "/WebContent/login-form.jsp";
-			System.out.println(address);
-			RequestDispatcher view = request.getRequestDispatcher("login-form.jsp");
-			view.forward(request, response);
+			response.sendRedirect("login-form.jsp");
 		}
-		
-		
-		if(azione.equals("aggiungi") && !(Objects.isNull(utente)))
+		else if(azione.equals("aggiungi") && !(Objects.isNull(utente)))
 		{
 			ProdottoDAO dao = new ProdottoDAO();
 			try {	
@@ -69,6 +63,8 @@ public class GestioneCarrello extends HttpServlet {
 
 				cart.addProduct(prodotto);
 				sessione.setAttribute("Carrello", cart);
+				RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+				view.forward(request, response);
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -80,6 +76,8 @@ public class GestioneCarrello extends HttpServlet {
 			cart = new Carrello();
 			
 			sessione.setAttribute("Carrello", cart);
+			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+			view.forward(request, response);
 		}
 		else if(azione.equals("acquista"))
 		{
@@ -94,6 +92,7 @@ public class GestioneCarrello extends HttpServlet {
 			String id = request.getParameter("id");
 			ProdottoDAO dao = new ProdottoDAO();
 			ProdottoBean prodotto;
+			
 			try {
 				prodotto = dao.doRetrieveByKey(id);
 				cart.deleteProduct(prodotto);
@@ -104,14 +103,13 @@ public class GestioneCarrello extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			
+			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+			view.forward(request, response);
 			
 			
 		}
 		
-		
-		RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
-		view.forward(request, response);
+
 			
 	}
 
