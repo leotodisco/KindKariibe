@@ -16,8 +16,11 @@
 
 <body>     
 <% UserBean utente = (UserBean) request.getAttribute("utente");%>
-<% String nome = (String) pageContext.getAttribute("user",PageContext.SESSION_SCOPE);  %>
-	
+<% if (utente == null) {
+					utente = new UserBean();
+					utente.setNome("ospite");
+				}
+				%>
         <nav class="nav-container">
             <div class="nav-container-item-sx">
                 <img src="" alt="logo"> 
@@ -31,7 +34,7 @@
             </ul>
 
             <div class="nav-container-item-dx">
-                <span class="text-user">Ciao, <%= nome %></span>
+                <span class="text-user">Ciao,  <%= utente.getNome() %> </span>
             <img src="" alt="cart">
                         </div>
         </nav>
