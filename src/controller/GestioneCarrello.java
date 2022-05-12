@@ -47,7 +47,8 @@ public class GestioneCarrello extends HttpServlet {
 		
 		if(Objects.isNull(utente))
 		{
-			response.sendRedirect("login-form.jsp");
+			RequestDispatcher view = request.getRequestDispatcher("login-form.jsp");
+			view.forward(request, response);
 		}
 		else if(azione.equals("aggiungi") && !(Objects.isNull(utente)))
 		{

@@ -20,6 +20,7 @@
     <th>Azioni</th>
   </tr>
   <% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
+  	
 	if(ListaProdotti == null) {
 		response.sendRedirect("./CreaCatalogo");	
 		return;

@@ -8,9 +8,10 @@
 </head>
 <body>
 <%
+	response.sendRedirect("Catalogo.jsp");
 %>
 
-	<jsp:forward page="/CreaCatalogo" />
+	
 
 </body>
 </html>
