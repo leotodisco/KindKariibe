@@ -58,7 +58,7 @@ public class RegistrazioneServlet extends HttpServlet {
 		try {
 			if(dao.doRetriveByEmail(email) != null)
 			{
-				response.sendRedirect("");
+				response.sendRedirect("RegistrazioneFallita.jsp");
 			}
 		} catch (NumberFormatException e1) {
 			// TODO Auto-generated catch block
