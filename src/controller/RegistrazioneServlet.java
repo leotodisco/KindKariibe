@@ -50,27 +50,34 @@ public class RegistrazioneServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String nTelefono = request.getParameter("nTelefono");
 		String Password = request.getParameter("password");
-		String via = request.getParameter("via");
-		String citta = request.getParameter("citta");
-		String CAP = request.getParameter("CAP");
-		String provincia = request.getParameter("provincia");
 		String sesso = request.getParameter("sesso");
-		String nCivico = request.getParameter("nCivico"); 
 		String dataS = request.getParameter("data");
 		
-	
+		UserDAO dao = new UserDAO();
+		
+		try {
+			if(dao.doRetriveByEmail(email) != null)
+			{
+				response.sendRedirect("");
+			}
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		UserBean utente = new UserBean();
 		try {
 			Date data = sdf.parse(dataS);
-			utente.setDataNascita(data);
+			java.sql.Date datasql = new java.sql.Date(data.getTime());
+			utente.setDataNascita(datasql);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		UserDAO dao = new UserDAO();
 		
 		utente.setNome(nome);
 		utente.setCognome(cognome);
@@ -79,6 +86,7 @@ public class RegistrazioneServlet extends HttpServlet {
 		utente.setnTelefono(nTelefono);
 		utente.setPassword(Password);
 		utente.setSesso(sesso);
+		utente.setAdmin(false);
 		
 		try {
 			dao.doSave(utente);
@@ -87,8 +95,13 @@ public class RegistrazioneServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-		
+		try {
+			request.getSession().setAttribute("utente", utente);
+			response.sendRedirect("Catalogo.jsp");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

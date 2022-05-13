@@ -33,7 +33,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 	public void doSave(UserBean bean) throws SQLException {
 		String insertSQL = "INSERT INTO utente" 
 				+ " (codiceFiscale, nome, cognome, email, nTelefono, password, genere, dataNascita ) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?,?)";
 
 		try (Connection con = ds.getConnection()){
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
@@ -47,16 +47,11 @@ public class UserDAO implements ModelInterface<UserBean> {
 				preparedStatement.setDate(8, (java.sql.Date) bean.getDataNascita());
 
 				preparedStatement.executeUpdate();
-				con.commit();
 			}
 		}
 		
-		//
-		MetodoPagamentoDAO metodo = new MetodoPagamentoDAO();
-		for( MetodoPagamentoBean p : bean.getElencoMetodiPagamento()) {			
-			metodo.doSave(p);
 		}
-	}
+	
 
 	@Override
 	public boolean doDelete(String codiceFiscale) throws SQLException {

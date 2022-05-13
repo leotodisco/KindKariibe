@@ -26,7 +26,7 @@
         <input type="submit" value="Login" id="log"/>       
         <br><br> 
         <span>
-            <a href="#">Password dimenticata</a>
+            <a href="RegistrazioneForm.jsp">Registrati</a>
         </span>        
             
     </form>     
