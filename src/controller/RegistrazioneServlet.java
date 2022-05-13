@@ -55,6 +55,10 @@ public class RegistrazioneServlet extends HttpServlet {
 		
 		UserDAO dao = new UserDAO();
 		
+		
+		
+		
+		
 		try {
 			if(dao.doRetriveByEmail(email) != null)
 			{
@@ -97,7 +101,6 @@ public class RegistrazioneServlet extends HttpServlet {
 		
 		try {
 			request.getSession().setAttribute("utente", utente);
-			response.sendRedirect("Catalogo.jsp");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

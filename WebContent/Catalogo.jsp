@@ -29,7 +29,8 @@
   				{
   				%>
   					<tr>
-  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img class = "images" src  = "./immagini/<%= prodotto.getPathImage().get(0)  %>" ></a></td>
+  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>">
+  					<img class = "images" src  = "./immagini/<%=prodotto.getPathImage().get(0)%>"  alt = "immagine"> </a> </td>
   					<td><%= prodotto.getNome() %></td>
   					<td>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></td>
   					<td><%= prodotto.getDescrizione() %></td>
@@ -53,7 +54,7 @@
 		
 		
 			<h2>Inserisci</h2>
-	<form action="AdminServlet" method="post">
+	<form action="AdminServlet" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="operazione" value="inserire">
 		 <label	for="nome">Nome:</label><br> <input name="nome" type="text"
 			maxlength="20" required placeholder="inserire nome..."><br>
@@ -71,8 +72,7 @@
 			placeholder="inserire descrizione..."></textarea><br>
 			
 				<label for="immagine">Immagine:</label><br>
-		<textarea name="immagine" maxlength="100" rows="3" required
-			placeholder="inserire nome immagine..."></textarea><br>
+			<input type="file" name="image" size="35"><br>
 			
 		<br> <label for="prezzo">Prezzo:</label><br> <input
 			name="prezzo" type="number" min="0" value="0" required><br>

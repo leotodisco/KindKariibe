@@ -1,11 +1,14 @@
 package controller;
 
+import com.oreilly.servlet.MultipartRequest;
+
+import java.io.File;
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.Optional;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,18 +47,23 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProdottoDAO prod = new ProdottoDAO();
-		String azioni = request.getParameter("operazione");
+		MultipartRequest multi;
+		String path = getServletContext().getRealPath("/")+"immagini";
+		multi = new MultipartRequest(request,path,20971520);
+		
+		String azioni = multi.getParameter("operazione");
 
 		if(azioni.equals("inserire")) {
-			String name = request.getParameter("nome");
-			String description = request.getParameter("descrizione");
-			Double price = Double.parseDouble(request.getParameter("prezzo"));
-			Double quantity = Double.parseDouble(request.getParameter("quantita"));
-			String catNome = request.getParameter("categoria");
-			Double iva = Double.parseDouble(request.getParameter("IVA"));
-			Double peso = Double.parseDouble(request.getParameter("peso"));
-			String immagine = request.getParameter("immagine");
-			String tipo = request.getParameter("tipo");
+			String name = multi.getParameter("nome");
+			String description = multi.getParameter("descrizione");
+			Double price = Double.parseDouble(multi.getParameter("prezzo"));
+			Double quantity = Double.parseDouble(multi.getParameter("quantita"));
+			String catNome = multi.getParameter("categoria");
+			Double iva = Double.parseDouble(multi.getParameter("IVA"));
+			Double peso = Double.parseDouble(multi.getParameter("peso"));
+			String tipo = multi.getParameter("tipo");
+		
+			
 			
 			CategoriaDAO buffer = new CategoriaDAO();
 			Optional<CategoriaBean> cat;
@@ -68,7 +76,6 @@ public class AdminServlet extends HttpServlet {
 				bean.setQuantitaResidua(quantity);
 				bean.setCategoria(cat);
 				bean.setIVA(iva);
-				bean.addImmagine(immagine);
 				bean.setPeso(peso);
 				bean.setTipo(tipo);
 				
