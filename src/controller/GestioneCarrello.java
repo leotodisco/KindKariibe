@@ -38,19 +38,12 @@ public class GestioneCarrello extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String path = request.getContextPath();
 		String azione = request.getParameter("action");
 		HttpSession sessione = request.getSession(true);
 		Carrello cart = (Carrello) sessione.getAttribute("Carrello"); 
 		
-		UserBean utente = (UserBean) request.getSession().getAttribute("utente");
 		
-		if(Objects.isNull(utente))
-		{
-			RequestDispatcher view = request.getRequestDispatcher("login-form.jsp");
-			view.forward(request, response);
-		}
-		else if(azione.equals("aggiungi") && !(Objects.isNull(utente)))
+		if(azione.equals("aggiungi"))
 		{
 			ProdottoDAO dao = new ProdottoDAO();
 			try {	
