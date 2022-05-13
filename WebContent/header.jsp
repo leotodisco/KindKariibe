@@ -16,43 +16,31 @@
 
 <body>     
 <% UserBean utente = (UserBean) request.getAttribute("utente");%>
-<% String nome = (String) pageContext.getAttribute("user",PageContext.SESSION_SCOPE);  %>
-   <header class = "mediaQuery">
-    <div id="hamburger" class="hamburger" onclick="animazione()">
-        <span class="hamburger__top-bun"></span>
-        <span class="hamburger__bottom-bun"></span>
-    </div>
-
-    <nav class="menu-item2">
-        <a href="" class="testo-menu">Gelateria</a>
-        <a href="" class="testo-menu">Pasticceria</a>
-        <a href="" class="testo-menu">Storia</a>
-        <a href="" class="testo-menu">Contatti</a>
-    </nav>
-    </header>
-
-
-        <header class = "header-container">
-            <div>
-            	<img src ="logo.png" alt="logo" class = "logo-header">
-            </div>
-            <nav class="menu-item">
-                <a href="" class="testo-menu">Gelateria</a>
-                <a href="" class="testo-menu">Pasticceria</a>
-                <a href="" class="testo-menu">Storia</a>
-                <a href="" class="testo-menu">Contatti</a>
-            </nav>
-
-				<% if (utente == null) {
+<% if (utente == null) {
 					utente = new UserBean();
 					utente.setNome("ospite");
 				}
 				%>
-            <div class = "parte-destra-header">
-			<span class = "item-dx">Ciao, <%= nome %>  </span>
-                <img src = "carrello.png" alt="cart" class = "item-dx">
-		</div>
-        </header>
+        <nav class="nav-container">
+            <div class="nav-container-item-sx">
+                <img src="" alt="logo"> 
+            </div>
+
+            <ul class="elenco nav-container-item">
+                <li>Gelateria</li>
+                <li>Pasticceria</li>
+                <li>Storia</li>
+                <li>Contatti</li>
+            </ul>
+
+            <div class="nav-container-item-dx">
+                <span class="text-user">Ciao,  <%= utente.getNome() %> </span>
+            <img src="" alt="cart">
+                        </div>
+        </nav>
+
 </body>
+
+
 
 </html>
