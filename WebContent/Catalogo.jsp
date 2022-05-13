@@ -84,7 +84,7 @@
 			<br> <label for="peso">Peso:</label><br> <input
 			name="peso" type="number" min="0" value="10" required><br>
 		
-		<label for="quantita">Quantità:</label><br> <input
+		<label for="quantita">Quantitï¿½:</label><br> <input
 			name="quantita" type="number" min="1" value="1" required><br>
 
 		<input type="submit" value="Aggiungi"><input type="reset"
@@ -135,7 +135,7 @@
 			<br> <label for="peso">Peso:</label><br> <input
 			name="peso" type="number" min="0" value="10" ><br>
 		
-		<label for="quantita">Quantità:</label><br> <input
+		<label for="quantita">Quantitï¿½:</label><br> <input
 			name="quantita" type="number" min="1" value="1" ><br>
 			
 			<input type="submit" value="Aggiorna"><input type="reset"

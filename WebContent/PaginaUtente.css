@@ -1,0 +1,108 @@
+@charset "ISO-8859-1";
+@font-face {
+  font-family: "archia-regular";
+  src: url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("truetype");
+}
+*{
+  padding: 0;
+  margin: 0;
+}
+
+.container{
+  display: flex;
+  align-items: center;
+  
+  justify-content: center;
+  margin-top: 300px;
+  
+}
+.top-container{
+  display: flex;
+  align-items: center;
+}
+body{
+  background-color: #fcefd4;
+}
+.card{
+	background-color: #fcefd4;
+	width: 280px;
+	border-radius: 33px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 2rem ;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+}
+
+.name{
+	font-size: 15px;
+	font-weight: bold;
+	color: #272727;
+  display: inline-block;
+	top: 8px;
+  font-family: 'archia-regular';
+}
+.mail{
+	font-size: 14px;
+	color: grey;
+  display: inline-block;
+	top: 2px;
+  font-family: 'archia-regular';
+}
+
+.ordini-recenti{
+  display: flex;
+	font-size: 16px;
+	
+	color: #2f2f2f;
+	margin-left: 2px;
+  margin-top: 15px;
+  font-family: 'archia-regular';
+}
+.le-tue-informazioni{
+	font-size: 16px;
+  display:flex;
+	
+	color: #2f2f2f;
+	margin-left: 2px;
+  margin-top: 3px;
+  font-family: 'archia-regular';
+}
+.logout{
+  display: flex;
+	font-size: 16px;
+
+	color: #2f2f2f;
+	margin-left: 2px;
+  margin-top: 3px;
+  font-family: 'archia-regular';
+}
+
+.text:hover {
+	border-bottom: 1px solid #2f2f2f;
+}
+text{
+  font-family: 'archia-regular';
+}
+.info{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.testi{
+  display: flex;
+  flex-direction: column;
+  font-family: 'archia-regular';
+  
+}
+.profilepic{
+  display: flex;
+  width: 70px;
+  height: 70px;
+}
+
