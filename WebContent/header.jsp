@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="./stili.css">
+    <link rel="stylesheet" type="text/css" href="stili.css">
     
     <script>
         function animazione() {
@@ -35,8 +35,8 @@
 
             <div class="nav-container-item-dx">
                 <span class="text-user">Ciao,  <%= utente.getNome() %> </span>
-            <img src="" alt="cart">
-                        </div>
+            <img src="" alt="cart" class="cart">
+          </div>
         </nav>
 
 </body>

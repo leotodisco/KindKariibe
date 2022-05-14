@@ -28,6 +28,7 @@ body {
 	background-color: #FCEFD4;
 	border-radius: 15px;
 	text-align: center;
+	padding-bottom: 30px;
 }
 
 .scritta{
@@ -70,8 +71,7 @@ label {
 	border-radius: 17px;
 	padding-left: 8px;
 }
-
-#log {
+.bottone-Schermata-Login {
     font-family: 'archia-regular';
 	width: 300px;
 	height: 30px;
@@ -81,6 +81,7 @@ label {
 	color: #2f2f2f;
 	background-color: #FCEFD4;
 	font-size: 17px;
+	cursor:pointer;
 }
 
 span {
@@ -96,4 +97,82 @@ a {
 	text-decoration: none;
 }
 
+.registrazione{
+    display:flex;
+    flex-direction: column;
+	width: 382px;
+	overflow: hidden;
+	margin: auto;
+	margin-top: 150px;
+	background-color: #FCEFD4;
+	border-radius: 15px;
+	text-align: center;
+	padding-bottom: 30px;
+    position:fixed;
+    left: -300px;
+    transform: translateX(-50%);
+}
+.animate{
+    left:50%;
+    transition: left 1000ms;
+}
 
+.uname2{
+    display: inline-block;
+        width: 95px;
+        height: 30px;
+        border-color: #2f2f2f;
+        border: 2px solid #2f2f2f;
+        background-color: #FCEFD4;
+        border-radius: 17px;
+        padding-left: 8px;
+}
+
+.uname3{
+    width: 52px;
+    height: 30px;
+    border-color: #2f2f2f;
+    border: 2px solid #2f2f2f;
+    background-color: #FCEFD4;
+    border-radius: 17px;
+    padding-left: 8px;
+}
+
+.via{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-left: 30px;
+    padding-bottom: 15px;
+}
+
+.uname4{
+    width: 145px;
+    height: 30px;
+    border-color: #2f2f2f;
+    border: 2px solid #2f2f2f;
+    background-color: #FCEFD4;
+    border-radius: 17px;
+}
+
+.sex{
+    margin-left: 30px;
+    border-radius: 25px;
+    border: 2px solid #2f2f2f;
+    width: 300px;
+    height: 30px;
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 0;
+  
+}
+
+@media screen and(max-width:800px){
+    body{
+        justify-content: center;
+    }
+
+
+}

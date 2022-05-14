@@ -43,6 +43,7 @@ public class RegistrazioneServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("\n\n\n\n"+"nyyftcgcgcgc"+"\n\n\n");
 		
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
@@ -58,7 +59,6 @@ public class RegistrazioneServlet extends HttpServlet {
 		String nCivico = request.getParameter("nCivico"); 
 		String dataS = request.getParameter("data");
 		
-	
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		UserBean utente = new UserBean();
