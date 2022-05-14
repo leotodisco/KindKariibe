@@ -45,14 +45,23 @@
 
 .nav-container-item-dx{
   margin-left: 140px;
+    display: flex;
+    align-items: center;
+
 }
 
 .nav-container-item-sx{
   margin-right: 140px;
+
 }
 
 .nav-container-item{
   display: flex;
   flex-direction: row;
   gap: 0px 11px;
+}
+
+.cart{
+	width: 50px;
+	height: 50px;
 }
