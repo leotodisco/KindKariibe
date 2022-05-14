@@ -120,6 +120,7 @@
 		<textarea name="immagine" maxlength="100" rows="3"
 			placeholder="inserire nome immagine..."></textarea>
 
+
 		<br> <label for="prezzo">Prezzo:</label><br> <input
 			name="prezzo" type="number" min="0" value="0"><br> <br>
 		<label for="IVA">IVA:</label><br> <input name="IVA" type="number"
