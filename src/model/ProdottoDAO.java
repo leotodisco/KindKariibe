@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 
 import beans.CategoriaBean;
 import beans.CorriereBean;
+import beans.ImmagineBeans;
 import beans.ProdottoBean;
 
 public class ProdottoDAO implements ModelInterface<ProdottoBean> {
@@ -52,24 +53,6 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					
 					ps.executeUpdate();
 
-					Integer id = null;
-					String getImageSQL ="SELECT idImmagine FROM kindkaribe.immagine WHERE URL = ?;";
-					try(PreparedStatement ps4 = con.prepareStatement(getImageSQL)){
-						ps4.setString(1, bean.getPathImage().get(0));
-
-						ResultSet image = ps4.executeQuery();
-						if(image.next()) {
-							id = image.getInt("idImmagine");
-						}
-					}
-
-					String insertImage ="INSERT INTO `kindkaribe`.`possessoImmagine` (`prodotto`, `immagine`) VALUES (?,?)";
-					try(PreparedStatement ps3 = con.prepareStatement(insertImage)){
-						ps3.setString(1, bean.getNome());
-						ps3.setInt(2, id);
-
-						ps3.execute();
-					}
 				}
 
 			}
@@ -97,25 +80,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 						ps2.execute();
 					}
-
-					Integer id = null;
-					String getImageSQL ="SELECT idImmagine FROM kindkaribe.immagine WHERE URL = ?;";
-					try(PreparedStatement ps4 = con.prepareStatement(getImageSQL)){
-						ps4.setString(1, bean.getPathImage().get(0));
-
-						ResultSet image = ps4.executeQuery();
-						if(image.next()) {
-							id = image.getInt("idImmagine");
-						}
-					}
-
-					String insertImage ="INSERT INTO `kindkaribe`.`possessoImmagine` (`prodotto`, `immagine`) VALUES (?,?)";
-					try(PreparedStatement ps3 = con.prepareStatement(insertImage)){
-						ps3.setString(1, bean.getNome());
-						ps3.setInt(2, id);
-
-						ps3.execute();
-					}
+					
 				
 				}
 			}
@@ -159,20 +124,19 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
-					String sqlImmagini = "SELECT url \r\n" + 
-							"FROM possessoImmagine JOIN immagine\r\n" + 
-							"on idImmagine = immagine\r\n" + 
-							"where prodotto = ?;";
-
-					//ottieni url immagini
-					try(PreparedStatement stmt = conn.prepareStatement(sqlImmagini)){
-						stmt.setString(1, nome);
-						ResultSet images = stmt.executeQuery();
-						while(images.next()) {
-							elencoPathImmagini.add(images.getString("url"));
-						}
-						bean.setPathImage(elencoPathImmagini);
+					
+					ImmagineDAO imDAO = new ImmagineDAO();
+					ImmagineBeans imBean = new ImmagineBeans();
+					PossessoImmagineDAO possDAO = new PossessoImmagineDAO();
+					
+					
+					for(String immagine : possDAO.retrieveImmagine(nome))
+					{
+						imBean = imDAO.doRetrieveByKey(immagine);
+						elencoPathImmagini.add(imBean.getUrl());
 					}
+					
+					bean.setPathImage(elencoPathImmagini);
 
 					//ottieni peso
 					String sqlPeso = "SELECT peso FROM estensione WHERE prodotto = ?;";
@@ -228,21 +192,21 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
-
-					String sqlImmagini = "SELECT url \r\n" + 
-							"FROM possessoImmagine JOIN immagine\r\n" + 
-							"on idImmagine = immagine\r\n" + 
-							"where prodotto = ?;";
-					//ottieni url immagini
-					try(PreparedStatement stmt = conn.prepareStatement(sqlImmagini)){
-						stmt.setString(1, bean.getNome());
-						ResultSet images = stmt.executeQuery();
-						ArrayList<String> elencoPathImmagini = new ArrayList<>();
-						while(images.next()) {
-							elencoPathImmagini.add(images.getString("url"));
-						}
-						bean.setPathImage(elencoPathImmagini);
+					
+					ArrayList<String> elencoPathImmagini = new ArrayList<>();
+					
+					ImmagineDAO imDAO = new ImmagineDAO();
+					ImmagineBeans imBean = new ImmagineBeans();
+					PossessoImmagineDAO possDAO = new PossessoImmagineDAO();
+					
+					for(String immagine : possDAO.retrieveImmagine(rs.getString("nome")))
+					{
+						imBean = imDAO.doRetrieveByKey(immagine);
+						elencoPathImmagini.add(imBean.getUrl());
 					}
+
+					bean.setPathImage(elencoPathImmagini);
+					
 					//ottieni peso
 					String sqlPeso = "SELECT peso FROM estensione WHERE prodotto = ?;";
 					try(PreparedStatement statement2 = conn.prepareStatement(sqlPeso)){
@@ -295,25 +259,9 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps.setString(7, bean.getNome());
 					ps.executeUpdate();
 					
-					Integer id = null;
-					String getImageSQL ="SELECT idImmagine FROM kindkaribe.immagine WHERE URL = ?;"; 
-					try(PreparedStatement ps4 = con.prepareStatement(getImageSQL)){
-						ps4.setString(1, bean.getPathImage().get(0)); 
-
-						ResultSet image = ps4.executeQuery();
-						if(image.next()) {
-							id = image.getInt("idImmagine");
-						}
-						else { //se l'immagine è stata modificata metto quella nuova
-							String insertImage ="INSERT INTO `kindkaribe`.`possessoImmagine` (`prodotto`, `immagine`) VALUES (?,?)";
-							try(PreparedStatement ps3 = con.prepareStatement(insertImage)){
-								ps3.setString(1, bean.getNome());
-								ps3.setInt(2, id);
-
-								ps3.execute();
-							}
-						}
-					}
+					
+						
+					
 				}
 			}
 		}
@@ -334,25 +282,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps.executeUpdate();	
 					//ps.setString(8, bean.getGusti()); //gusti deve andare in "costituzione"
 					//TO DO PESO
-					Integer id = null;
-					String getImageSQL ="SELECT idImmagine FROM kindkaribe.immagine WHERE URL = ?;"; 
-					try(PreparedStatement ps4 = con.prepareStatement(getImageSQL)){
-						ps4.setString(1, bean.getPathImage().get(0)); 
 
-						ResultSet image = ps4.executeQuery();
-						if(image.next()) {
-							id = image.getInt("idImmagine");
-						}
-						else { //se l'immagine è stata modificata metto quella nuova
-							String insertImage ="INSERT INTO `kindkaribe`.`possessoImmagine` (`prodotto`, `immagine`) VALUES (?,?)";
-							try(PreparedStatement ps3 = con.prepareStatement(insertImage)){
-								ps3.setString(1, bean.getNome());
-								ps3.setInt(2, id);
-
-								ps3.execute();
-							}
-						}
-					}
 					
 				}
 			}

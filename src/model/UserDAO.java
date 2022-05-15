@@ -136,6 +136,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 					}
 					
 					bean.setElencoMetodiPagamento(MetodiPagamento);
+					listaUtenti.add(bean);
 				}
 			}
 		}

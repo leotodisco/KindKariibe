@@ -92,7 +92,7 @@
 	</form>
 
 	<h2>Rimuovi Elemento</h2>
-	<form action="AdminServlet" method="post">
+	<form action="AdminServlet" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="operazione" value="rimuovi"> <label
 			for="nome">Nome:</label><br> <input name="nome" type="text"
 			maxlength="20" required placeholder="inserire nome..."><br>
@@ -103,7 +103,7 @@
 	</form>
 
 	<h2>Aggiorna prodotto</h2>
-	<form action="AdminServlet" method="post">
+	<form action="AdminServlet" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="operazione" value="aggiorna"> 
 		
 				 <label	for="nome">Nome:</label><br> <input name="nome" type="text"

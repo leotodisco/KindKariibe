@@ -15,8 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.CategoriaBean;
+import beans.ImmagineBeans;
 import beans.ProdottoBean;
 import model.CategoriaDAO;
+import model.ImmagineDAO;
+import model.PossessoImmagineDAO;
 import model.ProdottoDAO;
 
 /**
@@ -49,7 +52,6 @@ public class AdminServlet extends HttpServlet {
 		ProdottoDAO prod = new ProdottoDAO();
 		MultipartRequest multi;
 		String path = getServletContext().getRealPath("/")+"immagini";
-		System.out.println(path);
 		multi = new MultipartRequest(request,path,20971520);
 		String azioni = multi.getParameter("operazione");
 
@@ -65,10 +67,17 @@ public class AdminServlet extends HttpServlet {
 		
 			
 			
+			ImmagineBeans immagine = new ImmagineBeans();
+			ImmagineDAO imDAO = new ImmagineDAO();
+			PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
+			
 			CategoriaDAO buffer = new CategoriaDAO();
 			Optional<CategoriaBean> cat;
 			ProdottoBean bean = new ProdottoBean();
 			try {
+				immagine.setNome(multi.getOriginalFileName("image"));
+				immagine.setUrl(multi.getOriginalFileName("image"));
+				immagine.setTestoAlt("immagine mancante");
 				cat = Optional.of(buffer.doRetrieveByKey(catNome));
 				bean.setNome(name);
 				bean.setDescrizione(description);
@@ -86,6 +95,9 @@ public class AdminServlet extends HttpServlet {
 
 			try {
 				prod.doSave(bean);
+				int ID = imDAO.doSaveI(immagine);
+				immagine.setIdImmagine(ID);
+				posDAO.doSave(immagine, bean);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -94,7 +106,7 @@ public class AdminServlet extends HttpServlet {
 
 		//rimuove totalmente il prodotto dal database
 		if(azioni.equals("rimuovi")) {
-			String name = request.getParameter("nome");
+			String name = multi.getParameter("nome");
 			//TO DO metodo x diminuire la quantita nel database di quanto vale quantita
 
 			try {
