@@ -144,10 +144,12 @@
 		<% }
 		}
 		%>
-	
+	<a href = "login-form.jsp">Login</a>
 <form action="LogoutServlet" method="get" > 
      <input type="submit" value="Logout"/>
-</form> 
+ </form>
+     
+
 <h1>Carrello</h1> <p><a href = "GestioneCarrello?action=svuota">svuota</a></p><p><a href = "GestioneCarrello?action=acquista">acquista</a></p> 
 	<% HttpSession sessione = request.getSession();
 	

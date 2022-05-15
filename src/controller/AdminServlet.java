@@ -39,7 +39,7 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.doPost(request,response);
 	}
 
 	/**
@@ -49,8 +49,8 @@ public class AdminServlet extends HttpServlet {
 		ProdottoDAO prod = new ProdottoDAO();
 		MultipartRequest multi;
 		String path = getServletContext().getRealPath("/")+"immagini";
+		System.out.println(path);
 		multi = new MultipartRequest(request,path,20971520);
-		
 		String azioni = multi.getParameter("operazione");
 
 		if(azioni.equals("inserire")) {
@@ -105,7 +105,9 @@ public class AdminServlet extends HttpServlet {
 			}
 		}
 
+		
 		if(azioni.equals("aggiorna")) {
+			
 			String name = request.getParameter("nome");
 			String description = request.getParameter("descrizione");
 			Double price = Double.parseDouble(request.getParameter("prezzo"));
