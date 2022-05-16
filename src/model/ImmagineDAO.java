@@ -48,7 +48,7 @@ public class ImmagineDAO implements ModelInterface<ImmagineBeans> {
 				preparedStatement2.setInt(2, bean.getAltezza());
 				preparedStatement2.setInt(3, bean.getLunghezza());
 				preparedStatement2.setString(4, bean.getUrl());
-				preparedStatement2.setString(5, bean.getNome());
+				preparedStatement2.setString(5, bean.getNome().substring(0, bean.getNome().length() - 4));
 				preparedStatement2.setString(6, bean.getTestoAlt());
 				
 				preparedStatement2.executeUpdate();
