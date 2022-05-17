@@ -1,6 +1,7 @@
 package beans;
 
 import java.util.ArrayList;
+import java.sql.*;
 import java.util.Date;
 
 public class UserBean {
@@ -12,7 +13,7 @@ public class UserBean {
 	private String nTelefono;
 	private String password;
 	private String sesso; //puo valere F o M
-	private Date dataNascita;
+	private java.sql.Date dataNascita;
 	private ArrayList<MetodoPagamentoBean> elencoMetodiPagamento = new ArrayList<>();
 	private ArrayList<IndirizzoBean> indirizziSpedizione;
 	private Boolean admin;
@@ -99,11 +100,11 @@ public class UserBean {
 		this.sesso = sesso;
 	}
 	
-	public Date getDataNascita() {
+	public java.sql.Date getDataNascita() {
 		return this.dataNascita;
 	}
 	
-	public void setDataNascita(Date data) {
+	public void setDataNascita(java.sql.Date data) {
 		this.dataNascita = data;
 	}
 

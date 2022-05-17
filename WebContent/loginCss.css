@@ -169,6 +169,21 @@ a {
   
 }
 
+.data{
+background-color: red;
+display: flex;
+}
+
+.uname5{
+    width: 87px;
+    height: 30px;
+    border-color: #2f2f2f;
+    border: 2px solid #2f2f2f;
+    background-color: #FCEFD4;
+    border-radius: 17px;
+    margin-left: 8px;
+}
+
 @media screen and(max-width:800px){
     body{
         justify-content: center;

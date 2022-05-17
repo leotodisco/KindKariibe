@@ -32,9 +32,10 @@ public class UserDAO implements ModelInterface<UserBean> {
 
 	@Override
 	public void doSave(UserBean bean) throws SQLException {
-		String insertSQL = "INSERT INTO utente" 
+		
+		String insertSQL = "INSERT INTO utente " 
 				+ " (codiceFiscale, nome, cognome, email, nTelefono, password, genere, dataNascita ) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection con = ds.getConnection()){
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
@@ -45,10 +46,9 @@ public class UserDAO implements ModelInterface<UserBean> {
 				preparedStatement.setString(5, bean.getnTelefono());
 				preparedStatement.setString(6, bean.getPassword());
 				preparedStatement.setString(7, bean.getSesso());
-				preparedStatement.setDate(8, (java.sql.Date) bean.getDataNascita());
+				preparedStatement.setDate(8, bean.getDataNascita());
 
 				preparedStatement.executeUpdate();
-				con.commit();
 			}
 		}
 		
