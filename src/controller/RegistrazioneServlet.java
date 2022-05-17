@@ -43,7 +43,6 @@ public class RegistrazioneServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("\n\n\n\n"+"nyyftcgcgcgc"+"\n\n\n");
 		
 		String nome = request.getParameter("nome");
 		String cognome = request.getParameter("cognome");
@@ -59,16 +58,19 @@ public class RegistrazioneServlet extends HttpServlet {
 		String nCivico = request.getParameter("nCivico"); 
 		String dataS = request.getParameter("data");
 		
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date dataNascita = new java.util.Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 		UserBean utente = new UserBean();
 		try {
 			Date data = sdf.parse(dataS);
-			utente.setDataNascita(data);
+			java.sql.Date dataSQL = new java.sql.Date(data.getTime());
+
+			utente.setDataNascita(dataSQL);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		UserDAO dao = new UserDAO();
 		
