@@ -1,0 +1,96 @@
+@font-face{
+    font-family:"archia-regular";
+    src:url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("truetype");
+}
+
+@font-face {
+    font-family: 'intro_script_demomedium';
+    src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+  }
+
+body{
+    background-color: #fcefd4;
+    padding: 0;
+    margin: 0;
+}
+
+#titolo{
+    font-family: 'intro_script_demomedium';
+    font-size: 2.5rem;
+}
+
+#title{
+    text-align: center;
+}
+
+.immagine{
+	width: 50px;
+	height:50px;
+}
+
+table{
+    width: 100%;
+    table-layout: fixed;
+    font-family: 'archia-regular';
+    border: 2px solid #2f2f2f;
+    text-align: center;
+}
+
+td{
+    width: 100%;
+    font-family: 'archia-regular';
+    border: 2px solid #2f2f2f;
+}
+
+th{
+	width: 100%;
+    font-family: 'archia-regular';
+    border: 2px solid #2f2f2f;
+    weight: 1000;
+}
+
+div li{
+    margin-left: 10px;
+    font-family: 'archia-regular';
+    font-size: 1.5rem;
+    margin-top: 20px;
+    padding-bottom: 10px;
+}
+
+/*MODALE*/
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+  }
+  
+  .modal-content {
+    background-color: #eddab4;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #2f2f2f;
+    width: 50%;
+
+  }
+  
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #2f2f2f;
+    text-decoration: none;
+    cursor: pointer;
+  }
