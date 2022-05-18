@@ -1,0 +1,107 @@
+@charset "UTF-8";
+@font-face {
+    font-family: 'intro_script_demomedium';
+    src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+  }
+  
+  
+  @font-face{
+      font-family:"archia-regular";
+      src:url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("woff"),
+      url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("opentype"),
+      url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("truetype");
+    }
+
+    *{
+        padding:0;
+        margin:0;
+    }
+    
+body{
+    background-color: #FCEFD4; 
+}
+
+.container{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    gap: 50px;
+}
+
+.dettagli-card{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 16px 8px 8px 8px;
+    justify-content: center;
+}
+
+.nome{
+    font-family: 'archia-regular';
+    font-weight:900;
+    font-size: 1.2rem;
+}
+
+.card{
+    text-align: center;
+    align-items: center;
+}
+
+img{
+    border: 1px solid black;
+    height: 80%;
+    width: 70%;
+    border-radius: 12px;
+    margin-top: 5px;
+    object-fit: cover;
+}
+
+p{
+    margin-top: 3px;
+    font-family: 'archia-regular';  
+}
+
+button{
+    margin-top: 10px;
+    border-radius: 20px;
+    background-color: #FCEFD4;
+    cursor: pointer;
+    width: 100px;
+}
+
+.image{
+    width: 220px;
+    height: 220px;
+}
+
+.titolo{
+    text-align: center;
+    font-family: 'intro_script_demomedium';
+    color: #2f2f2f;
+    font-size:4.5rem;
+}
+
+.pasticceria{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+a{
+	text-decoration: none;
+	font-family: 'archia-regular';  
+}
+
+@media (max-width:800px) {
+    .container{
+        flex-direction: column;
+    }
+
+
+
+}
