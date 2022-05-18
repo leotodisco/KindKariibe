@@ -23,11 +23,12 @@ body{
 
 .container{
     margin-top: 50px;
-    display: flex;
-    flex-direction: row;
+    display: grid;
     justify-content: center;
     text-align: center;
-    gap: 50px;
+    row-gap: 50px;
+    column-gap: 50px;
+    grid-template-columns: repeat(5, 230px);
 }
 
 .dettagli-card{
