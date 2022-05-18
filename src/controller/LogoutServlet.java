@@ -29,7 +29,7 @@ public class LogoutServlet extends HttpServlet {
 		request.getSession().removeAttribute("adminRoles");
 		request.getSession().invalidate();
 
-		String redirectedPage = "/login-form.jsp";
+		String redirectedPage = "/Catalogo.jsp";
 		response.sendRedirect(request.getContextPath() + redirectedPage);	
 	}
 

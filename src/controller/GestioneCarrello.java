@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import beans.OrdineBean;
 import beans.ProdottoBean;
+import beans.UserBean;
 import model.Carrello;
 import model.ProdottoDAO;
 
@@ -41,6 +43,16 @@ public class GestioneCarrello extends HttpServlet {
 		Carrello cart = (Carrello) sessione.getAttribute("Carrello"); 
 		
 		
+		UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
+		
+		if(utente == null)
+		{
+			RequestDispatcher login = request.getRequestDispatcher("login-form.jsp");
+			login.forward(request, response);
+		}
+		
+		
+		
 		if(azione.equals("aggiungi"))
 		{
 			ProdottoDAO dao = new ProdottoDAO();
@@ -55,6 +67,8 @@ public class GestioneCarrello extends HttpServlet {
 
 				cart.addProduct(prodotto);
 				sessione.setAttribute("Carrello", cart);
+				RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+				view.forward(request, response);
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -66,6 +80,8 @@ public class GestioneCarrello extends HttpServlet {
 			cart = new Carrello();
 			
 			sessione.setAttribute("Carrello", cart);
+			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+			view.forward(request, response);
 		}
 		else if(azione.equals("acquista"))
 		{
@@ -80,6 +96,7 @@ public class GestioneCarrello extends HttpServlet {
 			String id = request.getParameter("id");
 			ProdottoDAO dao = new ProdottoDAO();
 			ProdottoBean prodotto;
+			
 			try {
 				prodotto = dao.doRetrieveByKey(id);
 				cart.deleteProduct(prodotto);
@@ -90,14 +107,13 @@ public class GestioneCarrello extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			
+			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+			view.forward(request, response);
 			
 			
 		}
 		
-		
-		RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
-		view.forward(request, response);
+
 			
 	}
 

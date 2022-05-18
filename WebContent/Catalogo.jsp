@@ -10,17 +10,10 @@
 </head>
 <body>
 
-	<%  UserBean utente = (UserBean) request.getAttribute("utente"); 
+	<%  UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 	
-		if(utente == null)
+		if(utente != null && utente.getAdmin())
 		{
-			utente = (UserBean) request.getSession(true).getAttribute("utente");
-		}
-	
-		if(utente.getAdmin())
-		{
-			HttpSession sessione = request.getSession(true);
-			sessione.setAttribute("utente", utente);
 		%>
 		<jsp:forward page="adminPage.jsp"/>
 	<% } %>
@@ -99,7 +92,7 @@
 			%>
 
 
-
+		<a href = "login-form.jsp">Login</a>
 
 
 
