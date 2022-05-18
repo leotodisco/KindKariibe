@@ -1,19 +1,25 @@
 package controller;
 
+import com.oreilly.servlet.MultipartRequest;
+
+import java.io.File;
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.Optional;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.CategoriaBean;
+import beans.ImmagineBeans;
 import beans.ProdottoBean;
 import model.CategoriaDAO;
+import model.ImmagineDAO;
+import model.PossessoImmagineDAO;
 import model.ProdottoDAO;
 
 /**
@@ -36,7 +42,7 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.doPost(request,response);
 	}
 
 	/**
@@ -44,23 +50,34 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProdottoDAO prod = new ProdottoDAO();
-		String azioni = request.getParameter("operazione");
+		MultipartRequest multi;
+		String path = getServletContext().getRealPath("/")+"immagini";
+		multi = new MultipartRequest(request,path,20971520);
+		String azioni = multi.getParameter("operazione");
 
 		if(azioni.equals("inserire")) {
-			String name = request.getParameter("nome");
-			String description = request.getParameter("descrizione");
-			Double price = Double.parseDouble(request.getParameter("prezzo"));
-			Double quantity = Double.parseDouble(request.getParameter("quantita"));
-			String catNome = request.getParameter("categoria");
-			Double iva = Double.parseDouble(request.getParameter("IVA"));
-			Double peso = Double.parseDouble(request.getParameter("peso"));
-			String immagine = request.getParameter("immagine");
-			String tipo = request.getParameter("tipo");
+			String name = multi.getParameter("nome");
+			String description = multi.getParameter("descrizione");
+			Double price = Double.parseDouble(multi.getParameter("prezzo"));
+			Double quantity = Double.parseDouble(multi.getParameter("quantita"));
+			String catNome = multi.getParameter("categoria");
+			Double iva = Double.parseDouble(multi.getParameter("IVA"));
+			Double peso = Double.parseDouble(multi.getParameter("peso"));
+			String tipo = multi.getParameter("tipo");
+		
+			
+			
+			ImmagineBeans immagine = new ImmagineBeans();
+			ImmagineDAO imDAO = new ImmagineDAO();
+			PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
 			
 			CategoriaDAO buffer = new CategoriaDAO();
 			Optional<CategoriaBean> cat;
 			ProdottoBean bean = new ProdottoBean();
 			try {
+				immagine.setNome(multi.getOriginalFileName("image"));
+				immagine.setUrl(multi.getOriginalFileName("image"));
+				immagine.setTestoAlt("immagine mancante");
 				cat = Optional.of(buffer.doRetrieveByKey(catNome));
 				bean.setNome(name);
 				bean.setDescrizione(description);
@@ -68,7 +85,6 @@ public class AdminServlet extends HttpServlet {
 				bean.setQuantitaResidua(quantity);
 				bean.setCategoria(cat);
 				bean.setIVA(iva);
-				bean.addImmagine(immagine);
 				bean.setPeso(peso);
 				bean.setTipo(tipo);
 				
@@ -79,6 +95,9 @@ public class AdminServlet extends HttpServlet {
 
 			try {
 				prod.doSave(bean);
+				int ID = imDAO.doSaveI(immagine);
+				immagine.setIdImmagine(ID);
+				posDAO.doSave(immagine, bean);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -87,7 +106,7 @@ public class AdminServlet extends HttpServlet {
 
 		//rimuove totalmente il prodotto dal database
 		if(azioni.equals("rimuovi")) {
-			String name = request.getParameter("nome");
+			String name = multi.getParameter("nome");
 			//TO DO metodo x diminuire la quantita nel database di quanto vale quantita
 
 			try {
@@ -98,7 +117,9 @@ public class AdminServlet extends HttpServlet {
 			}
 		}
 
+		
 		if(azioni.equals("aggiorna")) {
+			
 			String name = request.getParameter("nome");
 			String description = request.getParameter("descrizione");
 			Double price = Double.parseDouble(request.getParameter("prezzo"));

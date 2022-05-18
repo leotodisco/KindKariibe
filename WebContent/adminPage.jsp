@@ -65,14 +65,18 @@
                     <label for="categoria">Categoria:</label><br>
                     <select name="categoria">
                         <!--CATEGORIA BEAN NEL FOR CHE MI STAMPA TUTTE LE CATEGORIE-->
-                        <option value="volvo">Volvo</option>
+                        <option value="Monoporzione">Monoporzione</option>
+                        <option value="Gelato">Gelato</option>
+						<option value="Babà">Babà</option>
+						<option value="Piccola pasticceria">Piccola pasticceria</option>
+						<option value="Torta">Torta</option>
                     </select>
                     <br>
 
                     <label for="tipo">Tipo:</label><br>
                     <select name="tipo">
-                        <option value="volvo">Pasticceria</option>
-                        <option value="volvo">Vaschetta</option>
+                        <option value="Pasticceria">Pasticceria</option>
+                        <option value="Vaschetta">Vaschetta</option>
                     </select>
                     <br>
 
@@ -107,6 +111,7 @@
         <button id="myBtn1">Aggiorna</button>
         <div id="myModal1" class="modal">
             <div class="modal-content">
+            <!-- QUI AGGIUNGERE ID -->
                 <span class="close">&times;</span>
 
                 <form action="AdminServlet" method="post" enctype="multipart/form-data">
@@ -117,14 +122,18 @@
                     <label for="categoria">Categoria:</label><br>
                     <select name="categoria">
                         <!--CATEGORIA BEAN NEL FOR CHE MI STAMPA TUTTE LE CATEGORIE-->
-                        <option value="volvo">Volvo</option>
+                        <option value="Monoporzione">Monoporzione</option>
+                        <option value="Gelato">Gelato</option>
+						<option value="Babà">Babà</option>
+						<option value="Piccola pasticceria">Piccola pasticceria</option>
+						<option value="Torta">Torta</option>
                     </select>
                     <br>
 
                     <label for="tipo">Tipo:</label><br>
                     <select name="tipo">
-                        <option value="volvo">Pasticceria</option>
-                        <option value="volvo">Vaschetta</option>
+                        <option value="Pasticceria">Pasticceria</option>
+                        <option value="Gelateria">Vaschetta</option>
                     </select>
                     <br>
 
@@ -175,22 +184,24 @@
                 modal.style.display = "none";
             }
         }
+        
+        var modl = document.getElementById("myModal1");
+        var btn1 = document.getElementById("myBtn1");
+        var span1 = document.getElementsByClassName("close")[1];
 
-        var modal = document.getElementById("myModal1");
-        var btn = document.getElementById("myBtn1");
-        var span = document.getElementsByClassName("close")[0];
-
-        btn.onclick = function () {
-            modal.style.display = "block";
+        btn1.onclick = function () {
+            modl.style.display = "block";
         }
-        span.onclick = function () {
-            modal.style.display = "none";
+        span1.onclick = function () {
+            modl.style.display = "none";
         }
         window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == modl) {
+                modl.style.display = "none";
             }
         }
+        
+
     </script>
 </body>
 </html>

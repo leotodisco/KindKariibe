@@ -73,7 +73,6 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 			}	
 		}
 		
-		System.out.println("\n\n\n"+result+"\n\n\n");
 		return result;
 	}
 

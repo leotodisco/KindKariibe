@@ -13,7 +13,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import beans.IndirizzoBean;
 import beans.MetodoPagamentoBean;
 import beans.UserBean;
 
@@ -32,10 +31,9 @@ public class UserDAO implements ModelInterface<UserBean> {
 
 	@Override
 	public void doSave(UserBean bean) throws SQLException {
-		
-		String insertSQL = "INSERT INTO utente " 
+		String insertSQL = "INSERT INTO utente" 
 				+ " (codiceFiscale, nome, cognome, email, nTelefono, password, genere, dataNascita ) "
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?,?)";
 
 		try (Connection con = ds.getConnection()){
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
@@ -46,18 +44,14 @@ public class UserDAO implements ModelInterface<UserBean> {
 				preparedStatement.setString(5, bean.getnTelefono());
 				preparedStatement.setString(6, bean.getPassword());
 				preparedStatement.setString(7, bean.getSesso());
-				preparedStatement.setDate(8, bean.getDataNascita());
+				preparedStatement.setDate(8, (java.sql.Date) bean.getDataNascita());
 
 				preparedStatement.executeUpdate();
 			}
 		}
 		
-		//
-		MetodoPagamentoDAO metodo = new MetodoPagamentoDAO();
-		for( MetodoPagamentoBean p : bean.getElencoMetodiPagamento()) {			
-			metodo.doSave(p);
 		}
-	}
+	
 
 	@Override
 	public boolean doDelete(String codiceFiscale) throws SQLException {
@@ -91,13 +85,18 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setPassword(rs.getString("password"));
 					bean.setDataNascita(rs.getDate("dataNascita"));
 					bean.setSesso(rs.getString("genere"));	
-					
-					MetodoPagamentoDAO daoPagamenti= new MetodoPagamentoDAO();
-					bean.setElencoMetodiPagamento(daoPagamenti.doRetriveByUtente(codiceFiscale));
-					
-					IndirizzoDao indirizzoDao=new IndirizzoDao();
-					bean.setIndirizziSpedizione(indirizzoDao.doRetriveByUtente(codiceFiscale));
-					
+					ArrayList<MetodoPagamentoBean> MetodiPagamento = new ArrayList<>();
+					MetodoPagamentoDAO metodiDAO = new MetodoPagamentoDAO();
+
+					String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = '" + codiceFiscale + "'";
+
+					try(PreparedStatement ps = connection.prepareStatement(sqlPagamenti)){
+						ResultSet metodi = ps.executeQuery();
+						while(metodi.next()) {
+							MetodiPagamento.add(metodiDAO.doRetrieveByKey(metodi.getString("idMetodoPagamento")));
+						}
+					}
+					bean.setElencoMetodiPagamento(MetodiPagamento);
 				}
 			}
 		}
@@ -124,15 +123,20 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setDataNascita(rs.getDate("dataNascita"));
 					bean.setSesso(rs.getString("genere"));	
 					bean.setnTelefono(rs.getString("nTelefono"));
-					ArrayList<IndirizzoBean>indirizzi= new ArrayList<>();
+					ArrayList<MetodoPagamentoBean> MetodiPagamento = new ArrayList<>();
+					MetodoPagamentoDAO metodiDAO = new MetodoPagamentoDAO();
+
+					String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = '" + bean.getCodiceFiscale() + "'";
+
+					try(PreparedStatement ps = connection.prepareStatement(sqlPagamenti)){
+						ResultSet metodi = ps.executeQuery();
+						while(metodi.next()) {
+							MetodiPagamento.add(metodiDAO.doRetrieveByKey(metodi.getString("idMetodoPagamento")));
+						}
+					}
 					
-					MetodoPagamentoDAO daoPagamenti= new MetodoPagamentoDAO();
-					bean.setElencoMetodiPagamento(daoPagamenti.doRetriveByUtente(bean.getCodiceFiscale()));
-					
-					//completare con gli indirizzi
-					
-					IndirizzoDao indirizzoDao=new IndirizzoDao();
-					bean.setIndirizziSpedizione(indirizzoDao.doRetriveByUtente(bean.getCodiceFiscale()));
+					bean.setElencoMetodiPagamento(MetodiPagamento);
+					listaUtenti.add(bean);
 				}
 			}
 		}
@@ -182,12 +186,18 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setnTelefono(rs.getString("nTelefono"));
 					bean.setAdmin(rs.getBoolean("admin"));
 					
-					//acquisizione dei metodi di pagamento legati all'account
-					MetodoPagamentoDAO daoPagamenti= new MetodoPagamentoDAO();
-					bean.setElencoMetodiPagamento(daoPagamenti.doRetriveByUtente(bean.getCodiceFiscale()));
+					String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = '" + bean.getCodiceFiscale() + "'";
+
+					ArrayList<MetodoPagamentoBean> MetodiPagamento = new ArrayList<>();
+					MetodoPagamentoDAO metodiDAO = new MetodoPagamentoDAO();
 					
-					IndirizzoDao indirizzoDao=new IndirizzoDao();
-					bean.setIndirizziSpedizione(indirizzoDao.doRetriveByUtente(bean.getCodiceFiscale()));
+					try(PreparedStatement ps = connection.prepareStatement(sqlPagamenti)){
+						ResultSet metodi = ps.executeQuery();
+						while(metodi.next()) {
+							MetodiPagamento.add(metodiDAO.doRetrieveByKey(metodi.getString("metodo")));
+						}
+					}
+					bean.setElencoMetodiPagamento(MetodiPagamento);
 				}
 			}
 		}
