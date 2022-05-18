@@ -43,6 +43,16 @@ public class GestioneCarrello extends HttpServlet {
 		Carrello cart = (Carrello) sessione.getAttribute("Carrello"); 
 		
 		
+		UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
+		
+		if(utente == null)
+		{
+			RequestDispatcher login = request.getRequestDispatcher("login-form.jsp");
+			login.forward(request, response);
+		}
+		
+		
+		
 		if(azione.equals("aggiungi"))
 		{
 			ProdottoDAO dao = new ProdottoDAO();
