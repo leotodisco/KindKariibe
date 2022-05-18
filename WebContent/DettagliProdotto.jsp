@@ -11,7 +11,11 @@
 <%= bean.getNome()%></title>
 </head>
 <body>
+<<<<<<< HEAD
 
+=======
+<jsp:include page="header.jsp" />
+>>>>>>> 8768e1d529c6d35b00affba509d2991d75a9a0ff
 
 	      <div class = "container">
             <div class ="item">

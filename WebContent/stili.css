@@ -1,208 +1,67 @@
-@charset "UTF-8";
-
-@font-face{
-  font-family:"archia-regular";
-  src:url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("woff"),
-  url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("opentype"),
-  url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("truetype");
+@font-face {
+  font-family: "archia-regular";
+  src: url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("truetype");
 }
 
-
-*{
+* {
+  margin: 0;
   padding: 0;
-  margin:0;
-  border:0;
-  font-family:"archia-regular";
+  background-color: #fcefd4;
 }
 
-body{
-  text-transform:none;
-  background-color: #FCEFD4; 
-  color: #2F2F2F;
-}
-
-.header-container {
-	display: flex;
-	justify-content: space-between;
-	align-content: center;
-	align-items: center;
-	padding: 3rem;
-}
-
-.menu-item{
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  gap: 1rem;
-  font-size:30px;
-}
-
-.testo-menu{
+.elenco {
   display: inline-block;
-  text-decoration: none;
-  color: #2F2F2F;
+  list-style: none;
+  font-family: "archia-regular";
+  font-size: 1.5rem;
+  word-spacing: 6px;
 }
 
-a:hover{
-  color: #2F2F2F;
-  font-weight: bold;
+.elenco li {
+  display: inline-block;
 }
 
-a:active {
-	font-weight: bold;
+.text-user {
+  text-align: center;
+  color: #2f2f2f;
+  font-family: "Archia-Regular";
+  font-size: 1.2rem;
+  padding-right: 10px;
 }
 
-.logo-header{
-  display: flex;
+.nav-container {
+  background-color: #fcefd4;
+  margin-top: 30px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  place-items: center;
 }
 
-.parte-destra-header{
+.nav-container-item-dx{
+  margin-left: 140px;
+    display: flex;
+    align-items: center;
+
+}
+
+.nav-container-item-sx{
+  margin-right: 140px;
+
+}
+
+.nav-container-item{
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  gap: 10px;
+  gap: 0px 11px;
 }
 
-.menu-item2{
-  display: none;
-}
-
-.hamburger {
-  cursor: pointer;
-  content: '';
-  display: none;
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  transition: all 0.25s;
-}
-
-.hamburger__top-bun,
-.hamburger__bottom-bun {
-  content: '';
-  display: block;
-  position: absolute;
-  left: 15px;
-  width: 18px;
-  height: 1px;
-  background: #2F2F2F;
-  transform: rotate(0);
-  transition: all 0.25s;
-}
-
-.hamburger:hover [class*="-bun"] {
-  background: #fff;
-}
-
-.hamburger__top-bun {
-  top: 23px;
-  transform: translateY(-3px);
-}
-
-.hamburger__bottom-bun {
-  bottom: 23px;
-  transform: translateY(3px);
-}
-
-.open {
-  transform: rotate(90deg);
-}
-
-.open .hamburger__top-bun {
-  transform: 
-    rotate(45deg) 
-    translateY(0px);
-}
-
-.open .hamburger__bottom-bun {
-  transform: 
-    rotate(-45deg) 
-    translateY(0px);
-}
-
-@media (max-width: 800px) {
-.mediaQuery{
-  display: flex;
-  flex-direction: column;
-}
-
-.header-container{
-  display: none;
-}
-
-.menu-item{
-  flex-direction: column;
-}
-
-.menu-item2{
-  font-size: 1.8rem;
-  margin-top: 8rem;
-  flex-direction: column;
-  display: flex;
-  align-items: stretch;
-  row-gap: 30px;
-}
-
-.hamburger {
-  margin-left: 10px;
-  margin-top: 2rem;
-  cursor: pointer;
-  content: '';
-  display: block;
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  transition: all 0.25s;
-}
-
-
-.hamburger__top-bun,
-.hamburger__bottom-bun {
-  content: '';
-  display: block;
-  position: absolute;
-  left: 15px;
-  width: 18px;
-  height: 1px;
-  background: #2F2F2F;
-  transform: rotate(0);
-  transition: all 0.25s;
-}
-
-.hamburger:hover [class*="-bun"] {
-  background: rgb(182, 97, 0);
-}
-
-.hamburger__top-bun {
-  top: 23px;
-  transform: translateY(-3px);
-}
-
-.hamburger__bottom-bun {
-  bottom: 23px;
-  transform: translateY(3px);
-}
-
-.open {
-  transform: rotate(90deg);
-}
-
-.open .hamburger__top-bun {
-  transform: 
-    rotate(45deg) 
-    translateY(0px);
-}
-
-.open .hamburger__bottom-bun {
-  transform: 
-    rotate(-45deg) 
-    translateY(0px);
-}
-
-
-.testo-menu{
-  margin-left: 10px;
-}
-
-
+.cart{
+	width: 50px;
+	height: 50px;
 }

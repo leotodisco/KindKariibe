@@ -28,6 +28,37 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 			System.out.println("Error:" + e.getMessage());
 		}
 	}
+	
+	public ArrayList<MetodoPagamentoBean> doRetriveByUtente(String codiceFiscale) throws SQLException{
+		String sql="SELECT * FROM metodopagamento INNER JOIN datipagamento ON idMetodoPagamento = metodo WHERE utente= '"+codiceFiscale+"'";
+		
+		try(Connection con= ds.getConnection()){
+			ArrayList<MetodoPagamentoBean> metodi= new ArrayList<>();
+			
+			try(PreparedStatement ps=con.prepareStatement(sql)){
+				ResultSet rs=ps.executeQuery();
+				while(rs.next()) {
+					MetodoPagamentoBean metodo= new MetodoPagamentoBean();
+					
+					metodo.setidMetodoPagamento(rs.getInt("idMetodoPagamento"));
+					metodo.setTipo(rs.getString("tipo"));
+					metodo.setNomeIntestatario(rs.getString("nomeIntestatario"));
+					metodo.setNumeroCarta(rs.getString("numeroCarta"));
+					metodo.setMeseScadenza(rs.getInt("meseScadenza"));
+					metodo.setAnnoScadenza(rs.getInt("annoScadenza"));
+					metodo.setIban(rs.getString("IBAN"));
+					metodo.setCausale(rs.getString("causale"));
+					metodo.setCircuito(rs.getString("circuito"));
+					metodo.setCVV(rs.getInt("CVV"));
+					
+					metodi.add(metodo);
+				}
+				
+				return metodi;
+			}
+			
+		}
+	}
 
 	@Override
 	public void doSave(MetodoPagamentoBean bean) throws SQLException {

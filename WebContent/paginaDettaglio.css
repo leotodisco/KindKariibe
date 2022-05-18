@@ -90,6 +90,7 @@ body{
         border-radius: 30px;
         width: 336px;
         height: 60px;
+
 }
 
 .container-bottone{
@@ -158,8 +159,6 @@ a{
 
     .image{
         display: inline-block;
-        height: auto;
-        width: 70%;
         border-radius: 25px;
         text-align: center;
         align-items: center;
