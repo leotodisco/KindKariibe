@@ -53,7 +53,7 @@
 
 
 	<form action="LogoutServlet" method="get">
-		<input type="submit" value="Logout" />
+		<input type="submi value="Logout" />
 	</form>
 	<h1>Carrello</h1>
 	<p>
