@@ -28,6 +28,7 @@
         <th>Quantità Residua</th>
         <th>Descrizione</th>
         <th>IVA</th>
+        <th>Elimina</th>
         </tr>
 
   <%
@@ -44,6 +45,13 @@
   					<td><%=  prodotto.getQuantitaResidua().intValue() %></td>
   					<td><%= prodotto.getDescrizione() %></td>
   					<td><%= prodotto.getIVA() %>&percnt;</td>
+  					<td>
+  						<form action="AdminServlet" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="operazione" value="rimuovi">
+							<input name="nome" type="hidden" value="<%= prodotto.getNome() %>">
+							<input type="submit" value="&times;" class="close-">
+						</form>	
+  					</td>
   					</tr>
   					
   				<%}%>
@@ -161,11 +169,6 @@
 
             </div>
         </div>
-
-
-
-
-
     </div>
 
     <script>
