@@ -86,6 +86,23 @@ div li{
     float: right;
     font-size: 28px;
     font-weight: bold;
+    cursor: pointer;
+  }
+  
+    .close-{
+    background-color: #fcefd4;
+    border: none;
+    color: #2f2f2f;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  
+  .close-:hover, 
+  .close-:focus {
+    color: #2f2f2f;
+    font-size: 32px;
+    text-decoration: none;
+    cursor: pointer;
   }
   
   .close:hover,
