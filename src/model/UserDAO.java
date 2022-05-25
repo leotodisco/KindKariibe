@@ -186,19 +186,15 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setnTelefono(rs.getString("nTelefono"));
 					bean.setAdmin(rs.getBoolean("admin"));
 					
-					String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = '" + bean.getCodiceFiscale() + "'";
-
-					ArrayList<MetodoPagamentoBean> MetodiPagamento = new ArrayList<>();
-					MetodoPagamentoDAO metodiDAO = new MetodoPagamentoDAO();
-					
-					try(PreparedStatement ps = connection.prepareStatement(sqlPagamenti)){
-						ResultSet metodi = ps.executeQuery();
-						while(metodi.next()) {
-							MetodiPagamento.add(metodiDAO.doRetrieveByKey(metodi.getString("metodo")));
-						}
-					}
-					bean.setElencoMetodiPagamento(MetodiPagamento);
 				}
+				
+				MetodoPagamentoDAO daoPagamenti= new MetodoPagamentoDAO();
+				bean.setElencoMetodiPagamento(daoPagamenti.doRetriveByUtente(bean.getCodiceFiscale()));
+				
+				IndirizzoDao daoIndirizzi= new IndirizzoDao();
+				bean.setIndirizziSpedizione(daoIndirizzi.doRetriveByUtente(bean.getCodiceFiscale()));
+				
+				
 			}
 		}
 		return bean;

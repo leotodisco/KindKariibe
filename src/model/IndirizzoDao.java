@@ -51,7 +51,7 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 	
 	
 	public ArrayList<IndirizzoBean> doRetriveByUtente(String codiceFiscale) throws SQLException{
-		String sql= "SELECT * FROM indirizzo INNER JOIN possessoIndirizzo ON indirizzo= id WHERE utente= '"+ codiceFiscale+"'";
+		String sql= "SELECT * FROM indirizzo INNER JOIN possessoIndirizzo ON indirizzo.id=possessoIndirizzo.indirizzo WHERE utente= '"+ codiceFiscale+"'";
 		
 		try(Connection con= ds.getConnection()){
 			try(PreparedStatement ps= con.prepareStatement(sql)){
