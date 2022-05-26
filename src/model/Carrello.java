@@ -63,6 +63,15 @@ public class Carrello {
 		return products.keySet().toString() ;
 	}
 	
+	public Double getCostoTotale() {
+		@SuppressWarnings("deprecation")
+		Double totale=new Double(0);
+		for(ProdottoBean prodotto : this.products.keySet()) {
+			totale+= prodotto.getPrezzo()* this.products.get(prodotto);
+		}
+		return totale;
+	}
+	
 	
 	
 	

@@ -84,7 +84,7 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 		List<CorriereBean> corrieri = new ArrayList<>();
 		CorriereBean buffer = new CorriereBean();
 		order = order.isEmpty() ? "nome" : order;
-		String sql = "SELECT * FROM " + TABLE_NAME + " Order by" + order;
+		String sql = "SELECT * FROM " + TABLE_NAME + " Order by idCorriere " + order;
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){

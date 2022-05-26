@@ -51,8 +51,6 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				ps.setDouble(4, bean.getCostoTotale());
 				ps.setString(5, bean.getCodiceSconto());
 				ps.setDate(6, (Date) bean.getDataEvasione());
-				ps.setDate(7, (Date) bean.getDataPartenza());
-				ps.setDate(8, (Date) bean.getDataArrivo());
 				ps.setString(9, bean.getUrlPdf());
 				ps.setInt(10, bean.getIndirizzoSpedizione().getId());
 

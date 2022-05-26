@@ -33,8 +33,8 @@
 	<%}%>
 	<h1>Seleziona il tuo metodo di pagamento</h1>
 	
-	<form action="AcquistaServlet?action=completa">
-	
+	<form action="AcquistaServlet" method="get">
+	<input type="hidden" name="action" value="conferma">
 	<%ArrayList<MetodoPagamentoBean> metodiPagamento= utente.getElencoMetodiPagamento();
 	if(metodiPagamento.isEmpty()){%>
 		<h2>non hai nessuno metodo di pagamento</h2>
@@ -44,7 +44,7 @@
 			  while(it.hasNext()){ 
 			  	MetodoPagamentoBean pagamento=it.next();%>
 				  <input type="radio"  value="<%=pagamento.getIdMetodoPagamento()%>" name="idMetodo"required>
-				  					<%=pagamento.getCircuito()+"  "+pagamento.getNumeroCarta().subSequence(13,15)%>
+				  					<%=pagamento.getCircuito()+"  "+pagamento.getNumeroCarta().subSequence(12,15)%>
 			  <%}
 			  %>
 			  <h1>Scegli il tuo indirizzo di spedizione</h1>
@@ -59,23 +59,25 @@
 	  	while(it.hasNext()){ 
 	  		IndirizzoBean indirizzo=it.next();%>
 		  	<input type="radio" value="<%=indirizzo.getId()%>" name="idIndirizzo" required>
-		  					<%= indirizzo.getVia()+"  "+ indirizzo.getCitta()%>
+		  					<%= indirizzo.getVia()+"  "+ indirizzo.getCitta()%><br>
 	 	 <%}	
 	}
 	
 	CorriereDAO corriereDao= new CorriereDAO();
-	Collection<CorriereBean> corrieri= corriereDao.doRetrieveAll("disc");
+	Collection<CorriereBean> corrieri= corriereDao.doRetrieveAll("DESC");
 	if(corrieri.isEmpty()){%>
 		<h1>Non ci sono corrieri</h1>
 	<% 
-	}else{
+	}else{%>
+	<h1>scegli il tuo corriere</h1>
+	<% 
 		Iterator<CorriereBean> it= corrieri.iterator();
 		while(it.hasNext()){
 			CorriereBean corriere= it.next();%>
 			<input type="radio" value="<%= corriere.getId() %>" name="corriere" required>
+			<%= corriere.getAzienda() %><br>
 			
-			<%
-		}
+		<%}
 	}
 	%>
 	<br>

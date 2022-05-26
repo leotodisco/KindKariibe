@@ -1,8 +1,12 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+
 import beans.*;
 import model.*;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -53,6 +57,7 @@ public class AcquistaServlet extends HttpServlet {
 				}
 			}
 			else if(azione.equals("conferma")) {
+				System.out.println("creo l'ordine");
 				OrdineBean ordine= new OrdineBean();
 			
 				Carrello cart=(Carrello)sessione.getAttribute("Carrello");
@@ -84,7 +89,23 @@ public class AcquistaServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
+				ordine.setCostoTotale(cart.getCostoTotale());
 				
+				ordine.setCodiceSconto("");
+				
+				long millis = System.currentTimeMillis();  
+			        
+				java.util.Date date = new java.util.Date(millis);
+				ordine.setDataEvasione(date);
+				ordine.setUrlPdf("placeolder");
+				
+				OrdineDAO ordineDao= new OrdineDAO();
+				try {
+					ordineDao.doSave(ordine);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
