@@ -22,6 +22,16 @@ public class OrdineBean {
 	}
 
 
+	@Override
+	public String toString() {
+		return "OrdineBean [idOrdine=" + idOrdine + ", datiFiscali=" + datiFiscali + ", corriere=" + corriere
+				+ ", utente=" + utente + ", costoTotale=" + costoTotale + ", codiceSconto=" + codiceSconto
+				+ ", dataPartenza=" + dataPartenza + ", dataEvasione=" + dataEvasione + ", dataArrivo=" + dataArrivo
+				+ ", urlPdf=" + urlPdf + ", products=" + products + ", indirizzoSpedizione=" + indirizzoSpedizione
+				+ "]";
+	}
+
+
 	public void setIndirizzoSpedizione(IndirizzoBean indirizzoSpedizione) {
 		this.indirizzoSpedizione = indirizzoSpedizione;
 	}

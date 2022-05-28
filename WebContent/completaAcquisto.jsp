@@ -74,7 +74,7 @@
 		Iterator<CorriereBean> it= corrieri.iterator();
 		while(it.hasNext()){
 			CorriereBean corriere= it.next();%>
-			<input type="radio" value="<%= corriere.getId() %>" name="corriere" required>
+			<input type="radio" value="<%=corriere.getId()%>" name="corriere" required>
 			<%= corriere.getAzienda() %><br>
 			
 		<%}

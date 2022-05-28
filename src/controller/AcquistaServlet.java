@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Collection;
 
 import beans.*;
 import model.*;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 /**
  * Servlet implementation class AcquistaServlet
@@ -57,24 +59,49 @@ public class AcquistaServlet extends HttpServlet {
 				}
 			}
 			else if(azione.equals("conferma")) {
+				//creo l'oggetto datiFiscali
+				
+				DatiFiscaliBean datiFiscali= new DatiFiscaliBean();
+				String idIndirizzo= (String)request.getParameter("idIndirizzo");
+				
+				
+				datiFiscali.setIdIndirizzoFatturazione(Integer.parseInt(idIndirizzo));
+				datiFiscali.setIdMetodoPagamento(Integer.parseInt((String)request.getParameter("idMetodo")));
+				
+				DatiFiscaliDAO datiFiscaliDao= new DatiFiscaliDAO();
+				try {
+					datiFiscaliDao.doSave(datiFiscali);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					datiFiscali= datiFiscaliDao.theLastInsert();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				System.out.println(datiFiscali.toString());
+				
+				
 				System.out.println("creo l'ordine");
 				OrdineBean ordine= new OrdineBean();
-			
+				
+				ordine.setDatiFiscali(datiFiscali);
+				ordine.setUtente(utente);
 				Carrello cart=(Carrello)sessione.getAttribute("Carrello");
 				
+				
 				ordine.setProducts(cart.getProducts());			//setto i prodotti dell'ordine
-				DatiFiscaliDAO daoFiscali= new DatiFiscaliDAO();		//setto i dati fiscali
-				try {
-					ordine.setDatiFiscali(daoFiscali.doRetrieveByKey((String)request.getAttribute("idMetodo")));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+				
 						//setto i dati per la spedizione
 				IndirizzoDao daoIndirizzo= new IndirizzoDao();
 				
 				try {
-					ordine.setIndirizzoSpedizione(daoIndirizzo.doRetrieveByKey((String)request.getAttribute("idIndirizzo")));
+					ordine.setIndirizzoSpedizione(daoIndirizzo.doRetrieveByKey(idIndirizzo));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -83,7 +110,7 @@ public class AcquistaServlet extends HttpServlet {
 				CorriereDAO corriereDao= new CorriereDAO();
 				
 				try {
-					ordine.setCorriere(corriereDao.doRetrieveByKey((String)request.getAttribute("corriere")));
+					ordine.setCorriere(corriereDao.doRetrieveByKey((String)request.getParameter ("corriere")));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -95,13 +122,15 @@ public class AcquistaServlet extends HttpServlet {
 				
 				long millis = System.currentTimeMillis();  
 			        
-				java.util.Date date = new java.util.Date(millis);
+				java.sql.Date date = new java.sql.Date(millis);
 				ordine.setDataEvasione(date);
 				ordine.setUrlPdf("placeolder");
 				
 				OrdineDAO ordineDao= new OrdineDAO();
 				try {
 					ordineDao.doSave(ordine);
+					RequestDispatcher succesfull= request.getRequestDispatcher("confermaAcquisto.jsp");
+					succesfull.forward(request, response);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

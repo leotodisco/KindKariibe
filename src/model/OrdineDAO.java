@@ -37,10 +37,10 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 
 	@Override
 	public void doSave(OrdineBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "('datiFiscali','corriere','utente',"
-				+ "'costoTotale','codiceSconto','dataEvasione','dataPartenza','dataArrivo','urlPdf', 'indirizzoSpedizione') VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String sql = " INSERT INTO " + TABLE_NAME + " (datiFiscali,corriere,utente, "
+				+ " costoTotale, codiceSconto, dataEvasione, urlPdf, indirizzoSpedizione ) VALUES (?,?,?,?,?,?,?,?) ";
 
-		String sql2 = "INSERT INTO " + "composizione" + " ('prodotto','ordine','IVA','prezzo','quantita')"
+		String sql2 = "INSERT INTO " + "composizione" + " (prodotto,ordine,IVA,prezzo,quantita) "
 		+ "VALUES(?,?,?,?,?)";
 		
 		try(Connection con = ds.getConnection()){
@@ -51,13 +51,13 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				ps.setDouble(4, bean.getCostoTotale());
 				ps.setString(5, bean.getCodiceSconto());
 				ps.setDate(6, (Date) bean.getDataEvasione());
-				ps.setString(9, bean.getUrlPdf());
-				ps.setInt(10, bean.getIndirizzoSpedizione().getId());
-
+				ps.setString(7, bean.getUrlPdf());
+				ps.setInt(8, bean.getIndirizzoSpedizione().getId());
+				
 				ps.execute();
 			}
 			
-			try(PreparedStatement ps = con.prepareStatement("select idOrdine from ordine order by idOrdine DISC"))
+			try(PreparedStatement ps = con.prepareStatement("select idOrdine from ordine order by idOrdine DESC"))
 			{
 				ResultSet set = ps.executeQuery();
 				
