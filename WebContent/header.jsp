@@ -15,9 +15,9 @@
 </head>
 
 <body>     
-<% 	HttpSession sessione= request.getSession();
-	
-	UserBean utente = (UserBean) sessione.getAttribute("utente");%>
+<% 
+UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
+%>
 <% if (utente == null) {
 					utente = new UserBean();
 					utente.setNome("ospite");
