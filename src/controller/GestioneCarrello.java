@@ -83,14 +83,6 @@ public class GestioneCarrello extends HttpServlet {
 			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
 			view.forward(request, response);
 		}
-		else if(azione.equals("acquista"))
-		{
-			OrdineBean ordine = new OrdineBean();
-			// DA COMPLETARE	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-			
-			
-			
-		}
 		else if(azione.equals("rimuovi"))
 		{
 			String id = request.getParameter("id");
@@ -122,6 +114,9 @@ public class GestioneCarrello extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		String  nome= "nome";
+		nome.subSequence(nome.length()-3, nome.length());
 		doGet(request, response);
 	}
 

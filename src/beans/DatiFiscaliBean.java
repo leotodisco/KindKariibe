@@ -2,8 +2,15 @@ package beans;
 
 public class DatiFiscaliBean {
 	
+	@Override
+	public String toString() {
+		return "DatiFiscaliBean [idDatiFiscali=" + idDatiFiscali + ", metodoPagamento=" + idMetodoPagamento
+				+ ", idIndirizzoFatturazione=" + idIndirizzoFatturazione + "]";
+	}
+
+
 	private Integer idDatiFiscali;
-	private MetodoPagamentoBean metodoPagamento;
+	private Integer idMetodoPagamento;
 	private Integer idIndirizzoFatturazione;
 	
 	public DatiFiscaliBean() {
@@ -19,15 +26,16 @@ public class DatiFiscaliBean {
 		this.idDatiFiscali = idDatiFiscali;
 	}
 
-
-	public MetodoPagamentoBean getMetodoPagamento() {
-		return metodoPagamento;
+	public Integer getIdMetodoPagamento() {
+		return idMetodoPagamento;
 	}
 
 
-	public void setMetodoPagamento(MetodoPagamentoBean metodoPagamento) {
-		this.metodoPagamento = metodoPagamento;
+	public void setIdMetodoPagamento(Integer idMetodoPagamento) {
+		this.idMetodoPagamento = idMetodoPagamento;
 	}
+
+	
 
 	public Integer getIdIndirizzoFatturazione() {
 		return idIndirizzoFatturazione;

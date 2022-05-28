@@ -35,18 +35,36 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 	
 	@Override
 	public void doSave(DatiFiscaliBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + " (idDatiFiscali, metodoPagamento, indirizzo) VALUES (?,?,?)";
+		String sql = "INSERT INTO " + TABLE_NAME + " (metodoPagamento, indirizzoFatturazione) VALUES (?,?)";
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
-				ps.setInt(1, bean.getIdDatiFiscali());
-				ps.setInt(2, bean.getMetodoPagamento().getidMetodoPagamento());
-				ps.setInt(3, bean.getIdIndirizzoFatturazione());
-
+				ps.setInt(1, bean.getIdMetodoPagamento());
+				ps.setInt(2, bean.getIdIndirizzoFatturazione());
 				ps.execute();
 
 			}
 		}
+		
+	}
+	
+	public DatiFiscaliBean theLastInsert() throws SQLException {
+		String sql= "SELECT * FROM "+ TABLE_NAME + " ORDER BY idDatiFiscali DESC LIMIT 1 ";
+		DatiFiscaliBean bean= new DatiFiscaliBean();
+		
+		try(Connection con= ds.getConnection()){
+			try(PreparedStatement ps= con.prepareStatement(sql)){
+				ResultSet rs= ps.executeQuery();
+				
+				if(rs.next()) {
+					bean.setIdDatiFiscali(rs.getInt("idDatiFiscali"));
+					bean.setIdIndirizzoFatturazione(rs.getInt("indirizzoFatturazione"));
+					bean.setIdMetodoPagamento(rs.getInt("metodoPagamento"));
+				}
+
+			}
+		}
+		return bean;
 	}
 
 	@Override
@@ -74,12 +92,8 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 				if(rs.next()) {
 					dt.setIdDatiFiscali(rs.getInt("idDatiFiscali"));
 					dt.setIdIndirizzoFatturazione(rs.getInt("indirizzo"));
+					dt.setIdMetodoPagamento(rs.getInt("idMetodoPagamento"));
 				}
-
-				MetodoPagamentoBean metodo = new MetodoPagamentoBean();
-				MetodoPagamentoDAO metodoDao = new MetodoPagamentoDAO();
-				metodo = metodoDao.doRetrieveByKey(String.valueOf(rs.getInt("metodoPagamento")));
-				dt.setMetodoPagamento(metodo);
 
 
 			}
@@ -93,7 +107,7 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 		List<DatiFiscaliBean> dati = new ArrayList<>();
 		
 		
-		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY ?";
+		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY idDatiFiscali ?";
 		order = order.isEmpty() ? "nome" : order;
 		
 		try(Connection con = ds.getConnection()){
@@ -101,16 +115,14 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 				ps.setInt(1, Integer.valueOf(order));
 				ResultSet rs = ps.executeQuery();
 
-				MetodoPagamentoBean metodo = new MetodoPagamentoBean();
-				MetodoPagamentoDAO metodoDao = new MetodoPagamentoDAO();
+
 				
 				while(rs.next()) {
 					DatiFiscaliBean dt = new DatiFiscaliBean();
 					dt.setIdDatiFiscali(rs.getInt("idDatiFiscali"));
 					dt.setIdIndirizzoFatturazione(rs.getInt("indirizzo"));
+					dt.setIdMetodoPagamento(rs.getInt("idMetodoPagamento"));
 					
-					metodo = metodoDao.doRetrieveByKey(String.valueOf(rs.getInt("metodoPagamento")));
-					dt.setMetodoPagamento(metodo);
 					dati.add(dt);
 				}
 				
@@ -127,7 +139,7 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
-				ps.setInt(1, bean.getMetodoPagamento().getidMetodoPagamento());
+				ps.setInt(1, bean.getIdMetodoPagamento());
 				ps.setInt(2, bean.getIdIndirizzoFatturazione());
 				ps.setInt(3, bean.getIdDatiFiscali());
 
