@@ -72,13 +72,14 @@ label {
 	border-radius: 17px;
 	padding-left: 8px;
 }
+
 .bottone-Schermata-Login {
     font-family: 'archia-regular';
-	width: 300px;
+	width: 150px;
 	height: 30px;
 	border: none;
 	border-radius: 17px;
-	padding-left: 7px;
+	
 	color: #2f2f2f;
 	background-color: #FCEFD4;
 	font-size: 17px;
@@ -188,6 +189,13 @@ display: flex;
 .error{
 	background-color: red;
 }
+
+.container-bottoni{
+	display:flex;
+	justify-content: center;
+	column-gap: 5px;
+}
+
 
 @media screen and(max-width:800px){
     body{

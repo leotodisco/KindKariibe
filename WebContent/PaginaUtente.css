@@ -8,6 +8,13 @@
     url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
       format("truetype");
 }
+
+@font-face {
+  font-family: 'intro_script_demomedium';
+  src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+}
+
+
 *{
   padding: 0;
   margin: 0;

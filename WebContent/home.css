@@ -1,0 +1,266 @@
+@font-face {
+    font-family: 'intro_script_demomedium';
+    src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+  }
+
+@font-face{
+    font-family:"archia-regular";
+    src:url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("truetype");
+  }
+
+*{
+  margin: 0;
+}
+
+body{
+  background-color: #fcefd4;
+}
+
+.center{
+  margin-top: -50px;
+  display: flex;
+  padding-bottom: 700px;
+  justify-content: center;
+}
+
+.dot {
+  margin-top: 230px;
+  margin-right: 110px;
+    height: 210px;
+    width: 210px;
+    background-color: #acd872;
+    border-radius: 50%;
+    z-index: 10000;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    align-items: center;
+    z-index: 0;
+  }
+
+.dotArancione{
+    margin-top: 45px;
+    margin-left: 15px;
+    height: 210px;
+    width: 210px;
+    background-color: #f27da4;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    z-index: -100;   
+}
+
+@keyframes entraTesto{
+  0% {
+    margin-top: -800px;
+  }
+
+  100% {
+    margin-top: 260px;
+  }
+}
+
+.spanHome{
+  text-align: center;
+  font-family: 'intro_script_demomedium';
+  font-size: 8rem;
+  z-index: 999;
+  position: absolute;
+  margin-top: 260px;
+  z-index: 800;
+  animation-duration: 2s;
+  animation-name: entraTesto;
+}
+
+
+@keyframes slideIn {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 50%;
+  }
+}
+
+.wave-sx {
+  z-index: -100;  
+  width: 300px;
+  width: 50%;
+  border: 1px solid #2f2f2f;
+  animation-duration: 2s;
+  animation-name: slideIn;
+  margin-top: 385px;
+}
+
+h4{
+  position: absolute;
+  display: block;
+  font-family:"archia-regular";
+  font-size: 1.4rem;
+  margin-top: 400px;
+  z-index: 10;
+  animation-duration: 2s;
+  animation-name: entra;
+}
+
+@keyframes entra{
+  0% {
+    margin-top: -800px;
+  }
+
+  100% {
+    margin-top: 400px;
+  }
+}
+
+@media screen and (max-width:800px){
+	.spanHome{
+  font-size: 5rem;
+}
+
+.center{
+  margin-top: -50px;
+  display: flex;
+  padding-bottom: 700px;
+  justify-content: center;
+}
+
+.dot {
+  margin-top: 230px;
+  margin-right: 110px;
+    height: 150px;
+    width: 150px;
+    background-color: #acd872;
+    border-radius: 50%;
+    z-index: 10000;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    text-align: center;
+    align-items: center;
+    z-index: 0;
+  }
+
+.dotArancione{
+    margin-top: 37px;
+    margin-left: 15px;
+    height: 150px;
+    width: 150px;
+    background-color: #f27da4;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    z-index: -100;   
+}
+
+@keyframes slideIn {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 70%;
+  }
+}
+
+.wave-sx {
+  z-index: -100;  
+  width: 300px;
+  width: 70%;
+  border: 1px solid #2f2f2f;
+  animation-duration: 2s;
+  animation-name: slideIn;
+  margin-top: 100px;
+  margin-top: 338px;
+}
+	
+	h4{
+  position: absolute;
+  display: block;
+  font-family:"archia-regular";
+  font-size: 1.4rem;
+  margin-top: 360px;
+  z-index: 10;
+  animation-duration: 2s;
+  animation-name: entra;
+}
+
+@keyframes entra{
+  0% {
+    margin-top: -800px;
+  }
+
+  100% {
+    margin-top: 360px;
+  }
+}
+}
+
+@media (max-width: 480px){
+	
+@keyframes slideIn {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 90%;
+  }
+}
+
+.wave-sx {
+  z-index: -100;  
+  width: 300px;
+  width: 90%;
+  border: 1px solid #2f2f2f;
+  animation-duration: 2s;
+  animation-name: slideIn;
+  margin-top: 100px;
+  margin-top: 338px;
+}
+	
+	@keyframes entraTesto{
+  0% {
+    margin-top: -800px;
+  }
+
+  100% {
+    margin-top: 275px;
+  }
+}
+
+.spanHome{
+  text-align: center;
+  font-family: 'intro_script_demomedium';
+  font-size: 4.5rem;
+  z-index: 999;
+  position: absolute;
+  margin-top: 275px;
+  z-index: 800;
+  animation-duration: 2s;
+  animation-name: entraTesto;
+}
+	
+	
+	
+	h4{
+  font-size: 1.2rem;
+  margin-top: 355px;
+  z-index: 10;
+}
+
+@keyframes entra{
+  0% {
+    margin-top: -800px;
+  }
+
+  100% {
+    margin-top: 355px;
+  }
+}
+	
+}

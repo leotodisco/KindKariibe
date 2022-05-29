@@ -4,6 +4,12 @@
     url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("opentype"),
     url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf") format("truetype");
   }
+  
+ @font-face {
+  font-family: 'intro_script_demomedium';
+  src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+}
+ 
 
 
  *{
@@ -39,7 +45,9 @@ body{
 .image{
     height: 450px;
     width: 460px;
+    border: 3px solid #9d7955;
     border-radius: 25px;
+     box-shadow: 0px 4px #DBD3C0;
 }
 
 .descrizione{
@@ -57,41 +65,29 @@ body{
 }
 
 .categoria{
+	font-family: 'archia-regular';
     text-align: center;
     text-decoration: none;
     align-items: center;
     height: 22px;
     width: 100px;
-    background-color: #DDB892;
+    background-color: #ea97b3;
     border-radius: 5px;
 }
 
 .aggiungi{
     font-family: "archia-regular";
     font-size: 28px;
-    color: #2f2f2f;
+    background-color: transparent;
     cursor: pointer;
     float: left;
     border: 3px solid #9d7955;
-    border-color: #9d7955;
     border-radius: 30px;
+    box-shadow: 0px 4px #DBD3C0;
     width: 336px;
     height: 60px;
 }
 
-.aggiungi:hover{
-        font-family: "archia-regular";
-        font-size: 28px;
-        color: #2f2f2f;
-        cursor: pointer;
-        float: left;
-        border: 3px solid #9d7955;
-        border-color: #9d7955;
-        border-radius: 30px;
-        width: 336px;
-        height: 60px;
-
-}
 
 .container-bottone{
     margin-top: 5rem;
@@ -127,7 +123,38 @@ a{
 	color: #2f2f2f;
 }
 
+.product-title-nascosto{
+	display: none;
+	font-family: "archia-regular";
+    font-size: 3rem;
+	
+}
+
+.categoria-nascosto{
+	display:none;
+}
+	
+
 @media (max-width: 800px) {
+	.categoria{
+	display:none;
+
+}
+
+.categoria-nascosto{
+	display:block;
+		font-family: 'archia-regular';
+    text-align: center;
+    text-decoration: none;
+    align-items: center;
+    height: 22px;
+    width: 100px;
+    background-color: #ea97b3;
+    border-radius: 5px;
+    margin-left: 10%;
+}
+	
+	
     .container-bottone{
         margin-top: 5rem;
         text-align: center;
@@ -135,7 +162,7 @@ a{
     }
 
     .container{
-        margin-top: 0.8rem;
+        margin-top: 0rem;
         display: flex;
         flex-direction: column;
         gap: 20%;
@@ -144,6 +171,7 @@ a{
     }
 
     .item{
+    	margin-top: 2rem;
         display: inline-block;
         background: transparent;
         justify-content: center;
@@ -163,11 +191,14 @@ a{
         text-align: center;
         align-items: center;
         justify-content: center;
+        width:85%;
+       	height: 85%;
     }
 
     .product-title{
+    display:none;
         font-family: "archia-regular";
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     .consigliati{
@@ -179,6 +210,7 @@ a{
     }
 
     .aggiungi{
+       box-shadow: 0px 4px #DBD3C0;
         font-family: "archia-regular";
         font-size: 18px;
         color: #2f2f2f;
@@ -187,18 +219,24 @@ a{
         border: 3px solid #9d7955;
         border-color: #9d7955;
         border-radius: 30px;
-        width: 50%;
+        background-color: transparent;
     }
-
-    .aggiungi:hover{
-        font-family: "archia-regular";
-        font-size: 18px;
-        color: #2f2f2f;
-        cursor: pointer;
-        float: left;
-        border: 3px solid #9d7955;
-        border-color: #9d7955;
-        border-radius: 30px;
-        width: 50%;
+    .product-title-nascosto{
+    display:block;
+    margin-top:15px;
+    margin-left: 10%;
+    }
 }
+
+@media (max-width: 480px){
+	   .image{
+        display: inline-block;
+        border-radius: 25px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        width:75%;
+       	height: 85%;
+    }
+		
 }
