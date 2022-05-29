@@ -11,6 +11,7 @@ const taxElem = document.querySelector('#tax');
 const totalElem = document.querySelector('#total');
 
 
+
 // loop: for add event on multiple `increment` & `decrement` button
 for (let i = 0; i < incrementBtn.length; i++) {
 
@@ -85,4 +86,24 @@ const totalCalc = function () {
   totalElem.textContent = total.toFixed(2);
   payAmountBtn.textContent = total.toFixed(2);
 
+  
 }
+
+
+function myFunction(){
+  var y = document.getElementById("prova");
+  
+  y.style.display = "none";
+  document.getElementById("bonific").style.display="block";
+}
+
+function myFunction2(){
+  var y = document.getElementById("bonific");
+  
+  y.style.display = "none";
+  document.getElementById("prova").style.display="block";
+}
+
+
+
+

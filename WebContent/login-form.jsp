@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="loginCss.css">
 <link href="https://www.dafontfree.net/embed/dmxhZGltaXItc2NyaXB0LXJlZ3VsYXImZGF0YS8xMy92LzY1NTU2L1ZMQURJTUlSLlRURg" rel="stylesheet" type="text/css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Benvenuto!</title>
 </head>
 <body>  
@@ -27,13 +28,14 @@
             <label for="password"></label>
             <input class="pass" type="password" name="password" placeholder="Password">
             <br><br>
-            <input type="submit" value="Login" class="bottone-Schermata-Login" />
-            <br><br>
+        		<input type="submit" value="Login" class="bottone-Schermata-Login" />
+        	<br>
 
         </form>
-            <span>
+            <div class="container-bottoni">
+	
                 <button id="log" class="bottone-Schermata-Login">Crea Account</button>
-            </span>
+            </div>
     </div>
 
  <div class="registrazione" id="registrationDiv">
@@ -49,7 +51,10 @@
                 <input type="text" id="cognome" name="cognome" placeholder="Cognome" class="uname" required><br><br>
                 <label for="Codice Fiscale"></label>
                 <input type="text" id="codFiscale" placeholder="Codice Fiscale" name="CodiceFiscale" class="uname" required><br><br>
-                <button id="avanti" class="bottone-Schermata-Login" >Avanti</button>
+                <span class="container-bottoni">
+                <!-- INDIETRO LO DEVO METTERE SOTTO -->
+                	<button id="avanti" class="bottone-Schermata-Login">Avanti</button>
+                </span>
             </div>
 
             <div id="classe">
@@ -86,20 +91,29 @@
                         <input type="radio" id="Sesso" name="sesso" value="F">
                     </div>
                 </fieldset>
-                <button id="avanti2" class="bottone-Schermata-Login">Avanti</button>
+                <br>
+                <span class="container-bottoni">
+                	<!-- FARE JAVASCRIPT PER BOTTONE INDIETRO1 -->
+                	<button id="indietro1" class="bottone-Schermata-Login">Indietro</button>
+                	<button id="avanti2" class="bottone-Schermata-Login">Avanti</button>
+                </span>
             </div>
 
             <div id="classe3">
                 <label for="Numero Telefono"></label>
                 <input class="pass" type="text" name="nTelefono" placeholder="Numero Telefono" required><br><br>
                 <label for="email"></label>
-                <input type="text" name="emailr" class="uname" placeholder="Email" required>
+                <input type="text" name="emailr" class="uname" placeholder="Email" id="email" required>
                 <br><br>
                 <label for="password"></label>
                 <input class="pass" type="password" name="password" placeholder="Password" required>
                 <span>
                     <br><br>
-                    <input type="submit" value="Registrati" class="bottone-Schermata-Login" id="last" />
+                    <span class="container-bottoni">
+                	<!-- FARE JAVASCRIPT PER BOTTONE INDIETRO1 -->
+	                	<button id="indietro2" class="bottone-Schermata-Login">Indietro</button>
+    	                <input type="submit" value="Registrati" class="bottone-Schermata-Login" id="last" />
+       		        </span>
                 </span>
             </div>
         </form>
@@ -108,7 +122,7 @@
 
 
     <script>
-   
+    
         $(document).ready(function () {
             $(log).click(function () {
                 $(registrationDiv).show();
@@ -119,7 +133,21 @@
                 $(classe3).hide();
                 $(last).hide();
             });
-
+            
+            $(indietro1).click(function fun() {
+            	$(registrationDiv).show();
+                $(classe1).show();
+                $(classe).hide();
+                
+            });
+            
+            $(indietro2).click(function fun() {
+            	$(registrationDiv).show();
+                $(classe).show();
+                $(classe3).hide();
+                $(avanti2).show();
+            });
+            
             $(avanti).click(function fun() {
             	//espressione regolare in JQUERY non richiede che ci siano '/'
             	//e si usa il metodo test anzichè match
@@ -189,7 +217,6 @@
 					}
 					
 					function validate(obj) {
-				
 					  	var valid = true;
 
 						var email = document.getElementsByName("emailr")[0];
@@ -207,10 +234,45 @@
 						} else {
 							numbers.classList.remove("error");
 						}
+						
+						//DA QUI CE LA PARTE NUOVA
+						function checkIfEmailExists(email) {
+								return $.ajax({
+									url : "Api/User",
+									type : 'GET',
+									async : false,
+									cache : false,
+									timeout : 30000,
+									dataType : "json",
+									data : {
+										action : "checkEmail",
+										email : email
+									},
+									success : function(data) {
+										return data
+									},
+									fail : function(msg) {
+										return true;
+									}
+								});
+							}
 
+					
+							var res = checkIfEmailExists($("#email").val());
+							
+							if (res.responseJSON.message == "taken") {
+								valid = false;
+								email.classList.add("error");
+						 
+							} else {
+								email.classList.remove("error");
+							
+							}
+						
 						if (valid)
 							obj.submit();
 					}
+
 				</script>
 </body>
 

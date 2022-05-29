@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8" import="java.util.*" import="beans.*"
+	import="model.*"%>
 <!DOCTYPE html>
 
 
@@ -10,7 +11,7 @@
   <!--
     - custom css link
   -->
-  <link rel="stylesheet" href="CarrelloStile.css">
+  <link rel="stylesheet" href="style.css">
 
   <!--
     - google font link
@@ -21,7 +22,16 @@
 </head>
 
 <body>
+      <% HttpSession sessione = request.getSession();
+	
+		Carrello cart = (Carrello) sessione.getAttribute("Carrello");
+		
+		if(cart == null)
+		{%>
+		<p>Carrello vuoto</p>
 
+	<%}
+	%>
 
   <!--
     - main container
@@ -46,25 +56,25 @@
 
           <div class="payment-method">
 
-            <button class="method selected">
+            <button class="method" onclick="myFunction2()">
               <ion-icon name="card"></ion-icon>
 
               <span>Carta di Credito</span>
 
-              <ion-icon class="checkmark fill" name="checkmark-circle"></ion-icon>
+              <ion-icon class="checkmark " name="checkmark-circle"></ion-icon>
             </button>
 
-            <button class="method">
-              <ion-icon name="logo-paypal"></ion-icon>
+            <button class="method"  onclick="myFunction()">
+              <ion-icon name="logo-euro"></ion-icon>
 
-              <span>ParEPall</span>
+              <span>Bonifico</span>
 
-              <ion-icon class="checkmark" name="checkmark-circle-outline"></ion-icon>
+              <ion-icon class="checkmark " name="checkmark-circle"></ion-icon>
             </button>
 
           </div>
 
-          <form action="#">
+          <form action="#" id="prova">
 
             <div class="cardholder-name">
               <label for="cardholder-name" class="label-default">Nome Proprietario</label>
@@ -99,9 +109,64 @@
 
             </div>
 
+
+          </form>
+          <form action="#" id="bonific">
+
+            <div class="cardholder-name">
+              <label for="cardholder-name" class="label-default">Rapporto di addebito </label>
+              <input type="text" name="cardholder-name" id="cardholder-name" class="input-default">
+            </div>
+
+            <div class="cardholder-name">
+              <label for="cardholder-name" class="label-default">Eseguito da</label>
+              <input type="text" name="card-number" id="card-number" class="input-default">
+            </div>
+
+            <div class="cardholder-name">
+              <label for="cardholder-name" class="label-default">IBAN</label>
+              <input type="text" name="card-number" id="card-number" class="input-default">
+            </div>
+
+
+            <div class="cvv">
+              <label for="cvv" class="label-default">Importo</label>
+              <input type="number" name="cvv" id="cvv" class="input-default">
+            </div>
+
+            <div class="cardholder-name">
+              <label for="cardholder-name" class="label-default">Causale</label>
+              <input type="text" name="card-number" id="card-number" class="input-default">
+            </div>
+
+            <div class="input-flex">
+
+              <div class="expire-date">
+                <label for="expire-date" class="label-default">Data di esecuzione</label>
+
+                <div class="input-flex">
+
+                  <input type="number" name="day" id="expire-date" placeholder="31" min="1" max="31"
+                    class="input-default">
+                  /
+                  <input type="number" name="month" id="expire-date" placeholder="12" min="1" max="12"
+                    class="input-default">
+
+                </div>
+              </div>
+
+              <div class="cvv">
+                <label for="cvv" class="label-default">CVV</label>
+                <input type="number" name="cvv" id="cvv" class="input-default">
+              </div>
+
+            </div>
+
           </form>
 
         </div>
+
+        
 
         <button class="btn btn-primary">
           <b>Sgancia</b> € <span id="payAmount">2.15</span>
@@ -113,6 +178,13 @@
       <!--
         - cart section
       -->
+
+      <%
+		else
+		{
+		
+			for(ProdottoBean prodotto : cart.getProducts().keySet())
+			{%>
       <section class="cart">
 
         <div class="cart-item-box">
@@ -124,12 +196,12 @@
             <div class="card">
 
               <div class="img-box">
-                <img src="./images/green-tomatoes.jpg" alt="Green tomatoes" width="80px" class="product-img">
+              	<img class="product-img" width="80px" src="./immagini/<%= prodotto.getPathImage().get(0)%>">
               </div>
 
               <div class="detail">
 
-                <h4 class="product-name">Leopoldo's Ass</h4>
+                <h4 class="product-name"><%=prodotto.getNome()%></h4>
 
                 <div class="wrapper">
 
@@ -146,7 +218,7 @@
                   </div>
 
                   <div class="price">
-                    € <span id="price">1.25</span>
+                    € <span id="price"><%=prodotto.getPrezzo()%></span>
                   </div>
 
                 </div>
@@ -155,55 +227,13 @@
 
               <button class="product-close-btn">
                 <ion-icon name="close-outline"></ion-icon>
+                <a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getNome()%>">Rimuovi</a>
               </button>
 
             </div>
 
           </div>
 
-          <div class="product-card">
-
-            <div class="card">
-
-              <div class="img-box">
-                <img src="torta_cereali.jpg" alt="Cabbage" width="80px" class="product-img">
-              </div>
-
-              <div class="detail">
-
-                <h4 class="product-name">Leopoldo's cock 1 Pcs</h4>
-
-                <div class="wrapper">
-
-                  <div class="product-qty">
-                    <button id="decrement">
-                      <ion-icon name="remove-outline"></ion-icon>
-                    </button>
-
-                    <span id="quantity">1</span>
-
-                    <button id="increment">
-                      <ion-icon name="add-outline"></ion-icon>
-                    </button>
-                  </div>
-
-                  <div class="price">
-                    € <span id="price">0.80</span>
-                  </div>
-
-                </div>
-
-              </div>
-
-              <button class="product-close-btn">
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
 
         <div class="wrapper">
 
@@ -220,6 +250,10 @@
             </div>
 
           </div>
+          
+	<%}
+		}
+	%>
 
           <div class="amount">
 
