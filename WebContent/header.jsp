@@ -36,7 +36,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
         <ul>
         	<li><a href="home.jsp" class="testoResponsive">Home</a></li>
             <li><a href="Catalogo.jsp" class="testoResponsive">Pasticceria</a></li>
-            <li><a href="Catalogo.jsp" class="testoResponsive">Gelateria</a></li>
+            <li><a href="Catalogo-Gelateria.jsp" class="testoResponsive">Gelateria</a></li>
             <li><a href="#" class="testoResponsive">Storia</a></li>
             <li><a href="#" class="testoResponsive">Contatti</a></li>
         </ul>

@@ -20,7 +20,7 @@
 	      <div class = "container">
 	      
             <div class ="item">
-             <img src = "./immagini/<%=bean.getPathImage().get(0)%>" alt = "immagine" class ="image">
+             <img class="image" src="./immagini/<%= bean.getPathImage().get(0)  %>">
             </div>
             <div class="item-descrizione">
                 <p class = "product-title"><%= bean.getNome() %></p>

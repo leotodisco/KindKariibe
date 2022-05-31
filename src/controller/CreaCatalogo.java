@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,23 +43,49 @@ public class CreaCatalogo extends HttpServlet {
 		String azioni = request.getParameter("action");
 		HttpSession sessione = request.getSession();
 		UserBean utente = (UserBean) sessione.getAttribute("utente");
+		String tipo = request.getParameter("tipo");
 
 		if(azioni == null)
 		{
-			ProdottoDAO Dao = new ProdottoDAO();
-			ArrayList<ProdottoBean> ListaProdotti = null;
-			try {
-				ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
-				request.setAttribute("prodotti", ListaProdotti);
+			
+			if(tipo.equals("Pasticceria"))
+				{
+				ProdottoDAO Dao = new ProdottoDAO();
+				ArrayList<ProdottoBean> ListaProdotti = null;
+				try {
+					ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
+					List<ProdottoBean> ListaPasticceria = ListaProdotti.stream().filter(t -> t.getTipo().equals("Pasticceria")).collect(Collectors.toList());
+					request.setAttribute("prodotti", ListaPasticceria);
 
-				RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
-				view.include(request, response);
+					RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+					view.include(request, response);
 
 
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				}
+			else if(tipo.equals("Gelateria"))
+			{
+				ProdottoDAO Dao = new ProdottoDAO();
+				ArrayList<ProdottoBean> ListaProdotti = null;
+				try {
+					ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
+					List<ProdottoBean> ListaPasticceria = ListaProdotti.stream().filter(t -> t.getTipo().equals("Vaschetta")).collect(Collectors.toList());
+					request.setAttribute("prodotti", ListaPasticceria);
+
+					RequestDispatcher view = request.getRequestDispatcher("Catalogo-Gelateria.jsp");
+					view.include(request, response);
+
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+
 		}
 		else if(azioni.equals("details"))
 		{
