@@ -19,7 +19,7 @@ public class ProdottoBean {
 	private Double peso;
 	private CategoriaBean categoria; //può essere null
 	private ArrayList<String> pathImage = new ArrayList<>(); //path immagini
-	private ArrayList<GustoBean> gusti = new ArrayList<>(); //id gusti
+	private ArrayList<GustoBean> gusti = new ArrayList<>(); //gusti
 	
 	
 	

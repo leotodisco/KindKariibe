@@ -31,14 +31,15 @@ public class CostituzioneDAO {
 	
 	public void doSave(GustoBean gusto ,ProdottoBean prodotto) throws SQLException{
 	
-		String insertSQL = "insert into kindkaribe.costituzione (prodotto,gusto) \r\n" + 
-				"VALUES (?,?)";
+		String insertSQL = "insert into kindkaribe.costituzione (prodotto,gusto,peso) \r\n" + 
+				"VALUES (?,?,?)";
 		
 		
 		try (Connection con = ds.getConnection()){
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
 				preparedStatement.setLong(1, prodotto.getId());
 				preparedStatement.setString(2, gusto.getNome());
+				preparedStatement.setDouble(3, prodotto.getPeso());
 				
 				preparedStatement.execute();
 			}

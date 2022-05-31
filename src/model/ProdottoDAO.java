@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import javax.naming.Context;
@@ -15,7 +14,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import beans.CategoriaBean;
-import beans.CorriereBean;
+import beans.GustoBean;
 import beans.ImmagineBeans;
 import beans.ProdottoBean;
 
@@ -81,6 +80,9 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ImmagineDAO imDAO = new ImmagineDAO();
 					ImmagineBeans imBean = new ImmagineBeans();
 					PossessoImmagineDAO possDAO = new PossessoImmagineDAO();
+					CostituzioneDAO CostDAO = new CostituzioneDAO();
+					GustoDAO GDAO = new GustoDAO();
+					GustoBean GustoB = new GustoBean();
 					
 					
 					for(String immagine : possDAO.retrieveImmagine(nome))
@@ -91,29 +93,14 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					
 					bean.setPathImage(elencoPathImmagini);
 
-					//ottieni peso
-					String sqlPeso = "SELECT peso FROM estensione WHERE prodotto = ?;";
-					try(PreparedStatement statement2 = conn.prepareStatement(sqlPeso)){
-						statement2.setString(1, nome);
-						ResultSet weight = statement2.executeQuery();
-						while(weight.next())
-						{
-							bean.setPeso(weight.getDouble("peso"));						
-						}
-					}
 
-					//ottieni gusti
-					String sqlGusti = "SELECT gusto FROM costituzione WHERE prodotto = ?;";
-					try(PreparedStatement statement3 = conn.prepareStatement(sqlGusti)){
-						statement3.setString(1, nome);
-						ArrayList<String> elencoGusti = new ArrayList<>();
-						ResultSet gusti = statement3.executeQuery();
-
-						while(gusti.next()) {
-							elencoGusti.add(gusti.getString("gusto"));
-						}
-						bean.setGusti(Optional.of(elencoGusti));
+					for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+					{
+						GustoB = GDAO.doRetrieveByKey(gusti);
+						bean.getGusti().add(GustoB);
 					}
+					
+					
 				}
 			}	
 		}
@@ -152,6 +139,9 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ImmagineDAO imDAO = new ImmagineDAO();
 					ImmagineBeans imBean = new ImmagineBeans();
 					PossessoImmagineDAO possDAO = new PossessoImmagineDAO();
+					CostituzioneDAO CostDAO = new CostituzioneDAO();
+					GustoDAO GDAO = new GustoDAO();
+					GustoBean GustoB = new GustoBean();
 					
 					for(String immagine : possDAO.retrieveImmagine(rs.getString("id")))
 					{
@@ -160,31 +150,14 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					}
 
 					bean.setPathImage(elencoPathImmagini);
+
 					
-					//ottieni peso
-					String sqlPeso = "SELECT peso FROM estensione WHERE prodotto = ?;";
-					try(PreparedStatement statement2 = conn.prepareStatement(sqlPeso)){
-						statement2.setString(1, bean.getNome());
-						ResultSet weight = statement2.executeQuery();
-						if(weight.next())
-						{
-							bean.setPeso(weight.getDouble("peso"));						
-						}
+					for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+					{
+						GustoB = GDAO.doRetrieveByKey(gusti);
+						bean.getGusti().add(GustoB);
 					}
-
-					//ottieni gusti
-					String sqlGusti = "SELECT gusto FROM costituzione WHERE prodotto = ?;";
-					try(PreparedStatement statement3 = conn.prepareStatement(sqlGusti)){
-						statement3.setString(1, bean.getNome());
-						ArrayList<String> elencoGusti = new ArrayList<>();
-						ResultSet gusti = statement3.executeQuery();
-
-						while(gusti.next()) {
-							elencoGusti.add(gusti.getString("gusto"));
-						}
-						bean.setGusti(Optional.of(elencoGusti));
-					}
-
+					
 					result.add(bean);
 				}
 			}	
@@ -312,16 +285,8 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps2.setInt(7, ID);
 
 					ps2.execute();
-
-					String insertPeso ="INSERT INTO `kindkaribe`.`estensione` (`prodotto`, `peso`) VALUES (?,?)";
-					try(PreparedStatement ps3 = con.prepareStatement(insertPeso)){
-						ps3.setString(1, bean.getNome());
-						ps3.setDouble(2, bean.getPeso());
-
-						ps3.execute();
-						
 						return ID;
-					}
+					
 					
 				
 				}
