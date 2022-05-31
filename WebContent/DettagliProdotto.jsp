@@ -28,7 +28,7 @@
                 <p class = "descrizione"><%= bean.getDescrizione()%></p>
                 <p class = "product-title">&euro; <%= String.format("%.02f", bean.getPrezzo()) %></p>
                 <p class = "container-bottone">
-                <button class="aggiungi"><a href="./GestioneCarrello?action=aggiungi&id=<%=bean.getNome()%>">Aggiungi al carrello</a></button>
+                <button class="aggiungi"><a href="./GestioneCarrello?action=aggiungi&id=<%=bean.getId()%>">Aggiungi al carrello</a></button>
                 </p>
             </div>
         </div>

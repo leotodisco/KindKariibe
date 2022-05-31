@@ -64,7 +64,10 @@ public class AdminServlet extends HttpServlet {
 			Double iva = Double.parseDouble(multi.getParameter("IVA"));
 			Double peso = Double.parseDouble(multi.getParameter("peso"));
 			String tipo = multi.getParameter("tipo");
-		
+			String Gusto1 = multi.getParameter("gusto1");
+			String Gusto2 = multi.getParameter("gusto2");
+			String Gusto3 = multi.getParameter("gusto3");
+
 			
 			
 			ImmagineBeans immagine = new ImmagineBeans();
@@ -85,8 +88,10 @@ public class AdminServlet extends HttpServlet {
 				bean.setQuantitaResidua(quantity);
 				bean.setCategoria(cat);
 				bean.setIVA(iva);
-				bean.setPeso(peso);
 				bean.setTipo(tipo);
+				
+				
+				
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block

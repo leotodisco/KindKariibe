@@ -1,7 +1,6 @@
 package beans;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class ProdottoBean {
@@ -20,7 +19,7 @@ public class ProdottoBean {
 	private Double peso;
 	private CategoriaBean categoria; //può essere null
 	private ArrayList<String> pathImage = new ArrayList<>(); //path immagini
-	private ArrayList<String> gusti = new ArrayList<>(); //id gusti
+	private ArrayList<GustoBean> gusti = new ArrayList<>(); //id gusti
 	
 	
 	
@@ -105,11 +104,11 @@ public class ProdottoBean {
 		this.categoria = categoria.get();
 	}
 	
-	public ArrayList<String> getGusti() {
+	public ArrayList<GustoBean> getGusti() {
 		return gusti;
 	}
 	
-	public void setGusti(Optional<ArrayList<String>> gusti) {
+	public void setGusti(Optional<ArrayList<GustoBean>> gusti) {
 		this.gusti = gusti.orElse(null);
 	}
 	public Integer getId() {
