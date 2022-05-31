@@ -94,7 +94,8 @@ public class AdminServlet extends HttpServlet {
 			}
 
 			try {
-				prod.doSave(bean);
+				int ID2 = prod.doSaveI(bean);
+				bean.setId(ID2);
 				int ID = imDAO.doSaveI(immagine);
 				immagine.setIdImmagine(ID);
 				posDAO.doSave(immagine, bean);

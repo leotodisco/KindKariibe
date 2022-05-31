@@ -35,11 +35,10 @@ public class PossessoImmagineDAO {
 		String insertSQL = "insert into kindkaribe.possessoimmagine (prodotto,immagine) \r\n" + 
 				"VALUES (?,?)";
 		
-		ImmagineDAO immDAO = new ImmagineDAO();
 		
 		try (Connection con = ds.getConnection()){
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
-				preparedStatement.setString(1, prodotto.getNome());
+				preparedStatement.setLong(1, prodotto.getId());
 				preparedStatement.setInt(2, immagine.getIdImmagine());
 				
 				preparedStatement.execute();

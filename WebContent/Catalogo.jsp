@@ -36,11 +36,11 @@
   				{
   					%>
 		<div class="card">
-			<a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>"><img class="image" src="./immagini/<%= prodotto.getPathImage().get(0)  %>"></a>
+			<a href="CreaCatalogo?action=details&id=<%= prodotto.getId()%>"><img class="image" src="./immagini/<%= prodotto.getPathImage().get(0)  %>"></a>
 			<div class="dettagli-card">
 				<div class="nome"><%= prodotto.getNome() %></div>
 				<p>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></p>
-				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a>
+				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>">Aggiungi al carrello</a>
 			</div>
 		</div>
 		

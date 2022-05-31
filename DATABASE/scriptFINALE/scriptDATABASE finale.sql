@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `composizione`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `composizione` (
-  `prodotto` varchar(30) NOT NULL,
+  `prodotto` int NOT NULL,
   `ordine` int NOT NULL,
   `IVA` double NOT NULL,
   `prezzo` double NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `composizione` (
   PRIMARY KEY (`prodotto`,`ordine`),
   KEY `ordineReference_idx` (`ordine`),
   CONSTRAINT `ordineReference` FOREIGN KEY (`ordine`) REFERENCES `ordine` (`idOrdine`),
-  CONSTRAINT `prodottoOrdine` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`)
+  CONSTRAINT `prodottoOrdine` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -67,7 +67,7 @@ CREATE TABLE `composizione` (
 
 LOCK TABLES `composizione` WRITE;
 /*!40000 ALTER TABLE `composizione` DISABLE KEYS */;
-INSERT INTO `composizione` VALUES ('Mimosa',1,10,6,1),('Torta amarena',1,10,6,1),('Torta Cereali',2,10,10,1),('Tronchetto Amarena',2,10,16,1);
+INSERT INTO `composizione` VALUES ('1',1,10,6,1),('2',1,10,6,1),('3',2,10,10,1),('4',2,10,16,1);
 /*!40000 ALTER TABLE `composizione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,11 +105,11 @@ DROP TABLE IF EXISTS `costituzione`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `costituzione` (
   `gusto` varchar(30) NOT NULL,
-  `prodotto` varchar(30) NOT NULL,
+  `prodotto` int NOT NULL,
   PRIMARY KEY (`gusto`,`prodotto`),
   KEY `product_idx` (`prodotto`),
   CONSTRAINT `gusto` FOREIGN KEY (`gusto`) REFERENCES `gusto` (`nome`),
-  CONSTRAINT `product` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`)
+  CONSTRAINT `product` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -119,7 +119,7 @@ CREATE TABLE `costituzione` (
 
 LOCK TABLES `costituzione` WRITE;
 /*!40000 ALTER TABLE `costituzione` DISABLE KEYS */;
-INSERT INTO `costituzione` VALUES ('Cioccolato','Vaschetta bigusto'),('Pistacchio','Vaschetta bigusto');
+INSERT INTO `costituzione` VALUES ('Cioccolato','5'),('Pistacchio','5');
 /*!40000 ALTER TABLE `costituzione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,12 +210,12 @@ DROP TABLE IF EXISTS `estensione`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `estensione` (
-  `prodotto` varchar(30) NOT NULL,
+  `prodotto` int NOT NULL,
   `peso` double NOT NULL,
   PRIMARY KEY (`prodotto`,`peso`),
   KEY `peso_idx` (`peso`),
   CONSTRAINT `peso` FOREIGN KEY (`peso`) REFERENCES `datiprodotto` (`peso`),
-  CONSTRAINT `prodotto_` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`)
+  CONSTRAINT `prodotto_` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -225,7 +225,7 @@ CREATE TABLE `estensione` (
 
 LOCK TABLES `estensione` WRITE;
 /*!40000 ALTER TABLE `estensione` DISABLE KEYS */;
-INSERT INTO `estensione` VALUES ('Vaschetta bigusto',500);
+INSERT INTO `estensione` VALUES ('5',500);
 /*!40000 ALTER TABLE `estensione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -395,12 +395,12 @@ DROP TABLE IF EXISTS `possessoimmagine`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `possessoimmagine` (
-  `prodotto` varchar(30) NOT NULL,
+  `prodotto` int NOT NULL,
   `immagine` int NOT NULL,
   PRIMARY KEY (`prodotto`,`immagine`),
   KEY `immagine_idx` (`immagine`),
   CONSTRAINT `immagine` FOREIGN KEY (`immagine`) REFERENCES `immagine` (`idImmagine`),
-  CONSTRAINT `ImmagineProdotto` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`) ON DELETE CASCADE
+  CONSTRAINT `ImmagineProdotto` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -410,7 +410,7 @@ CREATE TABLE `possessoimmagine` (
 
 LOCK TABLES `possessoimmagine` WRITE;
 /*!40000 ALTER TABLE `possessoimmagine` DISABLE KEYS */;
-INSERT INTO `possessoimmagine` VALUES ('Tronchetto Amarena',1),('Mimosa',2),('Torta amarena',3),('Torta cereali',4),('vaschetta bigusto',5);
+INSERT INTO `possessoimmagine` VALUES ('2',1),('1',2),('3',3),('4',4),('5',5);
 /*!40000 ALTER TABLE `possessoimmagine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,13 +447,14 @@ DROP TABLE IF EXISTS `prodotto`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prodotto` (
   `nome` varchar(30) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT, 
   `categoria` varchar(40) DEFAULT NULL,
   `tipo` enum('Vaschetta','Pasticceria') NOT NULL,
   `prezzo` double NOT NULL,
   `descrizione` tinytext,
   `quantitaDisponibili` double NOT NULL,
   `IVA` double NOT NULL,
-  PRIMARY KEY (`nome`),
+  PRIMARY KEY (`id`),
   KEY `appartenenzaCategoria_idx` (`categoria`),
   CONSTRAINT `appartenenzaCategoria` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -465,7 +466,7 @@ CREATE TABLE `prodotto` (
 
 LOCK TABLES `prodotto` WRITE;
 /*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
-INSERT INTO `prodotto` VALUES ('Mimosa','Monoporzione','Pasticceria',6,'Ottima per la festa della donna',2,10),('Torta Amarena','Torta','Pasticceria',6,'Deliziosa torta all\'amarena',5,10),('Torta Cereali','Torta','Pasticceria',10,'Kinder cereali',1,10),('Tronchetto Amarena','Torta','Pasticceria',16,'Anarena e cioccolato',4,10),('Vaschetta bigusto','Gelato','Vaschetta',9,'Pistacchio e cioccolato',6,10);
+INSERT INTO `prodotto` VALUES ('Mimosa','1','Monoporzione','Pasticceria',6,'Ottima per la festa della donna',2,10),('Torta Amarena','2','Torta','Pasticceria',6,'Deliziosa torta all\'amarena',5,10),('Torta Cereali','3','Torta','Pasticceria',10,'Kinder cereali',1,10),('Tronchetto Amarena','4','Torta','Pasticceria',16,'Anarena e cioccolato',4,10),('Vaschetta bigusto','5','Gelato','Vaschetta',9,'Pistacchio e cioccolato' , 6 ,10);
 /*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -478,14 +479,14 @@ DROP TABLE IF EXISTS `recensione`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recensione` (
   `idRecensione` int NOT NULL AUTO_INCREMENT,
-  `prodotto` varchar(30) NOT NULL,
+  `prodotto` int NOT NULL,
   `utente` varchar(16) NOT NULL,
   `voto` int NOT NULL,
   `testo` tinytext,
   PRIMARY KEY (`idRecensione`),
   KEY `prodotto_idx` (`prodotto`),
   KEY `user_idx` (`utente`),
-  CONSTRAINT `prodotto` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`nome`),
+  CONSTRAINT `prodotto` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`id`),
   CONSTRAINT `user` FOREIGN KEY (`utente`) REFERENCES `utente` (`codiceFiscale`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
