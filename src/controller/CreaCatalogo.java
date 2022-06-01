@@ -48,7 +48,7 @@ public class CreaCatalogo extends HttpServlet {
 		if(azioni == null)
 		{
 			
-			if(tipo.equals("Pasticceria"))
+			if( tipo == null || tipo.equals("Pasticceria"))
 				{
 				ProdottoDAO Dao = new ProdottoDAO();
 				ArrayList<ProdottoBean> ListaProdotti = null;
