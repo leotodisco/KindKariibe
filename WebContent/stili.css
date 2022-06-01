@@ -124,13 +124,6 @@ a:link{
   gap: 0px 11px;
 }
 
-.cart{
-	width: 50px;
-	height: 50px;
-}
-
-
-
 
 .sidebar{
 	display:none;
@@ -222,6 +215,7 @@ ul li{
 
 @media (max-width:800px) {
     .sidebarBtn{
+   
     	position:relative;
     	margin-top:20px;
     	

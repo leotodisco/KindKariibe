@@ -18,6 +18,23 @@ body {
 	background-color: #FCEFD4;
 }
 
+input:focus {
+  border: 2px solid green;
+  outline:none;
+	
+}
+
+input:active{
+  border: 2px solid green;
+outline:none;	
+}
+
+.messaggio-errore{
+	display:none;
+	margin-bottom: 35px;
+	font-family: 'archia-regular';
+}
+
 .login {
     display: flex;
     flex-direction: column;

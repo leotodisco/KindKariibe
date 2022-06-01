@@ -50,7 +50,6 @@ public class UserApiServlet extends HttpServlet {
 	@SuppressWarnings("unused")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(action.equals("checkEmail")) {
-			System.out.println(request.getParameter("email"));
 			UserDAO dao = new UserDAO();
 			try {
 				UserBean u = dao.doRetriveByEmail(request.getParameter("email"));
@@ -76,11 +75,62 @@ public class UserApiServlet extends HttpServlet {
 				return;
 			}
 		}
+		
+		if(action.equals("checkCodFiscale")) {
+			UserDAO dao = new UserDAO();
+			try {
+				UserBean u = dao.doRetrieveByKey(request.getParameter("CodiceFiscale"));
+				response.setStatus(200);
+				String messaggio;
+				if(u.getEmail() == null) {
+					messaggio = "free";
+
+				}
+
+				else
+					messaggio = "taken";
+				
+				response.getWriter().print(gson.toJson(new ResponseStatusMessage(200, messaggio)));
+				response.getWriter().flush();
+				return;
+			} catch (Exception e) {
+				response.setStatus(500);
+
+				response.getWriter().flush();
+				return;
+			}
+		}
+		
+		
+		if(action.equals("checkNumero")) {
+			UserDAO dao = new UserDAO();
+			try {
+				UserBean u = dao.doRetriveByNumero(request.getParameter("nTelefono"));
+				String messaggio;
+
+				if(u.getCodiceFiscale() == null) {
+					messaggio = "free";
+				}
+				
+				else
+					messaggio = "taken";
+
+				response.getWriter().print(gson.toJson(new ResponseStatusMessage(200, messaggio)));
+				response.getWriter().flush();
+				return;
+			} catch (Exception e) {
+				response.setStatus(500);
+
+				response.getWriter().flush();
+				return;
+			}
+		}
+		
 
 		UserBean user = (UserBean) request.getSession().getAttribute("user");
 		if(user == null) {
 			response.setStatus(401);
-			//send error pagina 404
+
 			response.getWriter().flush();
 			return;
 		} else if ( action == null ) {

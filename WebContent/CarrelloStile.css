@@ -1,40 +1,22 @@
-/*-----------------------------------*\
-  #style.css
-\*-----------------------------------*/
+@font-face {
+  font-family: "archia-regular";
+  src: url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("truetype");
+}
 
-/**
- * copyright 2021 @codewithsadee 
- */
-
-
-
-
-
-/*-----------------------------------*\
-  #VARIABLE
-\*-----------------------------------*/
+@font-face {
+  font-family: 'intro_script_demomedium';
+  src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+  src: url('./font/introscriptdemo-medium.woff') format('woff');
+}
 
 :root {
 
-  /**
-   * Colors
-   */
-
-  --onyx:         hsl(0,0,6);
-  --azure:        hsl(219, 77%, 60%);
-  --white:        hsla(98.8, 93.7, 83.1);
-  --platinum:     hsl(0, 44%, 96%);
-  --gainsboro:    hsl(0, 10%, 67%);
-  --red-salsa:    hsl(0, 77%, 60%);
-  --dim-gray:     hsl(0, 0%, 6%);
-  --davys-gray:   hsl(0, 0%, 6%);
-  --spanish-gray: hsl(0, 0%, 6%);
-  --quick-silver: hsl(0, 0%, 6%);
   background-color: #fcefd4;
-
-  /**
-   * Typography
-   */
 
   --fs-28: 28px;
   --fs-24: 24px;
@@ -42,26 +24,11 @@
   --fs-15: 15px;
   --fs-14: 14px;
 
-  --fw-5: 500;
-  --fw-6: 600;
-  --fw-7: 700;
-
-  /**
-   * Others 
-   */
 
   --px: 60px;
   --radius: 5px;
 
 }
-
-
-
-
-
-/*-----------------------------------*\
-  #RESET
-\*-----------------------------------*/
 
 *{
   margin: 0;
@@ -69,10 +36,18 @@
   box-sizing: border-box;
 }
 
-html { font-family: 'Source Sans 3', sans-serif; }
+#bonific{
+	display: none;
+}
+
+
+
+#form-carta{
+	display:none;
+}
 
 a {
-  color: inherit;
+  color: #2f2f2f;
   text-decoration: none;
 }
 
@@ -80,12 +55,13 @@ button {
   border: none;
   background: none;
   font: inherit;
+  font-family: "archia-regular";
   cursor: pointer;
 }
 
 ion-icon, span { display: inline-block; }
 
-label, img { display: block; }
+label, img { display: block;   font-family: "archia-regular";}
 
 input {
   font: inherit;
@@ -93,7 +69,7 @@ input {
   border: none;
 }
 
-input:focus { outline: 2px solid var(--azure); }
+input:focus { outline: 2px solid #95c05c; }
 
 /**
  * Remove number input up & down button
@@ -119,18 +95,6 @@ input::-webkit-outer-spin-button {
 
 ::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 
-
-
-
-
-/*-----------------------------------*\
-  #MAIN STYLE
-\*-----------------------------------*/
-
-/**
- * main container 
- */
-
 .container {
   max-width: 1440px;
   min-height: 100vh;
@@ -139,41 +103,44 @@ input::-webkit-outer-spin-button {
   flex-direction: column;
 }
 
+span{
+	font-family: "archia-regular";
+}
+
 .heading {
-  font-size: var(--fs-28);
-  font-weight: var(--fw-6);
-  color: var(--onyx);
-  border-bottom: 1px solid var(--gainsboro);
-  padding: 20px var(--px);
+font-family: 'intro_script_demomedium';
+  font-size: 4rem;
+  color: #2f2f2f;
+  border-bottom: 1px solid #2f2f2f;
+  padding: 20px ;
   display:     flex;
   align-items: center;
   gap: 20px;
 }
 
-.heading ion-icon { font-size: 40px; }
+.heading ion-icon { font-size: 4rem; }
 
 .item-flex {
   display: flex;
   flex-grow: 1;
 }
 
-/**
- * checkout section style 
- */
+.checkmark{
+	display:none;
+}
 
 .checkout {
   width: 70%;
-  padding: 40px var(--px);
-  background: var(--white);
-  border-right: 1px solid var(--gainsboro);
+  padding: 40px ;
+  border-right: 1px solid #2f2f2f;
 }
 
 .section-heading {
-  color: var(--onyx);
+    font-family: "archia-regular";
+  color: #2f2f2f;
   margin-bottom: 30px;
-  font-size: var(--fs-24);
-  font-weight: var(--fw-5);
 }
+
 
 .payment-form { margin-bottom: 40px; }
 
@@ -182,11 +149,22 @@ input::-webkit-outer-spin-button {
   align-items: center;
   gap: 30px;
   margin-bottom: 40px;
- 
 }
 
+.method-1{
+border: 1px solid #2f2f2f;
+  border-radius: 25px;
+  width: 50%;
+  display:     flex;
+  flex-direction: column;
+
+  padding: 15px 30px;
+  gap: 20px;	
+}
+
+
 .payment-method .method {
-  border: 1px solid var(--quick-silver);
+  border: 1px solid #2f2f2f;
   border-radius: 100px;
   width: 50%;
   display:     flex;
@@ -197,10 +175,10 @@ input::-webkit-outer-spin-button {
   
 }
 .payment-method .method:hover{
-  color: var(--azure);
+  color: #95c05c;
 }
 
-.payment-method .selected { border-color:black; }
+.payment-method .selected { border-color:aqua; }
 
 .payment-method .method ion-icon { font-size: 20px; }
 
@@ -211,25 +189,26 @@ input::-webkit-outer-spin-button {
 
 .payment-method .method .fill { color:black; }
 
+
 .label-default {
   padding-left: 10px;
   margin-bottom: 5px;
-  font-size: var(--fs-14);
-  color: var(--spanish-gray);
+  font-size: 0.9rem;
+  color: #2f2f2f;
 }
 
 .input-default {
-  background: var(--platinum);
-  border-radius: var(--radius);
-  color: var(--davys-gray);
+  background: transparent;
+  border-radius: 20px;
+  border: 1px solid #2f2f2f;
 }
 
 .payment-form input {
   padding: 10px 15px;
-  font-size: var(--fs-18);
-  font-weight: var(--fw-5);
+  font-family: "archia-regular";
 }
 .input-default{
+	  font-family: "archia-regular";
   border-radius: 100px;
 }
 .cardholder-name,
@@ -267,19 +246,16 @@ input::-webkit-outer-spin-button {
 }
 
 .btn-primary {
-  background: var(--azure);
-  font-weight: var(--fw-5);
-  color: var(--white);
+  background: transparent;
+  font-family: "archia-regular";
+  border: 1px solid #2f2f2f;
+  color: #2f2f2f;
   padding: 13px 45px;
   border-radius: 100px;
 }
 
 .btn-primary b { margin-right: 10px; }
 
-
-/**
- * cart section style
- */
 
 .cart {
   width: 40%;
@@ -289,11 +265,11 @@ input::-webkit-outer-spin-button {
 
 .cart-item-box {
   padding: 40px;
-
-  
+  margin-top: 0;
 }
 
-.product-card:not(:last-child) { margin-bottom: 20px; }
+.product-card { margin-bottom: 20px; 
+}
 
 .product-card .card {
   position: relative;
@@ -302,12 +278,15 @@ input::-webkit-outer-spin-button {
   gap: 20px;
 }
 
-.card .product-img { border-radius: var(--radius); }
+.card .product-img { 
+	border: 1px solid #2f2f2f;
+	border-radius: 10px; }
 
 .card .detail .product-name {
-  font-weight: var(--fw-6);
-  font-size: var(--fs-15);
-  color: var(--dim-gray);
+	font-family: "archia-regular";
+  font-size: 1.3rem;
+  font-weight: 1;
+  color: #2f2f2f;
   margin-bottom: 10px;
 }
 
@@ -323,7 +302,7 @@ input::-webkit-outer-spin-button {
 }
 
 .product-qty button {
-  background: var(--platinum);
+  background: transparent;
   width:  20px;
   height: 20px;
   display:         flex;
@@ -341,8 +320,8 @@ input::-webkit-outer-spin-button {
 
 .product-close-btn {
   position: absolute;
-  top:   0;
-  right: 0;
+  top:   15px;
+  right: 40px;
 }
 
 .product-close-btn ion-icon {
@@ -354,8 +333,8 @@ input::-webkit-outer-spin-button {
 
 .discount-token {
   padding: 40px var(--px);
-  border-top:    1px solid var(--gainsboro);
-  border-bottom: 1px solid var(--gainsboro);
+  border-top:    1px solid #2f2f2f;
+  border-bottom: 1px solid #2f2f2f;
 }
 
 .wrapper-flex {
@@ -366,35 +345,34 @@ input::-webkit-outer-spin-button {
 
 .wrapper-flex input {
   padding: 12px 15px;
-  font-weight: var(--fw-6);
   letter-spacing: 2px;
 }
 
 .btn-outline {
   padding: 10px 25px;
-  border: 1px solid var(--azure);
-  color: var(--azure);
+  border: 1px solid #2f2f2f;
+  color: #2f2f2f;
   border-radius: 100px;
 }
 
 .btn-outline:hover {
-  background: var(--azure);
-  color: var(--white);
+  background: #fcefd4;
+  color: #2f2f2f;
 }
 
-.amount { padding: 40px var(--px); }
+.amount { padding: 40px; }
 
 .amount > div {
   display:         flex;
   justify-content: space-between;
 }
 
-.amount > div:not(:last-child) { margin-bottom: 10px; }
+.amount > div { margin-bottom: 10px; }
 
 .amount .total {
-  font-size: var(--fs-18);
-  font-weight: var(--fw-7);
-  color: var(--onyx);
+	font-family: "archia-regular";
+ font-weight: 999;
+  color: #2f2f2f;
 }
 
 #bonific{
@@ -404,10 +382,6 @@ input::-webkit-outer-spin-button {
 
 
 
-
-/*-----------------------------------*\
-  #RESPONSIVE
-\*-----------------------------------*/
 
 @media (max-width: 1200px) {
 
@@ -432,7 +406,7 @@ input::-webkit-outer-spin-button {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    border-bottom: 1px solid var(--gainsboro);
+    border-bottom: 1px solid #2f2f2f;
   }
 
   .cart .wrapper { margin-top: auto; }
@@ -447,10 +421,7 @@ input::-webkit-outer-spin-button {
 }
 
 
-
-
-
-@media (max-width: 768px) {
+@media (max-width: 1050px) {
 
   :root { --px: 40px; }
 
@@ -459,6 +430,13 @@ input::-webkit-outer-spin-button {
   .discount-token { border-top: 1px solid var(--gainsboro); }
 
   .wrapper-flex { gap: 20px; }
+  
+  
+  .input-flex .expire-date,
+  .input-flex .cvv { width: 100%; }
+  
+  .input-flex .expire-date,
+  .input-flex .cvv { width: 100%; }
 
 }
 
@@ -475,7 +453,8 @@ input::-webkit-outer-spin-button {
     flex-direction: column;
     gap: 20px;
   }
-
+	
+	}
   .payment-method .method { width: 100%; }
 
   .input-flex .expire-date,

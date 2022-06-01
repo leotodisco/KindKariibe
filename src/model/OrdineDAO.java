@@ -46,6 +46,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				ps.setInt(1, bean.getDatiFiscali().getIdDatiFiscali());
+				System.out.println("id corriere nel dao = " + bean.getCorriere().getId());
 				ps.setInt(2, bean.getCorriere().getId());
 				ps.setString(3, bean.getUtente().getCodiceFiscale());
 				ps.setDouble(4, bean.getCostoTotale());

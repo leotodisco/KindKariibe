@@ -80,18 +80,19 @@ public class CorriereDAO implements ModelInterface<CorriereBean> {
 	}
 
 	@Override
-	public Collection<CorriereBean> doRetrieveAll(String order) throws Exception {
+	public List<CorriereBean> doRetrieveAll(String order) throws Exception {
 		List<CorriereBean> corrieri = new ArrayList<>();
 		CorriereBean buffer = new CorriereBean();
 		order = order.isEmpty() ? "nome" : order;
-		String sql = "SELECT * FROM " + TABLE_NAME + " Order by idCorriere " + order;
+		String sql = "SELECT * FROM " + TABLE_NAME + " Order by " + order;
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
+				
 				ResultSet rs = statement.executeQuery();
 
 				while(rs.next()) {
-					buffer.setId(Integer. valueOf(rs.getString("idCorriere")));
+					buffer.setId(Integer.valueOf(rs.getString("idCorriere")));
 					buffer.setAzienda(rs.getString("azienda"));
 					buffer.setnTelefono(rs.getString("nTelefono"));
 					corrieri.add(buffer);

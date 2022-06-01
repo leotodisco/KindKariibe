@@ -69,7 +69,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 
             <div class="nav-container-item-dx">
                 <span class="text-user">Ciao,  <%= utente.getNome() %> </span>
-             <ion-icon name="cart-outline" style="font-size: 1.75rem; color= "#2f2f2f""></ion-icon> 
+             <a href="carrello.jsp"><ion-icon name="cart-outline" style="font-size: 1.75rem; color= "#2f2f2f""></ion-icon></a> 
           </div>
         </nav>
 

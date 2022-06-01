@@ -40,19 +40,13 @@
 			<div class="dettagli-card">
 				<div class="nome"><%= prodotto.getNome() %></div>
 				<p>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></p>
-				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a>
+				<a class="scritte" href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a>
 			</div>
 		</div>
-		
-		
-
 	<%}%>
 	</div>
 
 
-
-
-	<a href="carrello.jsp"> carrello</a>
 	<form action="LogoutServlet" method="get">
 		<input type="submi value="Logout" />
 

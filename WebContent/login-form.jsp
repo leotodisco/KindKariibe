@@ -43,7 +43,7 @@
             <h2>Crea Account</h2>
         </div>
         <br>
-        <form id="reg" method="post" action="RegistrazioneServlet" onsubmit="event.preventDefault(); validate(this)">
+        <form id="reg" method="post" action="RegistrazioneServlet" onsubmit="event.preventDefault(); validate(this);">
             <div id="classe1">
                 <label for="Nome"></label>
                 <input type="text" id="nome" name="nome" placeholder="Nome" class="uname" required><br><br>
@@ -51,8 +51,9 @@
                 <input type="text" id="cognome" name="cognome" placeholder="Cognome" class="uname" required><br><br>
                 <label for="Codice Fiscale"></label>
                 <input type="text" id="codFiscale" placeholder="Codice Fiscale" name="CodiceFiscale" class="uname" required><br><br>
+                <span class="messaggio-errore" id="codFiscaleAjaxError">Codice fiscale già presente nel database...</span>
+                <span class="messaggio-errore" id="codFiscaleErrato">Inserire un codice corretto...</span>
                 <span class="container-bottoni">
-                <!-- INDIETRO LO DEVO METTERE SOTTO -->
                 	<button id="avanti" class="bottone-Schermata-Login">Avanti</button>
                 </span>
             </div>
@@ -93,7 +94,6 @@
                 </fieldset>
                 <br>
                 <span class="container-bottoni">
-                	<!-- FARE JAVASCRIPT PER BOTTONE INDIETRO1 -->
                 	<button id="indietro1" class="bottone-Schermata-Login">Indietro</button>
                 	<button id="avanti2" class="bottone-Schermata-Login">Avanti</button>
                 </span>
@@ -101,7 +101,7 @@
 
             <div id="classe3">
                 <label for="Numero Telefono"></label>
-                <input class="pass" type="text" name="nTelefono" placeholder="Numero Telefono" required><br><br>
+                <input class="pass" id="nTelefono" type="text" name="nTelefono" placeholder="Numero Telefono" required><br><br>
                 <label for="email"></label>
                 <input type="text" name="emailr" class="uname" placeholder="Email" id="email" required>
                 <br><br>
@@ -119,11 +119,10 @@
         </form>
     </div>
 
-
-
+	
     <script>
-    
         $(document).ready(function () {
+            
             $(log).click(function () {
                 $(registrationDiv).show();
                 $(registrationDiv).addClass('animate');
@@ -133,58 +132,102 @@
                 $(classe3).hide();
                 $(last).hide();
             });
-            
+
             $(indietro1).click(function fun() {
-            	$(registrationDiv).show();
+                $(registrationDiv).show();
                 $(classe1).show();
                 $(classe).hide();
-                
+
             });
-            
+
             $(indietro2).click(function fun() {
-            	$(registrationDiv).show();
+                $(registrationDiv).show();
                 $(classe).show();
                 $(classe3).hide();
                 $(avanti2).show();
             });
-            
+
             $(avanti).click(function fun() {
-            	//espressione regolare in JQUERY non richiede che ci siano '/'
-            	//e si usa il metodo test anzichè match
-            	var regExpNomeCognome = new RegExp("^[A-Za-z]+$");
-            	var regExpCodFiscale = new RegExp("^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$", "i"); //la i serve per essere case sensitive
+                //espressione regolare in JQUERY non richiede che ci siano '/'
+                //e si usa il metodo test anzichè match
+                var flag = true;
+                var regExpNomeCognome = new RegExp("^[A-Za-z]+$");
+                var regExpCodFiscale = new RegExp("^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$", "i"); //la i serve per essere case sensitive
 
-            	if(!regExpNomeCognome.test($('#nome').val())){
-            		if(!regExpNomeCognome.test($('#cognome').val())){
-            			$('#cognome').addClass('error');
-            		}
-            		$('#nome').addClass('error');
-            		
-            		if(!regExpCodFiscale.test($('#codFiscale').val())){
-            			$('#codFiscale').addClass('error');
-            		}
-            	}
-            	
-            	else if(!regExpNomeCognome.test($('#cognome').val())){
-            		$('#cognome').addClass('error');
-            		
-            		if(!regExpCodFiscale.test($('#codFiscale').val())){
-            			$('#codFiscale').addClass('error');
-            		}
-            	}
-            	
-            	else if(!regExpCodFiscale.test($('#codFiscale').val())){
-        			$('#codFiscale').addClass('error');
-        		}
+                if (!regExpNomeCognome.test($('#nome').val())) {
+                    if (!regExpNomeCognome.test($('#cognome').val())) {
+                        $('#cognome').addClass('error');
+                    }
+                    $('#nome').addClass('error');
 
-            	else{
-                $(classe1).hide();
-                $(last).hide();
-                $(classe3).hide();
-                $(classe).show();
-                $(avanti2).show();
-            	}
-                        });
+                    if (!regExpCodFiscale.test($('#codFiscale').val())) {
+                        $('#codFiscale').addClass('.error');
+                        $('#codFiscaleErrato').show();
+                    }
+                } //test nome
+
+                else if (!regExpNomeCognome.test($('#cognome').val())) {
+                    $('#cognome').addClass('error');
+                    //far mostrare "inserire cognome corretto"
+
+                    if (!regExpCodFiscale.test($('#codFiscale').val())) {
+                        $('#codFiscale').addClass('.error');
+                        $('#codFiscaleErrato').show();
+                    }
+                }//test cognome
+
+                if (!regExpCodFiscale.test($("#codFiscale").val())) {
+                    $('#codFiscale').addClass('.error');
+                    $("#codFiscaleErrato").show();
+                }
+
+                else {
+                    $(classe1).hide();
+                    $(last).hide();
+                    $(classe3).hide();
+                    $(classe).show();
+                    $(avanti2).show();
+                }
+                //cod fiscale check
+                function checkIfCodiceFiscaleExists(codFiscale) {
+                    return $.ajax({
+                        url: "Api/User",
+                        type: 'GET',
+                        async: false,
+                        cache: false,
+                        timeout: 30000,
+                        dataType: "json",
+                        data: {
+                            action: "checkCodFiscale",
+                            CodiceFiscale: codFiscale
+                        },
+                        success: function (data) {
+                            return data
+                        },
+                        fail: function (msg) {
+                            return true;
+                        }
+                    });
+                }
+                var res = checkIfCodiceFiscaleExists($("#codFiscale").val());
+                if (res.responseJSON.message == "taken") {
+                    flag = false;
+                    $('#codFiscale').addClass('error');
+                    $('#codFiscaleAjaxError').show();
+                }
+                else {
+                    $('#codFiscale').toggleClass('error');
+                    $('#codFiscaleAjaxError').hide();
+                }
+
+                if (flag == false) {
+                    $(registrationDiv).show();
+                    $(classe1).show();
+                    $(classe).hide();
+                }
+
+            
+            });
 
             $(avanti2).click(function funct() {
                 $(classe3).show();
@@ -192,88 +235,109 @@
                 $(classe).hide();
                 $(last).show();
             });
-
         });
-          
-        //fai pulsante indietro
 
-					function checkEmail(inputtxt) {
-						var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            function checkEmail(inputtxt) {
+                var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-						if (inputtxt.value.match(email))
-							return true;
-						else {
+                if (inputtxt.value.match(email))
+                    return true;
+                else {
 
-							return false;
-						}
-					}
+                    return false;
+                }
+            }
 
-					function checkPhonenumber(inputtxt) {
-						var phoneno = /^([0-9]{10})$/;
-						if (inputtxt.value.match(phoneno))
-							return true;
+            function checkPhonenumber(inputtxt) {
+                var phoneno = /^([0-9]{10})$/;
+                if (inputtxt.value.match(phoneno))
+                    return true;
 
-						return false;
-					}
-					
-					function validate(obj) {
-					  	var valid = true;
-
-						var email = document.getElementsByName("emailr")[0];
-						if (!checkEmail(email)) {
-							email.classList.add("error");
-							valid = false;
-						} else {
-							email.classList.remove("error");
-						}
-
-						var numbers = document.getElementsByName("nTelefono")[0];
-						if (!checkPhonenumber(numbers)) {
-							valid = false;
-							numbers.classList.add("error");
-						} else {
-							numbers.classList.remove("error");
-						}
-						
-						//DA QUI CE LA PARTE NUOVA
-						function checkIfEmailExists(email) {
-								return $.ajax({
-									url : "Api/User",
-									type : 'GET',
-									async : false,
-									cache : false,
-									timeout : 30000,
-									dataType : "json",
-									data : {
-										action : "checkEmail",
-										email : email
-									},
-									success : function(data) {
-										return data
-									},
-									fail : function(msg) {
-										return true;
-									}
-								});
+                return false;
+            }
+            
+            function validate(obj) {
+			  	var valid = true;
+				var email = document.getElementsByName("emailr")[0];
+				if (!checkEmail(email)) {
+					email.classList.add("error");
+					valid = false;
+				} else {
+					email.classList.remove("error");
+				}
+				var numbers = document.getElementsByName("nTelefono")[0];
+				if (!checkPhonenumber(numbers)) {
+					valid = false;
+					numbers.classList.add("error");
+				} else {
+					numbers.classList.remove("error");
+				}
+				
+				function checkIfEmailExists(email) {
+						return $.ajax({
+							url : "Api/User",
+							type : 'GET',
+							async : false,
+							cache : false,
+							timeout : 30000,
+							dataType : "json",
+							data : {
+								action : "checkEmail",
+								email : email
+							},
+							success : function(data) {
+								return data
+							},
+							fail : function(msg) {
+								return true;
 							}
-
-					
-							var res = checkIfEmailExists($("#email").val());
-							
-							if (res.responseJSON.message == "taken") {
-								valid = false;
-								email.classList.add("error");
-						 
-							} else {
-								email.classList.remove("error");
-							
-							}
-						
+						});
+					}
+					var res = checkIfEmailExists($("#email").val());
+					if (res.responseJSON.message == "taken") {
+						valid = false;
+						email.classList.add("error");
+				 
+					} else {
+						email.classList.remove("error");
+					}
+					//nTelefono
+					function controllaNTelefono(numero) {
+							return $.ajax({
+								url : "Api/User",
+								type : 'GET',
+								async : false,
+								cache : false,
+								timeout : 30000,
+								dataType : "json",
+								data : {
+									action : "checkNumero",
+									nTelefono : numero
+								},
+								success : function(data) {
+									return data;
+								},
+								fail : function(msg) {
+									return true;
+								}
+							});
+						}
+					var variabile = controllaNTelefono($("#nTelefono").val());
+					if (variabile.responseJSON.message == "taken") {
+						alert("prova2");
+						valid = false;
+						$("#nTelefono").classList.add("error");
+				 
+					} else {	
+					}
+				
 						if (valid)
 							obj.submit();
+						
 					}
-
+            
 				</script>
+
 </body>
 
 

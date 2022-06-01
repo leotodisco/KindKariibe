@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 import beans.*;
 import model.*;
@@ -58,6 +59,22 @@ public class AcquistaServlet extends HttpServlet {
 					succesfull.forward(request, response);
 				}
 			}
+			else if(azione.equals("prova")) {
+				IndirizzoDao daoAddress = new IndirizzoDao();
+				IndirizzoBean beanIndirizzo;
+				
+				MetodoPagamentoDAO metodDAO = new MetodoPagamentoDAO();
+				try {
+					MetodoPagamentoBean beanz = metodDAO.doRetrieveByKey(request.getParameter("idMetodo"));
+					beanIndirizzo = daoAddress.doRetrieveByKey(request.getParameter("idIndirizzo"));
+					System.out.println("\n\nID metodo = "+ beanz.toString());
+					System.out.println("\n indirizzo: "+ beanIndirizzo.toString());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 			else if(azione.equals("conferma")) {
 				//creo l'oggetto datiFiscali
 				
@@ -110,7 +127,9 @@ public class AcquistaServlet extends HttpServlet {
 				CorriereDAO corriereDao= new CorriereDAO();
 				
 				try {
-					ordine.setCorriere(corriereDao.doRetrieveByKey((String)request.getParameter ("corriere")));
+					CorriereBean corrierel =  corriereDao.doRetrieveAll("idCorriere").get(0);
+					System.out.println("prova corriere " + corrierel.toString());
+					ordine.setCorriere(corrierel);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -129,7 +148,7 @@ public class AcquistaServlet extends HttpServlet {
 				OrdineDAO ordineDao= new OrdineDAO();
 				try {
 					ordineDao.doSave(ordine);
-					RequestDispatcher succesfull= request.getRequestDispatcher("confermaAcquisto.jsp");
+					RequestDispatcher succesfull= request.getRequestDispatcher("home.jsp"); //leopoldo ha modificato
 					succesfull.forward(request, response);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
