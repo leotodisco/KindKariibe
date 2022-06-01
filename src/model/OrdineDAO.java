@@ -70,7 +70,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				{
 					for(ProdottoBean products : bean.getProducts().keySet())
 					{
-						ps1.setString(1, products.getNome());
+						ps1.setInt(1, products.getId());
 						ps1.setInt(2, idOrdine);
 						ps1.setDouble(3, products.getIVA());
 						ps1.setDouble(4, products.getPrezzo());
@@ -197,7 +197,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 
 	@Override
 	public void doUpdate(OrdineBean bean) throws SQLException {
-		String sql = "UPDATE " +TABLE_NAME+ "WHERE idOrdine = ?";
+		String sql = "UPDATE " +TABLE_NAME+ " WHERE idOrdine = ?";
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
