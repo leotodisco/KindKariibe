@@ -58,6 +58,14 @@ public class IndirizzoBean {
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "IndirizzoBean [id=" + id + ", via=" + via + ", citta=" + citta + ", CAP=" + CAP + ", nCivico=" + nCivico
+				+ ", provincia=" + provincia + "]";
+	}
 	
 	
 	

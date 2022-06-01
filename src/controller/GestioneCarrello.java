@@ -41,8 +41,6 @@ public class GestioneCarrello extends HttpServlet {
 		String azione = request.getParameter("action");
 		HttpSession sessione = request.getSession(true);
 		Carrello cart = (Carrello) sessione.getAttribute("Carrello"); 
-		
-		
 		UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 		
 		if(utente == null)
@@ -66,8 +64,9 @@ public class GestioneCarrello extends HttpServlet {
 				}
 
 				cart.addProduct(prodotto);
+				
 				sessione.setAttribute("Carrello", cart);
-				RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+				RequestDispatcher view = request.getRequestDispatcher("carrello.jsp");
 				view.forward(request, response);
 				
 			} catch (Exception e) {
@@ -83,6 +82,7 @@ public class GestioneCarrello extends HttpServlet {
 			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
 			view.forward(request, response);
 		}
+		
 		else if(azione.equals("rimuovi"))
 		{
 			String id = request.getParameter("id");
@@ -99,11 +99,10 @@ public class GestioneCarrello extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
+			RequestDispatcher view = request.getRequestDispatcher("carrello.jsp");
 			view.forward(request, response);
-			
-			
 		}
+		
 		
 
 			

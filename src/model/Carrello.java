@@ -35,6 +35,7 @@ public class Carrello {
 	
 	public synchronized void deleteProduct(ProdottoBean product) {
 		
+		
 		for(ProdottoBean prodotto : products.keySet())
 		{
 			if(prodotto.getNome().equals(product.getNome()))
@@ -46,9 +47,7 @@ public class Carrello {
 				else
 				{
 					products.replace(prodotto, products.get(prodotto) - 1);
-				}
-				
-				
+				}			
 			}
 		}
 		
@@ -60,10 +59,10 @@ public class Carrello {
 
 	@Override
 	public String toString() {
-		return products.keySet().toString() ;
+		return products.toString() ;
 	}
 	
-	public Double getCostoTotale() {
+	public synchronized Double getCostoTotale() {
 		@SuppressWarnings("deprecation")
 		Double totale=new Double(0);
 		for(ProdottoBean prodotto : this.products.keySet()) {
@@ -72,8 +71,19 @@ public class Carrello {
 		return totale;
 	}
 	
+	public synchronized Double getTax()
+	{
+		double totale = 0;
+		for(ProdottoBean prodotto : this.products.keySet()) {
+			totale+= (prodotto.getIVA()*prodotto.getPrezzo()/100)*products.get(prodotto);
+		}
 	
+		return totale;
+	}
 	
+
+		
+	}
 	
+
 	
-}

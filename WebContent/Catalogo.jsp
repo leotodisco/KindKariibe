@@ -43,16 +43,10 @@
 				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>">Aggiungi al carrello</a>
 			</div>
 		</div>
-		
-		
-
 	<%}%>
 	</div>
 
 
-
-
-	<a href="carrello.jsp"> carrello</a>
 	<form action="LogoutServlet" method="get">
 		<input type="submi value="Logout" />
 

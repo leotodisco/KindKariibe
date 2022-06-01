@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 import beans.IndirizzoBean;
 
 public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
-	private static final String TABLE_NAME = "Indirizzo";
+	private static final String TABLE_NAME = "indirizzo";
 	private static DataSource ds;
 
 	static {
@@ -28,46 +28,49 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 		}
 	}
 
-	
-	
+
+
 	@Override
 	public void doSave(IndirizzoBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + " ('via', 'citta', 'CAP', 'numCivico', 'provincia') "
-				+ "VALUES (?,?,?,?,?)";
-		
+		String sql = "INSERT INTO " + TABLE_NAME + " (via, citta, CAP, numCivico, provincia) "
+				+ " VALUES (?,?,?,?,?) ";
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	
 				ps.setString(1, bean.getVia());
 				ps.setString(2, bean.getCitta());
 				ps.setString(3, bean.getCAP());
+
 				ps.setString(4, bean.getnCivico());
 				ps.setString(5, bean.getProvincia());
 
 				ps.execute();
 			}
 		}
+
 		
+
+
 	}
-	
-	
+
+
 	public ArrayList<IndirizzoBean> doRetriveByUtente(String codiceFiscale) throws SQLException{
 		String sql= "SELECT * FROM indirizzo INNER JOIN possessoIndirizzo ON indirizzo.id=possessoIndirizzo.indirizzo WHERE utente= '"+ codiceFiscale+"'";
-		
+
 		try(Connection con= ds.getConnection()){
 			try(PreparedStatement ps= con.prepareStatement(sql)){
 				ResultSet rs= ps.executeQuery();
 				ArrayList<IndirizzoBean> indirizzi= new ArrayList<>();
-				
+
 				while(rs.next()) {
 					IndirizzoBean indirizzo=new IndirizzoBean();
-					
+
 					indirizzo.setId(rs.getInt("id"));
 					indirizzo.setVia(rs.getString("via"));
 					indirizzo.setCitta(rs.getString("citta"));
 					indirizzo.setProvincia(rs.getString("provincia"));
 					indirizzo.setnCivico(rs.getString("numCivico"));
 					indirizzo.setCAP(rs.getString("CAP"));
-					
+
 					indirizzi.add(indirizzo);
 				}
 				return indirizzi;
@@ -89,7 +92,7 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 
 	@Override
 	public IndirizzoBean doRetrieveByKey(String arg) throws Exception {
-		
+
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE `id`= ? ";
 		IndirizzoBean result = new IndirizzoBean();
 
@@ -135,14 +138,14 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 		}
 
 		return categorie;
-		
+
 	}
 
 	@Override
 	public void doUpdate(IndirizzoBean bean) throws SQLException {
 		String sql = "UPDATE utente SET via = ?,citta = ?, provincia = ?, CAP = ?, " +
 				" numCivico = ? WHERE id = ?" ;
-		
+
 		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){	
 				preparedStatement.setString(1, bean.getVia());
@@ -151,10 +154,24 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 				preparedStatement.setString(4, bean.getCAP());
 				preparedStatement.setString(5, bean.getnCivico());
 				preparedStatement.setInt(6, bean.getId());
-				
+
 				preparedStatement.execute();
 			}
 		}
+	}
+	
+	public int ottieniKeyAutoIncrement() throws SQLException {
+		String sql2 = "SELECT MAX(id) as id from indirizzo";
+		try(Connection connect = ds.getConnection()){
+			try(PreparedStatement statement = connect.prepareStatement(sql2)){	
+				ResultSet rs = statement.executeQuery();
+				if(rs.next()) {
+					return rs.getInt("id");
+				}
+			}
+		}
+		return 0;
+		
 	}
 
 }

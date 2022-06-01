@@ -180,8 +180,7 @@
       -->
 
       <%
-		else
-		{
+		
 		
 			for(ProdottoBean prodotto : cart.getProducts().keySet())
 			{%>
@@ -251,7 +250,7 @@
 
           </div>
           
-	<%}
+	<%
 		}
 	%>
 
