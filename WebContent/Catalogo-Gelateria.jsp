@@ -21,12 +21,12 @@
 
 
 	<div class="pasticceria">
-		<span class="titolo">La Pasticceria</span>
+		<span class="titolo">La Gelateria</span>
 	</div>
 
 	<% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
 	if(ListaProdotti == null) {
-		response.sendRedirect("./CreaCatalogo");	
+		response.sendRedirect("./CreaCatalogo?tipo=Gelateria");	
 		return;
 	}
 	%>

@@ -26,7 +26,7 @@
 
 	<% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
 	if(ListaProdotti == null) {
-		response.sendRedirect("./CreaCatalogo");	
+		response.sendRedirect("./CreaCatalogo?tipo=Pasticceria");	
 		return;
 	}
 	%>
