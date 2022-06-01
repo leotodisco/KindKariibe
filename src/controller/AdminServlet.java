@@ -93,7 +93,7 @@ public class AdminServlet extends HttpServlet {
 				bean.setCategoria(cat);
 				bean.setIVA(iva);
 				bean.setTipo(tipo);
-				
+				bean.setPeso(peso);
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -103,8 +103,6 @@ public class AdminServlet extends HttpServlet {
 			try {
 				if(tipo.equals("Vaschetta"))
 				{
-					
-					bean.setPeso(peso);
 					try {
 						bean.getGusti().add(gDAO.doRetrieveByKey(Gusto1));
 						

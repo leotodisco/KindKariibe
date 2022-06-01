@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `kindkaribe` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `kindkaribe`;
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: kindkaribe
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -106,7 +106,6 @@ DROP TABLE IF EXISTS `costituzione`;
 CREATE TABLE `costituzione` (
   `gusto` varchar(30) NOT NULL,
   `prodotto` int NOT NULL,
-  `peso` enum('500','750','1000') NOT NULL,
   PRIMARY KEY (`gusto`,`prodotto`),
   KEY `product_idx` (`prodotto`),
   CONSTRAINT `gusto` FOREIGN KEY (`gusto`) REFERENCES `gusto` (`nome`),
@@ -120,7 +119,7 @@ CREATE TABLE `costituzione` (
 
 LOCK TABLES `costituzione` WRITE;
 /*!40000 ALTER TABLE `costituzione` DISABLE KEYS */;
-INSERT INTO `costituzione` VALUES ('Cioccolato',5,'500'),('Pistacchio',5,'500');
+INSERT INTO `costituzione` VALUES ('Cioccolato',5),('Pistacchio',5);
 /*!40000 ALTER TABLE `costituzione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,6 +404,7 @@ CREATE TABLE `prodotto` (
   `descrizione` tinytext,
   `quantitaDisponibili` double NOT NULL,
   `IVA` double NOT NULL,
+  `peso` enum('500','750','1000') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `appartenenzaCategoria_idx` (`categoria`),
   CONSTRAINT `appartenenzaCategoria` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`nome`)
@@ -417,7 +417,7 @@ CREATE TABLE `prodotto` (
 
 LOCK TABLES `prodotto` WRITE;
 /*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
-INSERT INTO `prodotto` VALUES ('Mimosa',1,'Monoporzione','Pasticceria',6,'Ottima per la festa della donna',2,10),('Torta Amarena',2,'Torta','Pasticceria',6,'Deliziosa torta all\'amarena',5,10),('Torta Cereali',3,'Torta','Pasticceria',10,'Kinder cereali',1,10),('Tronchetto Amarena',4,'Torta','Pasticceria',16,'Anarena e cioccolato',4,10),('Vaschetta bigusto',5,'Gelato','Vaschetta',9,'Pistacchio e cioccolato',6,10),('dede',6,'Monoporzione','Pasticceria',2,'dede',1,10),('ff',7,'Monoporzione','Pasticceria',22,'rvrv',1,10);
+INSERT INTO `prodotto` VALUES ('Mimosa',1,'Monoporzione','Pasticceria',6,'Ottima per la festa della donna',2,10,NULL),('Torta Amarena',2,'Torta','Pasticceria',6,'Deliziosa torta all\'amarena',5,10,NULL),('Torta Cereali',3,'Torta','Pasticceria',10,'Kinder cereali',1,10,NULL),('Tronchetto Amarena',4,'Torta','Pasticceria',16,'Anarena e cioccolato',4,10,NULL),('Vaschetta bigusto',5,'Gelato','Vaschetta',9,'Pistacchio e cioccolato',6,10,'500'),('dede',6,'Monoporzione','Pasticceria',2,'dede',1,10,NULL),('ff',7,'Monoporzione','Pasticceria',22,'rvrv',1,10,NULL);
 /*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -493,4 +493,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-31 21:48:13
+-- Dump completed on 2022-06-01 10:04:10

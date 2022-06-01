@@ -75,6 +75,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
+					bean.setPeso(rs.getDouble("peso"));
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					
 					ImmagineDAO imDAO = new ImmagineDAO();
@@ -133,6 +134,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
+					bean.setPeso(rs.getDouble("peso"));
 					
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					
@@ -171,7 +173,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 		
 		if(bean.getTipo().toLowerCase().equals("pasticceria")) {
 			sql = "UPDATE " + TABLE_NAME + " SET "
-					+ " tipo = ?, descrizione = ?, quantitaDisponibili = ?, prezzo = ?, IVA = ?, categoria = ? "
+					+ " tipo = ?, descrizione = ?, quantitaDisponibili = ?, prezzo = ?, IVA = ?, categoria = ?"
 					+ " WHERE id = ? ";
 			
 
@@ -199,7 +201,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 		else {
 			sql = "UPDATE " + TABLE_NAME + " SET "
-					+ " tipo = ?, descrizione = ?, quantitaDisponibili = ?, prezzo = ?, IVA = ? "
+					+ " tipo = ?, descrizione = ?, quantitaDisponibili = ?, prezzo = ?, IVA = ?, peso = ?, categoria = ? "
 					+ " WHERE id = ? ";
 
 			try(Connection con = ds.getConnection()){
@@ -209,7 +211,9 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps.setDouble(3, bean.getQuantitaResidua());
 					ps.setDouble(4, bean.getPrezzo());
 					ps.setDouble(5, bean.getIVA());
-					ps.setLong(6, bean.getId());
+					ps.setDouble(6, bean.getPeso());
+					ps.setString(7, bean.getCategoria().getNome());
+					ps.setLong(8, bean.getId());
 					ps.executeUpdate();	
 					//ps.setString(8, bean.getGusti()); //gusti deve andare in "costituzione"
 					//TO DO PESO
@@ -262,8 +266,8 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 		}
 		else {
 			sql = "INSERT INTO " + TABLE_NAME 
-					+ " (nome, tipo, descrizione, quantitaDisponibili, prezzo, IVA,id) "
-					+ " VALUES (?,?,?,?,?,?,?)";
+					+ " (nome, tipo, descrizione, quantitaDisponibili, prezzo, IVA,id,categoria,peso) "
+					+ " VALUES (?,?,?,?,?,?,?,?,?)";
 
 			try(Connection con = ds.getConnection()){
 				try(PreparedStatement ps = con.prepareStatement(IDSQL)){
@@ -283,7 +287,9 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps2.setDouble(5, bean.getPrezzo());
 					ps2.setDouble(6, bean.getIVA());
 					ps2.setInt(7, ID);
-
+					ps2.setString(8, bean.getCategoria().getNome());
+					ps2.setDouble(9, bean.getPeso());	
+					
 					ps2.execute();
 						return ID;
 					
