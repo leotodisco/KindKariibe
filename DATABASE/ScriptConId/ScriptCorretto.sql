@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `kindkaribe` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `kindkaribe`;
--- MySQL dump 10.13  Distrib 8.0.28, for macos11 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: kindkaribe
 -- ------------------------------------------------------
@@ -67,7 +67,7 @@ CREATE TABLE `composizione` (
 
 LOCK TABLES `composizione` WRITE;
 /*!40000 ALTER TABLE `composizione` DISABLE KEYS */;
-INSERT INTO `composizione` VALUES ('1',1,10,6,1),('2',1,10,6,1),('3',2,10,10,1),('4',2,10,16,1);
+INSERT INTO `composizione` VALUES (1,1,10,6,1),(2,1,10,6,1),(3,2,10,10,1),(4,2,10,16,1);
 /*!40000 ALTER TABLE `composizione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +119,7 @@ CREATE TABLE `costituzione` (
 
 LOCK TABLES `costituzione` WRITE;
 /*!40000 ALTER TABLE `costituzione` DISABLE KEYS */;
-INSERT INTO `costituzione` VALUES ('Cioccolato','5'),('Pistacchio','5');
+INSERT INTO `costituzione` VALUES ('Cioccolato',5),('Pistacchio',5);
 /*!40000 ALTER TABLE `costituzione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,56 +180,6 @@ INSERT INTO `datipagamento` VALUES ('DNNGLI01R51A717E',1),('GNVLRT01R10F924V',2)
 UNLOCK TABLES;
 
 --
--- Table structure for table `datiprodotto`
---
-
-DROP TABLE IF EXISTS `datiprodotto`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `datiprodotto` (
-  `peso` double NOT NULL,
-  PRIMARY KEY (`peso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `datiprodotto`
---
-
-LOCK TABLES `datiprodotto` WRITE;
-/*!40000 ALTER TABLE `datiprodotto` DISABLE KEYS */;
-INSERT INTO `datiprodotto` VALUES (500),(750),(1000);
-/*!40000 ALTER TABLE `datiprodotto` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `estensione`
---
-
-DROP TABLE IF EXISTS `estensione`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `estensione` (
-  `prodotto` int NOT NULL,
-  `peso` double NOT NULL,
-  PRIMARY KEY (`prodotto`,`peso`),
-  KEY `peso_idx` (`peso`),
-  CONSTRAINT `peso` FOREIGN KEY (`peso`) REFERENCES `datiprodotto` (`peso`),
-  CONSTRAINT `prodotto_` FOREIGN KEY (`prodotto`) REFERENCES `prodotto` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `estensione`
---
-
-LOCK TABLES `estensione` WRITE;
-/*!40000 ALTER TABLE `estensione` DISABLE KEYS */;
-INSERT INTO `estensione` VALUES ('5',500);
-/*!40000 ALTER TABLE `estensione` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `gusto`
 --
 
@@ -270,7 +220,7 @@ CREATE TABLE `immagine` (
   `nome` varchar(25) NOT NULL,
   `testoALT` varchar(20) NOT NULL,
   PRIMARY KEY (`idImmagine`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +229,7 @@ CREATE TABLE `immagine` (
 
 LOCK TABLES `immagine` WRITE;
 /*!40000 ALTER TABLE `immagine` DISABLE KEYS */;
-INSERT INTO `immagine` VALUES (1,1206,1280,'tronchetto.jpg','Tronchetto Amarena','buono'),(2,1206,1280,'mono_mimosa.jpg','mimosa','festa della donna'),(3,960,1280,'torta_amarena.jpg','torta amarena','torta'),(4,1024,1280,'torta_cereali.jpg','torta cereali','torta'),(5,960,1280,'gelato_pistacchio','vaschetta bigusto','vaschetta');
+INSERT INTO `immagine` VALUES (1,1206,1280,'tronchetto.jpg','Tronchetto Amarena','buono'),(2,1206,1280,'mono_mimosa.jpg','mimosa','festa della donna'),(3,960,1280,'torta_amarena.jpg','torta amarena','torta'),(4,1024,1280,'torta_cereali.jpg','torta cereali','torta'),(5,960,1280,'gelato_pistacchio','vaschetta bigusto','vaschetta'),(6,0,0,'Screenshot (2).png','Screenshot (2)','immagine mancante'),(7,0,0,'Screenshot (1).png','Screenshot (1)','immagine mancante');
 /*!40000 ALTER TABLE `immagine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -410,18 +360,18 @@ CREATE TABLE `possessoimmagine` (
 
 LOCK TABLES `possessoimmagine` WRITE;
 /*!40000 ALTER TABLE `possessoimmagine` DISABLE KEYS */;
-INSERT INTO `possessoimmagine` VALUES ('2',1),('1',2),('3',3),('4',4),('5',5);
+INSERT INTO `possessoimmagine` VALUES (2,1),(1,2),(3,3),(4,4),(5,5),(6,6),(7,7);
 /*!40000 ALTER TABLE `possessoimmagine` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `possessoIndirizzo`
+-- Table structure for table `possessoindirizzo`
 --
 
-DROP TABLE IF EXISTS `possessoIndirizzo`;
+DROP TABLE IF EXISTS `possessoindirizzo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `possessoIndirizzo` (
+CREATE TABLE `possessoindirizzo` (
   `utente` varchar(16) NOT NULL,
   `indirizzo` int NOT NULL,
   PRIMARY KEY (`utente`,`indirizzo`)
@@ -429,13 +379,13 @@ CREATE TABLE `possessoIndirizzo` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `possessoIndirizzo`
+-- Dumping data for table `possessoindirizzo`
 --
 
-LOCK TABLES `possessoIndirizzo` WRITE;
-/*!40000 ALTER TABLE `possessoIndirizzo` DISABLE KEYS */;
-INSERT INTO `possessoIndirizzo` VALUES ('TDSLLD00E18C129Y',1),('TDSLLD00E18C129Y',2);
-/*!40000 ALTER TABLE `possessoIndirizzo` ENABLE KEYS */;
+LOCK TABLES `possessoindirizzo` WRITE;
+/*!40000 ALTER TABLE `possessoindirizzo` DISABLE KEYS */;
+INSERT INTO `possessoindirizzo` VALUES ('TDSLLD00E18C129Y',1),('TDSLLD00E18C129Y',2);
+/*!40000 ALTER TABLE `possessoindirizzo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -447,17 +397,18 @@ DROP TABLE IF EXISTS `prodotto`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prodotto` (
   `nome` varchar(30) NOT NULL,
-  `id` int NOT NULL AUTO_INCREMENT, 
+  `id` int NOT NULL AUTO_INCREMENT,
   `categoria` varchar(40) DEFAULT NULL,
   `tipo` enum('Vaschetta','Pasticceria') NOT NULL,
   `prezzo` double NOT NULL,
   `descrizione` tinytext,
   `quantitaDisponibili` double NOT NULL,
   `IVA` double NOT NULL,
+  `peso` enum('500','750','1000') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `appartenenzaCategoria_idx` (`categoria`),
   CONSTRAINT `appartenenzaCategoria` FOREIGN KEY (`categoria`) REFERENCES `categoria` (`nome`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -466,7 +417,7 @@ CREATE TABLE `prodotto` (
 
 LOCK TABLES `prodotto` WRITE;
 /*!40000 ALTER TABLE `prodotto` DISABLE KEYS */;
-INSERT INTO `prodotto` VALUES ('Mimosa','1','Monoporzione','Pasticceria',6,'Ottima per la festa della donna',2,10),('Torta Amarena','2','Torta','Pasticceria',6,'Deliziosa torta all\'amarena',5,10),('Torta Cereali','3','Torta','Pasticceria',10,'Kinder cereali',1,10),('Tronchetto Amarena','4','Torta','Pasticceria',16,'Anarena e cioccolato',4,10),('Vaschetta bigusto','5','Gelato','Vaschetta',9,'Pistacchio e cioccolato' , 6 ,10);
+INSERT INTO `prodotto` VALUES ('Mimosa',1,'Monoporzione','Pasticceria',6,'Ottima per la festa della donna',2,10,NULL),('Torta Amarena',2,'Torta','Pasticceria',6,'Deliziosa torta all\'amarena',5,10,NULL),('Torta Cereali',3,'Torta','Pasticceria',10,'Kinder cereali',1,10,NULL),('Tronchetto Amarena',4,'Torta','Pasticceria',16,'Anarena e cioccolato',4,10,NULL),('Vaschetta bigusto',5,'Gelato','Vaschetta',9,'Pistacchio e cioccolato',6,10,'500'),('dede',6,'Monoporzione','Pasticceria',2,'dede',1,10,NULL),('ff',7,'Monoporzione','Pasticceria',22,'rvrv',1,10,NULL);
 /*!40000 ALTER TABLE `prodotto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -529,7 +480,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES ('DNNGLI01R51A717E','Giulia','Donnarumma','2001-10-11','gi.donnarumma@gmail.com','3318899543','giDonna8','F',0),('GNVLRT01R10F924V','Alberto','Genovese','2001-10-10','alb.genovese@gmail.com','3342524079','Gengar10?','M',1),('RSSMRA96A01F839E','Mario','Rossi','1996-01-01','mario.rossi@gmail.com','3456545678','marioRossi','M',0),('SFODGL02M46H703Y','Sofia','De Angelis','2002-08-06','sofia.deangelis02@gmail.com','3467896756','sofia!','F',0),('TDSLLD00E18C129Y','Leopoldo','Todisco','2000-05-18','leopoldo.todiscozte@gmail.com','3245167890','le0p0ld0','M',1);
+INSERT INTO `utente` VALUES ('bgvhndcfxrstyeui','root','dede','2001-10-10','root@gmail.com','5439087654','root','M',0),('DNNGLI01R51A717E','Giulia','Donnarumma','2001-10-11','gi.donnarumma@gmail.com','3318899543','giDonna8','F',0),('GNVLRT01R10F924V','Alberto','Genovese','2001-10-10','alb.genovese@gmail.com','3342524079','Gengar10?','M',1),('RSSMRA96A01F839E','Mario','Rossi','1996-01-01','mario.rossi@gmail.com','3456545678','marioRossi','M',0),('SFODGL02M46H703Y','Sofia','De Angelis','2002-08-06','sofia.deangelis02@gmail.com','3467896756','sofia!','F',0),('TDSLLD00E18C129Y','Leopoldo','Todisco','2000-05-18','leopoldo.todiscozte@gmail.com','3245167890','le0p0ld0','M',1);
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -542,4 +493,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-05 12:43:04
+-- Dump completed on 2022-06-01 10:04:10

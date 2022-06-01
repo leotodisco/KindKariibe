@@ -61,7 +61,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 
 	@Override
 	public GustoBean doRetrieveByKey(String id) throws Exception {
-		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE nome = ?";
+		String sql = "SELECT * FROM " + "kindkaribe.gusto" + " WHERE nome = ?";
 		GustoBean bean = new GustoBean();
 
 		try(Connection conn = ds.getConnection()){
@@ -74,7 +74,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 					bean.setNome(rs.getString("nome"));
 					bean.setColore(rs.getString("colore"));
 					bean.setDescrizione(rs.getString("descrizione"));
-					bean.setquantitaInMagazzino(Integer.valueOf(rs.getString("quantitaResidua")));
+					bean.setquantitaInMagazzino(Double.valueOf(rs.getString("quantitaResidua")));
 				}
 			}	
 		}

@@ -38,6 +38,7 @@
 	<%ArrayList<MetodoPagamentoBean> metodiPagamento= utente.getElencoMetodiPagamento();
 	if(metodiPagamento.isEmpty()){%>
 		<h2>non hai nessuno metodo di pagamento</h2>
+		
 	<%}
 	else{%>
 			<%Iterator<MetodoPagamentoBean> it= metodiPagamento.iterator();

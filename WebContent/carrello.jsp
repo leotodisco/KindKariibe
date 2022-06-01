@@ -35,7 +35,7 @@
 	<h1><%= prodotto.getNome() %>
 		X
 		<%= cart.getProducts().get(prodotto) %>
-		<a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getNome()%>">
+		<a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getId()%>">
 			rimuovi</a>
 	</h1>
 
