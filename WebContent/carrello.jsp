@@ -203,11 +203,11 @@
 
                         <div class="product-qty">
                           <!--parte in cui in java si fa incrementare e decrementare-->
-                          <button id="decrement"><a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getNome()%>"><ion-icon name="remove-outline"></ion-icon></a>
+                          <button id="decrement"><a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getId()%>"><ion-icon name="remove-outline"></ion-icon></a>
                           </button>
                           <span id="quantity"><%= cart.getProducts().get(prodotto) %></span>
                           <button id="increment">
-                          <a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>"><ion-icon name="add-outline"></ion-icon></a>
+                          <a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>"><ion-icon name="add-outline"></ion-icon></a>
                             
                           </button>
                         </div>
@@ -221,7 +221,7 @@
                       </div>
                     </div>
                     <button class="product-close-btn">
-                      <a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getNome()%>">&#10006;</a>
+                      <a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getId()%>">&#10006;</a>
                     </button>
                   </div>
                 </div>

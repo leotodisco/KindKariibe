@@ -101,9 +101,6 @@ public class AcquistaServlet extends HttpServlet {
 				}
 				
 				System.out.println(datiFiscali.toString());
-				
-				
-				System.out.println("creo l'ordine");
 				OrdineBean ordine= new OrdineBean();
 				
 				ordine.setDatiFiscali(datiFiscali);
@@ -112,7 +109,6 @@ public class AcquistaServlet extends HttpServlet {
 				
 				
 				ordine.setProducts(cart.getProducts());			//setto i prodotti dell'ordine
-				
 				
 						//setto i dati per la spedizione
 				IndirizzoDao daoIndirizzo= new IndirizzoDao();
@@ -128,7 +124,6 @@ public class AcquistaServlet extends HttpServlet {
 				
 				try {
 					CorriereBean corrierel =  corriereDao.doRetrieveAll("idCorriere").get(0);
-					System.out.println("prova corriere " + corrierel.toString());
 					ordine.setCorriere(corrierel);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
