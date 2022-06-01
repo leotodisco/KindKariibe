@@ -49,7 +49,6 @@
               <%} %>
               </div>
 
-         
           </div>
 
           <h2 class="section-heading">Dettagli di pagamento</h2>

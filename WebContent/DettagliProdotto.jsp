@@ -20,7 +20,7 @@
 	      <div class = "container">
 	      
             <div class ="item">
-             <img src = "./immagini/<%=bean.getPathImage().get(0)%>" alt = "immagine" class ="image">
+             <img class="image" src="./immagini/<%= bean.getPathImage().get(0)  %>">
             </div>
             <div class="item-descrizione">
                 <p class = "product-title"><%= bean.getNome() %></p>
@@ -28,7 +28,7 @@
                 <p class = "descrizione"><%= bean.getDescrizione()%></p>
                 <p class = "product-title">&euro; <%= String.format("%.02f", bean.getPrezzo()) %></p>
                 <p class = "container-bottone">
-                <button class="aggiungi"><a href="./GestioneCarrello?action=aggiungi&id=<%=bean.getNome()%>">Aggiungi al carrello</a></button>
+                <button class="aggiungi"><a href="./GestioneCarrello?action=aggiungi&id=<%=bean.getId()%>">Aggiungi al carrello</a></button>
                 </p>
             </div>
         </div>

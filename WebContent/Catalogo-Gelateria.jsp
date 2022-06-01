@@ -21,12 +21,12 @@
 
 
 	<div class="pasticceria">
-		<span class="titolo">La Pasticceria</span>
+		<span class="titolo">La Gelateria</span>
 	</div>
 
 	<% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
 	if(ListaProdotti == null) {
-		response.sendRedirect("./CreaCatalogo");	
+		response.sendRedirect("./CreaCatalogo?tipo=Gelateria");	
 		return;
 	}
 	%>
@@ -40,7 +40,7 @@
 			<div class="dettagli-card">
 				<div class="nome"><%= prodotto.getNome() %></div>
 				<p>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></p>
-				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getNome()%>">Aggiungi al carrello</a>
+				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>">Aggiungi al carrello</a>
 			</div>
 		</div>
 		

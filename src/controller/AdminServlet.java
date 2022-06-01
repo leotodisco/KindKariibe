@@ -2,7 +2,6 @@ package controller;
 
 import com.oreilly.servlet.MultipartRequest;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.sql.SQLException;
@@ -15,9 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.CategoriaBean;
+import beans.GustoBean;
 import beans.ImmagineBeans;
 import beans.ProdottoBean;
 import model.CategoriaDAO;
+import model.CostituzioneDAO;
+import model.GustoDAO;
 import model.ImmagineDAO;
 import model.PossessoImmagineDAO;
 import model.ProdottoDAO;
@@ -64,12 +66,17 @@ public class AdminServlet extends HttpServlet {
 			Double iva = Double.parseDouble(multi.getParameter("IVA"));
 			Double peso = Double.parseDouble(multi.getParameter("peso"));
 			String tipo = multi.getParameter("tipo");
-		
+			String Gusto1 = multi.getParameter("gusto1");
+			String Gusto2 = multi.getParameter("gusto2");
+			String Gusto3 = multi.getParameter("gusto3");
+
 			
 			
 			ImmagineBeans immagine = new ImmagineBeans();
 			ImmagineDAO imDAO = new ImmagineDAO();
 			PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
+			GustoDAO gDAO = new GustoDAO();
+			CostituzioneDAO cDAO = new CostituzioneDAO();
 			
 			CategoriaDAO buffer = new CategoriaDAO();
 			Optional<CategoriaBean> cat;
@@ -85,8 +92,8 @@ public class AdminServlet extends HttpServlet {
 				bean.setQuantitaResidua(quantity);
 				bean.setCategoria(cat);
 				bean.setIVA(iva);
-				bean.setPeso(peso);
 				bean.setTipo(tipo);
+				bean.setPeso(peso);
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -94,10 +101,36 @@ public class AdminServlet extends HttpServlet {
 			}
 
 			try {
-				prod.doSave(bean);
+				if(tipo.equals("Vaschetta"))
+				{
+					try {
+						bean.getGusti().add(gDAO.doRetrieveByKey(Gusto1));
+						
+						if(Gusto2 != null)
+						{
+							bean.getGusti().add(gDAO.doRetrieveByKey(Gusto2));
+						}
+						
+						if(Gusto3 != null)
+						{
+							bean.getGusti().add(gDAO.doRetrieveByKey(Gusto3));
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				int ID2 = prod.doSaveI(bean);
+				bean.setId(ID2);
 				int ID = imDAO.doSaveI(immagine);
 				immagine.setIdImmagine(ID);
 				posDAO.doSave(immagine, bean);
+				
+				for(GustoBean G : bean.getGusti())
+				{
+					cDAO.doSave(G, bean);
+				}
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

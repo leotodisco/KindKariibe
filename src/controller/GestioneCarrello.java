@@ -114,8 +114,7 @@ public class GestioneCarrello extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String  nome= "nome";
-		nome.subSequence(nome.length()-3, nome.length());
+
 		doGet(request, response);
 	}
 
