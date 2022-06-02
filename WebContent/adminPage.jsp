@@ -37,7 +37,7 @@
   				{
   				%>
   					<tr>
-  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getNome()%>">
+  					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getId()%>">
   					<img class="immagine" src  = "./immagini/<%=prodotto.getPathImage().get(0)%>"  alt = "immagine"> </a> </td>
   					<td><%= prodotto.getNome() %></td>
   					<td><%= prodotto.getCategoria().getNome() %></td>
@@ -49,7 +49,7 @@
   					<td>
   						<form action="AdminServlet" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="operazione" value="rimuovi">
-							<input name="nome" type="hidden" value="<%= prodotto.getNome() %>">
+							<input name="nome" type="hidden" value="<%= prodotto.getId() %>">
 							<input type="submit" value="&times;" class="close-">
 						</form>	
   					</td>

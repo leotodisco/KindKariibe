@@ -40,7 +40,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 	@Override
 	public boolean doDelete(String arg) throws SQLException {
-		String sql = "DELETE FROM "+ TABLE_NAME +" WHERE `nome`= ?";
+		String sql = "DELETE FROM "+ TABLE_NAME +" WHERE `id`= ?";
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				ps.setString(1, arg);
