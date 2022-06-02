@@ -4,6 +4,7 @@
 <html>
 
 <head>
+
     <link rel="stylesheet" type="text/css" href="stili.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -18,9 +19,14 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 %>
 <% if (utente == null) {
 					utente = new UserBean();
-					utente.setNome("ospite");
 				}
 				%>
+				
+<%
+    response.setHeader( "Cache-Control", "no-store, no-cache, must-revalidate");  //HTTP 1.1
+    response.setHeader("Pragma","no-cache"); //HTTP 1.0
+    response.setDateHeader ("Expires", -1); //prevents caching at the proxy server
+%>
 				
 	<script>
         $(document).ready(function () {
@@ -68,7 +74,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             </ul>
 
             <div class="nav-container-item-dx">
-                <span class="text-user">Ciao,  <%= utente.getNome() %> </span>
+                <span class="text-user"><a href="PaginaUtente.jsp"> <%= utente.getNome()==null ? "Accedi" : "Ciao, " + utente.getNome() %> </a> </span>
              <a href="carrello.jsp"><ion-icon name="cart-outline" style="font-size: 1.75rem; color= "#2f2f2f""></ion-icon></a> 
           </div>
         </nav>

@@ -19,6 +19,7 @@
   		}
   %>
  <jsp:include page = "header.jsp"/>
+
  
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -205,10 +206,11 @@
                           <!--parte in cui in java si fa incrementare e decrementare-->
                           <button id="decrement"><a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getId()%>"><ion-icon name="remove-outline"></ion-icon></a>
                           </button>
-                          <span id="quantity"><%= cart.getProducts().get(prodotto) %></span>
+                          <span id="quantity"><%=cart.getProducts().get(prodotto)%></span>
+                          
+                          
                           <button id="increment">
                           <a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>"><ion-icon name="add-outline"></ion-icon></a>
-                            
                           </button>
                         </div>
 
@@ -308,11 +310,9 @@ $(document).ready(function () {
      $(".indirizzo-").click(function(){
     	$(".indirizzo-").css("border", "1px solid #2f2f2f")
     	$(this).css("border", "2px solid green")
-    	
- 
     })
-
-})
+	
+})//chiusura jquery totale
 </script>
 	
 </body>

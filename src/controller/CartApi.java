@@ -7,17 +7,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class CartApi
  */
-@WebServlet("/LogoutServlet")
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/CartApi")
+public class CartApi extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String contentType = "application/json; charset=UTF-8";
+	private String action;
+	private Gson gson = new Gson();
+
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if(request.getHeader("x-requested-with") == null) {
+			response.sendError(500);
+			return;
+		} 
+		this.action = request.getParameter("action");
+		response.setContentType(contentType);		
+		super.service(request, response);
+	}
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public CartApi() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,14 +43,13 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-
-		request.getSession().removeAttribute("adminRoles");
-		request.getSession().invalidate();
-
-		String redirectedPage = "/Catalogo.jsp";
-		response.sendRedirect(request.getContextPath() + redirectedPage);	
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		if(action.equals("incrementa")) {
+			System.out.println("ciao");
+			System.out.println("prova nella servlet, quantita = " + request.getParameter("Quantita"));
+		}
 	}
 
 	/**
@@ -44,5 +60,4 @@ public class LogoutServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	
 }

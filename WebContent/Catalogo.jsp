@@ -47,13 +47,6 @@
 	</div>
 
 
-	<form action="LogoutServlet" method="get">
-		<input type="submi value="Logout" />
-
-
-		<a href = "login-form.jsp">Login</a>
-
-
 
 </body>
 </html>

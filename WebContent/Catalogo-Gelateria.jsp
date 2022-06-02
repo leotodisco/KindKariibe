@@ -49,53 +49,5 @@
 	<%}%>
 	</div>
 
-
-
-
-
-	<form action="LogoutServlet" method="get">
-		<input type="submit" value="Logout" />
-	</form>
-	<h1>Carrello</h1>
-	<p>
-		<a href="GestioneCarrello?action=svuota">svuota</a>
-	</p>
-	<p>
-		<a href="GestioneCarrello?action=acquista">acquista</a>
-	</p>
-	<% HttpSession sessione = request.getSession();
-	
-		Carrello cart = (Carrello) sessione.getAttribute("Carrello");
-		
-		if(cart == null)
-		{%>
-	<p>Carrello vuoto</p>
-
-	<%}
-		else
-		{
-		
-			for(ProdottoBean prodotto : cart.getProducts().keySet())
-			{%>
-
-	<h1><%= prodotto.getNome() %>
-		X
-		<%= cart.getProducts().get(prodotto) %>
-		<a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getNome()%>">
-			rimuovi</a>
-	</h1>
-
-	<%}
-		%>
-
-
-	<%}
-			%>
-
-
-		<a href = "login-form.jsp">Login</a>
-
-
-
 </body>
 </html>

@@ -63,6 +63,7 @@ public class LoginServlet extends HttpServlet {
 				{
 					request.getSession().setAttribute("utente", User);
 					RequestDispatcher succesfull = request.getRequestDispatcher("LoginSuccesfull.jsp");
+
 					succesfull.forward(request, response);
 				}
 				else

@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import = "beans.*"   %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,17 +8,33 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
-    <body>
+    <body style="background-color: #fcefd4;">
+    <% 
+UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
+%>
+<% if (utente == null) { %>
+	<jsp:forward page="login-form.jsp"/>
+
+<%
+				}
+				%>
+     <jsp:include page = "header.jsp"/>
+     
+      	<%
+    response.setHeader( "Cache-Control", "no-store, no-cache, must-revalidate");  //HTTP 1.1
+    response.setHeader("Pragma","no-cache"); //HTTP 1.0
+    response.setDateHeader ("Expires", -1); //prevents caching at the proxy server
+%>
+
     <div class="container">
 
         <div class="card">
             
             <div class="top-container">
                <div class ="info">
-                <img src="https://i.imgur.com/G1pXs7D.jpg" class="profilepic" >
                     <div class="testi">
-                        <p class="name">Pinuccio IlPazzo</p>
-                        <p class="mail">leopoldogay@gmail.com</p>
+                        <p class="name"><%=utente.getNome()%></p>
+                        <p class="mail"><%=utente.getEmail()%></p>
                     </div>
                 </div>
             </div>
@@ -31,7 +46,9 @@
                 <span class="text">Informazioni personali</span>
             </div>
             <div class="logout">
-                <span class="text">Logout</span>
+                	<form action="LogoutServlet" method="get">
+						<input type="submit" value="Logout" />
+					</form>
             </div>
             
         </div>
