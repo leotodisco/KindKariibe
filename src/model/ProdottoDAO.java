@@ -300,7 +300,63 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 		}
 	}
 	
-	
+	public ProdottoBean doRetrieveByNome(String nome) throws Exception {
+		String sql = "SELECT prodotto.*, categoria.nome as Cnome, categoria.descrizione as Cdesc "
+				+ "FROM prodotto JOIN categoria "
+				+"ON categoria.nome = prodotto.categoria "
+				+ "where prodotto.id = ?";
+		ProdottoBean bean = new ProdottoBean();
+		CategoriaBean buffer = new CategoriaBean();
+
+		try(Connection conn = ds.getConnection()){
+			try(PreparedStatement statement = conn.prepareStatement(sql)){
+				statement.setString(1, nome);
+
+				ResultSet rs = statement.executeQuery();
+				if(rs.next()) {
+					bean.setNome(rs.getString("nome"));
+					bean.setId(Integer.parseInt(rs.getString("id")));
+					buffer.setNome(rs.getString("Cnome"));
+					buffer.setDescrizione(rs.getString("Cdesc"));
+					Optional<CategoriaBean> optional = Optional.of(buffer); //categoria può essere null
+					bean.setCategoria(optional);
+					bean.setPrezzo(rs.getDouble("prezzo"));
+					bean.setIVA(rs.getDouble("IVA"));
+					bean.setDescrizione(rs.getString("descrizione"));
+					bean.setTipo(rs.getString("tipo"));
+					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
+					bean.setPeso(rs.getDouble("peso"));
+					ArrayList<String> elencoPathImmagini = new ArrayList<>();
+					
+					ImmagineDAO imDAO = new ImmagineDAO();
+					ImmagineBeans imBean = new ImmagineBeans();
+					PossessoImmagineDAO possDAO = new PossessoImmagineDAO();
+					CostituzioneDAO CostDAO = new CostituzioneDAO();
+					GustoDAO GDAO = new GustoDAO();
+					GustoBean GustoB = new GustoBean();
+					
+					
+					for(String immagine : possDAO.retrieveImmagine(nome))
+					{
+						imBean = imDAO.doRetrieveByKey(immagine);
+						elencoPathImmagini.add(imBean.getUrl());
+					}
+					
+					bean.setPathImage(elencoPathImmagini);
+
+
+					for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+					{
+						GustoB = GDAO.doRetrieveByKey(gusti);
+						bean.getGusti().add(GustoB);
+					}
+					
+					
+				}
+			}	
+		}
+		return bean;
+	}
 	
 	
 }
