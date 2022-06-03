@@ -19,6 +19,44 @@
   padding: 0;
 }
 
+.titolo-ricerca{
+	  font-family: "archia-regular";
+	  font-size: 1.2rem;
+}
+
+.immagine-ricerca{
+	width: 50px;
+	height: 50px;
+	border: 1px solid #2f2f2f;
+}
+
+.nascondi{
+	display:none;
+}
+
+.container-ricerca{
+	display:flex; 
+	flex-direction:column; 
+}
+
+.form-prodotti-ricerca{
+	margin-left: 3px; 
+	padding-right: 18px;
+    width: 200px;
+    height: 20px;
+    border-color: #2f2f2f;
+    border: 1px solid #2f2f2f;
+    background-color: #FCEFD4;
+    border-radius: 17px;
+}
+
+.divProdottiRicerca{
+	 width: 280px; 
+	 position:absolute; 
+	 margin-top:30px;
+	 background-color: #fcefd4;
+}
+
 
 a{
 	text-decoration:none;

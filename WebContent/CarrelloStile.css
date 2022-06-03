@@ -383,7 +383,7 @@ border: 1px solid #2f2f2f;
 
 
 
-@media (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
 
   .item-flex { flex-direction: column-reverse; }
 
@@ -404,7 +404,7 @@ border: 1px solid #2f2f2f;
 
   .cart {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:  1fr;
     width: 100%;
     border-bottom: 1px solid #2f2f2f;
   }
@@ -412,7 +412,7 @@ border: 1px solid #2f2f2f;
   .cart .wrapper { margin-top: auto; }
 
   .cart .cart-item-box {
-    border-right: 1px solid var(--gainsboro);
+    border-right: 1px solid #2f2f2f;
     margin-bottom: 0;
   }
 
@@ -421,16 +421,18 @@ border: 1px solid #2f2f2f;
 }
 
 
-@media (max-width: 1050px) {
+@media screen and (max-width: 1050px) {
 
   :root { --px: 40px; }
 
   .cart { grid-template-columns: 1fr; }
 
-  .discount-token { border-top: 1px solid var(--gainsboro); }
+  .discount-token { border-top: 1px solid #2f2f2f; }
 
   .wrapper-flex { gap: 20px; }
+    .cart .wrapper { margin-top: auto; }
   
+    .discount-token { border-top: none; }
   
   .input-flex .expire-date,
   .input-flex .cvv { width: 100%; }
@@ -444,7 +446,7 @@ border: 1px solid #2f2f2f;
 
 
 
-@media (max-width: 567px) {
+@media screen and (max-width: 567px) {
 
   :root { --px: 20px; }
 
