@@ -1,18 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" import = "beans.*" %>
+    pageEncoding="utf-8" import = "beans.*" import = "java.util.*" import="java.nio.*" import="java.nio.charset.StandardCharsets" %>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
 <link href = "paginaDettaglio.css" rel = "stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<% ProdottoBean bean = (ProdottoBean) request.getAttribute("prodotto"); %>
+<% ProdottoBean bean = (ProdottoBean) request.getAttribute("prodotto"); 
+	List<ProdottoBean> elenco = (List<ProdottoBean>) request.getAttribute("prodottiConsigliati");
+	UserBean utente = (UserBean) request.getSession(true).getAttribute("utente"); 
+	
+%>
 
-<title>
-<%= bean.getNome()%></title>
+<title><%= bean.getNome()%></title>
 </head>
 <body>
-
 <jsp:include page="header.jsp" />
 
 <p class = "product-title-nascosto"><%= bean.getNome() %></p>
@@ -25,6 +29,7 @@
             <div class="item-descrizione">
                 <p class = "product-title"><%= bean.getNome() %></p>
                 <p class = "categoria"><%= bean.getTipo()%></p>
+                <p class = "votoMedio" id="rating"><%= request.getAttribute("votoMedio")%></p>
                 <p class = "descrizione"><%= bean.getDescrizione()%></p>
                 <p class = "product-title">&euro; <%= String.format("%.02f", bean.getPrezzo()) %></p>
                 <p class = "container-bottone">
@@ -32,33 +37,102 @@
                 </p>
             </div>
         </div>
-
-        <div class="consigliati">
-            <div class = "item-consigliato">
-                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
-                <p>testo</p>
-            </div>
-            
-            <div class = "item-consigliato">
-                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
-                <p>testo</p>
-            </div>
-
-            <div class = "item-consigliato">
-                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
-                <p>testo</p>
-            </div>
-
-            <div class = "item-consigliato">
-                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
-                <p>testo</p>
-            </div>
-
-            <div class = "item-consigliato">
-                <img src="" alt = "elemento consigliato" class ="immagine-item-consigliato">
-                <p>testo</p>
-            </div>
+		
+        <br><br>
+		<div class="intestazione">
+        	<span class="prodotti-consigliati-header">Prodotti consigliati</span>
         </div>
+        <div class="consigliati">
+        <%
+        	for(ProdottoBean p : elenco){
+        		 %>
+            <div class = "item-consigliato">
+                <a class="cons" href="CreaCatalogo?action=details&id=<%= p.getId()%>" style="text-decoration:none"><img src="./immagini/<%= p.getPathImage().get(0)  %>" alt = "elemento consigliato" class ="immagine-item-consigliato"></a>
+                <span style="text-align:center"><a class="cons" href="CreaCatalogo?action=details&id=<%= p.getId()%>" style="text-decoration:none"><%= p.getNome() %></a></span>
+            </div>
+        <%
+        	}
+            %>
+            
+             </div>
+        <br><br>
+        <div class="intestazione">
+        	<span class="prodotti-consigliati-header">Lascia una recensione</span>
+        </div>
+        
+        <div class="recensioni" id="parte-recensione">
+        	<form action="RecensioneServlet" method="get" class="form-recensione">
+        		<input type="hidden" name="prodotto" value="<%=bean.getId()%>">
+         
+        		<!-- DIV VOTO -->
+        		<div class="rate">
+        			<input type="radio" id="star5" name="voto" value="5" required />
+        			<label for="star5" title="text">5 stars</label>
+        			<input type="radio" id="star4" name="voto" value="4" required/>
+        			<label for="star4" title="text">4 stars</label>
+        			<input type="radio" id="star3" name="voto" value="3" required/>
+        			<label for="star3" title="text">3 stars</label>
+        			<input type="radio" id="star2" name="voto" value="2" required/>
+        			<label for="star2" title="text">2 stars</label>
+        			<input type="radio" id="star1" name="voto" value="1" required/>
+        			<label for="star1" title="text">1 star</label>
+    			</div>
+        		<!-- DOV -->
+        		<br><br>
+        		<textarea rows="5" cols="60" name="testo" placeholder=" inserisci una recensione..." id="rex"></textarea>
+        		<input type="hidden" name="action" value="recensisci">
+        		<br><br>
+        		<div style="text-align:center">
+        			<input type="submit" value="Recensisci" id="tasto-recensione" style="display:none">
+        		</div>
+        	</form>
+        </div>
+        
+            <script>
+            $(document).ready(function () {
+            	//fare ajax che controlla se è stato acquistato il prodotto
+            	//se è stato acquistato mostra il pulsante recensisci
+            	//se l'user non ha acquistato non mostra il pulsante
+            	function ControllaRecensione(prodotto) {
+					return $.ajax({
+						url : "RecensioneServlet",
+						type : 'GET',
+						async : false,
+						cache : false,
+						timeout : 30000,
+						dataType : "json",
+						data : {
+							action : "check",
+							prodotto : prodotto
+						},
+						success : function(data) {
+							return data
+						},
+						fail : function(msg) {
+							return true;
+						}
+					});
+				}
+            	  var n = $("#rating").text();
+			        $("#rating").empty();
 
+			        for (let i = 0; i < n; i++) {
+			            $("#rating").append("<ion-icon name=star></ion-icon>");
+			        }
+			        
+            	var res = ControllaRecensione(<%=bean.getId()%>);
+				if (res.responseJSON.message == "acquistato") {
+					$("#tasto-recensione").show();
+				} else{	
+					$('#rex').attr("placeholder", "  PUOI RECENSIRE SOLO SE HAI ACQUISTATO IL PRODOTTO")
+				}
+				
+				
+
+            });//chiusura JQUERY
+            
+            
+            </script>
+       
 </body>
 </html>

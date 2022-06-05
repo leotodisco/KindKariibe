@@ -17,6 +17,8 @@ import beans.CategoriaBean;
 import beans.GustoBean;
 import beans.ImmagineBeans;
 import beans.ProdottoBean;
+import beans.RecensioneBean;
+import beans.UserBean;
 
 public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 	private static final String TABLE_NAME = "prodotto";
@@ -50,7 +52,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 	}
 
 	@Override
-	public ProdottoBean doRetrieveByKey(String nome) throws Exception {
+	public ProdottoBean doRetrieveByKey(String id) throws Exception {
 		String sql = "SELECT prodotto.*, categoria.nome as Cnome, categoria.descrizione as Cdesc "
 				+ "FROM prodotto JOIN categoria "
 				+"ON categoria.nome = prodotto.categoria "
@@ -60,7 +62,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
-				statement.setString(1, nome);
+				statement.setString(1, id);
 
 				ResultSet rs = statement.executeQuery();
 				if(rs.next()) {
@@ -86,7 +88,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					GustoBean GustoB = new GustoBean();
 					
 					
-					for(String immagine : possDAO.retrieveImmagine(nome))
+					for(String immagine : possDAO.retrieveImmagine(id))
 					{
 						imBean = imDAO.doRetrieveByKey(immagine);
 						elencoPathImmagini.add(imBean.getUrl());
@@ -356,6 +358,25 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 			}	
 		}
 		return bean;
+	}
+	
+	public static boolean isAcquired(ProdottoBean bean, UserBean user) throws SQLException {
+		String controllaAcquisto = "SELECT * FROM utente U JOIN (SELECT * FROM ordine O JOIN composizione C ON O.idOrdine=C.ordine WHERE C.prodotto = ?) J "+
+				"ON U.codiceFiscale= J.utente WHERE U.codiceFiscale=?";
+
+		try(Connection con = ds.getConnection()){
+			try(PreparedStatement ps = con.prepareStatement(controllaAcquisto)){	
+				ps.setInt(1, bean.getId());
+				ps.setString(2, user.getCodiceFiscale());
+
+				ResultSet rs = ps.executeQuery();
+				if(rs.next())
+					return true;
+
+				else 
+					return false;
+			}
+}
 	}
 	
 	

@@ -92,7 +92,6 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 
 	@Override
 	public IndirizzoBean doRetrieveByKey(String arg) throws Exception {
-
 		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE `id`= ? ";
 		IndirizzoBean result = new IndirizzoBean();
 

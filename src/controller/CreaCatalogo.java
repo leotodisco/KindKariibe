@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import beans.ProdottoBean;
 import beans.UserBean;
 import model.ProdottoDAO;
+import model.RecensioneDAO;
 
 /**
  * Servlet implementation class CreaCatalogo
@@ -95,7 +96,11 @@ public class CreaCatalogo extends HttpServlet {
 			ProdottoBean prodotto;
 			try {
 				prodotto = Dao.doRetrieveByKey(request.getParameter("id"));
+				List<ProdottoBean> prodottiConsigliati = Dao.doRetrieveAll("C.nome").stream().filter(s->!s.getId().equals(request.getParameter("id"))).limit(4).collect(Collectors.toList());
+				
+				request.setAttribute("prodottiConsigliati", prodottiConsigliati);
 				request.setAttribute("prodotto", prodotto);
+				request.setAttribute("votoMedio", RecensioneDAO.getVotoMedio(prodotto));
 				RequestDispatcher view = request.getRequestDispatcher("DettagliProdotto.jsp");
 				view.include(request, response);
 
