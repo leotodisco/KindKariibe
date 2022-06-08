@@ -293,7 +293,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps2.setDouble(9, bean.getPeso());	
 					
 					ps2.execute();
-						return ID;
+					return ID;
 					
 					
 				

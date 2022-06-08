@@ -11,11 +11,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import beans.MetodoPagamentoBean;
+import beans.UserBean;
 
-import beans.ImmagineBeans;
-import beans.ProdottoBean;
-
-public class PossessoImmagineDAO {
+public class DatiPagamentoDAO {
+	
 	
 	private static DataSource ds;
 
@@ -30,61 +30,59 @@ public class PossessoImmagineDAO {
 	}
 
 	
-	public void doSave(ImmagineBeans immagine ,ProdottoBean prodotto) throws SQLException{
+	public void doSave(UserBean utente ,MetodoPagamentoBean metodo) throws SQLException{
 	
-		String insertSQL = "insert into kindkaribe.possessoimmagine (prodotto,immagine) \r\n" + 
+		String insertSQL = "insert into kindkaribe.datipagamento (utente,metodo) \r\n" + 
 				"VALUES (?,?)";
 		
 		
 		try (Connection con = ds.getConnection()){
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
-				preparedStatement.setLong(1, prodotto.getId());
-				preparedStatement.setInt(2, immagine.getIdImmagine());
+				preparedStatement.setString(1, utente.getCodiceFiscale());
+				preparedStatement.setInt(2, metodo.getidMetodoPagamento());
 				
 				preparedStatement.execute();
 			}
 		}
 	}
 		
-	public boolean doDelete(String Idimmagine, String prodotto) throws SQLException {
-			String sql = "DELETE FROM possessoimmagine WHERE immagine = ? and prodotto = ?";
+	public boolean doDelete(String Idmetodo, String utente) throws SQLException {
+			String sql = "DELETE FROM datipagamento WHERE utente = ? and metodo = ?";
 
 			try(Connection connection = ds.getConnection()){
 				try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-					preparedStatement.setString(1, Idimmagine);
-					preparedStatement.setString(2, prodotto);
+					preparedStatement.setString(1, utente);
+					preparedStatement.setString(2, Idmetodo);
 					return preparedStatement.execute();	
 				}
 			}
 		}
 		
-	public ArrayList<String> retrieveImmagine(String nomeP) throws SQLException
+	public ArrayList<String> retrieveMetodo(String utente) throws SQLException
 	{
-		String sql = "SELECT immagine from possessoimmagine where prodotto = ?";
+		String sql = "SELECT immagine from datipagamento where utente = ?";
 		
-		ArrayList<String> immagini = new ArrayList<>();
+		ArrayList<String> metodi = new ArrayList<>();
 		
 		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-				preparedStatement.setString(1, nomeP);
+				preparedStatement.setString(1, utente);
 				ResultSet rs = preparedStatement.executeQuery();
 				
 				while(rs.next())
 				{
-					immagini.add(rs.getString("immagine"));
+					metodi.add(rs.getString("metodo"));
 				}
 				
 			}
 		}
 		
 		
-		return immagini;
+		return metodi;
 		
 	}
 		
 		
-		
-		
-	}
-	
 
+
+}

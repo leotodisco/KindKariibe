@@ -87,7 +87,7 @@
                 <!--<ion-icon class="checkmark " name="checkmark-circle"></ion-icon>-->
                  <!-- capire per quale motivo mi passa sempre solo il primo elemento che compare -->
                 <span class="method-1" >
-                 <input type="radio" name="idMetodo" value="<%=m.getIdMetodoPagamento()%>" class="identifier" style="display:none;">
+                 <input type="radio" name="idMetodo" value="<%=m.getidMetodoPagamento()%>" class="identifier" style="display:none;">
                     <span><ion-icon name="card"></ion-icon><ion-icon class="checkmark" name="checkmark-circle" style="display:none;"></ion-icon></span>
                   	<span><b>Numero:</b> <%= "XXXX XXXX XXXX " + m.getNumeroCarta().substring(m.getNumeroCarta().length()-4) %></span>
                   	<span><b>Intestatario:</b> <%= m.getNomeIntestatario()%></span>
@@ -107,7 +107,8 @@
 				<h5 id="chiudi" style="margin-left: 10%; margin-top:6.7px; cursor:pointer; display:none;">&#10006;</h5>
 			</span>
 			
-            <form action="servlet per aggiungere roba" method="get" id="form-carta">
+            <form action="AggiungiMetodoPagamento" method="post" id="form-carta">
+            <input type="hidden" name="tipo" value="carta">
               <div class="cardholder-name">
                 <label for="cardholder-name" class="label-default">Nome Proprietario</label>
                 <input type="text" name="cardholder-name" id="cardholder-name" class="input-default" placeholder="Mario Rossi">
@@ -120,7 +121,7 @@
                 <div class="expire-date">
                   <label for="expire-date" class="label-default">Data Scadenza</label>
                   <div class="input-flex">
-                    <input type="number" name="day" id="expire-date" placeholder="31" min="1" max="31"
+                    <input type="number" name="year" id="expire-date" placeholder="31" min="1" max="31"
                       class="input-default">
                     /
                     <input type="number" name="month" id="expire-date" placeholder="12" min="1" max="12"
@@ -135,7 +136,8 @@
               <input type="submit" value="INSERISCI METODO">
             </form>
             
-            <form action="#" id="bonific">
+            <form action="AggiungiMetodoPagamento" id="bonific" method = "post">
+            <input type="hidden" name="tipo" value="bonific">
               <div class="cardholder-name">
                 <label for="cardholder-name" class="label-default">Rapporto di addebito </label>
                 <input type="text" name="cardholder-name" id="cardholder-name" class="input-default">
