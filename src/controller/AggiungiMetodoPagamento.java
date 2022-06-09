@@ -57,8 +57,8 @@ public class AggiungiMetodoPagamento extends HttpServlet {
 			String CVV = request.getParameter("cvv");
 			
 			MetodoPagamentoBean bean = new MetodoPagamentoBean();
-			bean.setAnnoScadenza(Integer.parseInt(AnnoScadenza));
-			bean.setMeseScadenza(Integer.parseInt(MeseScadenza));
+			bean.setAnnoScadenza(Integer.valueOf(AnnoScadenza));
+			bean.setMeseScadenza(Integer.valueOf(MeseScadenza));
 			bean.setCVV(Integer.parseInt(CVV));
 			bean.setNomeIntestatario(Proprietario);
 			bean.setNumeroCarta(NumeroCarta);

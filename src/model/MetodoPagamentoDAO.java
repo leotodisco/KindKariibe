@@ -174,13 +174,11 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 	public int doSaveI(MetodoPagamentoBean bean) throws SQLException {
 		String sql = new String();
 		
-		String IDSQL = "SELECT idMetodoPagamento FROM kindkaribe.metodopagamento ORDER BY idImmagine DESC LIMIT 1";
+		String IDSQL = "SELECT idMetodoPagamento FROM kindkaribe.metodopagamento ORDER BY idMetodoPagamento DESC LIMIT 1";
 		
 		if(bean.getTipo().equals("Carta")) {
-			sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario','numeroCarta','meseScadenza', "
-					+ " 'annoScadenza','IBAN',', "
-					+ " 'circuito','CVV','idMetodoPagamento') "
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?)";
+			sql = "INSERT INTO " + TABLE_NAME + " (idMetodoPagamento,tipo,nomeIntestatario,numeroCarta,meseScadenza,annoScadenza,circuito,CVV) "
+					+ " VALUES ( ?,?,?,?,?,?,?,? )";
 
 			try(Connection con = ds.getConnection()){
 				try(PreparedStatement ps = con.prepareStatement(IDSQL)){	
@@ -192,16 +190,14 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 					
 					PreparedStatement ps2 = con.prepareStatement(sql);
 					
-					ps2.setInt(1, bean.getidMetodoPagamento());
+					ps2.setInt(1, ID);
 					ps2.setString(2, bean.getTipo());
 					ps2.setString(3, bean.getNomeIntestatario());
 					ps2.setString(4, bean.getNumeroCarta());
 					ps2.setInt(5, bean.getMeseScadenza());
 					ps2.setInt(6, bean.getAnnoScadenza());
-					ps2.setString(7, bean.getIban());
-					ps2.setString(8, bean.getCircuito());
-					ps2.setInt(9, bean.getCVV());
-					ps2.setInt(10, ID);
+					ps2.setString(7, bean.getCircuito());
+					ps2.setInt(8, bean.getCVV());
 
 					ps2.execute();
 					return ID;

@@ -40,7 +40,7 @@ public class DatiPagamentoDAO {
 			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
 				preparedStatement.setString(1, utente.getCodiceFiscale());
 				preparedStatement.setInt(2, metodo.getidMetodoPagamento());
-				
+			
 				preparedStatement.execute();
 			}
 		}
