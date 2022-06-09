@@ -74,9 +74,10 @@
 
           </div>
 
-          <form action="#" id="prova">
+          <form action="AggiungiMetodoPagamento" id="prova">
 
             <div class="cardholder-name">
+            <input type="hidden" name="tipo" value="carta">
               <label for="cardholder-name" class="label-default">Nome Proprietario</label>
               <input type="text" name="cardholder-name" id="cardholder-name" class="input-default">
             </div>

@@ -103,7 +103,3 @@ function myFunction2(){
   y.style.display = "none";
   document.getElementById("prova").style.display="block";
 }
-
-
-
-
