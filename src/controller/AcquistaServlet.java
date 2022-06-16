@@ -67,8 +67,6 @@ public class AcquistaServlet extends HttpServlet {
 				try {
 					MetodoPagamentoBean beanz = metodDAO.doRetrieveByKey(request.getParameter("idMetodo"));
 					beanIndirizzo = daoAddress.doRetrieveByKey(request.getParameter("idIndirizzo"));
-					System.out.println("\n\nID metodo = "+ beanz.toString());
-					System.out.println("\n indirizzo: "+ beanIndirizzo.toString());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -100,7 +98,6 @@ public class AcquistaServlet extends HttpServlet {
 					e1.printStackTrace();
 				}
 				
-				System.out.println(datiFiscali.toString());
 				OrdineBean ordine= new OrdineBean();
 				
 				ordine.setDatiFiscali(datiFiscali);
