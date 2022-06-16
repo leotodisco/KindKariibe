@@ -30,20 +30,35 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 
 
 
-	@Override
-	public void doSave(IndirizzoBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + " (via, citta, CAP, numCivico, provincia) "
-				+ " VALUES (?,?,?,?,?) ";
+	public int doSaveI(IndirizzoBean bean) throws SQLException {
+		String sql = "INSERT INTO " + TABLE_NAME + " (via, citta, CAP, numCivico, provincia,id) "
+				+ " VALUES (?,?,?,?,?,?) ";
+		
+		String IDSQL = "SELECT id FROM kindkaribe.indirizzo ORDER BY id DESC LIMIT 1";
+		
 		try(Connection con = ds.getConnection()){
-			try(PreparedStatement ps = con.prepareStatement(sql)){	
-				ps.setString(1, bean.getVia());
-				ps.setString(2, bean.getCitta());
-				ps.setString(3, bean.getCAP());
+			try(PreparedStatement ps = con.prepareStatement(IDSQL)){	
 
-				ps.setString(4, bean.getnCivico());
-				ps.setString(5, bean.getProvincia());
+				
+				ResultSet id = ps.executeQuery();
+				
+				id.next();
+				int ID = id.getInt("id") + 1;
+				
+				PreparedStatement preparedStatement2 = con.prepareStatement(sql);
+				
+				
+				
+				preparedStatement2.setString(1, bean.getVia());
+				preparedStatement2.setString(2, bean.getCitta());
+				preparedStatement2.setString(3, bean.getCAP());
 
-				ps.execute();
+				preparedStatement2.setString(4, bean.getnCivico());
+				preparedStatement2.setString(5, bean.getProvincia());
+				preparedStatement2.setInt(6, ID);
+				preparedStatement2.execute();
+				
+				return ID;
 			}
 		}
 
@@ -51,6 +66,16 @@ public class IndirizzoDao implements ModelInterface<IndirizzoBean> {
 
 
 	}
+	
+	
+	@Override
+	public void doSave(IndirizzoBean bean) throws SQLException {
+
+		//non usare
+		
+		}
+
+	
 
 
 	public ArrayList<IndirizzoBean> doRetriveByUtente(String codiceFiscale) throws SQLException{

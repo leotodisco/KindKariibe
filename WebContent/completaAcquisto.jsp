@@ -44,7 +44,7 @@
 			<%Iterator<MetodoPagamentoBean> it= metodiPagamento.iterator();
 			  while(it.hasNext()){ 
 			  	MetodoPagamentoBean pagamento=it.next();%>
-				  <input type="radio"  value="<%=pagamento.getIdMetodoPagamento()%>" name="idMetodo"required>
+				  <input type="radio"  value="<%=pagamento.getidMetodoPagamento()%>" name="idMetodo"required>
 				  					<%=pagamento.getCircuito()+"  "+pagamento.getNumeroCarta().subSequence(12,15)%>
 			  <%}
 			  %>
