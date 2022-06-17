@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.GustoBean;
 import beans.ProdottoBean;
 import beans.RecensioneBean;
 import beans.UserBean;
+import model.GustoDAO;
 import model.ProdottoDAO;
 import model.RecensioneDAO;
 
@@ -46,6 +48,15 @@ public class CreaCatalogo extends HttpServlet {
 		HttpSession sessione = request.getSession();
 		UserBean utente = (UserBean) sessione.getAttribute("utente");
 		String tipo = request.getParameter("tipo");
+		GustoDAO gDAO = new GustoDAO();
+		
+		try {
+			ArrayList<GustoBean> gusti = (ArrayList<GustoBean>) gDAO.doRetrieveAll("nome");
+			request.getSession().setAttribute("gusti", gusti);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		if(azioni == null)
 		{

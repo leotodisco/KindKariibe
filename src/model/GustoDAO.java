@@ -85,8 +85,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 	@Override
 	public Collection<GustoBean> doRetrieveAll(String order) throws Exception {
 		List<GustoBean> gusti = new ArrayList<>();
-		GustoBean buffer = new GustoBean();
-		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY = ?";
+		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY ? ";
 		order = order.isEmpty() ? "nome" : order;
 
 		try(Connection conn = ds.getConnection()){
@@ -95,10 +94,11 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 				ResultSet rs = statement.executeQuery();
 
 				while(rs.next()) {
-					buffer.setNome(rs.getString("idCorriere"));
+					GustoBean buffer = new GustoBean();
+					buffer.setNome(rs.getString("nome"));
 					buffer.setColore(rs.getString("colore"));
 					buffer.setDescrizione(rs.getString("descrizione"));
-					buffer.setquantitaInMagazzino(Integer.valueOf(rs.getString("quantitaResidua")));
+					buffer.setquantitaInMagazzino(Double.valueOf(rs.getString("quantitaResidua")));
 					gusti.add(buffer);
 				}
 			}	

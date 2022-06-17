@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="admin.css">
     <meta charset="UTF-8">
     <title>Admin</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -13,6 +14,14 @@
 	if(ListaProdotti == null) {
 		response.sendRedirect("./CreaCatalogo");	
 		return;
+	}
+	
+	ArrayList<GustoBean> ListaGusti = (ArrayList<GustoBean>) request.getSession().getAttribute("gusti");
+	if(ListaGusti == null) {
+		response.sendRedirect("./CreaCatalogo");	
+		return;
+	
+	
 	}
 	%>
 	
@@ -84,12 +93,12 @@
 
                     <label for="tipo">Tipo:</label><br>
                     <select name="tipo">
-                        <option value="Pasticceria">Pasticceria</option>
-                        <option value="Vaschetta">Vaschetta</option>
+                        <option value="Pasticceria" id = "Pasticceria">Pasticceria</option>
+                        <option value="Vaschetta" id = "Vaschetta">Vaschetta</option>
                     </select>
                     <br>
 
-
+					
                     <label for="descrizione">Descrizione:</label><br>
                     <textarea name="descrizione" maxlength="100" rows="3" required
                         placeholder="inserire descrizione..."></textarea><br>
@@ -108,6 +117,47 @@
 
                     <label for="quantita">Quantità:</label><br> <input name="quantita" type="number" min="1" value="1"
                         required><br>
+
+                    <label for="gusto1" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
+                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    
+				<% 	for(GustoBean g : ListaGusti)
+				{ 
+				%>
+					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					
+				<%}%>
+				
+                    </select>
+                    <br>
+                    
+                    <label for="gusto2" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
+                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    
+				<% 	for(GustoBean g : ListaGusti)
+				{ 
+				%>
+					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					
+				<%}%>
+				
+                    </select>
+                    <br>
+                    
+                    
+                    <label for="gusto3" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
+                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    
+				<% 	for(GustoBean g : ListaGusti)
+				{ 
+				%>
+					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					
+				<%}%>
+				
+                    </select>
+                    <br>
+
 
                     <input type="submit" value="Aggiungi"><input type="reset" value="Reset">
 
@@ -176,7 +226,21 @@
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];
-
+        
+		$("#Vaschetta").click(function(){
+		
+			$(".vaschetta").show();
+		
+		})
+		
+		$("#Pasticceria").click(function(){
+		
+			$(".vaschetta").hide();
+			
+			
+		})
+		
+        
         btn.onclick = function () {
             modal.style.display = "block";
         }
@@ -204,8 +268,7 @@
                 modl.style.display = "none";
             }
         }
-        
-
+       
     </script>
 </body>
 </html>
