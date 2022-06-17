@@ -4,11 +4,14 @@
 <html>
 
 <head>
-
+	
+	
     <link rel="stylesheet" type="text/css" href="stili.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+       
+       <link rel="shortcut icon" href="./lib/favicon.ico"/>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </head>
@@ -76,6 +79,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 			
 			$("#valoreRicerca").keyup( function(){
             	$("#prova").empty(); //se non svuotassi all'inizio finirei per avere un elenco di prodotti subito
+            	
             	var res = ricercaAjax($("#valoreRicerca").val());
    
 			})
@@ -149,7 +153,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 						</div>
 					</div>    
                 
-                <span class="text-user"><a href="PaginaUtente.jsp"> <%= utente.getNome()==null ? "Accedi" : "Ciao, " + utente.getNome() %> </a> </span>
+                <span class="text-user"><a href="PaginaUtenteServlet"> <%= utente.getNome()==null ? "Accedi" : "Ciao, " + utente.getNome() %> </a> </span>
 	  	    		
              	<a href="carrello.jsp"><ion-icon name="cart-outline" style="font-size: 1.75rem; color: #2f2f2f;"></ion-icon></a> 
              

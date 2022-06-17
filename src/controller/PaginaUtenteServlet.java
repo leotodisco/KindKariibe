@@ -31,7 +31,7 @@ public class PaginaUtenteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		doPost(request,response);
 	}
 
 	/**
@@ -56,6 +56,8 @@ public class PaginaUtenteServlet extends HttpServlet {
 			}
 
 		}
+		RequestDispatcher success= request.getRequestDispatcher("PaginaUtente.jsp");
+		success.forward(request, response);
 	}
 
 }
