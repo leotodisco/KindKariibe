@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -120,7 +121,8 @@ public class AcquistaServlet extends HttpServlet {
 				CorriereDAO corriereDao= new CorriereDAO();
 				
 				try {
-					CorriereBean corrierel =  corriereDao.doRetrieveAll("idCorriere").get(0);
+					ArrayList<CorriereBean> corrierelista =  (ArrayList<CorriereBean>) corriereDao.doRetrieveAll("idCorriere");
+					CorriereBean corrierel = corrierelista.get((int)Math.floor(((Double) (Math.random() * 2))));
 					ordine.setCorriere(corrierel);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -140,6 +142,8 @@ public class AcquistaServlet extends HttpServlet {
 				OrdineDAO ordineDao= new OrdineDAO();
 				try {
 					ordineDao.doSave(ordine);
+					cart = new Carrello();
+					sessione.setAttribute("Carrello", cart);
 					RequestDispatcher succesfull= request.getRequestDispatcher("home.jsp"); //leopoldo ha modificato
 					succesfull.forward(request, response);
 				} catch (SQLException e) {

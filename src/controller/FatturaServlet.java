@@ -132,15 +132,15 @@ public class FatturaServlet extends HttpServlet {
 
         prodotti.addCell(new Cell().add(new Paragraph("Torta Mimosa").setMarginLeft(2).setMarginTop(1)));
         prodotti.addCell(new Cell().add(new Paragraph("1").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("â‚¬ 88,00").setMarginLeft(2).setMarginTop(1)));
+        prodotti.addCell(new Cell().add(new Paragraph("€ 88,00").setMarginLeft(2).setMarginTop(1)));
 
         prodotti.addCell(new Cell().add(new Paragraph("Torta Mimosa").setMarginLeft(2).setMarginTop(1)));
         prodotti.addCell(new Cell().add(new Paragraph("1").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("â‚¬ 88,00").setMarginLeft(2).setMarginTop(1)));
+        prodotti.addCell(new Cell().add(new Paragraph("€ 88,00").setMarginLeft(2).setMarginTop(1)));
 
         prodotti.addCell(new Cell().add(new Paragraph("Torta Mimosa").setMarginLeft(2).setMarginTop(1)));
         prodotti.addCell(new Cell().add(new Paragraph("1").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("â‚¬ 88,00").setMarginLeft(2).setMarginTop(1)));
+        prodotti.addCell(new Cell().add(new Paragraph("€ 88,00").setMarginLeft(2).setMarginTop(1)));
 
         document.add(prodotti);
 
