@@ -44,7 +44,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             		$("#prova").empty(); //svuoto la div perchè in questo modo si toglie quello che avevo cercato prima
             		$("#prova").show();
             		
-            		data.forEach(e => {
+            		data.forEach(e = {
 						var myvar = '<a href="CreaCatalogo?action=details&id='+e.id+'"><div style=" width: 200px;  border-bottom: 1px solid black; right: 50px;"><h2 class="titolo-ricerca">'+e.nome+'</h2></a> ';
 						var myvar2 = '<a href="CreaCatalogo?action=details&id='+e.id+'"><img class="immagine-ricerca" src="./immagini/'+e.pathImage[0]+'">'+'</a> </div><br><br>';
 						
@@ -112,7 +112,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             <li><a href="#" class="testoResponsive">Storia</a></li>
             <li><a href="#" class="testoResponsive">Contatti</a></li>
             <!-- mettere disegno omino, posso pensare di mettere sia accedi che carrello nello stesso li -->
-            <li><a href="PaginaUtente.jsp" class="testoResponsive">Profilo <ion-icon name="person" style="font-size: 1.55rem; color: #2f2f2f;"></ion-icon></a></li>
+            <li><a href="PaginaUtenteServlet" class="testoResponsive">Profilo <ion-icon name="person" style="font-size: 1.55rem; color: #2f2f2f;"></ion-icon></a></li>
             <li><a href="carrello.jsp">Carrello <ion-icon name="cart-outline" style=" align-items: center; font-size: 1.75rem; color: #2f2f2f;"></ion-icon></a></li>
             <!-- per la ricerca fare nuovo li -->
         </ul>
