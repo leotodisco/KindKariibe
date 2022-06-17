@@ -126,7 +126,7 @@
 				<h5 id="chiudi" style="margin-left: 10%; margin-top:6.7px; cursor:pointer; display:none;">&#10006;</h5>
 			</span>
 				
-            <form action="servlet per aggiungere roba" method="get" id="form-carta">
+            <form action="AggiungiMetodoPagamento" method="get" id="form-carta">
               <div class="cardholder-name">
                 <label for="cardholder-name" class="label-default">Nome Proprietario</label>
                 <input type="text" name="cardholder-name" id="cardholder-name" class="input-default" placeholder="  Mario Rossi" required>

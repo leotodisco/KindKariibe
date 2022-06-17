@@ -91,7 +91,7 @@ public class DatiFiscaliDAO implements ModelInterface<DatiFiscaliBean>{
 
 				if(rs.next()) {
 					dt.setIdDatiFiscali(rs.getInt("idDatiFiscali"));
-					dt.setIdIndirizzoFatturazione(rs.getInt("indirizzo"));
+					dt.setIdIndirizzoFatturazione(rs.getInt("indirizzoFatturazione"));
 					dt.setIdMetodoPagamento(rs.getInt("idMetodoPagamento"));
 				}
 
