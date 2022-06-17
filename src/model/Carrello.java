@@ -8,7 +8,7 @@ public class Carrello {
 	private HashMap<ProdottoBean,Integer> products;
 	
 	public Carrello() {
-		products = new HashMap<>();
+		this.products = new HashMap<>();
 	}
 	
 	public void addProduct(ProdottoBean product) {
@@ -35,10 +35,9 @@ public class Carrello {
 	
 	public synchronized void deleteProduct(ProdottoBean product) {
 		
-		
 		for(ProdottoBean prodotto : products.keySet())
 		{
-			if(prodotto.getNome().equals(product.getNome()))
+			if(prodotto.getId().equals(product.getId()))
 			{
 				if(products.get(prodotto) == 1)
 				{
@@ -63,7 +62,11 @@ public class Carrello {
 	}
 	
 	public synchronized Double getCostoTotale() {
-		@SuppressWarnings("deprecation")
+		
+		if(this.products.keySet().isEmpty()) {
+			return (double) 0;
+		}
+			
 		Double totale=new Double(0);
 		for(ProdottoBean prodotto : this.products.keySet()) {
 			totale+= prodotto.getPrezzo()* this.products.get(prodotto);
@@ -71,7 +74,7 @@ public class Carrello {
 		return totale;
 	}
 	
-	public synchronized Double getTax()
+	public Double getTax()
 	{
 		double totale = 0;
 		for(ProdottoBean prodotto : this.products.keySet()) {
@@ -80,10 +83,19 @@ public class Carrello {
 	
 		return totale;
 	}
-	
+
+	public synchronized void eliminaProdotto(ProdottoBean product) {
+		for(ProdottoBean p : this.products.keySet()) {
+			if(product.getId().equals(p.getId())) {
+				System.out.println("ora lo trova?");
+				products.remove(p);
+			}
+		}
 
 		
 	}
+
+}
 	
 
 	

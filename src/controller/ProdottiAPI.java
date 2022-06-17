@@ -11,11 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import beans.ProdottoBean;
 import beans.ResponseStatusMessage;
+import model.Carrello;
 import model.ProdottoDAO;
 
 /**
@@ -37,7 +39,7 @@ public class ProdottiAPI extends HttpServlet {
 			return;
 		} 
 		this.action = request.getParameter("action");
-		response.setContentType(contentType);		
+		response.setContentType(contentType);	
 		super.service(request, response);
 	}
        
@@ -53,10 +55,7 @@ public class ProdottiAPI extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("prodotto").isEmpty() || request.getParameter("prodotto")==null ) {
-			response.setStatus(200);
-			response.getWriter().print(gson.toJson(null));
-		}
+
 		
 		if(action.equals("search")) {
 			ProdottoDAO dao = new ProdottoDAO();
@@ -80,6 +79,113 @@ public class ProdottiAPI extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		//incrementa quantita
+		if(action.equals("incrementa")) {
+			System.out.println("ha capito che voglio?\n");
+			if((String) request.getParameter("prodotto") == null)
+				return;
+			
+			HttpSession sessione = request.getSession(true);
+			//chiedi ad alessandro come minchia puoi passare qualcosa della sessione via ajax
+			Carrello cart = (Carrello) sessione.getAttribute("Carrello");
+			ProdottoDAO prod = new ProdottoDAO();
+			ProdottoBean p;
+			double result = 0;
+			double totaleIVA = 0;
+			try {
+				p = prod.doRetrieveByNome((String) request.getParameter("prodotto"));
+				cart.addProduct(p); // questo metodo controlla se un prodotto è gia presente, in tal caso incrementa solo
+				result = cart.getCostoTotale();
+				totaleIVA = cart.getTax();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			response.setStatus(200);
+			response.getWriter().print(gson.toJson(result));
+			response.getWriter().flush();
+			return;
+		}
+		
+		if(action.equals("decrementa")) {
+			System.out.println("funzione di decrementa");
+			if((String) request.getParameter("prodotto") == null)
+				return;
+			
+			HttpSession sessione = request.getSession(true);
+			//chiedi ad alessandro come minchia puoi passare qualcosa della sessione via ajax
+			Carrello cart = (Carrello) sessione.getAttribute("Carrello");
+			
+			
+			ProdottoDAO prod = new ProdottoDAO();
+			ProdottoBean p;
+			double result = 0;
+			double totaleIVA = 0;
+			
+			try {
+				p = prod.doRetrieveByNome((String) request.getParameter("prodotto"));
+				cart.deleteProduct(p); // questo metodo controlla se un prodotto è gia presente, in tal caso incrementa solo
+				result = cart.getCostoTotale();
+				totaleIVA = cart.getTax();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			response.setStatus(200);
+			response.getWriter().print(gson.toJson(result));
+			response.getWriter().flush();
+			return;
+		}
+		
+		
+		if(action.equals("tasse")) {		
+			HttpSession sessione = request.getSession(true);
+			//chiedi ad alessandro come minchia puoi passare qualcosa della sessione via ajax
+			Carrello cart = (Carrello) sessione.getAttribute("Carrello");
+			double totaleIVA = 0;
+			
+			try {
+				totaleIVA = cart.getTax();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			response.setStatus(200);
+			response.getWriter().print(gson.toJson(totaleIVA));
+			response.getWriter().flush();
+			return;
+		}
+		
+		if(action.equals("elimina")) {
+			System.out.println("elimina\n");
+			if((String) request.getParameter("prodotto") == null)
+				return;
+			
+			HttpSession sessione = request.getSession(true);
+			
+			Carrello cart = (Carrello) sessione.getAttribute("Carrello");
+			ProdottoDAO prod = new ProdottoDAO();
+			ProdottoBean p;
+			double result = 0;
+			double totaleIVA = 0;
+			try {
+				p = prod.doRetrieveByNome((String) request.getParameter("prodotto"));
+				cart.eliminaProdotto(p); // questo metodo controlla se un prodotto è gia presente, in tal caso incrementa solo
+				
+				result = cart.getCostoTotale();
+				totaleIVA = cart.getTax();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			response.setStatus(200);
+			response.getWriter().print(gson.toJson(result));
+			response.getWriter().flush();
+			return;
+		}
+
+		
 	}
 
 	/**

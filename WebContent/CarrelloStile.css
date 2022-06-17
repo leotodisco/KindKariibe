@@ -36,11 +36,29 @@
   box-sizing: border-box;
 }
 
+#scritta-per-inserire-metodo{
+	cursor: pointer;
+	margin: 0; 
+	font-weight: 800; 
+	color: #2F2F2F;	
+}
+
+#scritta-per-inserire-metodo:hover{	
+	color: green;
+}
+
 #bonific{
 	display: none;
 }
 
-
+.bottone-inserisci{
+	border: 1px solid #2f2f2f;
+  border-radius: 25px;
+  width: 50%;
+	background-color: transparent;
+  padding: 15px 30px;	
+  font-family: "archia-regular";
+}
 
 #form-carta{
 	display:none;
@@ -64,12 +82,14 @@ ion-icon, span { display: inline-block; }
 label, img { display: block;   font-family: "archia-regular";}
 
 input {
+  padding-left: 10px;
   font: inherit;
   width: 100%;
   border: none;
+  outline: none;
 }
 
-input:focus { outline: 2px solid #95c05c; }
+input:focus { outline: none;}
 
 /**
  * Remove number input up & down button
@@ -78,7 +98,6 @@ input::-webkit-inner-spin-button,
 input::-webkit-outer-spin-button {
   appearance:         none;
   -webkit-appearance: none;
-  margin: 0;
 }
 
 /**
@@ -197,10 +216,26 @@ border: 1px solid #2f2f2f;
   color: #2f2f2f;
 }
 
+.input-submit{
+	  background: transparent;
+  border-radius: 20px;
+  width: 50%;
+  height: 40px;
+  border: 1px solid #2f2f2f;
+  cursor:pointer;
+}
+
+
 .input-default {
   background: transparent;
   border-radius: 20px;
+  width: 70%;
+  height: 40px;
   border: 1px solid #2f2f2f;
+}
+
+input:focus {
+  border: 2px solid green;
 }
 
 .payment-form input {
@@ -224,8 +259,12 @@ border: 1px solid #2f2f2f;
   
 }
 
+#expire-date{
+	width: 33%;
+}
+
 .input-flex .expire-date,
-.input-flex .cvv { width: 50%; }
+.input-flex .cvv { width: 30%; }
 
 .expire-date .input-flex {
   color: var(--spanish-gray);

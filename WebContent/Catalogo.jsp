@@ -11,7 +11,8 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<%  UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
+	<%  
+		UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 	
 		if(utente != null && utente.getAdmin())
 		{
@@ -37,14 +38,31 @@
   					%>
 		<div class="card">
 			<a href="CreaCatalogo?action=details&id=<%= prodotto.getId()%>"><img class="image" src="./immagini/<%= prodotto.getPathImage().get(0)  %>"></a>
+				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>"><ion-icon name="cart-outline" id="iconaCarrello" style="font-size: 1.75rem; color: #2f2f2f; background-color: #fcefd4;"></ion-icon></a>
 			<div class="dettagli-card">
 				<div class="nome"><%= prodotto.getNome() %></div>
 				<p>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></p>
-				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>">Aggiungi al carrello</a>
 			</div>
 		</div>
 	<%}%>
 	</div>
+	
+	<script>
+	 $(document).ready(function () {
+		 /*
+        $(".card").mouseover(function(){
+         $(this).find("#iconaCarrello").show()
+        	
+        })//chiusura hover
+        
+        $(".card").mouseout(function(){
+        	$(this).find("#iconaCarrello").hide()
+        	
+        })//chiusura hover
+		 */
+        
+     }) //chiusura jquery
+	</script>
 
 
 

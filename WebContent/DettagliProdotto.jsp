@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <% ProdottoBean bean = (ProdottoBean) request.getAttribute("prodotto"); 
 	List<ProdottoBean> elenco = (List<ProdottoBean>) request.getAttribute("prodottiConsigliati");
+	List<RecensioneBean> elencoRecensioni = (List<RecensioneBean>) request.getAttribute("recensioni");
 	UserBean utente = (UserBean) request.getSession(true).getAttribute("utente"); 
 	
 %>
@@ -88,6 +89,52 @@
         	</form>
         </div>
         
+        
+		<div class="intestazione">        
+        	<span class="prodotti-consigliati-header">Recensioni</span>
+        	<br>
+        </div>
+        
+        <section id="testimonials">
+<%for(RecensioneBean r : elencoRecensioni) {%>
+    <!--testimonials-box-container------>
+    <div class="testimonial-box-container">
+        <!--BOX-1-------------->
+        <div class="testimonial-box">
+            <!--top------------------------->
+            <div class="box-top">
+                <!--profile----->
+                <div class="profile">
+                    <!--img---->
+                    <div class="profile-img">
+                        <img src="https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png" />
+                    </div>
+                    <!--name-and-username-->
+                    <div class="name-user">
+                        <span class="nomeUtente" style="color: #2f2f2f; font-size: 1.2rem;"><%= r.getUtente().getNome() %></span>
+                    </div>
+                </div>
+                <!--reviews------>
+                <div class="reviews">
+                    <span class="votoMedio"><%= r.getVoto() %></span>
+                    <!--Empty star-->
+                </div>
+            </div>
+            <!--Comments---------------------------------------->
+            <div class="client-comment">
+                <p><%= r.getTesto() %></p>
+            </div>
+        </div>
+    </div>
+    	<%}%>
+</section>
+        
+        
+        
+       
+        
+        	
+  
             <script>
             $(document).ready(function () {
             	//fare ajax che controlla se è stato acquistato il prodotto
@@ -113,14 +160,14 @@
 						}
 					});
 				}
-            	  var n = $("#rating").text();
-			        $("#rating").empty();
+            	  var n = $(".votoMedio").text();
+			        $(".votoMedio").empty();
 
 			        for (let i = 0; i < n; i++) {
-			            $("#rating").append("<ion-icon name=star></ion-icon>");
+			            $(".votoMedio").append("<ion-icon name=star></ion-icon>");
 			        }
 			        
-            	var res = ControllaRecensione(<%=bean.getId()%>);
+			        var res = ControllaRecensione(<%=bean.getId()%>);
 				if (res.responseJSON.message == "acquistato") {
 					$("#tasto-recensione").show();
 				} else{	

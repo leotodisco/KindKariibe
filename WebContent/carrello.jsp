@@ -15,11 +15,18 @@
   <% HttpSession sessione=request.getSession(true); UserBean utente=(UserBean) sessione.getAttribute("utente");
   		if(utente==null){ %>
   		<jsp:forward page="login-form.jsp"/>
+  		
   	<%		
   		}
   %>
  <jsp:include page = "header.jsp"/>
 
+<!-- CONTROLLARE QUESTA COSA DOMANI -->
+		<%Carrello cart=(Carrello) sessione.getAttribute("Carrello"); 
+			if(cart == null){
+				cart = new Carrello();
+		}
+			%>
  
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -54,6 +61,7 @@
 
           <h2 class="section-heading">Dettagli di pagamento</h2>
                   <div class="payment-form">
+                  
             <div class="payment-method">
               <span class="method" id="bottone-carta-credito">
                 <ion-icon name="card"></ion-icon>
@@ -62,8 +70,10 @@
               </span>
 
               <span class="method" id="bottone-bonifico">
+              <!-- QUI INSERIRE UN CHECKBOX PER DIRE CHE E UN BONIFICO  -->
                 <ion-icon name="logo-euro"></ion-icon>
-                <span>Bonifico</span>
+                <span>Pagamento in Contrassegno</span>
+                <input type="hidden" name="tipo" value="bonifico" class="identifier"> 
                 <ion-icon class="checkmark" id="checkmark-bonifico" name="checkmark-circle"></ion-icon>
               </span>
 
@@ -96,99 +106,64 @@
      <%} %>
               </div>  
     </div>
-                            <input type="submit" value="conferma">
+    					
+                            <input type="submit" value="Conferma Pagamento" class="bottone-inserisci" id="tasto-conferma-pagamento">
+                        
               </form>
  
             <!--CI VUOLE METODO POST (?)-->
-            <span style="display:flex">
-            <button class="method" id="inserimento-carta" style="margin-bottom:25px; display:none;">
-				<h2 style="margin: 0; font-weight: 500; color: #2F2F2F;">Inserisci una nuova carta</h2>
-			</button>
+            
+          </div>
+          
+          <button class="btn btn-primary" style="display: none;" id="bottone-conferma">
+            <b>Conferma</b> € <span id="payAmount"><%=cart.getCostoTotale() %></span>
+          </button>
+
+			<span style="display:flex">
+            	<button class="method" id="inserimento-carta" style="margin-bottom:25px; display:none;">
+					<h2 id="scritta-per-inserire-metodo">Inserisci una nuova carta</h2>
+				</button>
 				<h5 id="chiudi" style="margin-left: 10%; margin-top:6.7px; cursor:pointer; display:none;">&#10006;</h5>
 			</span>
-			
+				
             <form action="servlet per aggiungere roba" method="get" id="form-carta">
               <div class="cardholder-name">
                 <label for="cardholder-name" class="label-default">Nome Proprietario</label>
-                <input type="text" name="cardholder-name" id="cardholder-name" class="input-default" placeholder="Mario Rossi">
+                <input type="text" name="cardholder-name" id="cardholder-name" class="input-default" placeholder="  Mario Rossi" required>
               </div>
               <div class="card-number">
                 <label for="card-number" class="label-default">Numero Di Carta</label>
-                <input type="number" name="card-number" id="card-number" class="input-default" placeholder="1111 1111 1111 1111">
+                <input type="number" name="card-number" id="card-number" class="input-default" placeholder="  1111 1111 1111 1111" required>
               </div>
               <div class="input-flex">
                 <div class="expire-date">
                   <label for="expire-date" class="label-default">Data Scadenza</label>
                   <div class="input-flex">
                     <input type="number" name="day" id="expire-date" placeholder="31" min="1" max="31"
-                      class="input-default">
+                      class="input-default" required>
                     /
                     <input type="number" name="month" id="expire-date" placeholder="12" min="1" max="12"
-                      class="input-default">
+                      class="input-default" required>
                   </div>
                 </div>
-                <div class="cvv">
-                  <label for="cvv" class="label-default">CVV</label>
-                  <input type="number" name="cvv" id="cvv" class="input-default" placeholder="XXX">
-                </div>
               </div>
-              <input type="submit" value="INSERISCI METODO">
-            </form>
-            
-            <form action="#" id="bonific">
-              <div class="cardholder-name">
-                <label for="cardholder-name" class="label-default">Rapporto di addebito </label>
-                <input type="text" name="cardholder-name" id="cardholder-name" class="input-default">
-              </div>
-              <div class="cardholder-name">
-                <label for="cardholder-name" class="label-default">Eseguito da</label>
-                <input type="text" name="card-number" id="card-number" class="input-default">
-              </div>
-              <div class="cardholder-name">
-                <label for="cardholder-name" class="label-default">IBAN</label>
-                <input type="text" name="card-number" id="card-number" class="input-default">
-              </div>
+              <br>
               <div class="cvv">
-                <label for="Importo" class="label-default">Importo</label>
-                <input type="number" name="cvv" id="cvv" class="input-default">
-              </div>
-              <div class="cardholder-name">
-                <label for="cardholder-name" class="label-default">Causale</label>
-                <input type="text" name="card-number" id="card-number" class="input-default">
-              </div>
-              <div class="input-flex">
-
-                <div class="expire-date">
-                  <label for="expire-date" class="label-default">Data di esecuzione</label>
-
-                  <div class="input-flex">
-                    <!--scadenza-->
-                    <input type="number" name="day" id="expire-date" placeholder="31" min="1" max="31"
-                      class="input-default">
-                    /
-                    <input type="number" name="month" id="expire-date" placeholder="12" min="1" max="12"
-                      class="input-default">
-                  </div>
+                  <label for="cvv" class="label-default">CVV</label>
+                  <input type="number" name="cvv" id="cvv" class="input-default" placeholder="  XXX" required>
                 </div>
-              </div>
-            </form> <!-- fine form bonifico -->
-            
-          </div>
-		<%Carrello cart=(Carrello) sessione.getAttribute("Carrello"); %>
-          <button class="btn btn-primary" style="display: none;" id="bottone-conferma">
-            <b>Conferma</b> € <span id="payAmount"><%=cart.getCostoTotale() %></span>
-          </button>
-
-        </section>
-
+              <br><br>
+              
+              <input type="submit" value="Inserisci Carta" class="bottone-inserisci">
+    
+            </form>
+</section>
 
         <section class="cart">
               <div style=" text-align:center; margin-top:20px; padding: 0; margin-bottom:0;">
 <h2 class="section-heading">Prodotti</h2>
 </div>
-          <%  if(cart==null) {%>
-            <p>Non ci sono prodotti nel carrello</p>
-            <%}else { for(ProdottoBean prodotto : cart.getProducts().keySet()) {%>
+          <%  for(ProdottoBean prodotto : cart.getProducts().keySet()) {%>
              
               <div class="cart-item-box">
                 <div class="product-card">
@@ -200,19 +175,22 @@
                       <h4 class="product-name">
                         <%=prodotto.getNome()%>
                       </h4>
+                      <h4 class="product-id" style="display:none">
+                        <%=prodotto.getId()%>
+                      </h4>
                       <div class="wrapper">
 
                         <div class="product-qty">
                           <!--parte in cui in java si fa incrementare e decrementare-->
-                          <button id="decrement"><a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getId()%>"><ion-icon name="remove-outline"></ion-icon></a>
+                          <button class="diminuisci"><ion-icon name="remove-outline"></ion-icon>
                           </button>
-                          <span id="quantity"><%=cart.getProducts().get(prodotto)%></span>
-                          
-                          
-                          <button id="increment">
-                          <a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>"><ion-icon name="add-outline"></ion-icon></a>
+                          <span id="quantity" class="quantita"><%=cart.getProducts().get(prodotto)%></span>
+
+                          <button id="increment" class="aumenta">
+                          <ion-icon name="add-outline"></ion-icon>
                           </button>
-                        </div>
+                          
+                        </div> <!-- div quantita -->
 
                         <div class="price">
                           € <span id="price">
@@ -223,14 +201,14 @@
                       </div>
                     </div>
                     <button class="product-close-btn">
-                      <a href="GestioneCarrello?action=rimuovi&id=<%=prodotto.getId()%>">&#10006;</a>
+                      &#10006;
                     </button>
                   </div>
                 </div>
            
               </div>
               
-              <%} } %>
+              <%}  %>
                 <div class="wrapper">
                   <div class="discount-token">
                     <label for="discount-token" class="label-default">Codice Sconto</label>
@@ -242,7 +220,7 @@
 
                   <div class="amount">
                     <div class="tax">
-                      <span>IVA</span> <span>€ <span id="tax"><%= String.format("%,.2f", cart.getTax()) %></span></span>
+                      <span>IVA</span> <span>€ <span id="tax-span"><%= String.format("%,.2f", cart.getTax()) %></span></span>
                     </div>
                     <div class="shipping">
                       <span>Spedizione</span> <span>€ <span id="shipping">0.00</span></span>
@@ -257,7 +235,6 @@
     </main>
 
 <script>
-
 $(document).ready(function () {
 	
     $('#bottone-carta-credito').click(function () {
@@ -266,7 +243,6 @@ $(document).ready(function () {
     	$("#bottone-bonifico").css("border", "1px solid #2f2f2f");
     	$("#checkmark-carta").show();
     	$("#checkmark-bonifico").hide();
-    	$("#bonific").hide();
     	$("#container-metodi-pagamento").show();
     	$("#inserimento-carta").show();
     	 	$('#inserimento-carta').click(function () {
@@ -302,19 +278,184 @@ $(document).ready(function () {
     	   $(this).find("input[type=radio][name=idMetodo]").prop("checked", true);
     });
     
+    $("input[type=radio][name=tipo]").parent().on("click", function() {
+ 	   $(this).find("input[type=radio][name=tipo]").prop("checked", true);
+ 	});
+    
     $("input[type=radio][name=idIndirizzo]").parent().on("click", function() {
  	   $(this).find("input[type=radio][name=idIndirizzo]").prop("checked", true);
- });
+ 	});
     
     //indirizzo
      $(".indirizzo-").click(function(){
     	$(".indirizzo-").css("border", "1px solid #2f2f2f")
     	$(this).css("border", "2px solid green")
     })
-	
+    
+    $("#scritta-per-inserire-metodo").click(function (){
+    	$("#scritta-per-inserire-metodo").css("color", "green")
+    	 $('#chiudi').click(function () {
+    		 $("#scritta-per-inserire-metodo").css("color", "#2f2f2f")
+    			 })
+    })
+    
+    //ajax per incremento e decremento
+    function incrementa(nome){
+    	return $.ajax({
+			url : "ProdottiAPI",
+			type : 'GET',
+			async : false,
+			cache : false,
+			timeout : 3000,
+			dataType : "json",
+			data : {
+				action: "incrementa",
+				prodotto: nome
+			},
+			success : function(data) {
+				return data;
+
+			},
+			fail : function(msg) {
+				
+				return false;
+			}
+		});
+    }
+    
+     function ottieniTasse(){
+     	return $.ajax({
+ 			url : "ProdottiAPI",
+ 			type : 'GET',
+ 			async : false,
+ 			cache : false,
+ 			timeout : 3000,
+ 			dataType : "json",
+ 			data : {
+ 				action: "tasse"
+ 			},
+ 			success : function(data) {
+ 				return data;
+
+ 			},
+ 			fail : function(msg) {
+ 				return false;
+ 			}
+ 		});
+     }
+    
+    $(".aumenta").click(function (){
+    	var qt = $(this).parent().children(".quantita").text()
+    	qt++
+    	var id = $(this).parent().parent().parent().children(".product-id").text()
+    	var result = incrementa(id)
+		
+    	
+    	
+		var tasse = ottieniTasse();
+		$("#tax-span").empty();
+		$("#tax-span").append(parseFloat(tasse.responseJSON).toFixed(2))
+
+		$("#total").empty()
+		$("#total").append(parseFloat(parseFloat(result.responseJSON) + parseFloat(tasse.responseJSON)).toFixed(2))
+		
+		$(this).parent().children(".quantita").empty();
+		$(this).parent().children(".quantita").append(qt);
+    })
+    
+    //fine incremento
+    
+    //parte del decremento
+    function decrementa(nome){
+     	return $.ajax({
+ 			url : "ProdottiAPI",
+ 			type : 'GET',
+ 			async : false,
+ 			cache : false,
+ 			timeout : 3000,
+ 			dataType : "json",
+ 			data : {
+ 				action: "decrementa",
+ 				prodotto: nome
+ 			},
+ 			success : function(data) {
+ 				return data;
+
+ 			},
+ 			fail : function(msg) {
+ 				
+ 				return false;
+ 			}
+ 		});
+     }
+    
+    $(".diminuisci").click(function (){
+     	var qt = $(this).parent().children(".quantita").text()
+    	qt--
+    	
+    	var id = $(this).parent().parent().parent().children(".product-id").text()
+    	
+       	if(qt == 0){
+    		$(this).parent().parent().parent().parent().hide();
+    	}
+     	decrementa(id);
+
+		var tasse = ottieniTasse();
+
+		$("#tax-span").empty();
+		$("#tax-span").append(parseFloat(tasse.responseJSON).toFixed(2))
+
+		$("#total").empty()
+		$("#total").append(parseFloat(parseFloat(result.responseJSON) + parseFloat(tasse.responseJSON)).toFixed(2))
+		
+		$(this).parent().children(".quantita").empty();
+		$(this).parent().children(".quantita").append(qt);
+    })
+    
+    
+    //elimina totalmente un prodotto dal catalogo
+    function elimina(nome){
+     	return $.ajax({
+ 			url : "ProdottiAPI",
+ 			type : 'GET',
+ 			async : false,
+ 			cache : false,
+ 			timeout : 3000,
+ 			dataType : "json",
+ 			data : {
+ 				action: "elimina",
+ 				prodotto: nome
+ 			},
+ 			success : function(data) {
+ 				return data;
+
+ 			},
+ 			fail : function(msg) {
+ 				
+ 				return false;
+ 			}
+ 		});
+     }
+   
+     $(".product-close-btn").click(function (){
+    	var id = $(this).parent().parent().parent().find(".product-id").text()
+    	var result = elimina(id)
+        $(this).parent().parent().parent().hide();
+
+		var tasse = ottieniTasse();
+		$("#tax-span").empty();
+		$("#tax-span").append(parseFloat(tasse.responseJSON).toFixed(2))
+
+		$("#total").empty()
+		$("#total").append(parseFloat(parseFloat(result.responseJSON) + parseFloat(tasse.responseJSON)).toFixed(2))
+		
+		$(this).parent().children(".quantita").empty();
+		$(this).parent().children(".quantita").append(qt);
+
+    })
 })//chiusura jquery totale
 </script>
-	
+	            	
 </body>
 
 </html>

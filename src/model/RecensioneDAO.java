@@ -124,6 +124,50 @@ public class RecensioneDAO implements ModelInterface<RecensioneBean> {
 		
 		return null;
 	}
+	
+	public ArrayList<RecensioneBean> getRecensioniByProduct(ProdottoBean prod) throws Exception{
+		String sql = "SELECT * FROM "+ TABLE_NAME + " WHERE prodotto = ?";
+		ArrayList<RecensioneBean> lista = new ArrayList<>();
+		RecensioneBean result = new RecensioneBean();
+		
+		try(Connection conn = ds.getConnection()){
+			try(PreparedStatement statement = conn.prepareStatement(sql)){
+				statement.setInt(1, prod.getId());
+				ResultSet rs = statement.executeQuery();
+				ProdottoDAO prodDAO = new ProdottoDAO();
+				UserDAO daoUser = new UserDAO();
+				
+				while(rs.next()) {
+					result.setIdRecensione(rs.getInt("idRecensione"));
+					result.setVoto(rs.getInt("voto"));
+					result.setTesto(rs.getString("testo"));
+					try {
+						result.setProdotto(prodDAO.doRetrieveByKey(rs.getString("prodotto")));
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						result.setUtente(daoUser.doRetrieveByKey(rs.getString("utente")));
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					lista.add(result);
+				}
+			}
+		}
+		
+		
+		return lista;
+	}
 
 	@Override
 	public void doUpdate(RecensioneBean bean) throws SQLException {

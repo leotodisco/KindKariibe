@@ -17,6 +17,7 @@
 * {
   margin: 0;
   padding: 0;
+
 }
 
 .titolo-ricerca{
@@ -30,6 +31,8 @@
 	border: 1px solid #2f2f2f;
 }
 
+
+
 .nascondi{
 	display:none;
 }
@@ -40,21 +43,29 @@
 }
 
 .form-prodotti-ricerca{
-	margin-left: 3px; 
-	padding-right: 18px;
+	margin-left: 2px; 
+	padding-right: 20px;
+	padding-left: 5px;
     width: 200px;
     height: 20px;
     border-color: #2f2f2f;
     border: 1px solid #2f2f2f;
-    background-color: #FCEFD4;
+    background-color: #fcefd4;
+    margin-right: 5px;
     border-radius: 17px;
+    outline:none;
+}
+
+.form-prodotti-ricerca:focus{
+	outline:none;
+	border: 2px solid #2f2f2f;
 }
 
 .divProdottiRicerca{
 	 width: 280px; 
 	 position:absolute; 
 	 margin-top:30px;
-	 background-color: #fcefd4;
+
 }
 
 
@@ -73,10 +84,6 @@ a:visited{
 	color: #2f2f2f;
 }
 
-a:hover{
-	text-decoration:none;
-	color:#2f2f2f;
-}
 
 a:link{
 	text-decoration:none;
@@ -193,12 +200,19 @@ ul li{
 }
 
 .testoResponsive{
+
      text-decoration: none;
     padding: 10px 20px;
     display: block;
-    border-bottom: 1px solid #d5a138;
     color: #2f2f2f ;
 }
+
+li>a:hover{
+	font-size: 1.6rem;
+	text-decoration:none;
+}
+
+
 
 .sidebarBtn{
     display: none;

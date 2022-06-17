@@ -17,7 +17,142 @@
 * {
 	margin: 0;
 	padding: 0;
+		box-sizing:border-box;
 }
+
+/*
+PARTE RECENSIONI
+*/
+
+.nomeUtente{
+	font-family: "archia-regular";
+}
+
+a{
+    text-decoration: none;
+}
+#testimonials{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width:100%;
+}
+.testimonial-heading{
+    letter-spacing: 1px;
+    margin: 30px 0px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+ 
+.testimonial-heading span{
+    font-size: 1.3rem;
+    color: #252525;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.testimonial-box-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width:100%;
+}
+.testimonial-box{
+    width:500px;
+    box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+    background-color: #fbfcd4;
+    padding: 20px;
+    margin: 15px;
+    cursor: pointer;
+    border-radius: 20px;
+}
+.profile-img{
+    width:50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+.profile-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.profile{
+    display: flex;
+    align-items: center;
+}
+.name-user{
+    display: flex;
+    flex-direction: column;
+}
+.name-user strong{
+    color: #3d3d3d;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+.name-user span{
+    color: #979797;
+    font-size: 0.8rem;
+}
+.reviews{
+    color: #f9d71c;
+}
+.box-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.client-comment p{
+    font-size: 0.9rem;
+    color: #4b4b4b;
+}
+.testimonial-box:hover{
+    transform: translateY(-6px);
+    transition: all ease 0.3s;
+}
+ 
+@media(max-width:1060px){
+    .testimonial-box{
+        width:45%;
+        padding: 10px;
+    }
+}
+@media(max-width:790px){
+    .testimonial-box{
+        width:100%;
+    }
+    .testimonial-heading h1{
+        font-size: 1.4rem;
+    }
+}
+@media(max-width:340px){
+    .box-top{
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+    }
+    .reviews{
+        margin-top: 10px;
+    }
+}
+::selection{
+    color: #ffffff;
+    background-color: #252525;
+}
+
+
+
+/*FINE PARTE RECENSIONI*/
+
+
+
 
 .votoMedio{
 	margin-top:20px;
@@ -58,7 +193,7 @@ body {
 
 .form-recensione>textarea{
 	background-color: transparent;
-	border: 2px solid green;
+	border: 2px solid #555149;
 	border-radius: 10px;
 }
 
@@ -74,8 +209,10 @@ textarea:link{
 	outline-color:green;
 }
 
-textarea:focus{
-	outline-color:green;
+.form-recensione>textarea:focus{
+	border: 3px solid #555149;
+	outline: none;
+
 }
 /*nasconde le frecce da input-type number*/
 input::-webkit-outer-spin-button,
@@ -124,6 +261,13 @@ text-align:center;
 	font-family: "archia-regular";
 	font-size: 1.3rem;
 	max-width: 600px;
+}
+
+.descrizione-1 {
+	text-align: left;
+	font-family: "archia-regular";
+	font-size: 1.3rem;
+	
 }
 
 .product-title {
@@ -203,7 +347,7 @@ text-align:center;
 	display: inline-block;
 	border-radius: 25px;
 	width: 180px;
-	height: 180px;
+	height: 178px;
 	border: 5px solid green;
 }
 
@@ -386,6 +530,7 @@ a:not(.cons) {
 		width: 100%px;
 		height: 100%px;
 	}
+
 }
 
 @media ( max-width : 480px) {

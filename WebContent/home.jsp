@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="home.css">
+    <link rel="icon" type="image/x-icon" href="./lib/favicon.ico" />
+    
 </head>
 
 <body>
@@ -23,6 +25,11 @@
         <hr class="wave-sx" >
         <h4>dal 1980</h4>
     </div>
+    
+    
+    <form action="FatturaServlet" method="get">
+						<input type="submit" value="fattura" />
+					</form>
 </body>
 
 </html>

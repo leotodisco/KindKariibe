@@ -15,6 +15,7 @@
 <% UserBean utente = (UserBean) request.getAttribute("utente"); %>
 
 	<div>	
+	<br><br>
 		<h1 class="error-code">404</h1>
 		<p class="error">Pagina non trovata</p>	
 		

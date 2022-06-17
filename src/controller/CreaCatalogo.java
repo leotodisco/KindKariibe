@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.ProdottoBean;
+import beans.RecensioneBean;
 import beans.UserBean;
 import model.ProdottoDAO;
 import model.RecensioneDAO;
@@ -90,17 +91,20 @@ public class CreaCatalogo extends HttpServlet {
 		}
 		else if(azioni.equals("details"))
 		{
-
+			RecensioneDAO daoRecensioni = new RecensioneDAO();
+			ArrayList<RecensioneBean> elencoRecensioni = new ArrayList<>();
 			ProdottoDAO Dao = new ProdottoDAO();	
 
 			ProdottoBean prodotto;
 			try {
 				prodotto = Dao.doRetrieveByKey(request.getParameter("id"));
 				List<ProdottoBean> prodottiConsigliati = Dao.doRetrieveAll("C.nome").stream().filter(s->!s.getId().equals(request.getParameter("id"))).limit(4).collect(Collectors.toList());
+				elencoRecensioni = (ArrayList<RecensioneBean>) daoRecensioni.getRecensioniByProduct(prodotto).stream().limit(5).collect(Collectors.toList());
 				
 				request.setAttribute("prodottiConsigliati", prodottiConsigliati);
 				request.setAttribute("prodotto", prodotto);
 				request.setAttribute("votoMedio", RecensioneDAO.getVotoMedio(prodotto));
+				request.setAttribute("recensioni", elencoRecensioni);
 				RequestDispatcher view = request.getRequestDispatcher("DettagliProdotto.jsp");
 				view.include(request, response);
 

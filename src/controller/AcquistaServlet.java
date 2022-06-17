@@ -82,7 +82,7 @@ public class AcquistaServlet extends HttpServlet {
 				String idIndirizzo= (String)request.getParameter("idIndirizzo");
 				
 				
-				datiFiscali.setIdIndirizzoFatturazione(Integer.parseInt(idIndirizzo));
+				datiFiscali.setIdIndirizzoFatturazione(Integer.valueOf(idIndirizzo));
 				datiFiscali.setIdMetodoPagamento(Integer.parseInt((String)request.getParameter("idMetodo")));
 				
 				DatiFiscaliDAO datiFiscaliDao= new DatiFiscaliDAO();
