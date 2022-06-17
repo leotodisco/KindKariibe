@@ -1,7 +1,5 @@
 package beans;
 
-import java.util.ArrayList;
-
 public class MetodoPagamentoBean {
 	private Integer idMetodoPagamento;
 	private String tipo;
@@ -14,15 +12,6 @@ public class MetodoPagamentoBean {
 	private String circuito;
 	private Integer CVV;
 
-
-
-	public int getIdMetodoPagamento() {
-		return idMetodoPagamento;
-	}
-
-	public void setIdMetodoPagamento(int idMetodoPagamento) {
-		this.idMetodoPagamento = idMetodoPagamento;
-	}
 
 	public String getCircuito() {
 		return circuito;

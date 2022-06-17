@@ -121,7 +121,6 @@ public class UserDAO implements ModelInterface<UserBean> {
 		String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = '" + codiceFiscale + "'";
 		MetodoPagamentoDAO metodiDAO = new MetodoPagamentoDAO();
 		ArrayList<MetodoPagamentoBean> MetodiPagamento = new ArrayList<>();
-		bean.setElencoMetodiPagamento(MetodiPagamento);
 		
 		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement ps = connection.prepareStatement(sqlPagamenti)){

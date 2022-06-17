@@ -62,49 +62,8 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 
 	@Override
 	public void doSave(MetodoPagamentoBean bean) throws SQLException {
-		String sql = new String();
-		
-		if(bean.getTipo().equals("Carta")) {
-			sql = "INSERT INTO " + TABLE_NAME + "('idMetodoPagamento','tipo','nomeIntestatario','numeroCarta','meseScadenza', "
-					+ " 'annoScadenza','IBAN',', "
-					+ " 'circuito','CVV') "
-					+ " VALUES (?,?,?,?,?,?,?,?,?)";
-
-			try(Connection con = ds.getConnection()){
-				try(PreparedStatement ps = con.prepareStatement(sql)){	
-					ps.setInt(1, bean.getidMetodoPagamento());
-					ps.setString(2, bean.getTipo());
-					ps.setString(3, bean.getNomeIntestatario());
-					ps.setString(4, bean.getNumeroCarta());
-					ps.setInt(5, bean.getMeseScadenza());
-					ps.setInt(6, bean.getAnnoScadenza());
-					ps.setString(7, bean.getIban());
-					ps.setString(8, bean.getCircuito());
-					ps.setInt(9, bean.getCVV());
-
-					ps.execute();
-				}
-			}
-		}
-		
-		else { //se il metodo è bonifico
-			sql = "INSERT INTO " + TABLE_NAME + " ('idMetodoPagamento','tipo','nomeIntestatario', "
-					+ "'IBAN','causale',) "
-					+ " VALUES (?,?,?,?,?) ";
-
-			try(Connection con = ds.getConnection()){
-				try(PreparedStatement ps = con.prepareStatement(sql)){	
-					ps.setInt(1, bean.getidMetodoPagamento());
-					ps.setString(2, bean.getTipo());
-					ps.setString(3, bean.getNomeIntestatario());
-					ps.setString(4, bean.getIban());
-					ps.setString(5, bean.getCausale());
-
-					ps.execute();
-				}
-			}
-			
-		}
+	//non usare
+	
 	}
 
 	@Override
@@ -210,4 +169,74 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 		}
 
 	}
+	
+	
+	public int doSaveI(MetodoPagamentoBean bean) throws SQLException {
+		String sql = new String();
+		
+		String IDSQL = "SELECT idMetodoPagamento FROM kindkaribe.metodopagamento ORDER BY idMetodoPagamento DESC LIMIT 1";
+		
+		if(bean.getTipo().equals("Carta")) {
+			sql = "INSERT INTO " + TABLE_NAME + " (idMetodoPagamento,tipo,nomeIntestatario,numeroCarta,meseScadenza,annoScadenza,circuito,CVV) "
+					+ " VALUES ( ?,?,?,?,?,?,?,? )";
+
+			try(Connection con = ds.getConnection()){
+				try(PreparedStatement ps = con.prepareStatement(IDSQL)){	
+					
+					ResultSet id = ps.executeQuery();
+					
+					id.next();
+					int ID = id.getInt("idMetodoPagamento") + 1;
+					
+					PreparedStatement ps2 = con.prepareStatement(sql);
+					
+					ps2.setInt(1, ID);
+					ps2.setString(2, bean.getTipo());
+					ps2.setString(3, bean.getNomeIntestatario());
+					ps2.setString(4, bean.getNumeroCarta());
+					ps2.setInt(5, bean.getMeseScadenza());
+					ps2.setInt(6, bean.getAnnoScadenza());
+					ps2.setString(7, bean.getCircuito());
+					ps2.setInt(8, bean.getCVV());
+
+					ps2.execute();
+					return ID;
+				}
+			}
+		}
+		
+		else { //se il metodo è bonifico
+			sql = "INSERT INTO " + TABLE_NAME + " ('idMetodoPagamento','tipo','nomeIntestatario', "
+					+ "'IBAN','causale','idMetodoPagamento') "
+					+ " VALUES (?,?,?,?,?,?) ";
+
+			try(Connection con = ds.getConnection()){
+				try(PreparedStatement ps = con.prepareStatement(IDSQL)){
+					
+					ResultSet id = ps.executeQuery();
+					
+					id.next();
+					int ID = id.getInt("idMetodoPagamento") + 1;
+					
+					PreparedStatement ps2 = con.prepareStatement(sql);
+					
+					ps2.setInt(1, bean.getidMetodoPagamento());
+					ps2.setString(2, bean.getTipo());
+					ps2.setString(3, bean.getNomeIntestatario());
+					ps2.setString(4, bean.getIban());
+					ps2.setString(5, bean.getCausale());
+					ps2.setLong(6, ID);
+
+					ps2.execute();
+					return ID;
+				}
+			}
+			
+		}
+	}
+	
+	
+	
+	
+	
 }

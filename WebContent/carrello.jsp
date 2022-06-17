@@ -97,7 +97,7 @@
                 <!--<ion-icon class="checkmark " name="checkmark-circle"></ion-icon>-->
                  <!-- capire per quale motivo mi passa sempre solo il primo elemento che compare -->
                 <span class="method-1" >
-                 <input type="radio" name="idMetodo" value="<%=m.getIdMetodoPagamento()%>" class="identifier" style="display:none;">
+                 <input type="radio" name="idMetodo" value="<%=m.getidMetodoPagamento()%>" class="identifier" style="display:none;">
                     <span><ion-icon name="card"></ion-icon><ion-icon class="checkmark" name="checkmark-circle" style="display:none;"></ion-icon></span>
                   	<span><b>Numero:</b> <%= "XXXX XXXX XXXX " + m.getNumeroCarta().substring(m.getNumeroCarta().length()-4) %></span>
                   	<span><b>Intestatario:</b> <%= m.getNomeIntestatario()%></span>
