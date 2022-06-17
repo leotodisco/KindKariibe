@@ -31,6 +31,13 @@ public class PaginaUtenteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione= request.getSession(true);
 		
 		UserBean utente= (UserBean)sessione.getAttribute("utente");
@@ -39,16 +46,16 @@ public class PaginaUtenteServlet extends HttpServlet {
 			fail.forward(request, response);
 		}
 		else {
+			OrdineDAO ordineDao= new OrdineDAO();
 			
-		}
-	}
+			try {
+				request.setAttribute("ordini", ordineDao.doRetriveByUtente(utente));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		}
 	}
 
 }
