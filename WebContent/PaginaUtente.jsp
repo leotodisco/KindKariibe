@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "beans.*"   %>
+    pageEncoding="UTF-8" import = "beans.*" import = "java.util.*"   %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,6 +41,19 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             
             <div class="ordini-recenti">
                 <span class="text">Ordini recenti</span>
+                <table>
+                	<%Collection<OrdineBean> ordini=(Collection<OrdineBean>)request.getAttribute("ordini");
+                	
+                		if(ordini==null){
+                			System.out.println("Non hai nessun ordine");
+                		}
+                		else{
+                			for(OrdineBean ordine: ordini){
+                				System.out.println(ordine.getIdOrdine().toString());
+                			}
+                		}
+                		%>
+                </table>
             </div>
             <div class="le-tue-informazioni">
                 <span class="text">Informazioni personali</span>

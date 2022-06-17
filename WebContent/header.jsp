@@ -153,7 +153,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 						</div>
 					</div>    
                 
-                <span class="text-user"><a href="PaginaUtente.jsp"> <%= utente.getNome()==null ? "Accedi" : "Ciao, " + utente.getNome() %> </a> </span>
+                <span class="text-user"><a href="PaginaUtenteServlet"> <%= utente.getNome()==null ? "Accedi" : "Ciao, " + utente.getNome() %> </a> </span>
 	  	    		
              	<a href="carrello.jsp"><ion-icon name="cart-outline" style="font-size: 1.75rem; color: #2f2f2f;"></ion-icon></a> 
              

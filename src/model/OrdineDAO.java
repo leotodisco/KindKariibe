@@ -35,6 +35,50 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 		}
 	}
 
+	
+	public Collection<OrdineBean> doRetriveByUtente(UserBean utente) throws Exception {
+		String sql= "SELECT * FROM "+ TABLE_NAME+" WHERE utente = ?";
+
+		OrdineBean ordine= new OrdineBean();
+		List<OrdineBean> ordini = new ArrayList<>();
+		
+		try(Connection con= ds.getConnection()){
+			try(PreparedStatement ps= con.prepareStatement(sql)){
+				ps.setString(1, utente.getCodiceFiscale());
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()) {
+					ordine.setIdOrdine(rs.getInt("idOrdine"));
+					ordine.setCodiceSconto(rs.getString("codiceSconto"));
+					ordine.setCostoTotale(rs.getDouble("costoTotale"));
+					ordine.setUrlPdf(rs.getString("urlPdf"));
+					ordine.setDataEvasione(rs.getDate("dataEvasione"));
+					ordine.setDataPartenza(rs.getDate("dataPartenza"));
+					ordine.setDataArrivo(rs.getDate("dataArrivo"));
+					
+					
+				
+
+					ordine.setUtente(utente);
+
+					CorriereBean r = new CorriereBean();
+					CorriereDAO crrDao = new CorriereDAO();
+					r = crrDao.doRetrieveByKey(rs.getString("corriere"));
+					ordine.setCorriere(r);
+
+					DatiFiscaliBean df = new DatiFiscaliBean();
+					DatiFiscaliDAO datiFis = new DatiFiscaliDAO();
+					df = datiFis.doRetrieveByKey(String.valueOf(rs.getInt("datiFiscali")));
+					ordine.setDatiFiscali(df);
+				
+					IndirizzoDao ind= new IndirizzoDao();
+					ordine.setIndirizzoSpedizione(ind.doRetrieveByKey(rs.getString("indirizzoSpedizione")));
+				
+					ordini.add(ordine);
+				}
+			}
+		}
+		return ordini;
+	}
 	@Override
 	public void doSave(OrdineBean bean) throws SQLException {
 		String sql = " INSERT INTO " + TABLE_NAME + " (datiFiscali,corriere,utente, "
