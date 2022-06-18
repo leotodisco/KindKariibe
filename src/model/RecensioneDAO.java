@@ -13,10 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import beans.IndirizzoBean;
 import beans.ProdottoBean;
 import beans.RecensioneBean;
-import beans.UserBean;
 
 public class RecensioneDAO implements ModelInterface<RecensioneBean> {
 	private static final String TABLE_NAME = "recensione";
@@ -42,12 +40,7 @@ public class RecensioneDAO implements ModelInterface<RecensioneBean> {
 				ps.setInt(1, bean.getProdotto().getId());
 				ps.setString(2, bean.getUtente().getCodiceFiscale());
 
-				ResultSet rs = ps.executeQuery();
-				if(rs.next())
-						System.out.println("il prodotto è stato acquistato");
-				
-				else 
-					return;
+				ps.executeQuery();
 			}
 		}
 		

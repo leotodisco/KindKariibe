@@ -67,7 +67,9 @@ public class RecensioneServlet extends HttpServlet {
 				
 				recensioneDAO.doSave(recensione);
 				
-				RequestDispatcher view = request.getRequestDispatcher("home.jsp");
+				request.setAttribute("prodotto", prodotto);
+				
+				RequestDispatcher view = request.getRequestDispatcher("DettagliProdotto.jsp");
 				view.forward(request, response);
 				
 			} catch (Exception e) {
