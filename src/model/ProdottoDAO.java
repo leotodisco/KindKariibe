@@ -290,7 +290,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps2.setDouble(6, bean.getIVA());
 					ps2.setInt(7, ID);
 					ps2.setString(8, bean.getCategoria().getNome());
-					ps2.setDouble(9, bean.getPeso());	
+					ps2.setString(9,);	
 					
 					ps2.execute();
 					return ID;

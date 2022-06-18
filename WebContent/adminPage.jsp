@@ -111,9 +111,15 @@
 
                     <br> <label for="IVA">IVA:</label><br> <input name="IVA" type="number" min="0" value="10"
                         required><br>
+                        
+                    <label for="peso" class = "vaschetta" style = "display:none">Peso:</label><br>
+                    <select name="peso" class = "vaschetta" style = "display:none">
+                    
+                        <option value="500">500</option>
+                        <option value="750">750</option>
+						<option value="1000">1000</option>
 
-                    <br> <label for="peso">Peso:</label><br> <input name="peso" type="number" min="0" value="10"
-                        required><br>
+					</select>
 
                     <label for="quantita">Quantità:</label><br> <input name="quantita" type="number" min="1" value="1"
                         required><br>
