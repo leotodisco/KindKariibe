@@ -109,8 +109,8 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
         	<li><a href="home.jsp" class="testoResponsive">Home</a></li>
             <li><a href="Catalogo.jsp" class="testoResponsive">Pasticceria</a></li>
             <li><a href="Catalogo-Gelateria.jsp" class="testoResponsive">Gelateria</a></li>
-            <li><a href="#" class="testoResponsive">Storia</a></li>
-            <li><a href="#" class="testoResponsive">Contatti</a></li>
+            <li><a href="Storia.jsp" class="testoResponsive">Storia</a></li>
+            <li><a href="Contatti.jsp" class="testoResponsive">Contatti</a></li>
             <!-- mettere disegno omino, posso pensare di mettere sia accedi che carrello nello stesso li -->
             <li><a href="PaginaUtenteServlet" class="testoResponsive">Profilo <ion-icon name="person" style="font-size: 1.55rem; color: #2f2f2f;"></ion-icon></a></li>
             <li><a href="carrello.jsp">Carrello <ion-icon name="cart-outline" style=" align-items: center; font-size: 1.75rem; color: #2f2f2f;"></ion-icon></a></li>
@@ -138,8 +138,8 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             <ul class="elenco nav-container-item">
                 <li><a href="Catalogo-Gelateria.jsp">Gelateria</a></li>
                 <li><a href="Catalogo.jsp">Pasticceria</a></li>
-                <li>Storia</li>
-                <li>Contatti</li>
+                <li><a href="Storia.jsp">Storia</a></li>
+                <li><a href = "Contatti.jsp">Contatti</a></li>
             </ul>
            
 
