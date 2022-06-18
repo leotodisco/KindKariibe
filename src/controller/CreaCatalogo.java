@@ -64,10 +64,14 @@ public class CreaCatalogo extends HttpServlet {
 			if( tipo == null || tipo.equals("Pasticceria"))
 				{
 				ProdottoDAO Dao = new ProdottoDAO();
-				ArrayList<ProdottoBean> ListaProdotti = null;
+				List<ProdottoBean> ListaPasticceria = null;
 				try {
-					ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
-					List<ProdottoBean> ListaPasticceria = ListaProdotti.stream().filter(t -> t.getTipo().equals("Pasticceria")).collect(Collectors.toList());
+					ListaPasticceria = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
+					
+				if(tipo != null && tipo.equals("Pasticceria"))
+				{
+					ListaPasticceria = ListaPasticceria.stream().filter(t -> t.getTipo().equals("Pasticceria")).collect(Collectors.toList());
+				}
 					request.setAttribute("prodotti", ListaPasticceria);
 
 					RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");

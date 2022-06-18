@@ -66,7 +66,17 @@
   					
   				<%}%>
  			
+ 			
+ 			
 </table> 
+
+ 			            <div class="logout">
+                	<form action="LogoutServlet" method="get">
+						<input type="submit" value="Logout" />
+					</form>
+            </div>
+ 			
+
 
     <div>
         <li>Inserimento</li>
@@ -125,25 +135,25 @@
                         required><br>
 
                     <label for="gusto1" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
-                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    <select name="gusto1" class = "vaschetta" style = "display:none">
                     
 				<% 	for(GustoBean g : ListaGusti)
 				{ 
 				%>
-					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					 <option value="<%= g.getNome()%>"><%= g.getNome() %></option>
 					
 				<%}%>
 				
                     </select>
                     <br>
                     
-                    <label for="gusto2" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
-                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    <label for="gusto2" class = "vaschetta" style = "display:none">Gusto 2:</label><br>
+                    <select name="gusto2" class = "vaschetta" style = "display:none">
                     
 				<% 	for(GustoBean g : ListaGusti)
 				{ 
 				%>
-					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					 <option value="<%= g.getNome()%>"><%= g.getNome() %></option>
 					
 				<%}%>
 				
@@ -151,13 +161,13 @@
                     <br>
                     
                     
-                    <label for="gusto3" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
-                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    <label for="gusto3" class = "vaschetta" style = "display:none">Gusto 3:</label><br>
+                    <select name="gusto3" class = "vaschetta" style = "display:none">
                     
 				<% 	for(GustoBean g : ListaGusti)
 				{ 
 				%>
-					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					 <option value="<%= g.getNome()%>"><%= g.getNome() %></option>
 					
 				<%}%>
 				

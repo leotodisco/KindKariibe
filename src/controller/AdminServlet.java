@@ -105,6 +105,7 @@ public class AdminServlet extends HttpServlet {
 				{
 					try {
 						bean.setPeso(peso);
+						System.out.println(Gusto1);
 						bean.getGusti().add(gDAO.doRetrieveByKey(Gusto1));
 						
 						if(Gusto2 != null)
@@ -147,6 +148,8 @@ public class AdminServlet extends HttpServlet {
 				ImmagineDAO imDAO = new ImmagineDAO();
 				PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
 				ArrayList<String> immagini = posDAO.retrieveImmagine(name);
+				
+				
 				
 				for(String id : immagini)
 				{
