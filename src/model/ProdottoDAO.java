@@ -77,7 +77,6 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
-					bean.setPeso(rs.getDouble("peso"));
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					
 					ImmagineDAO imDAO = new ImmagineDAO();
@@ -96,13 +95,16 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					
 					bean.setPathImage(elencoPathImmagini);
 
-
-					for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
-					{
-						GustoB = GDAO.doRetrieveByKey(gusti);
-						bean.getGusti().add(GustoB);
-					}
 					
+					if(bean.getTipo().equals("Vaschetta"))
+					{
+						bean.setPeso(rs.getDouble("peso"));
+						for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+						{
+							GustoB = GDAO.doRetrieveByKey(gusti);
+							bean.getGusti().add(GustoB);
+						}
+					}
 					
 				}
 			}	
@@ -136,7 +138,6 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
-					bean.setPeso(rs.getDouble("peso"));
 					
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					
@@ -156,12 +157,15 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setPathImage(elencoPathImmagini);
 
 					
-					for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+					if(bean.getTipo().equals("Vaschetta"))
 					{
-						GustoB = GDAO.doRetrieveByKey(gusti);
-						bean.getGusti().add(GustoB);
+						bean.setPeso(rs.getDouble("peso"));
+						for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+						{
+							GustoB = GDAO.doRetrieveByKey(gusti);
+							bean.getGusti().add(GustoB);
+						}
 					}
-					
 					result.add(bean);
 				}
 			}	
@@ -290,7 +294,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps2.setDouble(6, bean.getIVA());
 					ps2.setInt(7, ID);
 					ps2.setString(8, bean.getCategoria().getNome());
-					ps2.setString(9,);	
+					ps2.setString(9,Long.valueOf(Math.round(bean.getPeso())).toString());	
 					
 					ps2.execute();
 					return ID;
