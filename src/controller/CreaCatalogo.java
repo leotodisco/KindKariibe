@@ -120,7 +120,18 @@ public class CreaCatalogo extends HttpServlet {
 				request.setAttribute("prodotto", prodotto);
 				request.setAttribute("votoMedio", RecensioneDAO.getVotoMedio(prodotto));
 				request.setAttribute("recensioni", elencoRecensioni);
-				RequestDispatcher view = request.getRequestDispatcher("DettagliProdotto.jsp");
+				
+				RequestDispatcher view = null;
+				
+				if(utente.getAdmin() == true)
+				{
+					view = request.getRequestDispatcher("DettagliProdottoAdmin.jsp");
+				}
+				else
+				{
+					view = request.getRequestDispatcher("DettagliProdotto.jsp");
+				}
+				
 				view.include(request, response);
 
 			} catch (Exception e) {

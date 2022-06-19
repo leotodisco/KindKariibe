@@ -156,11 +156,11 @@ public class FatturaServlet extends HttpServlet {
         dettagliFiscali.addCell(new Cell().add(new Paragraph(("Costo Totale")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
 
         dettagliFiscali.addCell(new Cell().add(new Paragraph("Mastercard").setMarginLeft(2).setMarginTop(1)));
-        dettagliFiscali.addCell(new Cell().add(new Paragraph("Imponibile: â‚¬ 33,00\nSpedizione: â‚¬ 2,00\nSconto: â‚¬ 0,00\nIVA: 10%\n").setMarginLeft(2).setMarginTop(1)));
+        dettagliFiscali.addCell(new Cell().add(new Paragraph("Imponibile: € 33,00\nSpedizione: € 2,00\nSconto: € 0,00\nIVA: 10%\n").setMarginLeft(2).setMarginTop(1)));
         document.add(dettagliFiscali);
 
         Table totale = new Table(fullWidth);
-        totale.addCell(new Cell().add(new Paragraph("Totale: â‚¬ 300,00").setBold().setFontSize(16).setTextAlignment(TextAlignment.RIGHT).setMarginRight(25)).setBackgroundColor(verdeScuro));
+        totale.addCell(new Cell().add(new Paragraph("Totale: € 300,00").setBold().setFontSize(16).setTextAlignment(TextAlignment.RIGHT).setMarginRight(25)).setBackgroundColor(verdeScuro));
         document.add(totale);
 
         //note

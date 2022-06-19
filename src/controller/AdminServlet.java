@@ -165,56 +165,22 @@ public class AdminServlet extends HttpServlet {
 		
 		if(azioni.equals("aggiorna")) {
 			
-			String name = request.getParameter("nome");
-			String description = request.getParameter("descrizione");
-			Double price = Double.parseDouble(request.getParameter("prezzo"));
-			Double quantity = Double.parseDouble(request.getParameter("quantita"));
-			String catNome = request.getParameter("categoria");
-			Double iva = Double.parseDouble(request.getParameter("IVA"));
-			Double peso = Double.parseDouble(request.getParameter("peso"));
-			String immagine = request.getParameter("immagine");
-			String tipo = request.getParameter("tipo");
+			String Attributo = multi.getParameter("Attributo");
+			String valore = multi.getParameter("valore");
+			String Idprodotto = multi.getParameter("prodotto");
 			
-			CategoriaDAO buffer = new CategoriaDAO();
-			Optional<CategoriaBean> cat;
-			ProdottoDAO dao = new ProdottoDAO();
-			ProdottoBean bean = new ProdottoBean();
 			try {
-				bean = dao.doRetrieveByKey(name);
-			} catch (Exception e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-			try {
-				cat = Optional.of(buffer.doRetrieveByKey(catNome));
-				bean.setNome(name);
-				bean.setDescrizione(description);
-				bean.setPrezzo(price);
-				bean.setQuantitaResidua(quantity);
-				bean.setCategoria(cat);
-				bean.setIVA(iva);
-				bean.addImmaginePrimaPosizione(immagine); //in prima posizione della lista c'è l'immagine del catalogo
-				bean.setPeso(peso);
-				bean.setTipo(tipo);
-				
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-
-			try {
-				prod.doUpdate(bean);
+				ProdottoDAO.SingoloUpdate(Attributo, valore, Idprodotto);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-
-		RequestDispatcher view = getServletContext().getRequestDispatcher("/Catalogo.jsp");
-		view.forward(request, response);
 		
-	}
+			
+			response.sendRedirect("DettagliProdottoAdmin.jsp");
+			
+			}
 
+	}
 
 }

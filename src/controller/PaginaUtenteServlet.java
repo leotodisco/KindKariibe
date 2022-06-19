@@ -24,7 +24,6 @@ public class PaginaUtenteServlet extends HttpServlet {
      */
     public PaginaUtenteServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
