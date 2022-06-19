@@ -49,7 +49,7 @@
   					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getId()%>">
   					<img class="immagine" src  = "./immagini/<%=prodotto.getPathImage().get(0)%>"  alt = "immagine"> </a> </td>
   					<td><%= prodotto.getNome() %></td>
-  					<td><%= prodotto.getCategoria().getNome() %></td>
+  					<td><%= prodotto.getCategoria().toString()%></td>
   					<td><%= prodotto.getTipo() %></td>
   					<td>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></td>
   					<td><%=  prodotto.getQuantitaResidua().intValue() %></td>

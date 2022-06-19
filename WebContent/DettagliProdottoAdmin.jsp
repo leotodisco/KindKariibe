@@ -10,8 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <% ProdottoBean bean = (ProdottoBean) request.getAttribute("prodotto"); 
 	List<ProdottoBean> elenco = (List<ProdottoBean>) request.getAttribute("prodottiConsigliati");
+	List<CategoriaBean> elencoC = (List<CategoriaBean>) request.getAttribute("categorie");
 	
-	if(elenco == null)
+	
+	if(elenco == null || elencoC == null)
 	{
 		response.sendRedirect("./CreaCatalogo?azioni=details");	
 		return;
@@ -49,12 +51,68 @@
                         <input type="hidden" name="Attributo" value="nome">
                         <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
                         <input type="hidden" name="operazione" value="aggiorna">
-                        <input type="submit" value="modifica">
+                        <input type="submit" value="conferma modifica">
                 </form>
-                <p class = "categoria"><%= bean.getTipo()%></p>
+                <p class = "categoria"><%= bean.getTipo() %></p>
                 <p class = "votoMedio" id="rating"><%= request.getAttribute("votoMedio")%></p>
-                <p class = "descrizione"><%= bean.getDescrizione()%></p>
-                <p class = "product-title">&euro; <%= String.format("%.02f", bean.getPrezzo()) %></p>
+                <p class = "descrizione"><%= bean.getDescrizione()%></p><button id= "descrizione">modifica</button>
+                <form action="AdminServlet" method = "post" class = "descrizioneF" enctype="multipart/form-data" style = "display:none">
+                	<label for="valore">Descrizione:</label><br>
+                    <textarea name="valore" maxlength="100" rows="3" required
+                        placeholder="inserire descrizione..."></textarea><br>
+                        <input type="hidden" name="Attributo" value="descrizione">
+                        <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                        <input type="hidden" name="operazione" value="aggiorna">
+                        <input type="submit" value="conferma modifica">
+                </form>
+                <p class = "product-title">&euro; <%= String.format("%.02f", bean.getPrezzo()) %></p><button id= "prezzo">modifica</button>
+                <form action="AdminServlet" method = "post" class = "prezzoF" enctype="multipart/form-data" style = "display:none">
+                	<label for="valore">Prezzo:</label><br>
+                    <input type = "text" name = "valore" required class = "number"><br>
+                        <input type="hidden" name="Attributo" value="prezzo">
+                        <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                        <input type="hidden" name="operazione" value="aggiorna">
+                        <input type="submit" value="conferma modifica">
+                </form>
+                <p class = "categoria"><%= bean.getCategoria().toString() %></p><button id= "categoria">modifica</button>
+                <form action="AdminServlet" method = "post" class = "categoriaF" enctype="multipart/form-data" style = "display:none">
+                	<label for="valore">Categoria:</label><br>
+                    <select name="valore">
+                 
+				<% 	
+				for(CategoriaBean C : elencoC)
+				{ 
+				%>
+					 <option value="<%= C.getNome() %>"><%= C.getNome() %></option>
+					
+				<%}%>
+				
+                    </select>
+                        <input type="hidden" name="Attributo" value="categoria">
+                        <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                        <input type="hidden" name="operazione" value="aggiorna">
+                        <input type="submit" value="conferma modifica">
+                </form>
+                
+                <p class = "product-title"> IVA :<%= String.format("%.02f", bean.getIVA()) %> &percnt;</p><button id= "IVA">modifica</button>
+                <form action="AdminServlet" method = "post" class = "IVAF" enctype="multipart/form-data" style = "display:none">
+                	<label for="valore">IVA:</label><br>
+                    <input type = "text" name = "valore" required class = "number"><br>
+                        <input type="hidden" name="Attributo" value="IVA">
+                        <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                        <input type="hidden" name="operazione" value="aggiorna">
+                        <input type="submit" value="conferma modifica">
+                </form>
+                
+                <p class = "product-title"> quantita residua :<%= bean.getQuantitaResidua() %></p><button id= "quantita">modifica</button>
+                <form action="AdminServlet" method = "post" class = "quantitaF" enctype="multipart/form-data" style = "display:none">
+                	<label for="valore">quantita residua:</label><br>
+                    <input type = "text" name = "valore" required class = "number"><br>
+                        <input type="hidden" name="Attributo" value="quantitaDisponibili">
+                        <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                        <input type="hidden" name="operazione" value="aggiorna">
+                        <input type="submit" value="conferma modifica">
+                </form>
                 
             </div>
         </div>
@@ -201,9 +259,133 @@
             
             $("#Nome").click(function(){
             	
-            	$(".nomeF").show();
+            	var form = $(".nomeF").css("display")
             	
-            		})
+            	if(form == "none"){
+            	
+            		$(".nomeF").show();
+            		
+            	}
+            	else
+				{
+            		$(".nomeF").hide();
+				}            		
+ 					
+            })
+            
+                        
+            
+            $("#descrizione").click(function(){
+            	
+            	var form = $(".descrizioneF").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".descrizioneF").show();
+            		
+            	}
+            	else
+				{
+            		$(".descrizioneF").hide();
+				}            		
+ 					
+            })
+            
+                $("#prezzo").click(function(){
+            	
+            	var form = $(".prezzoF").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".prezzoF").show();
+            		
+            	}
+            	else
+				{
+            		$(".prezzoF").hide();
+				}            		
+ 					
+            })
+            
+               $("#categoria").click(function(){
+            	
+            	var form = $(".categoriaF").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".categoriaF").show();
+            		
+            	}
+            	else
+				{
+            		$(".categoriaF").hide();
+				}            		
+ 					
+            })
+            
+                $("#IVA").click(function(){
+            	
+            	var form = $(".IVAF").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".IVAF").show();
+            		
+            	}
+            	else
+				{
+            		$(".IVAF").hide();
+				}            		
+ 					
+            })
+            
+                $("#quantita").click(function(){
+            	
+            	var form = $(".quantitaF").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".quantitaF").show();
+            		
+            	}
+            	else
+				{
+            		$(".quantitaF").hide();
+				}            		
+ 					
+            })
+            
+            $("input.number").on("keydown", function (e) {
+    // allow function keys and decimal separators
+    if (
+        // backspace, delete, tab, escape, enter, comma and .
+        $.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 188, 190]) !== -1 ||
+        // Ctrl/cmd+A, Ctrl/cmd+C, Ctrl/cmd+X
+        ($.inArray(e.keyCode, [65, 67, 88]) !== -1 && (e.ctrlKey === true || e.metaKey === true)) ||
+        // home, end, left, right
+        (e.keyCode >= 35 && e.keyCode <= 39)) {
+ 
+        
+        // optional: replace commas with dots in real-time (for en-US locals)
+        if (e.keyCode === 188) {
+            e.preventDefault();
+            $(this).val($(this).val() + ".");
+        }
+    	/*
+        // optional: replace decimal points (num pad) and dots with commas in real-time (for EU locals)
+        if (e.keyCode === 110 || e.keyCode === 190) {
+            e.preventDefault();
+            $(this).val($(this).val() + ",");
+        }
+        */
+ 
+        return;
+    }
+    // block any non-number
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
+});
             
             
             </script>

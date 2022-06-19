@@ -114,10 +114,10 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 	@Override
 	public Collection<ProdottoBean> doRetrieveAll(String order) throws Exception {
-		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C "
-				+ "ON categoria = C.nome ";
+		String sql = "SELECT prodotto.*, categoria.nome as Cnome, categoria.descrizione as Cdesc "
+				+ "FROM prodotto JOIN categoria "
+				+"ON categoria.nome = prodotto.categoria ";
 		order = order.isEmpty() ? "C.nome" : order;
-		CategoriaBean buffer = new CategoriaBean();
 		ArrayList<ProdottoBean> result = new ArrayList<>();
 
 		try(Connection conn = ds.getConnection()){
@@ -126,6 +126,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 				ResultSet rs = statement.executeQuery();
 				while(rs.next()) {
+					CategoriaBean buffer = new CategoriaBean();
 					ProdottoBean bean = new ProdottoBean();
 					bean.setNome(rs.getString("nome"));
 					bean.setId(Integer.parseInt(rs.getString("id")));

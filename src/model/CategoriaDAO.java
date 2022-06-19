@@ -79,14 +79,16 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 	@Override
 	public Collection<CategoriaBean> doRetrieveAll(String order) throws Exception {
 		List<CategoriaBean> categorie = new ArrayList<>();
-		CategoriaBean buffer = new CategoriaBean();
-		String sql = "SELECT * FROM " + TABLE_NAME;
+		String sql = " SELECT * FROM " + TABLE_NAME + " ORDER BY ?";
+		order = order.isEmpty() ? "nome" : order;
 
 		try(Connection conn = ds.getConnection()){
 			try(PreparedStatement statement = conn.prepareStatement(sql)){
+				statement.setString(1, order);
 				ResultSet rs = statement.executeQuery();
 
 				while(rs.next()) {
+					CategoriaBean buffer = new CategoriaBean();
 					buffer.setNome(rs.getString("nome"));
 					buffer.setDescrizione(rs.getString("descrizione"));
 					categorie.add(buffer);

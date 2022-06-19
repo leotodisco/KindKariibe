@@ -15,10 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.CategoriaBean;
 import beans.GustoBean;
 import beans.ProdottoBean;
 import beans.RecensioneBean;
 import beans.UserBean;
+import model.CategoriaDAO;
 import model.GustoDAO;
 import model.ProdottoDAO;
 import model.RecensioneDAO;
@@ -108,7 +110,8 @@ public class CreaCatalogo extends HttpServlet {
 		{
 			RecensioneDAO daoRecensioni = new RecensioneDAO();
 			ArrayList<RecensioneBean> elencoRecensioni = new ArrayList<>();
-			ProdottoDAO Dao = new ProdottoDAO();	
+			ProdottoDAO Dao = new ProdottoDAO();
+			CategoriaDAO Cdao = new CategoriaDAO();
 
 			ProdottoBean prodotto;
 			try {
@@ -123,8 +126,10 @@ public class CreaCatalogo extends HttpServlet {
 				
 				RequestDispatcher view = null;
 				
-				if(utente.getAdmin() == true)
+				if(utente != null && utente.getAdmin() == true)
 				{
+					List<CategoriaBean> categorie = (List<CategoriaBean>) Cdao.doRetrieveAll("nome");
+					request.setAttribute("categorie", categorie);
 					view = request.getRequestDispatcher("DettagliProdottoAdmin.jsp");
 				}
 				else

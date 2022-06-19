@@ -99,7 +99,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 					gusti.add(buffer);
 				}
 			}	
-		}
+		} 
 		return gusti;
 	}
 
