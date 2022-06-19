@@ -169,15 +169,30 @@ public class AdminServlet extends HttpServlet {
 			String valore = multi.getParameter("valore");
 			String Idprodotto = multi.getParameter("prodotto");
 			
+			
+			if(Attributo.equals("gusto"))
+			{
+				String gusto = multi.getParameter("gusto");
+				try {
+					CostituzioneDAO.cambiaGusto(Idprodotto, valore,gusto);
+					response.sendRedirect("DettagliProdottoAdmin.jsp");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+			
 			try {
 				ProdottoDAO.SingoloUpdate(Attributo, valore, Idprodotto);
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
-			
-			response.sendRedirect("DettagliProdottoAdmin.jsp");
+			}
 			
 			}
 

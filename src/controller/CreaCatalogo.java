@@ -112,6 +112,7 @@ public class CreaCatalogo extends HttpServlet {
 			ArrayList<RecensioneBean> elencoRecensioni = new ArrayList<>();
 			ProdottoDAO Dao = new ProdottoDAO();
 			CategoriaDAO Cdao = new CategoriaDAO();
+			GustoDAO Gdao = new GustoDAO();
 
 			ProdottoBean prodotto;
 			try {
@@ -130,6 +131,8 @@ public class CreaCatalogo extends HttpServlet {
 				{
 					List<CategoriaBean> categorie = (List<CategoriaBean>) Cdao.doRetrieveAll("nome");
 					request.setAttribute("categorie", categorie);
+					List<GustoBean> gusti = (List<GustoBean>) Gdao.doRetrieveAll("nome");
+					request.setAttribute("gusti", gusti);
 					view = request.getRequestDispatcher("DettagliProdottoAdmin.jsp");
 				}
 				else

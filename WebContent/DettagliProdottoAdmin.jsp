@@ -11,6 +11,7 @@
 <% ProdottoBean bean = (ProdottoBean) request.getAttribute("prodotto"); 
 	List<ProdottoBean> elenco = (List<ProdottoBean>) request.getAttribute("prodottiConsigliati");
 	List<CategoriaBean> elencoC = (List<CategoriaBean>) request.getAttribute("categorie");
+	List<GustoBean> elencoG = (List<GustoBean>) request.getAttribute("gusti");
 	
 	
 	if(elenco == null || elencoC == null)
@@ -113,6 +114,61 @@
                         <input type="hidden" name="operazione" value="aggiorna">
                         <input type="submit" value="conferma modifica">
                 </form>
+                
+                				<% 	
+				if(bean.getTipo().equals("Vaschetta"))
+				{ 
+				%>
+					
+				<p class = "product-title"> peso:<%= bean.getPeso() %> g</p><button id= "peso">modifica</button>
+                <form action="AdminServlet" method = "post" class = "pesoF" enctype="multipart/form-data" style = "display:none">
+                    <label for="peso" class = "vaschetta">Peso:</label><br>
+                    <select name="valore" class = "vaschetta">
+                    
+                        <option value="500">500</option>
+                        <option value="750">750</option>
+						<option value="1000">1000</option>
+
+					</select>
+                        <input type="hidden" name="Attributo" value="peso">
+                        <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                        <input type="hidden" name="operazione" value="aggiorna">
+                        <input type="submit" value="conferma modifica">
+                </form>
+					
+				<% int i = 1; 	
+				for(GustoBean G : bean.getGusti())
+				{ 
+				%>
+					<p class = "product-title"> gusto <%=i + ":"  + G.getNome() %> </p><button id= "gusto<%=i%>">modifica</button>
+                	<form action="AdminServlet" method = "post" class = "gusto<%=i%>" enctype="multipart/form-data" style = "display:none">
+                    <label for="gusto" class = "vaschetta">gusto <%=i + ":"%></label><br>
+                    <select name="valore" class = "vaschetta">
+                    
+					<% 	for(GustoBean g : elencoG)
+					{ 
+					%>
+					 	<option value="<%= g.getNome()%>"><%= g.getNome() %></option>
+					
+					<%}%>
+
+					</select>
+                        <input type="hidden" name="Attributo" value="gusto">
+                        <input type="hidden" name="gusto" value="<%= G.getNome()%>">
+                        <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                        <input type="hidden" name="operazione" value="aggiorna">
+                        <input type="submit" value="conferma modifica">
+                	</form>
+					
+					
+					
+				<%	i++;
+								}%>
+					
+					
+					
+				<%}%>
+                
                 
             </div>
         </div>
@@ -351,6 +407,71 @@
             	else
 				{
             		$(".quantitaF").hide();
+				}            		
+ 					
+            })
+            
+            
+              	$("#peso").click(function(){
+            	
+            	var form = $(".pesoF").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".pesoF").show();
+            		
+            	}
+            	else
+				{
+            		$(".pesoF").hide();
+				}            		
+ 					
+            })
+            
+              	$("#gusto1").click(function(){
+            	
+            	var form = $(".gusto1").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".gusto1").show();
+            		
+            	}
+            	else
+				{
+            		$(".gusto1").hide();
+				}            		
+ 					
+            })
+            
+               	$("#gusto2").click(function(){
+            	
+            	var form = $(".gusto2").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".gusto2").show();
+            		
+            	}
+            	else
+				{
+            		$(".gusto2").hide();
+				}            		
+ 					
+            })
+            
+                $("#gusto3").click(function(){
+            	
+            	var form = $(".gusto3").css("display")
+            	
+            	if(form == "none"){
+            	
+            		$(".gusto3").show();
+            		
+            	}
+            	else
+				{
+            		$(".gusto3").hide();
 				}            		
  					
             })
