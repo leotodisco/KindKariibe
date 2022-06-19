@@ -476,6 +476,8 @@
  					
             })
             
+            
+            
             $("input.number").on("keydown", function (e) {
     // allow function keys and decimal separators
     if (

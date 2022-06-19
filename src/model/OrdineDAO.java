@@ -193,12 +193,12 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 	public Collection<OrdineBean> doRetrieveAll(String order) throws Exception {
 		List<OrdineBean> ordini = new ArrayList<>();
 
-		String sql = "SELECT * FROM " + TABLE_NAME + "ORDER BY ?";
-		order = order.isEmpty() ? "nome" : order;
+		String sql = "SELECT * FROM " + TABLE_NAME + " ORDER BY ?";
+		order = order.isEmpty() ? "idOrdine" : order;
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
-				ps.setInt(1, Integer.valueOf(order));
+				ps.setString(1, order);
 				ResultSet rs = ps.executeQuery();
 
 				while(rs.next()) {

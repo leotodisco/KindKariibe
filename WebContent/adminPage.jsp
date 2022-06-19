@@ -23,6 +23,15 @@
 	
 	
 	}
+
+	ArrayList<OrdineBean> ListaOrdini = (ArrayList<OrdineBean>) request.getSession().getAttribute("ordini");
+	if(ListaOrdini == null) {
+		response.sendRedirect("./CreaCatalogo");	
+		return;
+	
+	
+	}
+
 	%>
 	
 <div id=title>
@@ -237,7 +246,32 @@
             </div>
         </div>
     </div>
-
+	
+	<div>
+	
+				<% 	for(OrdineBean O : ListaOrdini)
+				{ 
+				%>
+					<h5>Ordine numero <%= O.getIdOrdine() %></h5>
+						
+					
+				<%}%>	
+	
+	</div>
+	
+	<div>
+	
+	<form action="AggiungiCategoria" method = "post">
+	
+	<label for="IVA">Categoria : </label><br> 
+	<input name="nome" type="text" maxlength="20" required
+                        placeholder="inserire nome..."><br>
+                        <input type="submit" value="Aggiungi">
+	
+	</form>
+	
+	</div>
+	
     <script>
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
