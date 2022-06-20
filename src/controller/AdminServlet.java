@@ -219,6 +219,41 @@ public class AdminServlet extends HttpServlet {
 			response.sendRedirect("DettagliProdottoAdmin.jsp");
 			
 		}
+		
+		if(azioni.equals("ModificaCategoria"))
+		{
+			String attributo = multi.getParameter("attributo");
+			String valore = multi.getParameter("valore");
+			String nome = multi.getParameter("nome");
+			
+			try {
+				CategoriaDAO.SingoloUpdate(attributo, valore, nome);
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		
+		if(azioni.equals("rimuoviC")) {
+			String name = multi.getParameter("nome");
+
+			try {
+				CategoriaDAO cDAO  = new CategoriaDAO();
+				
+				
+			
+					cDAO.doDelete(name);
+					response.sendRedirect("DettagliProdottoAdmin.jsp");
+				prod.doDelete(name);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 

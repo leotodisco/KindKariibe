@@ -31,6 +31,14 @@
 	
 	
 	}
+	
+	ArrayList<CategoriaBean> ListaCategoria = (ArrayList<CategoriaBean>) request.getSession().getAttribute("Categorie");
+	if(ListaCategoria == null) {
+		response.sendRedirect("./CreaCatalogo");	
+		return;
+	
+	
+	}
 
 	%>
 	
@@ -260,8 +268,47 @@
 	</div>
 	
 	<div>
+	ListaCategoria
 	
-
+				<% 	for(CategoriaBean C : ListaCategoria)
+				{ 
+				%>
+						<h5><%=C.getNome() %></h5>
+  						<form action="AdminServlet" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="operazione" value="rimuoviC">
+						<input name="nome" type="hidden" value="<%= C.getNome()%>">
+						<input type="submit" value="&times;" class="close-">
+						</form>	
+						
+						<button class = "nomeCategoria">modifica nome</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaN" style = "display:none" enctype="multipart/form-data"> 
+					    <label for="valore">nome : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire nome..."><br>
+                       	<input type = "hidden" value="ModificaCategoria" name = "operazione">
+                        <input type = "hidden" value="nome" name = "attributo">
+                        <input type = "hidden" value="<%=C.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 	
+					 	<h5><%=C.getDescrizione() %></h5><button class = "descrizioneCategoria">modifica descrizione</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaD" style = "display:none" enctype="multipart/form-data"> 
+					    <label for="valore">Descrizione : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire desrizione..."><br>
+                        <input type = "hidden" value="ModificaCategoria" name = "operazione">
+                        <input type = "hidden" value="descrizione" name = "attributo">
+                        <input type = "hidden" value="<%=C.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 </form>
+					 
+					 <hr>
+					
+				<%}%>
+	
+	<br>
 	<button id = "bottoneCategoria">Aggiungi Categoria</button>
 	<form action="AdminServlet" method = "post" enctype="multipart/form-data" id = "categoriaForm" style = "display:none">
 	<label for="Categoria">gusto</label><br>
@@ -285,6 +332,7 @@
 	
     <script>
     
+    
     	$("#bottoneCategoria").click(function(){
     		
         	var form = $("#categoriaForm").css("display")
@@ -297,6 +345,42 @@
         	else
 			{
         		$("#categoriaForm").hide();
+			}  
+    		
+    		
+    	})
+    	
+    	    $(".descrizioneCategoria").click(function(){
+    		
+        	var form = $(".formModificaD").css("display")
+        	
+        	if(form == "none"){
+        	
+        		$(".formModificaD").show();
+        		
+        	}
+        	else
+			{
+        		$(".formModificaD").hide();
+			}  
+    		
+    		
+    	})
+    	
+    	    $(".nomeCategoria").click(function(){
+    		
+    	    	
+
+        	var form = $(".formModificaN").css("display")
+        	
+        	if(form == "none"){
+        	
+        		$(".formModificaN").show();
+        		
+        	}
+        	else
+			{
+        		$(".formModificaN").hide();
 			}  
     		
     		

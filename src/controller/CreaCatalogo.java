@@ -54,6 +54,7 @@ public class CreaCatalogo extends HttpServlet {
 		String tipo = request.getParameter("tipo");
 		GustoDAO gDAO = new GustoDAO();
 		OrdineDAO Odao = new OrdineDAO();
+		CategoriaDAO CDAO = new CategoriaDAO();
 		
 		try {
 			ArrayList<GustoBean> gusti = (ArrayList<GustoBean>) gDAO.doRetrieveAll("nome");
@@ -74,6 +75,8 @@ public class CreaCatalogo extends HttpServlet {
 					ListaPasticceria = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
 					List<OrdineBean> ordini = (List<OrdineBean>) Odao.doRetrieveAll("idOrdine");
 					request.getSession().setAttribute("ordini", ordini);
+					List<CategoriaBean> Categorie= (List<CategoriaBean>) CDAO.doRetrieveAll("idOrdine");
+					request.getSession().setAttribute("Categorie", Categorie);
 					
 				if(tipo != null && tipo.equals("Pasticceria"))
 				{
