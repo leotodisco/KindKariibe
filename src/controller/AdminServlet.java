@@ -195,6 +195,30 @@ public class AdminServlet extends HttpServlet {
 			}
 			
 			}
+		
+		
+		if(azioni.equals("aggiungiCategoria"))
+		{
+			
+			String nome = multi.getParameter("nome");
+			String descrizione = multi.getParameter("descrizione");
+			
+			CategoriaDAO cDAO  = new CategoriaDAO();
+			CategoriaBean bean = new CategoriaBean();
+			
+			bean.setNome(nome);
+			bean.setDescrizione(descrizione);
+			
+			try {
+				cDAO.doSave(bean);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			response.sendRedirect("DettagliProdottoAdmin.jsp");
+			
+		}
 
 	}
 

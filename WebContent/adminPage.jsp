@@ -261,14 +261,38 @@
 	
 	<div>
 	
-	<form action="AggiungiCategoria" method = "post">
-	
-	<label for="IVA">Categoria : </label><br> 
+	<form action="AdminServlet" method = "post" enctype="multipart/form-data">
+	<label for="Categoria">Categoria</label><br>
+	<label for="nome">Nome : </label><br> 
 	<input name="nome" type="text" maxlength="20" required
                         placeholder="inserire nome..."><br>
+                        
+   	<label for="descrizione">Descrizione : </label><br> 
+	<input name="descrizione" type="text" maxlength="20" required
+                        placeholder="inserire desrizione..."><br>
                         <input type="submit" value="Aggiungi">
+                        
+    <input type="hidden" name="operazione" value="aggiungiCategoria">
 	
 	</form>
+	
+	<form action="AdminServlet" method = "post" enctype="multipart/form-data">
+	<label for="Categoria">gusto</label><br>
+	<label for="nome">Nome : </label><br> 
+	<input name="nome" type="text" maxlength="20" required
+                        placeholder="inserire nome..."><br>
+                        
+   	<label for="descrizione">Descrizione : </label><br> 
+	<input name="descrizione" type="text" maxlength="20" required
+                        placeholder="inserire desrizione..."><br>
+                        <input type="submit" value="Aggiungi">
+                        
+    <input type="hidden" name="operazione" value="aggiungiCategoria">
+	
+	</form>
+	
+	
+	
 	
 	</div>
 	

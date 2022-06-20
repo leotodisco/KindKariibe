@@ -31,7 +31,7 @@ public class CategoriaDAO implements ModelInterface<CategoriaBean> {
 	
 	@Override
 	public void doSave(CategoriaBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "('nome','descrizione') VALUES (?,?)";
+		String sql = "INSERT INTO " + TABLE_NAME + " (nome,descrizione) VALUES (?,?)";
 		
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	
