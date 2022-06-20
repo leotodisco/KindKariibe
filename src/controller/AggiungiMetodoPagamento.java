@@ -85,7 +85,8 @@ public class AggiungiMetodoPagamento extends HttpServlet {
 		}
 		
 		
-		
+		String vecchioURL=request.getHeader("referer");
+		response.sendRedirect(vecchioURL);
 		
 		
 		

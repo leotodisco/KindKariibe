@@ -4,14 +4,10 @@
 <html>
 
 <head>
-	
-	
     <link rel="stylesheet" type="text/css" href="stili.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-       
-       <link rel="shortcut icon" href="./lib/favicon.ico"/>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </head>
@@ -34,7 +30,9 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 				
 	<script>
         $(document).ready(function () {
+
             $('.sidebarBtn').click(function () {
+         
                 $('.sidebar').toggleClass('active')
                 $('.sidebarBtn').toggleClass('sposta')
             })//menu hamburger
@@ -44,7 +42,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             		$("#prova").empty(); //svuoto la div perchè in questo modo si toglie quello che avevo cercato prima
             		$("#prova").show();
             		
-            		data.forEach(e = {
+            		data.forEach(e => {
 						var myvar = '<a href="CreaCatalogo?action=details&id='+e.id+'"><div style=" width: 200px;  border-bottom: 1px solid black; right: 50px;"><h2 class="titolo-ricerca">'+e.nome+'</h2></a> ';
 						var myvar2 = '<a href="CreaCatalogo?action=details&id='+e.id+'"><img class="immagine-ricerca" src="./immagini/'+e.pathImage[0]+'">'+'</a> </div><br><br>';
 						
@@ -94,10 +92,8 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 					$("#prova").empty();
 					$("#prova").toggleClass("nascondi");
 				})
-
 			})
 			
-
 			
 			
         })//chiusura jquery totale
@@ -105,15 +101,15 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
     </script>
 
     <div class="sidebar" id="ciao">
-        <ul>
-        	<li><a href="home.jsp" class="testoResponsive">Home</a></li>
-            <li><a href="Catalogo.jsp" class="testoResponsive">Pasticceria</a></li>
-            <li><a href="Catalogo-Gelateria.jsp" class="testoResponsive">Gelateria</a></li>
-            <li><a href="Storia.jsp" class="testoResponsive">Storia</a></li>
-            <li><a href="Contatti.jsp" class="testoResponsive">Contatti</a></li>
+        <ul class="lista-header">
+        	<li class="item-header"><a href="home.jsp" class="testoResponsive">Home</a></li>
+            <li class="item-header"><a href="Catalogo.jsp" class="testoResponsive">Pasticceria</a></li>
+            <li class="item-header"><a href="Catalogo-Gelateria.jsp" class="testoResponsive">Gelateria</a></li>
+            <li class="item-header"><a href="Storia.jsp" class="testoResponsive">Storia</a></li>
+            <li class="item-header"><a href="Contatti.jsp" class="testoResponsive">Contatti</a></li>
             <!-- mettere disegno omino, posso pensare di mettere sia accedi che carrello nello stesso li -->
-            <li><a href="PaginaUtenteServlet" class="testoResponsive">Profilo <ion-icon name="person" style="font-size: 1.55rem; color: #2f2f2f;"></ion-icon></a></li>
-            <li><a href="carrello.jsp">Carrello <ion-icon name="cart-outline" style=" align-items: center; font-size: 1.75rem; color: #2f2f2f;"></ion-icon></a></li>
+            <li class="item-header"><a href="PaginaUtenteServlet" class="testoResponsive">Profilo <ion-icon name="person" style="font-size: 1.55rem; color: #2f2f2f;"></ion-icon></a></li>
+            <li class="item-header"><a href="carrello.jsp">Carrello <ion-icon name="cart-outline" style=" align-items: center; font-size: 1.75rem; color: #2f2f2f;"></ion-icon></a></li>
             <!-- per la ricerca fare nuovo li -->
         </ul>
     </div>
@@ -135,11 +131,11 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             </div>       
         </div>
        
-            <ul class="elenco nav-container-item">
-                <li><a href="Catalogo-Gelateria.jsp">Gelateria</a></li>
-                <li><a href="Catalogo.jsp">Pasticceria</a></li>
-                <li><a href="Storia.jsp">Storia</a></li>
-                <li><a href = "Contatti.jsp">Contatti</a></li>
+            <ul class="elenco nav-container-item lista-header">
+                <li class="item-header"><a href="Catalogo-Gelateria.jsp">Gelateria</a></li>
+                <li class="item-header"><a href="Catalogo.jsp">Pasticceria</a></li>
+                <li class="item-header"><a href="Storia.jsp">Storia</a></li>
+                <li class="item-header"><a href = "Contatti.jsp">Contatti</a></li>
             </ul>
            
 
@@ -150,6 +146,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 					<div class="container-ricerca" >
                   <input type="text" id="valoreRicerca" class="form-prodotti-ricerca nascondi" >
 					<div id="prova" class="nascondi divProdottiRicerca">
+		
 						</div>
 					</div>    
                 

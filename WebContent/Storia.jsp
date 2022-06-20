@@ -13,12 +13,14 @@
         <!-- da modificare i font e colori credo in te e poi aggiungere immagini quando arrivano-->
     </head>
     <body>
+    	<jsp:include page="header.jsp" />
+    	
         <section>
             <div class = "image">
                <img src="https://cdn.pixabay.com/photo/2017/08/26/23/37/business-2684758__340.png" id="foto">
             </div>
             <div class = "content">
-                <h2>About Us</h2>
+                <h2>Chi siamo</h2>
                 <span><!-- line here --></span>
                 <p id="prima">Una storia che ha origine prima della Seconda Guerra Mondiale una storia raccontata da ogni 
                     singola prelibatezza della pasticceria KindKaribe.

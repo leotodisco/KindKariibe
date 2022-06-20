@@ -22,15 +22,15 @@ response.setDateHeader("Expires", 0);
             <h2>Accedi</h2>
         </div>
         <br>
-        <form id="login" method="post" action="LoginServlet">
+        <form id="login" method="post" action="LoginServlet" onsubmit="funzioneConvalida(this);">
 
             <label for="email"></label>
-            <input type="text" name="email" class="uname" placeholder="Email">
+            <input type="text" id="email-login" name="email" class="uname" placeholder="Email">
             <br><br>
             <label for="password"></label>
-            <input class="pass" type="password" name="password" placeholder="Password">
+            <input class="pass" id="password-login" type="password" name="password" placeholder="Password">
             <br><br>
-        		<input type="submit" value="Login" class="bottone-Schermata-Login" />
+        		<input type="submit" value="Login" class="bottone-Schermata-Login" id="login-submitt"/>
         	<br>
 
         </form>
@@ -124,6 +124,47 @@ response.setDateHeader("Expires", 0);
 	
     <script>
         $(document).ready(function () {
+        	
+        	function checkLogin(email, pass) {
+                return $.ajax({
+                    url: "Api/User",
+                    type: 'GET',
+                    async: false,
+                    cache: false,
+                    timeout: 30000,
+                    dataType: "json",
+                    data: {
+                        action: "checkPassword",
+                        password: pass,
+                        email: email
+                    },
+                    success: function (data) {
+                    	
+                        return data
+                    },
+                    fail: function (msg) {
+                    	return true;
+                    }
+                });
+            }
+        	
+        	$("#login-submitt").click(function funzioneConvalida(obj) {
+        		var email = $("#email-login").val();
+        		var password = $("#password-login").val()
+        		var res = checkLogin(email, password);
+        		
+				if (res.responseJSON.message == "taken") {
+					obj.submit()
+				}
+				
+				else{
+					event.preventDefault();
+					$("#email-login").addClass("error");
+					$("#password-login").addClass("error");
+				}
+        	
+            });
+        	
             
             $(log).click(function () {
                 $(registrationDiv).show();
@@ -163,7 +204,7 @@ response.setDateHeader("Expires", 0);
                     $('#nome').addClass('error');
 
                     if (!regExpCodFiscale.test($('#codFiscale').val())) {
-                        $('#codFiscale').addClass('.error');
+                        $('#codFiscale').toggleClass("error");
                         $('#codFiscaleErrato').show();
                     }
                 } //test nome
@@ -173,13 +214,13 @@ response.setDateHeader("Expires", 0);
                     //far mostrare "inserire cognome corretto"
 
                     if (!regExpCodFiscale.test($('#codFiscale').val())) {
-                        $('#codFiscale').addClass('.error');
+                        $('#codFiscale').toggleClass('.error');
                         $('#codFiscaleErrato').show();
                     }
                 }//test cognome
 
                 if (!regExpCodFiscale.test($("#codFiscale").val())) {
-                    $('#codFiscale').addClass('.error');
+                    $('#codFiscale').toggleClass('.error');
                     $("#codFiscaleErrato").show();
                 }
 
@@ -333,8 +374,8 @@ response.setDateHeader("Expires", 0);
 					} else {	
 					}
 				
-						if (valid)
-							obj.submit();
+					if (valid)
+						obj.submit();
 						
 					}
             

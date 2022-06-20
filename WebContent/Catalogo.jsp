@@ -64,8 +64,6 @@
      }) //chiusura jquery
 	</script>
 
-	<a href="form-prova.html">prova</a>
-
 
 </body>
 </html>

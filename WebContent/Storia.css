@@ -1,6 +1,21 @@
-@charset "ISO-8859-1";
+@charset "UTF-8";
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+@font-face {
+  font-family: "archia-regular";
+  src: url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: 'intro_script_demomedium';
+  src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+  src: url('./font/introscriptdemo-medium.woff') format('woff');
+}
+
 
 *{
     box-sizing: border-box;
@@ -8,11 +23,9 @@
     margin: 0;
 }
 body{
-    font-family: 'Playfair Display', serif;
-    display: grid;
+
     background-color: #fcefd4;
-    align-content: center;
-    min-height: 100vh;
+
 }
 section{
     display: grid;
@@ -24,7 +37,7 @@ section{
     border-radius: 12px
 }
 .image{
-    background-color: #F0F1F8;
+    background-color: transparent;
     display: flex;
     border-radius: 12px 0 0 12px;
 }
@@ -33,41 +46,38 @@ height:50vh;
 margin:50px auto
 }
 .content{
-    background-color: #F0F1F8;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    border-radius: 0  12px 12px 0;
-    color: #acd872;
+    color: #2f2f2f;
 }
 .content h2{
-    text-transform: uppercase;
-    font-size: 36px;
-    letter-spacing: 6px;
-    opacity: 0.9;
+ font-family: 'intro_script_demomedium';
+	 color: #2f2f2f;
+    font-size: 4rem;
 }
 .content span{
     height: 0.5px;
     width: 80px;
-    background: #acd872;
-    margin: 30px 0;
+    background: #2f2f2f;
+ 	margin: 15px 0;
 }
 .content p{
     padding-bottom: 15px;
-    font-weight: 300;
-    opacity: 0.7;
+    font-family: "archia-regular";
     width: 80%;
     text-align: center;
     margin: 0 auto;
     line-height: 1.7;
-    color:#acd872;
+     color: #2f2f2f;
 }
 .links{
     margin: 15px 0;
 }
 .links li{
-    border: 2px solid #C850C0;
+    border: 2px solid #2f2f2f;
     list-style: none;
     border-radius: 5px;
     padding: 10px 15px;
@@ -76,17 +86,26 @@ margin:50px auto
 }
 .links li a{
     text-transform: uppercase;
-    color: #acd872;
+    color: #2f2f2f;
     text-decoration: none;
 }
+
 .links li:hover{
-    border-color: #acd872;
+    border-color: green;
+}
+
+.links li:focus{
+    border-color: green;
+}
+
+.links li:active{
+    border-color: green;
 }
 
 .vertical-line{
     height: 30px;
     width: 3px;
-    background: #acd872;
+    background: #2f2f2f;
     margin: 0 auto;
 }
 

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -98,6 +99,40 @@ public class UserApiServlet extends HttpServlet {
 
 				response.getWriter().flush();
 				return;
+			}
+		}
+		
+		//controlla il login 
+		if(action.equals("checkPassword")) {
+			UserDAO dao = new UserDAO();
+			String messaggio = new String();
+			try {
+				UserBean usr = dao.doRetriveByEmail(request.getParameter("email"));
+				ArrayList<String> emails = dao.doRetrieveEmails();
+				
+				if(!emails.contains(request.getParameter("email"))){
+					messaggio = "free";
+				}
+				
+				else if(usr.getPassword().equals(request.getParameter("password"))){
+						messaggio = "taken";
+				}
+
+				else {
+						messaggio = "free";
+				}
+			
+				
+				response.setStatus(200);
+				response.getWriter().print(gson.toJson(new ResponseStatusMessage(200, messaggio)));
+				response.getWriter().flush();
+
+			}
+			 catch (Exception e) {
+				response.setStatus(500);
+
+				response.getWriter().flush();
+
 			}
 		}
 		

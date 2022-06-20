@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import beans.*;
@@ -105,8 +106,16 @@ public class AcquistaServlet extends HttpServlet {
 				ordine.setUtente(utente);
 				Carrello cart=(Carrello)sessione.getAttribute("Carrello");
 				
+				//devo salvare prodotto - [quantita - iva - prezzo] 
+				//[quantita - iva - prezzo] è una lista di interi
+				ArrayList<Integer> quantitaIvaPrezzo = new ArrayList<>();
+				//posizione 0 = quantita, pos 1=iva pos2 = prezzo
 				
-				ordine.setProducts(cart.getProducts());			//setto i prodotti dell'ordine
+				HashMap<ProdottoBean,Integer> contenutoCarrello = cart.getProducts();			                  //setto i prodotti dell'ordine
+				for(ProdottoBean prod : contenutoCarrello.keySet()) {				
+					ordine.addProduct(prod);
+
+				}
 				
 						//setto i dati per la spedizione
 				IndirizzoDao daoIndirizzo= new IndirizzoDao();

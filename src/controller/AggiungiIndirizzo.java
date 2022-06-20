@@ -72,7 +72,8 @@ public class AggiungiIndirizzo extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
+		String vecchioURL=request.getHeader("referer");
+		response.sendRedirect(vecchioURL);
 		
 		
 	}

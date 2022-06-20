@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -35,18 +36,18 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 		}
 	}
 
-	
-	public Collection<OrdineBean> doRetriveByUtente(UserBean utente) throws Exception {
-		String sql= "SELECT * FROM "+ TABLE_NAME+" WHERE utente = ?";
 
-		OrdineBean ordine= new OrdineBean();
+	public Collection<OrdineBean> doRetriveByUtente(UserBean utente) throws Exception {
+		String sql= "SELECT * FROM "+ TABLE_NAME+" WHERE utente = ? ORDER BY dataEvasione DESC" ;
+
 		List<OrdineBean> ordini = new ArrayList<>();
-		
+
 		try(Connection con= ds.getConnection()){
 			try(PreparedStatement ps= con.prepareStatement(sql)){
 				ps.setString(1, utente.getCodiceFiscale());
 				ResultSet rs = ps.executeQuery();
 				while(rs.next()) {
+					OrdineBean ordine= new OrdineBean();
 					ordine.setIdOrdine(rs.getInt("idOrdine"));
 					ordine.setCodiceSconto(rs.getString("codiceSconto"));
 					ordine.setCostoTotale(rs.getDouble("costoTotale"));
@@ -54,9 +55,9 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					ordine.setDataEvasione(rs.getDate("dataEvasione"));
 					ordine.setDataPartenza(rs.getDate("dataPartenza"));
 					ordine.setDataArrivo(rs.getDate("dataArrivo"));
-					
-					
-				
+
+					//FAI LA PARTE CHE PRENDE I PRODOTTI DA COMPOSIZIONE
+
 
 					ordine.setUtente(utente);
 
@@ -69,28 +70,50 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					DatiFiscaliDAO datiFis = new DatiFiscaliDAO();
 					df = datiFis.doRetrieveByKey(String.valueOf(rs.getInt("datiFiscali")));
 					ordine.setDatiFiscali(df);
-				
+
 					IndirizzoDao ind= new IndirizzoDao();
 					ordine.setIndirizzoSpedizione(ind.doRetrieveByKey(rs.getString("indirizzoSpedizione")));
-				
-					ordini.add(ordine);
+
+					//DEVO PRENDERE TUTTI I PRODOTTI DI UN DATO ORDINE E STANNO IN COMPOSIZONE
+					String sqlProdotti = "SELECT * FROM composizione WHERE ordine = ?";
+					ProdottoDAO products = new ProdottoDAO();
+					ConcurrentHashMap<ProdottoBean,ArrayList<Integer>> elencoProdotti = new ConcurrentHashMap<>(); 
+					//NEL BEAN SI SALVA PRODOTTO-QUANTITA-PREZZO-IVA che stanno in composizione
+					//[QUANTITA-PREZZO-IVA] è una lista di interi/double
+					try(PreparedStatement statementDatiOrdine = con.prepareStatement(sqlProdotti)){
+						statementDatiOrdine.setInt(1, ordine.getIdOrdine());
+						ResultSet prodottiSET = statementDatiOrdine.executeQuery();
+						ArrayList<Integer> datiComposizione = new ArrayList<>();
+						
+						while(prodottiSET.next()) {
+							datiComposizione.add(0, Double.valueOf(prodottiSET.getString("quantita")).intValue());
+							datiComposizione.add(1, Double.valueOf(prodottiSET.getString("prezzo")).intValue());
+							datiComposizione.add(2, Double.valueOf(prodottiSET.getString("IVA")).intValue());
+							//devo inserire nella mappa tutto cio dopo
+							ProdottoBean prod = products.doRetrieveByKey(prodottiSET.getString("prodotto"));
+							ordine.addProduct(prod, datiComposizione);
+						}
+
+						ordini.add(ordine);
+					}
 				}
 			}
 		}
+		
+		//ordinare in base alla data
 		return ordini;
 	}
+
 	@Override
 	public void doSave(OrdineBean bean) throws SQLException {
 		String sql = " INSERT INTO " + TABLE_NAME + " (datiFiscali,corriere,utente, "
 				+ " costoTotale, codiceSconto, dataEvasione, urlPdf, indirizzoSpedizione ) VALUES (?,?,?,?,?,?,?,?) ";
 
-		String sql2 = "INSERT INTO " + "composizione" + " (prodotto,ordine,IVA,prezzo,quantita) "
-		+ "VALUES(?,?,?,?,?)";
-		
+
+
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				ps.setInt(1, bean.getDatiFiscali().getIdDatiFiscali());
-				System.out.println("id corriere nel dao = " + bean.getCorriere().getId());
 				ps.setInt(2, bean.getCorriere().getId());
 				ps.setString(3, bean.getUtente().getCodiceFiscale());
 				ps.setDouble(4, bean.getCostoTotale());
@@ -98,36 +121,38 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				ps.setDate(6, (Date) bean.getDataEvasione());
 				ps.setString(7, bean.getUrlPdf());
 				ps.setInt(8, bean.getIndirizzoSpedizione().getId());
-				
+
 				ps.execute();
 			}
-			
+
+			String sql2 = "INSERT INTO " + "composizione" + " (prodotto,ordine,IVA,prezzo,quantita) "
+					+ "VALUES(?,?,?,?,?)";
+
 			try(PreparedStatement ps = con.prepareStatement("select idOrdine from ordine order by idOrdine DESC"))
 			{
 				ResultSet set = ps.executeQuery();
-				
+
 				set.next();
-				
+
 				int idOrdine = set.getInt(1);
-				
-				try(PreparedStatement ps1 = con.prepareStatement(sql2))
+
+				for(ProdottoBean products : bean.getProducts().keySet())
 				{
-					for(ProdottoBean products : bean.getProducts().keySet())
+					try(PreparedStatement ps1 = con.prepareStatement(sql2))
 					{
 						ps1.setInt(1, products.getId());
 						ps1.setInt(2, idOrdine);
 						ps1.setDouble(3, products.getIVA());
 						ps1.setDouble(4, products.getPrezzo());
-						ps1.setInt(5, bean.getProducts().get(products));
-						
-						ps1.execute();
-						
+						ps1.setInt(5, bean.getProducts().get(products).get(0)); //in posizione 0 della lista c'è sempre quantita
+
+						ps1.executeUpdate();
 					}
 				}
-				
+
 			}
-			
-			
+
+
 		}
 
 	}
@@ -147,7 +172,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 
 	@Override
 	public OrdineBean doRetrieveByKey(String arg) throws Exception {
-		String sql = "SELECT * FROM " + TABLE_NAME + "WHERE idOrdine = ? ";
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE idOrdine = ? ";
 		OrdineBean ordine = new OrdineBean();
 
 		try(Connection con = ds.getConnection()){
@@ -163,8 +188,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					ordine.setDataEvasione(rs.getDate("dataEvasione"));
 					ordine.setDataPartenza(rs.getDate("dataPartenza"));
 					ordine.setDataArrivo(rs.getDate("dataArrivo"));
-					
-					
+
 				}
 
 				UserBean usr = new UserBean();
@@ -181,9 +205,31 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				DatiFiscaliDAO datiFis = new DatiFiscaliDAO();
 				df = datiFis.doRetrieveByKey(String.valueOf(rs.getInt("datiFiscali")));
 				ordine.setDatiFiscali(df);
-				
+
 				IndirizzoDao ind= new IndirizzoDao();
 				ordine.setIndirizzoSpedizione(ind.doRetrieveByKey(rs.getString("indirizzoSpedizione")));
+				
+				//DEVO PRENDERE TUTTI I PRODOTTI DI UN DATO ORDINE E STANNO IN COMPOSIZONE
+				String sqlProdotti = "SELECT * FROM composizione WHERE ordine = ?";
+				ProdottoDAO products = new ProdottoDAO();
+				ConcurrentHashMap<ProdottoBean,ArrayList<Integer>> elencoProdotti = new ConcurrentHashMap<>(); 
+				//NEL BEAN SI SALVA PRODOTTO-QUANTITA-PREZZO-IVA che stanno in composizione
+				//[QUANTITA-PREZZO-IVA] è una lista di interi/double
+				try(PreparedStatement statementDatiOrdine = con.prepareStatement(sqlProdotti)){
+					statementDatiOrdine.setInt(1, ordine.getIdOrdine());
+					ResultSet prodottiSET = statementDatiOrdine.executeQuery();
+					ArrayList<Integer> datiComposizione = new ArrayList<>();
+					
+					while(prodottiSET.next()) {
+						datiComposizione.add(0, Double.valueOf(prodottiSET.getString("quantita")).intValue());
+						datiComposizione.add(1, Double.valueOf(prodottiSET.getString("prezzo")).intValue());
+						datiComposizione.add(2, Double.valueOf(prodottiSET.getString("IVA")).intValue());
+						//devo inserire nella mappa tutto cio dopo
+						ProdottoBean prod = products.doRetrieveByKey(prodottiSET.getString("prodotto"));
+						ordine.addProduct(prod, datiComposizione);
+					}
+				}
+			
 			}
 		}
 		return ordine;
@@ -210,7 +256,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					ordine.setDataEvasione(rs.getDate("dataEvasione"));
 					ordine.setDataPartenza(rs.getDate("dataPartenza"));
 					ordine.setDataArrivo(rs.getDate("dataArrivo"));
-					
+
 					UserBean usr = new UserBean();
 					UserDAO usrDAO = new UserDAO();
 					usr = usrDAO.doRetrieveByKey(rs.getString("utente"));
@@ -225,12 +271,12 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					DatiFiscaliDAO datiFis = new DatiFiscaliDAO();
 					df = datiFis.doRetrieveByKey(String.valueOf(rs.getInt("datiFiscali")));
 					ordine.setDatiFiscali(df);
-					
+
 					IndirizzoDao ind= new IndirizzoDao();
 					ordine.setIndirizzoSpedizione(ind.doRetrieveByKey(rs.getString("indirizzoSpedizione")));
-					
+
 					ordini.add(ordine);
-					
+
 				}
 
 			}

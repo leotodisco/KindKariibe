@@ -41,6 +41,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
 		
 		String username = (String) request.getParameter("email");
 		String password = (String) request.getParameter("password");
@@ -50,14 +51,6 @@ public class LoginServlet extends HttpServlet {
 
 		try {
 			User = model.doRetriveByEmail(username); //prendo il cliente con l'email
-			
-			if(User.getEmail() == null)
-			{
-				RequestDispatcher fail = request.getRequestDispatcher("LoginFailed.jsp");
-				fail.include(request, response);
-			}
-			else
-			{
 				
 				if(password.equals(User.getPassword()))
 				{
@@ -66,13 +59,6 @@ public class LoginServlet extends HttpServlet {
 
 					succesfull.forward(request, response);
 				}
-				else
-				{
-					RequestDispatcher wrong = request.getRequestDispatcher("wrongPassword.jsp");
-					wrong.forward(request, response);
-				}
-				
-			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
