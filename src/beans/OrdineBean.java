@@ -233,6 +233,102 @@ public class OrdineBean {
 	public void setProducts(ConcurrentHashMap<ProdottoBean, ArrayList<Integer>> products) {
 		this.products = products;
 	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codiceSconto == null) ? 0 : codiceSconto.hashCode());
+		result = prime * result + ((corriere == null) ? 0 : corriere.hashCode());
+		result = prime * result + ((costoTotale == null) ? 0 : costoTotale.hashCode());
+		result = prime * result + ((dataArrivo == null) ? 0 : dataArrivo.hashCode());
+		result = prime * result + ((dataEvasione == null) ? 0 : dataEvasione.hashCode());
+		result = prime * result + ((dataPartenza == null) ? 0 : dataPartenza.hashCode());
+		result = prime * result + ((datiFiscali == null) ? 0 : datiFiscali.hashCode());
+		result = prime * result + ((idOrdine == null) ? 0 : idOrdine.hashCode());
+		result = prime * result + ((indirizzoSpedizione == null) ? 0 : indirizzoSpedizione.hashCode());
+		result = prime * result + ((products == null) ? 0 : products.hashCode());
+		result = prime * result + ((urlPdf == null) ? 0 : urlPdf.hashCode());
+		result = prime * result + ((utente == null) ? 0 : utente.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrdineBean other = (OrdineBean) obj;
+		if (codiceSconto == null) {
+			if (other.codiceSconto != null)
+				return false;
+		} else if (!codiceSconto.equals(other.codiceSconto))
+			return false;
+		if (corriere == null) {
+			if (other.corriere != null)
+				return false;
+		} else if (!corriere.equals(other.corriere))
+			return false;
+		if (costoTotale == null) {
+			if (other.costoTotale != null)
+				return false;
+		} else if (!costoTotale.equals(other.costoTotale))
+			return false;
+		if (dataArrivo == null) {
+			if (other.dataArrivo != null)
+				return false;
+		} else if (!dataArrivo.equals(other.dataArrivo))
+			return false;
+		if (dataEvasione == null) {
+			if (other.dataEvasione != null)
+				return false;
+		} else if (!dataEvasione.equals(other.dataEvasione))
+			return false;
+		if (dataPartenza == null) {
+			if (other.dataPartenza != null)
+				return false;
+		} else if (!dataPartenza.equals(other.dataPartenza))
+			return false;
+		if (datiFiscali == null) {
+			if (other.datiFiscali != null)
+				return false;
+		} else if (!datiFiscali.equals(other.datiFiscali))
+			return false;
+		if (idOrdine == null) {
+			if (other.idOrdine != null)
+				return false;
+		} else if (!idOrdine.equals(other.idOrdine))
+			return false;
+		if (indirizzoSpedizione == null) {
+			if (other.indirizzoSpedizione != null)
+				return false;
+		} else if (!indirizzoSpedizione.equals(other.indirizzoSpedizione))
+			return false;
+		if (products == null) {
+			if (other.products != null)
+				return false;
+		} else if (!products.equals(other.products))
+			return false;
+		if (urlPdf == null) {
+			if (other.urlPdf != null)
+				return false;
+		} else if (!urlPdf.equals(other.urlPdf))
+			return false;
+		if (utente == null) {
+			if (other.utente != null)
+				return false;
+		} else if (!utente.equals(other.utente))
+			return false;
+		return true;
+	}
+	
+	
+	
 	
 	
 }

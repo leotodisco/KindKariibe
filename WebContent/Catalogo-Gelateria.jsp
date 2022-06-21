@@ -11,7 +11,7 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<%  UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
+	<%  UserBean utente = (UserBean) request.getSession().getAttribute("utente");
 	
 		if(utente != null && utente.getAdmin())
 		{

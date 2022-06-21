@@ -115,7 +115,8 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setPassword(rs.getString("password"));
 					bean.setDataNascita(rs.getDate("dataNascita"));
 					bean.setSesso(rs.getString("genere"));	
-					bean.setnTelefono(rs.getString("nTelefono"));	
+					bean.setnTelefono(rs.getString("nTelefono"));
+					bean.setAdmin(rs.getBoolean("admin"));
 				}
 			}
 		}

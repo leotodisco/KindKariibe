@@ -32,6 +32,43 @@ public class CorriereBean {
 	public String toString() {
 		return "CorriereBean [id=" + id + ", nTelefono=" + nTelefono + ", azienda=" + azienda + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((azienda == null) ? 0 : azienda.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nTelefono == null) ? 0 : nTelefono.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CorriereBean other = (CorriereBean) obj;
+		if (azienda == null) {
+			if (other.azienda != null)
+				return false;
+		} else if (!azienda.equals(other.azienda))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nTelefono == null) {
+			if (other.nTelefono != null)
+				return false;
+		} else if (!nTelefono.equals(other.nTelefono))
+			return false;
+		return true;
+	}
 	
 	
 	
