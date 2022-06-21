@@ -290,6 +290,80 @@
 	
 	<br>
 	
+	<button id= "GustiB">Mostra Gusti</button>
+	<div id = "divGusti" style = "display:none">
+	
+	
+				<h5>ListaGusti</h5>
+	
+				<% 	for(GustoBean G : ListaGusti)
+				{ 
+				%>
+						<h5 class = "GustiD"><%=G.getNome() %></h5>
+  						<form action="AdminServlet" method="post" enctype="multipart/form-data" class = "GustiD">
+						<input type="hidden" name="operazione" value="rimuoviG">
+						<input name="nome" type="hidden" value="<%= G.getNome()%>">
+						<input type="submit" value="&times;" class="close-">
+						</form>	
+						
+						<button class = "nomeGusto" class = "GustoD">modifica nome</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaNG" style = "display:none" enctype="multipart/form-data" class = "GustoD"> 
+					    <label for="valore">nome : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire nome..."><br>
+                       	<input type = "hidden" value="ModificaGusto" name = "operazione">
+                        <input type = "hidden" value="nome" name = "attributo">
+                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 	
+					 	<h5 class = "GustiD"><%=G.getDescrizione() %></h5><button class = "descrizioneGusto" class = "GustoD">modifica descrizione</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaDG" style = "display:none" enctype="multipart/form-data" > 
+					    <label for="valore">Descrizione : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire desrizione..."><br>
+                        <input type = "hidden" value="ModificaGusto" name = "operazione">
+                        <input type = "hidden" value="descrizione" name = "attributo">
+                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 	
+					 	<h5 class = "GustiD"><%=G.getColore() %></h5><button class = "ColoreGusto" class = "GustoD">modifica Colore</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaCG" style = "display:none" enctype="multipart/form-data" > 
+					    <label for="valore">Colore : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire desrizione..."><br>
+                        <input type = "hidden" value="ModificaGusto" name = "operazione">
+                        <input type = "hidden" value="Colore" name = "attributo">
+                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 
+					 	<h5 class = "GustiD"><%=G.getquantitaInMagazzino() %></h5><button class = "QuantitaGusto" class = "GustoD">modifica quantita</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaQG" style = "display:none" enctype="multipart/form-data" > 
+					    <label for="valore">Colore : </label><br> 
+						<input name="valore" type="number" required><br>
+                        <input type = "hidden" value="ModificaGusto" name = "operazione">
+                        <input type = "hidden" value="Quantita" name = "attributo">
+                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 
+					 
+					 
+					 <hr>
+					
+				<%}%>
+		</div>
+	
+	
+	<br>
+	<br>
+	
 	<button id = "bottoneGusto">Aggiungi Gusto</button>
 	
 	<div id = "divAggiungiGusto" style = "display:none">
@@ -404,8 +478,25 @@
     	   		$("#divAggiungiGusto").toggle();
     	})
     	
+    		$("#GustiB").click(function(){
+    	   		$("#divGusti").toggle();
+    	})
     	
-    
+    		$(".nomeGusto").click(function(){
+    	   		$(".formModificaNG").toggle();
+    	})    	
+
+    	    		$(".descrizioneGusto").click(function(){
+    	   		$(".formModificaDG").toggle();
+    	})
+    	
+    	    		$(".ColoreGusto").click(function(){
+    	   		$(".formModificaCG").toggle();
+    	})
+    	
+    	    	    		$(".QuantitaGusto").click(function(){
+    	   		$(".formModificaQG").toggle();
+    	})
     
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import beans.IndirizzoBean;
 import beans.UserBean;
 import model.IndirizzoDao;
+import model.UserDAO;
 import model.possessoIndirizzoDAO;
 
 /**
@@ -61,13 +62,19 @@ public class AggiungiIndirizzo extends HttpServlet {
 		
 		IndirizzoDao Idao = new IndirizzoDao();
 		possessoIndirizzoDAO Pdao = new possessoIndirizzoDAO();
+		UserDAO uDAO = new UserDAO();
+		
+		
 		
 		
 		try {
 			int ID = Idao.doSaveI(bean);
 			bean.setId(ID);
 			Pdao.doSave(utente, bean);
-		} catch (SQLException e) {
+			utente = uDAO.doRetrieveByKey(utente.getCodiceFiscale());
+			request.getSession().setAttribute("utente", utente);
+			
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

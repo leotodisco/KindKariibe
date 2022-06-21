@@ -312,7 +312,24 @@ public class AdminServlet extends HttpServlet {
 			
 		}
 				
-
+		if(azioni.equals("ModificaGusto")) {
+			
+			String attributo = multi.getParameter("attributo");
+			String valore = multi.getParameter("valore");
+			String nome = multi.getParameter("nome");
+			
+			
+			
+			try {
+				GustoDAO.SingoloUpdate(attributo, valore, nome);
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 
 }

@@ -119,6 +119,31 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 
 	}
 
-
+	public static boolean SingoloUpdate(String Attributo, String valore, String Idprodotto) throws SQLException {
+		
+		String sql = "UPDATE " + TABLE_NAME + " SET " + Attributo + " = ?" 
+		 + " WHERE nome = ?";
+		
+		
+		try(Connection con = ds.getConnection()){
+			try(PreparedStatement preparedStatement2 = con.prepareStatement(sql)){
+				
+				preparedStatement2.setString(1, valore);
+				preparedStatement2.setString(2, Idprodotto);
+			
+				preparedStatement2.executeUpdate();
+		
+			}
+		
+		return true;
+		
+		
+	}
+	
+	
+	
+	}
+	
+	
 
 }
