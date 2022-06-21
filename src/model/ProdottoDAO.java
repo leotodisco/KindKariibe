@@ -77,7 +77,6 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
-					bean.setPeso(rs.getDouble("peso"));
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					
 					ImmagineDAO imDAO = new ImmagineDAO();
@@ -96,13 +95,16 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					
 					bean.setPathImage(elencoPathImmagini);
 
-
-					for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
-					{
-						GustoB = GDAO.doRetrieveByKey(gusti);
-						bean.getGusti().add(GustoB);
-					}
 					
+					if(bean.getTipo().equals("Vaschetta"))
+					{
+						bean.setPeso(rs.getDouble("peso"));
+						for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+						{
+							GustoB = GDAO.doRetrieveByKey(gusti);
+							bean.getGusti().add(GustoB);
+						}
+					}
 					
 				}
 			}	
@@ -112,10 +114,10 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 	@Override
 	public Collection<ProdottoBean> doRetrieveAll(String order) throws Exception {
-		String sql = "SELECT *,C.descrizione AS Cdesc, C.nome as Cnome FROM prodotto FULL JOIN categoria C "
-				+ "ON categoria = C.nome ";
+		String sql = "SELECT prodotto.*, categoria.nome as Cnome, categoria.descrizione as Cdesc "
+				+ "FROM prodotto JOIN categoria "
+				+"ON categoria.nome = prodotto.categoria ";
 		order = order.isEmpty() ? "C.nome" : order;
-		CategoriaBean buffer = new CategoriaBean();
 		ArrayList<ProdottoBean> result = new ArrayList<>();
 
 		try(Connection conn = ds.getConnection()){
@@ -124,6 +126,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 				ResultSet rs = statement.executeQuery();
 				while(rs.next()) {
+					CategoriaBean buffer = new CategoriaBean();
 					ProdottoBean bean = new ProdottoBean();
 					bean.setNome(rs.getString("nome"));
 					bean.setId(Integer.parseInt(rs.getString("id")));
@@ -136,7 +139,6 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setDescrizione(rs.getString("descrizione"));
 					bean.setTipo(rs.getString("tipo"));
 					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
-					bean.setPeso(rs.getDouble("peso"));
 					
 					ArrayList<String> elencoPathImmagini = new ArrayList<>();
 					
@@ -156,12 +158,15 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					bean.setPathImage(elencoPathImmagini);
 
 					
-					for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+					if(bean.getTipo().equals("Vaschetta"))
 					{
-						GustoB = GDAO.doRetrieveByKey(gusti);
-						bean.getGusti().add(GustoB);
+						bean.setPeso(rs.getDouble("peso"));
+						for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+						{
+							GustoB = GDAO.doRetrieveByKey(gusti);
+							bean.getGusti().add(GustoB);
+						}
 					}
-					
 					result.add(bean);
 				}
 			}	
@@ -290,7 +295,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					ps2.setDouble(6, bean.getIVA());
 					ps2.setInt(7, ID);
 					ps2.setString(8, bean.getCategoria().getNome());
-					ps2.setDouble(9, bean.getPeso());	
+					ps2.setString(9,Long.valueOf(Math.round(bean.getPeso())).toString());	
 					
 					ps2.execute();
 					return ID;
@@ -377,6 +382,29 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					return false;
 			}
 }
+	}	public static boolean SingoloUpdate(String Attributo, String valore, String Idprodotto) throws SQLException {
+		
+		String sql = "UPDATE " + TABLE_NAME + " SET " + Attributo + " = ?" 
+		 + " WHERE id = ?";
+		
+		
+		try(Connection con = ds.getConnection()){
+			try(PreparedStatement preparedStatement2 = con.prepareStatement(sql)){
+				
+				preparedStatement2.setString(1, valore);
+				preparedStatement2.setString(2, Idprodotto);
+			
+				preparedStatement2.executeUpdate();
+		
+			}
+		
+		return true;
+		
+		
+	}
+	
+	
+	
 	}
 	
 	

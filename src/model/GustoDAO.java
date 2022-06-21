@@ -11,9 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import javax.naming.Context;
-import javax.sql.DataSource;
-
 import beans.GustoBean;
 
 public class GustoDAO implements ModelInterface<GustoBean>{
@@ -33,7 +30,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 
 	@Override
 	public void doSave(GustoBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "('nome','colore','descrizione',quantitaResidua) VALUES (?,?,?,?))";
+		String sql = "INSERT INTO " + TABLE_NAME + " (nome,colore,descrizione,quantitaResidua) VALUES (?,?,?,?)";
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	
@@ -102,7 +99,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 					gusti.add(buffer);
 				}
 			}	
-		}
+		} 
 		return gusti;
 	}
 
@@ -122,6 +119,31 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 
 	}
 
-
+	public static boolean SingoloUpdate(String Attributo, String valore, String Idprodotto) throws SQLException {
+		
+		String sql = "UPDATE " + TABLE_NAME + " SET " + Attributo + " = ?" 
+		 + " WHERE nome = ?";
+		
+		
+		try(Connection con = ds.getConnection()){
+			try(PreparedStatement preparedStatement2 = con.prepareStatement(sql)){
+				
+				preparedStatement2.setString(1, valore);
+				preparedStatement2.setString(2, Idprodotto);
+			
+				preparedStatement2.executeUpdate();
+		
+			}
+		
+		return true;
+		
+		
+	}
+	
+	
+	
+	}
+	
+	
 
 }

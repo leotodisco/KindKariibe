@@ -13,6 +13,7 @@ import beans.MetodoPagamentoBean;
 import beans.UserBean;
 import model.DatiPagamentoDAO;
 import model.MetodoPagamentoDAO;
+import model.UserDAO;
 
 /**
  * Servlet implementation class AggiungiMetodoPagamento
@@ -67,14 +68,18 @@ public class AggiungiMetodoPagamento extends HttpServlet {
 			
 			MetodoPagamentoDAO mDao = new MetodoPagamentoDAO();
 			DatiPagamentoDAO dDAO = new DatiPagamentoDAO();
-			
+			UserDAO uDAO = new UserDAO();
 			try {
 				int ID = mDao.doSaveI(bean);
 				bean.setidMetodoPagamento(ID);
 				dDAO.doSave(utente, bean);
-				
+				utente = uDAO.doRetrieveByKey(utente.getCodiceFiscale());
+				request.getSession().setAttribute("utente", utente);
 				
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

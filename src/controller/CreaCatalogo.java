@@ -15,11 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.CategoriaBean;
 import beans.GustoBean;
+import beans.OrdineBean;
 import beans.ProdottoBean;
 import beans.RecensioneBean;
 import beans.UserBean;
+import model.CategoriaDAO;
 import model.GustoDAO;
+import model.OrdineDAO;
 import model.ProdottoDAO;
 import model.RecensioneDAO;
 
@@ -49,6 +53,8 @@ public class CreaCatalogo extends HttpServlet {
 		UserBean utente = (UserBean) sessione.getAttribute("utente");
 		String tipo = request.getParameter("tipo");
 		GustoDAO gDAO = new GustoDAO();
+		OrdineDAO Odao = new OrdineDAO();
+		CategoriaDAO CDAO = new CategoriaDAO();
 		
 		try {
 			ArrayList<GustoBean> gusti = (ArrayList<GustoBean>) gDAO.doRetrieveAll("nome");
@@ -64,10 +70,18 @@ public class CreaCatalogo extends HttpServlet {
 			if( tipo == null || tipo.equals("Pasticceria"))
 				{
 				ProdottoDAO Dao = new ProdottoDAO();
-				ArrayList<ProdottoBean> ListaProdotti = null;
+				List<ProdottoBean> ListaPasticceria = null;
 				try {
-					ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
-					List<ProdottoBean> ListaPasticceria = ListaProdotti.stream().filter(t -> t.getTipo().equals("Pasticceria")).collect(Collectors.toList());
+					ListaPasticceria = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
+					List<OrdineBean> ordini = (List<OrdineBean>) Odao.doRetrieveAll("idOrdine");
+					request.getSession().setAttribute("ordini", ordini);
+					List<CategoriaBean> Categorie= (List<CategoriaBean>) CDAO.doRetrieveAll("idOrdine");
+					request.getSession().setAttribute("Categorie", Categorie);
+					
+				if(tipo != null && tipo.equals("Pasticceria"))
+				{
+					ListaPasticceria = ListaPasticceria.stream().filter(t -> t.getTipo().equals("Pasticceria")).collect(Collectors.toList());
+				}
 					request.setAttribute("prodotti", ListaPasticceria);
 
 					RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
@@ -104,7 +118,10 @@ public class CreaCatalogo extends HttpServlet {
 		{
 			RecensioneDAO daoRecensioni = new RecensioneDAO();
 			ArrayList<RecensioneBean> elencoRecensioni = new ArrayList<>();
-			ProdottoDAO Dao = new ProdottoDAO();	
+			ProdottoDAO Dao = new ProdottoDAO();
+			CategoriaDAO Cdao = new CategoriaDAO();
+			GustoDAO Gdao = new GustoDAO();
+
 
 			ProdottoBean prodotto;
 			try {
@@ -116,7 +133,22 @@ public class CreaCatalogo extends HttpServlet {
 				request.setAttribute("prodotto", prodotto);
 				request.setAttribute("votoMedio", RecensioneDAO.getVotoMedio(prodotto));
 				request.setAttribute("recensioni", elencoRecensioni);
-				RequestDispatcher view = request.getRequestDispatcher("DettagliProdotto.jsp");
+				
+				RequestDispatcher view = null;
+				
+				if(utente != null && utente.getAdmin() == true)
+				{
+					List<CategoriaBean> categorie = (List<CategoriaBean>) Cdao.doRetrieveAll("nome");
+					request.setAttribute("categorie", categorie);
+					List<GustoBean> gusti = (List<GustoBean>) Gdao.doRetrieveAll("nome");
+					request.setAttribute("gusti", gusti);
+					view = request.getRequestDispatcher("DettagliProdottoAdmin.jsp");
+				}
+				else
+				{
+					view = request.getRequestDispatcher("DettagliProdotto.jsp");
+				}
+				
 				view.include(request, response);
 
 			} catch (Exception e) {

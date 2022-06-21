@@ -23,6 +23,23 @@
 	
 	
 	}
+
+	ArrayList<OrdineBean> ListaOrdini = (ArrayList<OrdineBean>) request.getSession().getAttribute("ordini");
+	if(ListaOrdini == null) {
+		response.sendRedirect("./CreaCatalogo");	
+		return;
+	
+	
+	}
+	
+	ArrayList<CategoriaBean> ListaCategoria = (ArrayList<CategoriaBean>) request.getSession().getAttribute("Categorie");
+	if(ListaCategoria == null) {
+		response.sendRedirect("./CreaCatalogo");	
+		return;
+	
+	
+	}
+
 	%>
 	
 <div id=title>
@@ -49,7 +66,7 @@
   					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getId()%>">
   					<img class="immagine" src  = "./immagini/<%=prodotto.getPathImage().get(0)%>"  alt = "immagine"> </a> </td>
   					<td><%= prodotto.getNome() %></td>
-  					<td><%= prodotto.getCategoria().getNome() %></td>
+  					<td><%= prodotto.getCategoria().toString()%></td>
   					<td><%= prodotto.getTipo() %></td>
   					<td>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></td>
   					<td><%=  prodotto.getQuantitaResidua().intValue() %></td>
@@ -66,7 +83,17 @@
   					
   				<%}%>
  			
+ 			
+ 			
 </table> 
+
+ 			            <div class="logout">
+                	<form action="LogoutServlet" method="get">
+						<input type="submit" value="Logout" />
+					</form>
+            </div>
+ 			
+
 
     <div>
         <li>Inserimento</li>
@@ -111,33 +138,39 @@
 
                     <br> <label for="IVA">IVA:</label><br> <input name="IVA" type="number" min="0" value="10"
                         required><br>
+                        
+                    <label for="peso" class = "vaschetta" style = "display:none">Peso:</label><br>
+                    <select name="peso" class = "vaschetta" style = "display:none">
+                    
+                        <option value="500">500</option>
+                        <option value="750">750</option>
+						<option value="1000">1000</option>
 
-                    <br> <label for="peso">Peso:</label><br> <input name="peso" type="number" min="0" value="10"
-                        required><br>
+					</select>
 
                     <label for="quantita">Quantità:</label><br> <input name="quantita" type="number" min="1" value="1"
                         required><br>
 
                     <label for="gusto1" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
-                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    <select name="gusto1" class = "vaschetta" style = "display:none">
                     
 				<% 	for(GustoBean g : ListaGusti)
 				{ 
 				%>
-					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					 <option value="<%= g.getNome()%>"><%= g.getNome() %></option>
 					
 				<%}%>
 				
                     </select>
                     <br>
                     
-                    <label for="gusto2" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
-                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    <label for="gusto2" class = "vaschetta" style = "display:none">Gusto 2:</label><br>
+                    <select name="gusto2" class = "vaschetta" style = "display:none">
                     
 				<% 	for(GustoBean g : ListaGusti)
 				{ 
 				%>
-					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					 <option value="<%= g.getNome()%>"><%= g.getNome() %></option>
 					
 				<%}%>
 				
@@ -145,13 +178,13 @@
                     <br>
                     
                     
-                    <label for="gusto3" class = "vaschetta" style = "display:none">Gusto 1:</label><br>
-                    <select name="gusto" class = "vaschetta" style = "display:none">
+                    <label for="gusto3" class = "vaschetta" style = "display:none">Gusto 3:</label><br>
+                    <select name="gusto3" class = "vaschetta" style = "display:none">
                     
 				<% 	for(GustoBean g : ListaGusti)
 				{ 
 				%>
-					 <option value="<%= g.getNome() %>"><%= g.getNome() %></option>
+					 <option value="<%= g.getNome()%>"><%= g.getNome() %></option>
 					
 				<%}%>
 				
@@ -166,63 +199,305 @@
             </div>
         </div>
 
-        <li>Aggiornamento</li>
-        <button id="myBtn1">Aggiorna</button>
-        <div id="myModal1" class="modal">
-            <div class="modal-content">
-            <!-- QUI AGGIUNGERE ID -->
-                <span class="close">&times;</span>
-
-                <form action="AdminServlet" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="operazione" value="aggiorna">
-                    <label for="nome">Nome:</label><br> <input name="nome" type="text" maxlength="20" required
+	                    <br>
+	<div>
+	
+				<br>
+				<button id= "ordiniB">Mostra Ordini</button><br>
+				<h5 class = "ordini" style = "display:none">Lista Ordini</h5>
+				<% 	for(OrdineBean O : ListaOrdini)
+				{ 
+				%>
+					<h5 class = "ordini" style = "display:none">Ordine numero <%= O.getIdOrdine() %></h5>
+						
+					
+				<%}%>	
+	
+	</div>
+	
+	<br>
+	<button id= "CategorieB">Mostra Categorie</button>
+	<div id = "divCategorie" style = "display:none">
+	
+	
+				<h5>ListaCategoria</h5>
+	
+				<% 	for(CategoriaBean C : ListaCategoria)
+				{ 
+				%>
+						<h5 class = "CategorieD"><%=C.getNome() %></h5>
+  						<form action="AdminServlet" method="post" enctype="multipart/form-data" class = "CategorieD">
+						<input type="hidden" name="operazione" value="rimuoviC">
+						<input name="nome" type="hidden" value="<%= C.getNome()%>">
+						<input type="submit" value="&times;" class="close-">
+						</form>	
+						
+						<button class = "nomeCategoria" class = "CategorieD">modifica nome</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaN" style = "display:none" enctype="multipart/form-data" class = "CategorieD"> 
+					    <label for="valore">nome : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire nome..."><br>
+                       	<input type = "hidden" value="ModificaCategoria" name = "operazione">
+                        <input type = "hidden" value="nome" name = "attributo">
+                        <input type = "hidden" value="<%=C.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 	
+					 	<h5 class = "CategorieD"><%=C.getDescrizione() %></h5><button class = "descrizioneCategoria" class = "CategorieD">modifica descrizione</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaD" style = "display:none" enctype="multipart/form-data" > 
+					    <label for="valore">Descrizione : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire desrizione..."><br>
+                        <input type = "hidden" value="ModificaCategoria" name = "operazione">
+                        <input type = "hidden" value="descrizione" name = "attributo">
+                        <input type = "hidden" value="<%=C.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 </form>
+					 
+					 <hr>
+					
+				<%}%>
+		</div>
+	
+	
+	<div>
+	
+	<br>
+	
+	<button id = "bottoneCategoria">Aggiungi Categoria</button>
+	<form action="AdminServlet" method = "post" enctype="multipart/form-data" id = "categoriaForm" style = "display:none">
+	<label for="Categoria">gusto</label><br>
+	<label for="nome">Nome : </label><br> 
+	<input name="nome" type="text" maxlength="20" required
                         placeholder="inserire nome..."><br>
-
-                    <label for="categoria">Categoria:</label><br>
-                    <select name="categoria">
-                        <!--CATEGORIA BEAN NEL FOR CHE MI STAMPA TUTTE LE CATEGORIE-->
-                        <option value="Monoporzione">Monoporzione</option>
-                        <option value="Gelato">Gelato</option>
-						<option value="Babà">Babà</option>
-						<option value="Piccola pasticceria">Piccola pasticceria</option>
-						<option value="Torta">Torta</option>
-                    </select>
-                    <br>
-
-                    <label for="tipo">Tipo:</label><br>
-                    <select name="tipo">
-                        <option value="Pasticceria">Pasticceria</option>
-                        <option value="Gelateria">Vaschetta</option>
-                    </select>
-                    <br>
+                        
+   	<label for="descrizione">Descrizione : </label><br> 
+	<input name="descrizione" type="text" maxlength="20" required
+                        placeholder="inserire desrizione..."><br>
+                        <input type="submit" value="Aggiungi">
+                        
+    <input type="hidden" name="operazione" value="aggiungiCategoria">
+	
+	</form>
+	
+	
+	
+	
+	
+	</div>
+	
+	<br>
+	
+	<button id= "GustiB">Mostra Gusti</button>
+	<div id = "divGusti" style = "display:none">
+	
+	
+				<h5>ListaGusti</h5>
+	
+				<% 	for(GustoBean G : ListaGusti)
+				{ 
+				%>
+						<h5 class = "GustiD"><%=G.getNome() %></h5>
+  						<form action="AdminServlet" method="post" enctype="multipart/form-data" class = "GustiD">
+						<input type="hidden" name="operazione" value="rimuoviG">
+						<input name="nome" type="hidden" value="<%= G.getNome()%>">
+						<input type="submit" value="&times;" class="close-">
+						</form>	
+						
+						<button class = "nomeGusto" class = "GustoD">modifica nome</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaNG" style = "display:none" enctype="multipart/form-data" class = "GustoD"> 
+					    <label for="valore">nome : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire nome..."><br>
+                       	<input type = "hidden" value="ModificaGusto" name = "operazione">
+                        <input type = "hidden" value="nome" name = "attributo">
+                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 	
+					 	<h5 class = "GustiD"><%=G.getDescrizione() %></h5><button class = "descrizioneGusto" class = "GustoD">modifica descrizione</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaDG" style = "display:none" enctype="multipart/form-data" > 
+					    <label for="valore">Descrizione : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire desrizione..."><br>
+                        <input type = "hidden" value="ModificaGusto" name = "operazione">
+                        <input type = "hidden" value="descrizione" name = "attributo">
+                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 	
+					 	<h5 class = "GustiD"><%=G.getColore() %></h5><button class = "ColoreGusto" class = "GustoD">modifica Colore</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaCG" style = "display:none" enctype="multipart/form-data" > 
+					    <label for="valore">Colore : </label><br> 
+						<input name="valore" type="text" maxlength="20" required
+                        						placeholder="inserire desrizione..."><br>
+                        <input type = "hidden" value="ModificaGusto" name = "operazione">
+                        <input type = "hidden" value="Colore" name = "attributo">
+                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 
+					 	<h5 class = "GustiD"><%=G.getquantitaInMagazzino() %></h5><button class = "QuantitaGusto" class = "GustoD">modifica quantita</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaQG" style = "display:none" enctype="multipart/form-data" > 
+					    <label for="valore">Colore : </label><br> 
+						<input name="valore" type="number" required><br>
+                        <input type = "hidden" value="ModificaGusto" name = "operazione">
+                        <input type = "hidden" value="Quantita" name = "attributo">
+                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        <input type="submit" value="modifica">
+					 
+					 	</form>
+					 
+					 
+					 
+					 <hr>
+					
+				<%}%>
+		</div>
+	
+	
+	<br>
+	<br>
+	
+	<button id = "bottoneGusto">Aggiungi Gusto</button>
+	
+	<div id = "divAggiungiGusto" style = "display:none">
+	
+	<form action="AdminServlet" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="operazione" value="aggiungiGusto">
+                    <label for="nome">Nome:</label><br> <input name="nome" type="text" maxlength="30" required
+                        placeholder="inserire nome...">
+                        <br>
 
                     <label for="descrizione">Descrizione:</label><br>
                     <textarea name="descrizione" maxlength="100" rows="3" required
                         placeholder="inserire descrizione..."></textarea><br>
 
-                    <label for="immagine">Immagine:</label><br>
-                    <input type="file" name="image" size="35"><br>
-
-                    <br> <label for="prezzo">Prezzo:</label><br> <input name="prezzo" type="number" min="0" value="0"
+                    <br> <label for="quantita">quantita:</label><br> <input name="quantita" type="number" min="0"
                         required><br>
+                        
+                    <label for="colore">Colore:</label><br>
+                    <textarea name="colore" maxlength="100" rows="3" required
+                        placeholder="inserire colore..."></textarea><br>
 
-                    <br> <label for="IVA">IVA:</label><br> <input name="IVA" type="number" min="0" value="10"
-                        required><br>
-
-                    <br> <label for="peso">Peso:</label><br> <input name="peso" type="number" min="0" value="10"
-                        required><br>
-
-                    <label for="quantita">Quantità:</label><br> <input name="quantita" type="number" min="1" value="1"
-                        required><br>
-
-                    <input type="submit" value="Aggiorna"><input type="reset" value="Reset">
+                    <input type="submit" value="Aggiungi Gusto"><input type="reset" value="Reset">
+                    <br>
                 </form>
-
-            </div>
-        </div>
-    </div>
-
+	
+	
+	
+	
+	
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     <script>
+    
+    
+    	$("#bottoneCategoria").click(function(){
+    		
+        	var form = $("#categoriaForm").css("display")
+        	
+        	if(form == "none"){
+        	
+        		$("#categoriaForm").show();
+        		
+        	}
+        	else
+			{
+        		$("#categoriaForm").hide();
+			}  
+    		
+    		
+    	})
+    	
+    	    $(".descrizioneCategoria").click(function(){
+    		
+        	var form = $(".formModificaD").css("display")
+        	
+        	if(form == "none"){
+        	
+        		$(".formModificaD").show();
+        		
+        	}
+        	else
+			{
+        		$(".formModificaD").hide();
+			}  
+    		
+    		
+    	})
+    	
+    	    $(".nomeCategoria").click(function(){
+    		
+    	    	
+
+        	var form = $(".formModificaN").css("display")
+        	
+        	if(form == "none"){
+        	
+        		$(".formModificaN").show();
+        		
+        	}
+        	else
+			{
+        		$(".formModificaN").hide();
+			}  
+    		
+    		
+    	})
+    	
+    	
+    	   	$("#ordiniB").click(function(){
+    	   		$(".ordini").toggle();
+    	})
+    	
+    	    	   	$("#CategorieB").click(function(){
+    	   		$("#divCategorie").toggle();
+    	})
+    	
+    	    	    	   	$("#bottoneGusto").click(function(){
+    	   		$("#divAggiungiGusto").toggle();
+    	})
+    	
+    		$("#GustiB").click(function(){
+    	   		$("#divGusti").toggle();
+    	})
+    	
+    		$(".nomeGusto").click(function(){
+    	   		$(".formModificaNG").toggle();
+    	})    	
+
+    	    		$(".descrizioneGusto").click(function(){
+    	   		$(".formModificaDG").toggle();
+    	})
+    	
+    	    		$(".ColoreGusto").click(function(){
+    	   		$(".formModificaCG").toggle();
+    	})
+    	
+    	    	    		$(".QuantitaGusto").click(function(){
+    	   		$(".formModificaQG").toggle();
+    	})
+    
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var span = document.getElementsByClassName("close")[0];

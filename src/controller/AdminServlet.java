@@ -94,7 +94,6 @@ public class AdminServlet extends HttpServlet {
 				bean.setCategoria(cat);
 				bean.setIVA(iva);
 				bean.setTipo(tipo);
-				bean.setPeso(peso);
 				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -105,6 +104,8 @@ public class AdminServlet extends HttpServlet {
 				if(tipo.equals("Vaschetta"))
 				{
 					try {
+						bean.setPeso(peso);
+						System.out.println(Gusto1);
 						bean.getGusti().add(gDAO.doRetrieveByKey(Gusto1));
 						
 						if(Gusto2 != null)
@@ -148,6 +149,8 @@ public class AdminServlet extends HttpServlet {
 				PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
 				ArrayList<String> immagini = posDAO.retrieveImmagine(name);
 				
+				
+				
 				for(String id : immagini)
 				{
 					imDAO.doDelete(id);
@@ -162,56 +165,171 @@ public class AdminServlet extends HttpServlet {
 		
 		if(azioni.equals("aggiorna")) {
 			
-			String name = request.getParameter("nome");
-			String description = request.getParameter("descrizione");
-			Double price = Double.parseDouble(request.getParameter("prezzo"));
-			Double quantity = Double.parseDouble(request.getParameter("quantita"));
-			String catNome = request.getParameter("categoria");
-			Double iva = Double.parseDouble(request.getParameter("IVA"));
-			Double peso = Double.parseDouble(request.getParameter("peso"));
-			String immagine = request.getParameter("immagine");
-			String tipo = request.getParameter("tipo");
+			String Attributo = multi.getParameter("Attributo");
+			String valore = multi.getParameter("valore");
+			String Idprodotto = multi.getParameter("prodotto");
 			
-			CategoriaDAO buffer = new CategoriaDAO();
-			Optional<CategoriaBean> cat;
-			ProdottoDAO dao = new ProdottoDAO();
-			ProdottoBean bean = new ProdottoBean();
-			try {
-				bean = dao.doRetrieveByKey(name);
-			} catch (Exception e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
+			
+			if(Attributo.equals("gusto"))
+			{
+				String gusto = multi.getParameter("gusto");
+				try {
+					CostituzioneDAO.cambiaGusto(Idprodotto, valore,gusto);
+					response.sendRedirect("DettagliProdottoAdmin.jsp");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			else
+			{
+			
 			try {
-				cat = Optional.of(buffer.doRetrieveByKey(catNome));
-				bean.setNome(name);
-				bean.setDescrizione(description);
-				bean.setPrezzo(price);
-				bean.setQuantitaResidua(quantity);
-				bean.setCategoria(cat);
-				bean.setIVA(iva);
-				bean.addImmaginePrimaPosizione(immagine); //in prima posizione della lista c'è l'immagine del catalogo
-				bean.setPeso(peso);
-				bean.setTipo(tipo);
-				
-			} catch (Exception e1) {
+				ProdottoDAO.SingoloUpdate(Attributo, valore, Idprodotto);
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e.printStackTrace();
+			}
+		
 			}
 			
+			}
+		
+		
+		if(azioni.equals("aggiungiCategoria"))
+		{
+			
+			String nome = multi.getParameter("nome");
+			String descrizione = multi.getParameter("descrizione");
+			
+			CategoriaDAO cDAO  = new CategoriaDAO();
+			CategoriaBean bean = new CategoriaBean();
+			
+			bean.setNome(nome);
+			bean.setDescrizione(descrizione);
+			
+			try {
+				cDAO.doSave(bean);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			response.sendRedirect("DettagliProdottoAdmin.jsp");
+			
+		}
+		
+		if(azioni.equals("ModificaCategoria"))
+		{
+			String attributo = multi.getParameter("attributo");
+			String valore = multi.getParameter("valore");
+			String nome = multi.getParameter("nome");
+			
+			try {
+				CategoriaDAO.SingoloUpdate(attributo, valore, nome);
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		
+		if(azioni.equals("rimuoviC")) {
+			String name = multi.getParameter("nome");
 
 			try {
-				prod.doUpdate(bean);
+				CategoriaDAO cDAO  = new CategoriaDAO();
+				
+				
+			
+					cDAO.doDelete(name);
+					response.sendRedirect("DettagliProdottoAdmin.jsp");
+				prod.doDelete(name);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
-		RequestDispatcher view = getServletContext().getRequestDispatcher("/Catalogo.jsp");
-		view.forward(request, response);
+		
+		if(azioni.equals("aggiungiI")) {
+			
+			ImmagineBeans immagine = new ImmagineBeans();
+			ImmagineDAO imDAO = new ImmagineDAO();
+			PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
+			ProdottoBean bean = new ProdottoBean();
+			String IDP = multi.getParameter("prodotto");
+			System.out.println(IDP);
+			
+			try {
+				bean = prod.doRetrieveByKey(IDP);
+				System.out.println(bean.getNome());
+				immagine.setNome(multi.getOriginalFileName("image"));
+				immagine.setUrl(multi.getOriginalFileName("image"));
+				immagine.setTestoAlt("immagine mancante");
+				int ID = imDAO.doSaveI(immagine);
+				immagine.setIdImmagine(ID);
+				posDAO.doSave(immagine, bean);
+				
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+		}
+		
+		if(azioni.equals("aggiungiGusto")){
+			
+			String nome = multi.getParameter("nome");
+			String descrizione = multi.getParameter("descrizione");
+			String quantita = multi.getParameter("quantita");
+			String colore = multi.getParameter("colore");
+			
+			GustoDAO GDAO = new GustoDAO();
+			GustoBean Gbean = new GustoBean();
+			
+			Gbean.setNome(nome);
+			Gbean.setColore(colore);
+			Gbean.setDescrizione(descrizione);
+			Gbean.setquantitaInMagazzino(Double.parseDouble(quantita));
+			
+			try {
+				GDAO.doSave(Gbean);
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+				
+		if(azioni.equals("ModificaGusto")) {
+			
+			String attributo = multi.getParameter("attributo");
+			String valore = multi.getParameter("valore");
+			String nome = multi.getParameter("nome");
+			
+			
+			
+			try {
+				GustoDAO.SingoloUpdate(attributo, valore, nome);
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		
 	}
-
 
 }

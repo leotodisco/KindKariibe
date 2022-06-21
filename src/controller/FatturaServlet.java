@@ -179,7 +179,6 @@ public class FatturaServlet extends HttpServlet {
         Table totale = new Table(fullWidth);
         totale.addCell(new Cell().add(new Paragraph("Totale: "+bean.getCostoTotale()).setBold().setFontSize(16).setTextAlignment(TextAlignment.RIGHT).setMarginRight(25)).setBackgroundColor(verdeScuro));
         document.add(totale);
-
         //note
         Table note = new Table(fullWidth);
         note.setFixedPosition(20, 0 , threecol*3);

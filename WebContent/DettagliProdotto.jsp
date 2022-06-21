@@ -10,7 +10,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <% ProdottoBean bean = (ProdottoBean) request.getAttribute("prodotto"); 
 	List<ProdottoBean> elenco = (List<ProdottoBean>) request.getAttribute("prodottiConsigliati");
+	
+	if(elenco == null)
+	{
+		response.sendRedirect("./CreaCatalogo?azioni=details");	
+		return;
+	}
+	
 	List<RecensioneBean> elencoRecensioni = (List<RecensioneBean>) request.getAttribute("recensioni");
+	if(elencoRecensioni == null)
+	{
+		response.sendRedirect("./CreaCatalogo?azioni=details");	
+		return;
+	}
+	
 	UserBean utente = (UserBean) request.getSession(true).getAttribute("utente"); 
 	
 %>

@@ -81,8 +81,27 @@ public class CostituzioneDAO {
 		
 	}
 		
+	public static boolean cambiaGusto(String Idprodotto, String valore, String gusto) throws SQLException
+	{
+		String sql = "UPDATE  costituzione SET gusto = ?" 
+				 + " WHERE prodotto = ? and gusto = ?";
+		
+		try(Connection con = ds.getConnection()){
+			try(PreparedStatement preparedStatement2 = con.prepareStatement(sql)){
+				
+				preparedStatement2.setString(1, valore);
+				preparedStatement2.setString(2, Idprodotto);
+				preparedStatement2.setString(3, gusto);
+			
+				preparedStatement2.executeUpdate();
+				return true;
+		
+			}
 		
 		
-		
+
 	
+}
+		
+	}
 }
