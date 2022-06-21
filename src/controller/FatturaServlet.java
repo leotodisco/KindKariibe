@@ -35,6 +35,10 @@ import com.itextpdf.layout.layout.LayoutResult;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.renderer.IRenderer;
 
+import beans.OrdineBean;
+import beans.ProdottoBean;
+import model.OrdineDAO;
+
 import java.io.*;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
@@ -63,14 +67,28 @@ public class FatturaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//NON VA BENE CHE MI PRENDE SOLO IL PATH ASSOLUTO MA IN QUALCHE MDODO SI SISTEMA SPEROÃ¹
 		//"/Users/leopoldotodisco/eclipse-workspace/progettoTSW/WebContent/WEB-INF/Fatture/provaOGGI.pdf"
+		OrdineDAO dao = new OrdineDAO();
+		OrdineBean bean = new OrdineBean();
+		double imponibile = 0.0;
+		
+		try {
+			bean = dao.doRetrieveByKey(request.getParameter("ordine"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		String percorsoPDF = getServletContext().getRealPath("/")+"WEB-INF/Fatture";
 		
-		File file = new File(percorsoPDF + "provaOGGI.pdf"); //sostituire provaOGGI con un nome
-		//ImageData logo = new ImageData();
+		File file = new File(percorsoPDF + request.getParameter("ordine") + ".pdf"); 
+		if(file.createNewFile()) {
+			System.out.println("si"); 
+		}
 		
 
         PdfFont introScriptDemo = PdfFontFactory.createFont(getServletContext().getRealPath("/") + "font/introscriptdemo-medium.woff2", "UTF8", true);
-        PdfWriter pdfWriter = new PdfWriter(percorsoPDF + "provaOGGI.pdf");
+        
+        PdfWriter pdfWriter = new PdfWriter(percorsoPDF + request.getParameter("ordine") + ".pdf");
         
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         String imgPath = getServletContext().getRealPath("/") + "immagini/kk senza sfondo.png";
@@ -81,8 +99,6 @@ public class FatturaServlet extends HttpServlet {
         pdfDocument.setDefaultPageSize(PageSize.A4);
         float x = pdfDocument.getDefaultPageSize().getWidth() / 2;
         float y = pdfDocument.getDefaultPageSize().getHeight() / 2;
-        System.out.println("x= " + x);
-        System.out.println("y= " + y);
 
         Document document = new Document(pdfDocument);
         float threecol = 190f;
@@ -114,8 +130,8 @@ public class FatturaServlet extends HttpServlet {
         descrizione.setMarginTop((float) 10.0);
         descrizione.addCell(new Cell().add(new Paragraph(("Fattura")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
         descrizione.addCell(new Cell().add(new Paragraph(("Destinatario")).setTextAlignment(TextAlignment.CENTER)).setBold().setBackgroundColor(verdePistacchio));
-        descrizione.addCell(new Cell().add(new Paragraph("Fattura numero: 1\nData: 20/11/2001").setMarginLeft(2).setMarginTop(1)));
-        descrizione.addCell(new Cell().add(new Paragraph("Spettabile Mario Rossi\nTDSLLD00E18C129Y\n3887868300").setMarginLeft(2).setMarginTop(1)));
+        descrizione.addCell(new Cell().add(new Paragraph("Fattura numero: "+bean.getIdOrdine()+"\nData: "+bean.getDataEvasioneAsString()).setMarginLeft(2).setMarginTop(1)));
+        descrizione.addCell(new Cell().add(new Paragraph("Spettabile "+ bean.getUtente().getNome() + " " + bean.getUtente().getCognome()+"\n"+bean.getUtente().getCodiceFiscale()+"\n"+bean.getUtente().getnTelefono()).setMarginLeft(2).setMarginTop(1)));
         document.add(descrizione);
 
         //linea di separazione
@@ -130,18 +146,17 @@ public class FatturaServlet extends HttpServlet {
         prodotti.addCell(new Cell().add(new Paragraph(("QuantitÃ ")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
         prodotti.addCell(new Cell().add(new Paragraph(("Costo")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
 
-        prodotti.addCell(new Cell().add(new Paragraph("Torta Mimosa").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("1").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("€ 88,00").setMarginLeft(2).setMarginTop(1)));
-
-        prodotti.addCell(new Cell().add(new Paragraph("Torta Mimosa").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("1").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("€ 88,00").setMarginLeft(2).setMarginTop(1)));
-
-        prodotti.addCell(new Cell().add(new Paragraph("Torta Mimosa").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("1").setMarginLeft(2).setMarginTop(1)));
-        prodotti.addCell(new Cell().add(new Paragraph("€ 88,00").setMarginLeft(2).setMarginTop(1)));
-
+        System.out.println(bean.getProducts().keySet());
+        for(ProdottoBean p : bean.getProducts().keySet()) {
+            prodotti.addCell(new Cell().add(new Paragraph(p.getNome()).setMarginLeft(2).setMarginTop(1)));
+            prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(0))).setMarginLeft(2).setMarginTop(1)));
+            prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(1))).setMarginLeft(2).setMarginTop(1)));
+        	
+        }
+        
+        
+        
+        
         document.add(prodotti);
 
         //linea di separazione
@@ -154,15 +169,16 @@ public class FatturaServlet extends HttpServlet {
 
         dettagliFiscali.addCell(new Cell().add(new Paragraph(("Metodo Pagamento")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
         dettagliFiscali.addCell(new Cell().add(new Paragraph(("Costo Totale")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
+        
 
-        dettagliFiscali.addCell(new Cell().add(new Paragraph("Mastercard").setMarginLeft(2).setMarginTop(1)));
-        dettagliFiscali.addCell(new Cell().add(new Paragraph("Imponibile: € 33,00\nSpedizione: € 2,00\nSconto: € 0,00\nIVA: 10%\n").setMarginLeft(2).setMarginTop(1)));
-        document.add(dettagliFiscali);
+        	dettagliFiscali.addCell(new Cell().add(new Paragraph("Mastercard").setMarginLeft(2).setMarginTop(1)));
+        	dettagliFiscali.addCell(new Cell().add(new Paragraph("Imponibile: "+imponibile+"\nSpedizione: â‚¬ 0,00\nSconto: â‚¬ 0,00\nIVA: 10%\n").setMarginLeft(2).setMarginTop(1)));
+        	document.add(dettagliFiscali);
+ 
 
         Table totale = new Table(fullWidth);
-        totale.addCell(new Cell().add(new Paragraph("Totale: € 300,00").setBold().setFontSize(16).setTextAlignment(TextAlignment.RIGHT).setMarginRight(25)).setBackgroundColor(verdeScuro));
+        totale.addCell(new Cell().add(new Paragraph("Totale: "+bean.getCostoTotale()).setBold().setFontSize(16).setTextAlignment(TextAlignment.RIGHT).setMarginRight(25)).setBackgroundColor(verdeScuro));
         document.add(totale);
-
         //note
         Table note = new Table(fullWidth);
         note.setFixedPosition(20, 0 , threecol*3);
@@ -172,19 +188,14 @@ public class FatturaServlet extends HttpServlet {
         document.close();
 	    
 	    
-	    
-	    
-	    
-	    
 	    //NON TOCCARE MAI 
 	    response.setContentType("application/pdf");
 	    //dove sta prova oggi devo mettere il nome del file, ossia l'id ordine
-	    response.setHeader( "Content-Disposition", "attachment; filename=\"provaOGGI.pdf\"");
+	    response.setHeader( "Content-Disposition", "attachment; filename=\"fattura.pdf\"");
 	    
 	    try(InputStream in = new FileInputStream(file)){
 	            try(OutputStream out = response.getOutputStream()) {
 	            	byte[] buffer = new byte[1024];
-	    
 	          
 	              int numBytesRead;
 	              while ((numBytesRead = in.read(buffer)) > 0) {

@@ -1,6 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,6 +43,8 @@ public class PaginaUtenteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessione= request.getSession(true);
 		
+		HashMap<OrdineBean, ArrayList<String>> elenco = new HashMap<>(); 
+		
 		UserBean utente= (UserBean)sessione.getAttribute("utente");
 		if(utente==null) {
 			RequestDispatcher fail= request.getRequestDispatcher("login-form.jsp");
@@ -46,15 +52,35 @@ public class PaginaUtenteServlet extends HttpServlet {
 		}
 		else {
 			OrdineDAO ordineDao= new OrdineDAO();
-			
+	
 			try {
-				request.setAttribute("ordini", ordineDao.doRetriveByUtente(utente));
+				for(OrdineBean order : ordineDao.doRetriveByUtente(utente)) {
+					ArrayList<String> elencoImmagini = new ArrayList<>();
+					ArrayList<ProdottoBean> bufferProdotti = new ArrayList<>();
+					
+					
+					for(ProdottoBean product : order.getProducts().keySet()) {
+						bufferProdotti.add(product);
+						
+						for(String image : product.getPathImage()) {
+							elencoImmagini.add(image);
+						}
+						
+						elenco.put(order, elencoImmagini);
+					}
+				}
+				
+				request.setAttribute("ordini", elenco);
+				//request.setAttribute("ordini", ordineDao.doRetriveByUtente(utente)); SE VOGLIO TORNARE A PRIMA BASTA
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
+		response.setHeader( "Cache-Control", "no-store, no-cache, must-revalidate");  //HTTP 1.1
+		response.setHeader("Pragma","no-cache"); //HTTP 1.0
+		response.setDateHeader ("Expires", -1); //prevents caching at the proxy server
 		RequestDispatcher success= request.getRequestDispatcher("PaginaUtente.jsp");
 		success.forward(request, response);
 	}

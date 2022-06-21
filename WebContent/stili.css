@@ -189,12 +189,12 @@ a:link{
 }
 
 
-ul{
-    margin: 0;
+.lista-header{
+	margin: 0;
     padding: 60px 0;
 }
 
-ul li{
+.item-header{
     list-style: none;
     text-align:center;
 }
@@ -208,7 +208,7 @@ ul li{
 }
 
 li>a:hover{
-	font-size: 1.6rem;
+	font-weight: 900;
 	text-decoration:none;
 }
 

@@ -51,9 +51,9 @@ public class UserDAO implements ModelInterface<UserBean> {
 			}
 		}
 		//aggiungi indirizzo in possesso indirizzo
-		
+
 		String insertAddress = "INSERT INTO possessoIndirizzo (utente, indirizzo) " + "VALUES (?, ?)";
-		
+
 		for(int i = 0; i < bean.getIndirizziSpedizione().size(); i++) {
 			try (Connection con = ds.getConnection()){
 				try(PreparedStatement preparedStatement = con.prepareStatement(insertAddress)){
@@ -65,7 +65,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 				}
 			}
 		}
-		
+
 		/*
 		String insertAddress = "INSERT INTO datipagamento (utente, metodo) " + "VALUES (?, ?)";
 		for(int i = 0; i < bean.getElencoMetodiPagamento().size(); i++) {
@@ -74,16 +74,16 @@ public class UserDAO implements ModelInterface<UserBean> {
 					MetodoPagamentoBean metodo = bean.getElencoMetodiPagamento().get(i);
 					preparedStatement.setString(1, bean.getCodiceFiscale());
 					preparedStatement.setInt(2, metodo.getIdMetodoPagamento());
-					
+
 					preparedStatement.executeUpdate();
 					System.out.println("\n\n\ndebug\n\n\n");
 				}
 			}
 		}
-		*/
-	
-		}
-	
+		 */
+
+	}
+
 
 	@Override
 	public boolean doDelete(String codiceFiscale) throws SQLException {
@@ -115,13 +115,14 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setPassword(rs.getString("password"));
 					bean.setDataNascita(rs.getDate("dataNascita"));
 					bean.setSesso(rs.getString("genere"));	
+					bean.setnTelefono(rs.getString("nTelefono"));	
 				}
-				}
+			}
 		}
 		String sqlPagamenti = "SELECT metodo FROM datiPagamento WHERE utente = '" + codiceFiscale + "'";
 		MetodoPagamentoDAO metodiDAO = new MetodoPagamentoDAO();
 		ArrayList<MetodoPagamentoBean> MetodiPagamento = new ArrayList<>();
-		
+
 		try(Connection connection = ds.getConnection()){
 			try(PreparedStatement ps = connection.prepareStatement(sqlPagamenti)){
 				ResultSet metodi = ps.executeQuery();
@@ -132,7 +133,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 				//debug
 			}
 		}
-	
+
 		return bean;
 	}
 
@@ -167,12 +168,13 @@ public class UserDAO implements ModelInterface<UserBean> {
 							MetodiPagamento.add(metodiDAO.doRetrieveByKey(metodi.getString("idMetodoPagamento")));
 						}
 					}
-					
+
 					bean.setElencoMetodiPagamento(MetodiPagamento);
 					listaUtenti.add(bean);
 				}
 			}
 		}
+
 
 		return listaUtenti;
 	}
@@ -208,7 +210,9 @@ public class UserDAO implements ModelInterface<UserBean> {
 				preparedStatement.setString(1, email);
 
 				ResultSet rs = preparedStatement.executeQuery();
-				while (rs.next()) {
+
+
+				if (rs.next()) {
 					bean.setCodiceFiscale(rs.getString("CodiceFiscale"));
 					bean.setNome(rs.getString("nome"));
 					bean.setCognome(rs.getString("cognome"));
@@ -218,21 +222,23 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setSesso(rs.getString("genere"));	
 					bean.setnTelefono(rs.getString("nTelefono"));
 					bean.setAdmin(rs.getBoolean("admin"));
-					
 				}
-				
+
+				else
+					return null;
+
 				MetodoPagamentoDAO daoPagamenti= new MetodoPagamentoDAO();
 				bean.setElencoMetodiPagamento(daoPagamenti.doRetriveByUtente(bean.getCodiceFiscale()));
-				
+
 				IndirizzoDao daoIndirizzi= new IndirizzoDao();
 				bean.setIndirizziSpedizione(daoIndirizzi.doRetriveByUtente(bean.getCodiceFiscale()));
-				
-				
+
+
 			}
 		}
 		return bean;
 	}
-	
+
 	public UserBean doRetriveByNumero(String numero) throws NumberFormatException, Exception{
 		UserBean bean = new UserBean();
 		String selectSQL = "SELECT * FROM utente WHERE nTelefono = ?";
@@ -253,18 +259,31 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setnTelefono(rs.getString("nTelefono"));
 					bean.setAdmin(rs.getBoolean("admin"));	
 				}
-				
+
 				MetodoPagamentoDAO daoPagamenti= new MetodoPagamentoDAO();
 				bean.setElencoMetodiPagamento(daoPagamenti.doRetriveByUtente(bean.getCodiceFiscale()));
-				
+
 				IndirizzoDao daoIndirizzi= new IndirizzoDao();
 				bean.setIndirizziSpedizione(daoIndirizzi.doRetriveByUtente(bean.getCodiceFiscale()));
-				
-				
+
+
 			}
 		}
 		return bean;
 	}
-	
 
-}
+	public ArrayList<String> doRetrieveEmails() throws SQLException{
+		String sql = "SELECT email FROM utente";
+		ArrayList<String> result = new ArrayList<>();
+
+		try (Connection connection = ds.getConnection()){
+			try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) {
+					result.add(rs.getString("email"));
+				}
+			}
+		}
+		return result;
+	}}

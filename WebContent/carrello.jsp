@@ -127,6 +127,7 @@
 			</span>
 				
             <form action="AggiungiMetodoPagamento" method="get" id="form-carta">
+            <input type="hidden" name="tipo" value="carta"> 
               <div class="cardholder-name">
                 <label for="cardholder-name" class="label-default">Nome Proprietario</label>
                 <input type="text" name="cardholder-name" id="cardholder-name" class="input-default" placeholder="  Mario Rossi" required>
@@ -139,10 +140,10 @@
                 <div class="expire-date">
                   <label for="expire-date" class="label-default">Data Scadenza</label>
                   <div class="input-flex">
-                    <input type="number" name="day" id="expire-date" placeholder="31" min="1" max="31"
+                    <input type="number" name="month" id="expire-date" placeholder="11" min="1" max="12"
                       class="input-default" required>
                     /
-                    <input type="number" name="month" id="expire-date" placeholder="12" min="1" max="12"
+                    <input type="number" name="year" id="expire-date" placeholder="2023" min="2022" 
                       class="input-default" required>
                   </div>
                 </div>
@@ -398,7 +399,7 @@ $(document).ready(function () {
        	if(qt == 0){
     		$(this).parent().parent().parent().parent().hide();
     	}
-     	decrementa(id);
+     	var result = decrementa(id);
 
 		var tasse = ottieniTasse();
 

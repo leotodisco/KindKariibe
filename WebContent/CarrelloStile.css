@@ -460,6 +460,9 @@ input:focus {
 }
 
 
+
+
+
 @media screen and (max-width: 1050px) {
 
   :root { --px: 40px; }
