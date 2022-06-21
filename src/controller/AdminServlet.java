@@ -254,6 +254,64 @@ public class AdminServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		if(azioni.equals("aggiungiI")) {
+			
+			ImmagineBeans immagine = new ImmagineBeans();
+			ImmagineDAO imDAO = new ImmagineDAO();
+			PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
+			ProdottoBean bean = new ProdottoBean();
+			String IDP = multi.getParameter("prodotto");
+			System.out.println(IDP);
+			
+			try {
+				bean = prod.doRetrieveByKey(IDP);
+				System.out.println(bean.getNome());
+				immagine.setNome(multi.getOriginalFileName("image"));
+				immagine.setUrl(multi.getOriginalFileName("image"));
+				immagine.setTestoAlt("immagine mancante");
+				int ID = imDAO.doSaveI(immagine);
+				immagine.setIdImmagine(ID);
+				posDAO.doSave(immagine, bean);
+				
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+		}
+		
+		if(azioni.equals("aggiungiGusto")){
+			
+			String nome = multi.getParameter("nome");
+			String descrizione = multi.getParameter("descrizione");
+			String quantita = multi.getParameter("quantita");
+			String colore = multi.getParameter("colore");
+			
+			GustoDAO GDAO = new GustoDAO();
+			GustoBean Gbean = new GustoBean();
+			
+			Gbean.setNome(nome);
+			Gbean.setColore(colore);
+			Gbean.setDescrizione(descrizione);
+			Gbean.setquantitaInMagazzino(Double.parseDouble(quantita));
+			
+			try {
+				GDAO.doSave(Gbean);
+				response.sendRedirect("DettagliProdottoAdmin.jsp");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+				
 
 	}
 

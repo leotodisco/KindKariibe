@@ -37,11 +37,18 @@
 <jsp:include page="header.jsp" />
 
 <p class = "product-title-nascosto"><%= bean.getNome() %></p>
-         <p class = "categoria-nascosto"><%= bean.getTipo()%></p>
+         <p class = "categoria-nascosto"><%= bean.getTipo()%> </p>
 	      <div class = "container">
 	      
             <div class ="item">
              <img class="image" src="./immagini/<%= bean.getPathImage().get(0)  %>">
+             <form action="AdminServlet" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="operazione" value="aggiungiI">
+				<input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                <label for="immagine">Immagine:</label><br>
+                <input type="file" name="image" size="35" required>
+                <input type="submit" value="aggiungi Immagine"><br>
+			</form>	
             </div>
             <div class="item-descrizione">
                 <p><%= bean.getNome() %></p><button id= "Nome">modifica</button>
@@ -62,7 +69,7 @@
                     <textarea name="valore" maxlength="100" rows="3" required
                         placeholder="inserire descrizione..."></textarea><br>
                         <input type="hidden" name="Attributo" value="descrizione">
-                        <input type="hidden" name="prodotto" value="<%=bean.getId() %>">
+                        <input type="hidden" name="prodotto" value="<%=bean.getId()%>">
                         <input type="hidden" name="operazione" value="aggiorna">
                         <input type="submit" value="conferma modifica">
                 </form>

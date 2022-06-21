@@ -30,7 +30,7 @@ public class GustoDAO implements ModelInterface<GustoBean>{
 
 	@Override
 	public void doSave(GustoBean bean) throws SQLException {
-		String sql = "INSERT INTO " + TABLE_NAME + "('nome','colore','descrizione',quantitaResidua) VALUES (?,?,?,?))";
+		String sql = "INSERT INTO " + TABLE_NAME + " (nome,colore,descrizione,quantitaResidua) VALUES (?,?,?,?)";
 
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){	

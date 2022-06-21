@@ -199,89 +199,41 @@
             </div>
         </div>
 
-        <li>Aggiornamento</li>
-        <button id="myBtn1">Aggiorna</button>
-        <div id="myModal1" class="modal">
-            <div class="modal-content">
-            <!-- QUI AGGIUNGERE ID -->
-                <span class="close">&times;</span>
-
-                <form action="AdminServlet" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="operazione" value="aggiorna">
-                    <label for="nome">Nome:</label><br> <input name="nome" type="text" maxlength="20" required
-                        placeholder="inserire nome..."><br>
-
-                    <label for="categoria">Categoria:</label><br>
-                    <select name="categoria">
-                        <!--CATEGORIA BEAN NEL FOR CHE MI STAMPA TUTTE LE CATEGORIE-->
-                        <option value="Monoporzione">Monoporzione</option>
-                        <option value="Gelato">Gelato</option>
-						<option value="Babà">Babà</option>
-						<option value="Piccola pasticceria">Piccola pasticceria</option>
-						<option value="Torta">Torta</option>
-                    </select>
-                    <br>
-
-                    <label for="tipo">Tipo:</label><br>
-                    <select name="tipo">
-                        <option value="Pasticceria">Pasticceria</option>
-                        <option value="Gelateria">Vaschetta</option>
-                    </select>
-                    <br>
-
-                    <label for="descrizione">Descrizione:</label><br>
-                    <textarea name="descrizione" maxlength="100" rows="3" required
-                        placeholder="inserire descrizione..."></textarea><br>
-
-                    <label for="immagine">Immagine:</label><br>
-                    <input type="file" name="image" size="35"><br>
-
-                    <br> <label for="prezzo">Prezzo:</label><br> <input name="prezzo" type="number" min="0" value="0"
-                        required><br>
-
-                    <br> <label for="IVA">IVA:</label><br> <input name="IVA" type="number" min="0" value="10"
-                        required><br>
-
-                    <br> <label for="peso">Peso:</label><br> <input name="peso" type="number" min="0" value="10"
-                        required><br>
-
-                    <label for="quantita">Quantità:</label><br> <input name="quantita" type="number" min="1" value="1"
-                        required><br>
-
-                    <input type="submit" value="Aggiorna"><input type="reset" value="Reset">
-                </form>
-
-            </div>
-        </div>
-    </div>
-	
+	                    <br>
 	<div>
 	
+				<br>
+				<button id= "ordiniB">Mostra Ordini</button><br>
+				<h5 class = "ordini" style = "display:none">Lista Ordini</h5>
 				<% 	for(OrdineBean O : ListaOrdini)
 				{ 
 				%>
-					<h5>Ordine numero <%= O.getIdOrdine() %></h5>
+					<h5 class = "ordini" style = "display:none">Ordine numero <%= O.getIdOrdine() %></h5>
 						
 					
 				<%}%>	
 	
 	</div>
 	
-	<div>
-	ListaCategoria
+	<br>
+	<button id= "CategorieB">Mostra Categorie</button>
+	<div id = "divCategorie" style = "display:none">
+	
+	
+				<h5>ListaCategoria</h5>
 	
 				<% 	for(CategoriaBean C : ListaCategoria)
 				{ 
 				%>
-						<h5><%=C.getNome() %></h5>
-  						<form action="AdminServlet" method="post" enctype="multipart/form-data">
+						<h5 class = "CategorieD"><%=C.getNome() %></h5>
+  						<form action="AdminServlet" method="post" enctype="multipart/form-data" class = "CategorieD">
 						<input type="hidden" name="operazione" value="rimuoviC">
 						<input name="nome" type="hidden" value="<%= C.getNome()%>">
 						<input type="submit" value="&times;" class="close-">
 						</form>	
 						
-						<button class = "nomeCategoria">modifica nome</button>
-					 	<form action="AdminServlet" method = "post" class = "formModificaN" style = "display:none" enctype="multipart/form-data"> 
+						<button class = "nomeCategoria" class = "CategorieD">modifica nome</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaN" style = "display:none" enctype="multipart/form-data" class = "CategorieD"> 
 					    <label for="valore">nome : </label><br> 
 						<input name="valore" type="text" maxlength="20" required
                         						placeholder="inserire nome..."><br>
@@ -292,8 +244,8 @@
 					 
 					 	</form>
 					 	
-					 	<h5><%=C.getDescrizione() %></h5><button class = "descrizioneCategoria">modifica descrizione</button>
-					 	<form action="AdminServlet" method = "post" class = "formModificaD" style = "display:none" enctype="multipart/form-data"> 
+					 	<h5 class = "CategorieD"><%=C.getDescrizione() %></h5><button class = "descrizioneCategoria" class = "CategorieD">modifica descrizione</button>
+					 	<form action="AdminServlet" method = "post" class = "formModificaD" style = "display:none" enctype="multipart/form-data" > 
 					    <label for="valore">Descrizione : </label><br> 
 						<input name="valore" type="text" maxlength="20" required
                         						placeholder="inserire desrizione..."><br>
@@ -307,8 +259,13 @@
 					 <hr>
 					
 				<%}%>
+		</div>
+	
+	
+	<div>
 	
 	<br>
+	
 	<button id = "bottoneCategoria">Aggiungi Categoria</button>
 	<form action="AdminServlet" method = "post" enctype="multipart/form-data" id = "categoriaForm" style = "display:none">
 	<label for="Categoria">gusto</label><br>
@@ -328,7 +285,55 @@
 	
 	
 	
+	
 	</div>
+	
+	<br>
+	
+	<button id = "bottoneGusto">Aggiungi Gusto</button>
+	
+	<div id = "divAggiungiGusto" style = "display:none">
+	
+	<form action="AdminServlet" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="operazione" value="aggiungiGusto">
+                    <label for="nome">Nome:</label><br> <input name="nome" type="text" maxlength="30" required
+                        placeholder="inserire nome...">
+                        <br>
+
+                    <label for="descrizione">Descrizione:</label><br>
+                    <textarea name="descrizione" maxlength="100" rows="3" required
+                        placeholder="inserire descrizione..."></textarea><br>
+
+                    <br> <label for="quantita">quantita:</label><br> <input name="quantita" type="number" min="0"
+                        required><br>
+                        
+                    <label for="colore">Colore:</label><br>
+                    <textarea name="colore" maxlength="100" rows="3" required
+                        placeholder="inserire colore..."></textarea><br>
+
+                    <input type="submit" value="Aggiungi Gusto"><input type="reset" value="Reset">
+                    <br>
+                </form>
+	
+	
+	
+	
+	
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
     <script>
     
@@ -385,6 +390,21 @@
     		
     		
     	})
+    	
+    	
+    	   	$("#ordiniB").click(function(){
+    	   		$(".ordini").toggle();
+    	})
+    	
+    	    	   	$("#CategorieB").click(function(){
+    	   		$("#divCategorie").toggle();
+    	})
+    	
+    	    	    	   	$("#bottoneGusto").click(function(){
+    	   		$("#divAggiungiGusto").toggle();
+    	})
+    	
+    	
     
     
         var modal = document.getElementById("myModal");
