@@ -132,7 +132,7 @@ public class AdminServlet extends HttpServlet {
 				{
 					cDAO.doSave(G, bean);
 				}
-				
+				response.sendRedirect("Catalogo.jsp");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -156,6 +156,7 @@ public class AdminServlet extends HttpServlet {
 					imDAO.doDelete(id);
 				}
 				prod.doDelete(name);
+				response.sendRedirect("Catalogo.jsp");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -175,7 +176,7 @@ public class AdminServlet extends HttpServlet {
 				String gusto = multi.getParameter("gusto");
 				try {
 					CostituzioneDAO.cambiaGusto(Idprodotto, valore,gusto);
-					response.sendRedirect("DettagliProdottoAdmin.jsp");
+					response.sendRedirect("Catalogo.jsp");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -186,7 +187,7 @@ public class AdminServlet extends HttpServlet {
 			
 			try {
 				ProdottoDAO.SingoloUpdate(Attributo, valore, Idprodotto);
-				response.sendRedirect("DettagliProdottoAdmin.jsp");
+				response.sendRedirect("Catalogo.jsp");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -216,8 +217,7 @@ public class AdminServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			response.sendRedirect("DettagliProdottoAdmin.jsp");
-			
+			response.sendRedirect("Catalogo.jsp");			
 		}
 		
 		if(azioni.equals("ModificaCategoria"))
@@ -228,8 +228,8 @@ public class AdminServlet extends HttpServlet {
 			
 			try {
 				CategoriaDAO.SingoloUpdate(attributo, valore, nome);
-				response.sendRedirect("DettagliProdottoAdmin.jsp");
-			} catch (SQLException e) {
+				response.sendRedirect("Catalogo.jsp");			
+				} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -247,8 +247,8 @@ public class AdminServlet extends HttpServlet {
 				
 			
 					cDAO.doDelete(name);
-					response.sendRedirect("DettagliProdottoAdmin.jsp");
-				prod.doDelete(name);
+					response.sendRedirect("Catalogo.jsp");
+					prod.doDelete(name);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -274,8 +274,7 @@ public class AdminServlet extends HttpServlet {
 				immagine.setIdImmagine(ID);
 				posDAO.doSave(immagine, bean);
 				
-				response.sendRedirect("DettagliProdottoAdmin.jsp");
-				
+				response.sendRedirect("Catalogo.jsp");				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -303,7 +302,7 @@ public class AdminServlet extends HttpServlet {
 			
 			try {
 				GDAO.doSave(Gbean);
-				response.sendRedirect("DettagliProdottoAdmin.jsp");
+				response.sendRedirect("Catalogo.jsp");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -322,8 +321,8 @@ public class AdminServlet extends HttpServlet {
 			
 			try {
 				GustoDAO.SingoloUpdate(attributo, valore, nome);
-				response.sendRedirect("DettagliProdottoAdmin.jsp");
-			} catch (SQLException e) {
+				response.sendRedirect("Catalogo.jsp");
+				} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

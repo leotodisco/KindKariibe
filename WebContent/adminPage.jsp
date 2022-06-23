@@ -10,6 +10,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
+<%  
+		UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
+	
+		if(utente == null || !utente.getAdmin())
+		{
+		%>
+		<jsp:forward page="login-form.jsp"/>
+	<% } %>
+
+
 	<% ArrayList<ProdottoBean> ListaProdotti = (ArrayList<ProdottoBean>) request.getAttribute("prodotti");
 	if(ListaProdotti == null) {
 		response.sendRedirect("./CreaCatalogo");	
