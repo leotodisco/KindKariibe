@@ -40,6 +40,7 @@ public class AcquistaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String azione= request.getParameter("action");
 		
 		HttpSession sessione= request.getSession(true);
