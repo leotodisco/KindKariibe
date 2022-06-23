@@ -68,7 +68,7 @@ $('#contact').click(function(){
    $("#seconda").hide();
 }); 
        </script>
-       
+       <jsp:include page="footer.jsp" />
     </body>
 </html>
     

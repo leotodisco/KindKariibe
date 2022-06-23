@@ -133,6 +133,7 @@ public class AdminServlet extends HttpServlet {
 					cDAO.doSave(G, bean);
 				}
 				
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

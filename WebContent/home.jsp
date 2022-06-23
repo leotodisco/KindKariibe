@@ -30,6 +30,7 @@
     <form action="FatturaServlet" method="get">
 						<input type="submit" value="fattura" />
 					</form>
+					 <jsp:include page="footer.jsp"/>
 </body>
 
 </html>
