@@ -2,6 +2,7 @@ package beans;
 
 import java.util.ArrayList;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserBean {
@@ -20,6 +21,15 @@ public class UserBean {
 	
 	public UserBean() {
 
+	}
+	
+	public String getDataNascitaAsString() {
+		if(this.dataNascita == null)
+			return "Impossibile leggere data";
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+		String strDate= formatter.format(this.dataNascita);  
+		return strDate;
 	}
 	
 	public ArrayList<MetodoPagamentoBean> getElencoMetodiPagamento() {
@@ -106,6 +116,10 @@ public class UserBean {
 	
 	public void setDataNascita(java.sql.Date data) {
 		this.dataNascita = data;
+	}
+	
+	public void addAddress(IndirizzoBean i) {
+		this.indirizziSpedizione.add(i);
 	}
 
 

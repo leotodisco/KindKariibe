@@ -21,7 +21,6 @@
   %>
  <jsp:include page = "header.jsp"/>
 
-<!-- CONTROLLARE QUESTA COSA DOMANI -->
 		<%Carrello cart=(Carrello) sessione.getAttribute("Carrello"); 
 			if(cart == null){
 				cart = new Carrello();
@@ -123,7 +122,7 @@
             	<button class="method" id="inserimento-carta" style="margin-bottom:25px; display:none;">
 					<h2 id="scritta-per-inserire-metodo">Inserisci una nuova carta</h2>
 				</button>
-				<h5 id="chiudi" style="margin-left: 10%; margin-top:6.7px; cursor:pointer; display:none;">&#10006;</h5>
+				<h5 id="chiudi" style="margin-left: 10%; margin-top:6.7px; cursor:pointer; display:none;"><ion-icon name="close"></ion-icon></h5>
 			</span>
 				
             <form action="AggiungiMetodoPagamento" method="get" id="form-carta">
@@ -196,20 +195,26 @@
                         <div class="price">
                           € <span id="price">
                             <!--variabile java a cui si somma il prezzo per fare il totale-->
-                            <%=prodotto.getPrezzo()%>
+                            <%=String.format("%,.2f",prodotto.getPrezzo())%>
                           </span>
                         </div>
                       </div>
                     </div>
                     <button class="product-close-btn">
-                      &#10006;
+                      <ion-icon name="close"></ion-icon>
                     </button>
                   </div>
                 </div>
-           
+           	
               </div>
               
               <%}  %>
+              
+              	<!-- BOTTONE PER SVUOTARE CARRELLO -->
+           		<div style="text-align:center;">
+           			<button id="svuota-carrello"><ion-icon name="trash-outline"></ion-icon>Svuota Carrello</button>
+           		</div>
+           		
                 <div class="wrapper">
                   <div class="discount-token">
                     <label for="discount-token" class="label-default">Codice Sconto</label>
@@ -227,7 +232,7 @@
                       <span>Spedizione</span> <span>€ <span id="shipping">0.00</span></span>
                     </div>
                     <div class="total">
-                      <span>Totale</span> <span>€ <span id="total"><%=String.format("%,.2f",cart.getCostoTotale() + cart.getTax()) %></span></span>
+                      <span>Totale</span> <span>€ <span id="total"><%=String.format("%,.2f",cart.getCostoTotale()) %></span></span>
                     </div>
                   </div>
                 </div>
@@ -358,7 +363,7 @@ $(document).ready(function () {
 		$("#tax-span").append(parseFloat(tasse.responseJSON).toFixed(2))
 
 		$("#total").empty()
-		$("#total").append(parseFloat(parseFloat(result.responseJSON) + parseFloat(tasse.responseJSON)).toFixed(2))
+		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
 		
 		$(this).parent().children(".quantita").empty();
 		$(this).parent().children(".quantita").append(qt);
@@ -407,7 +412,7 @@ $(document).ready(function () {
 		$("#tax-span").append(parseFloat(tasse.responseJSON).toFixed(2))
 
 		$("#total").empty()
-		$("#total").append(parseFloat(parseFloat(result.responseJSON) + parseFloat(tasse.responseJSON)).toFixed(2))
+		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
 		
 		$(this).parent().children(".quantita").empty();
 		$(this).parent().children(".quantita").append(qt);
@@ -448,12 +453,52 @@ $(document).ready(function () {
 		$("#tax-span").append(parseFloat(tasse.responseJSON).toFixed(2))
 
 		$("#total").empty()
-		$("#total").append(parseFloat(parseFloat(result.responseJSON) + parseFloat(tasse.responseJSON)).toFixed(2))
+		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
 		
 		$(this).parent().children(".quantita").empty();
 		$(this).parent().children(".quantita").append(qt);
 
     })
+    
+    //funzione per svuotare tutto il carrello
+    function svuotaTutto(){
+      	return $.ajax({
+  			url : "ProdottiAPI",
+  			type : 'GET',
+  			async : false,
+  			cache : false,
+  			timeout : 3000,
+  			dataType : "json",
+  			data : {
+  				action: "svuota"
+  			},
+  			success : function(data) {
+  				return data;
+
+  			},
+  			fail : function(msg) {
+  				return false;
+  			}
+  		});
+      }
+     
+     $("#svuota-carrello").click(function (){
+     	var result = svuotaTutto()
+     	//devo nascondere la div in cui sono tutti i prodotti
+     	$(".product-card").hide();
+     	$("#svuota-carrello").hide();
+     	
+ 		var tasse = ottieniTasse();
+ 		$("#tax-span").empty();
+ 		$("#tax-span").append(parseFloat(tasse.responseJSON).toFixed(2))
+
+ 		$("#total").empty()
+		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
+
+
+     })
+    
+    
 })//chiusura jquery totale
 </script>
 	            	

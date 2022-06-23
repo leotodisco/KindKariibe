@@ -83,13 +83,6 @@ public class GestioneCarrello extends HttpServlet {
 			}
 		}
 		
-		else if(azione.equals("svuota"))
-		{
-			cart = new Carrello();
-			sessione.setAttribute("Carrello", cart);
-			RequestDispatcher view = request.getRequestDispatcher("Catalogo.jsp");
-			view.forward(request, response);
-		}
 		
 		else if(azione.equals("rimuovi"))
 		{

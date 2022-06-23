@@ -3,6 +3,7 @@ package beans;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.time.*;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,10 +16,11 @@ public class OrdineBean {
 	private UserBean utente;
 	private Double costoTotale;
 	private String codiceSconto;
-	private Date dataPartenza,dataEvasione,dataArrivo;
+	private Date dataPartenza, dataArrivo;
+	private Date dataEvasione;
 	private String urlPdf;
 	private IndirizzoBean indirizzoSpedizione;
-	private ConcurrentHashMap<ProdottoBean,ArrayList<Integer>> products; //ci serve una lista di interi per indicare anche l'iva
+	private ConcurrentHashMap<ProdottoBean,ArrayList<Double>> products; //ci serve una lista di interi per indicare anche l'iva
 													  //in posizione 0 abbiamo quanita, in posizione 1 abbiamo IVA
 													  //in posizione 2 si salva il prezzo.
 	
@@ -160,15 +162,15 @@ public class OrdineBean {
 	//quando sto inserendo per la prima volta qualcosa mi va bene prendere i dati che avevo già
 	//se sto facendo un addProduct dopo mesi dall'ordine i prezzi potrebbero essere cambiati
 	//dunque li devo prendere da "composizione"
-	public synchronized void addProduct(ProdottoBean product, ArrayList<Integer> datiComposizione) {
+	public synchronized void addProduct(ProdottoBean product, ArrayList<Double> datiComposizione) {
 		if(!products.keySet().isEmpty()) {
 		for(ProdottoBean prodotto : products.keySet())
 			{
 			
-				if(prodotto.getNome().equals(product.getNome()))
+				if(prodotto.getId().equals(product.getId()))
 				{	
-					ArrayList<Integer> datiProdotto = new ArrayList<>(products.get(prodotto));
-					Integer quantitaAggiornata = datiComposizione.get(0) + 1;
+					ArrayList<Double> datiProdotto = new ArrayList<>(products.get(prodotto));
+					Double quantitaAggiornata = datiComposizione.get(0) + 1;
 					
 					datiComposizione.set(0, quantitaAggiornata);
 					this.products.replace(prodotto, datiComposizione);
@@ -196,17 +198,17 @@ public class OrdineBean {
 			
 				if(prodotto.getNome().equals(product.getNome()))
 				{	
-					ArrayList<Integer> datiProdotto = new ArrayList<>(products.get(prodotto));
-					Integer quantitaAggiornata = datiProdotto.get(0) + 1;
+					ArrayList<Double> datiProdotto = new ArrayList<>(products.get(prodotto));
+					Double quantitaAggiornata = datiProdotto.get(0) + 1;
 					datiProdotto.set(0, quantitaAggiornata);
 					this.products.replace(prodotto, datiProdotto);
 				}
 				
 				else {
-					ArrayList<Integer> datiProdotto = new ArrayList<>();
-					datiProdotto.add(0, 1); //se è la prima volta che aggiungo, la quantità vale 1
-					datiProdotto.add(1, product.getIVA().intValue());
-					datiProdotto.add(2, product.getPrezzo().intValue());
+					ArrayList<Double> datiProdotto = new ArrayList<>();
+					datiProdotto.add(0, 1.0); //se è la prima volta che aggiungo, la quantità vale 1
+					datiProdotto.add(1, product.getIVA());
+					datiProdotto.add(2, product.getPrezzo());
 					this.products.put(product, datiProdotto);
 					
 				}
@@ -215,22 +217,22 @@ public class OrdineBean {
 			
 		else
 			{
-				ArrayList<Integer> datiProdotto = new ArrayList<>();
-				datiProdotto.add(0, 1); //se è la prima volta che aggiungo, la quantità vale 1
-				datiProdotto.add(1, product.getIVA().intValue());
-				datiProdotto.add(2, product.getPrezzo().intValue());
+				ArrayList<Double> datiProdotto = new ArrayList<>();
+				datiProdotto.add(0, 1.0); //se è la prima volta che aggiungo, la quantità vale 1
+				datiProdotto.add(1, product.getIVA());
+				datiProdotto.add(2, product.getPrezzo());
 				this.products.put(product, datiProdotto);
 			}
 		
 	}
 	
 
-	public ConcurrentHashMap<ProdottoBean, ArrayList<Integer>> getProducts() {
+	public ConcurrentHashMap<ProdottoBean, ArrayList<Double>> getProducts() {
 		return products;
 	}
 
 
-	public void setProducts(ConcurrentHashMap<ProdottoBean, ArrayList<Integer>> products) {
+	public void setProducts(ConcurrentHashMap<ProdottoBean, ArrayList<Double>> products) {
 		this.products = products;
 	}
 

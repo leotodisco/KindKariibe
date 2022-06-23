@@ -101,7 +101,11 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
     </script>
 
     <div class="sidebar" id="ciao">
+    
         <ul class="lista-header">
+        <!-- inizio logo -->
+     
+        <!-- fine logo -->
         	<li class="item-header"><a href="home.jsp" class="testoResponsive">Home</a></li>
             <li class="item-header"><a href="Catalogo.jsp" class="testoResponsive">Pasticceria</a></li>
             <li class="item-header"><a href="Vaschetta.jsp" class="testoResponsive">Gelateria</a></li>
@@ -109,7 +113,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             <li class="item-header"><a href="Contatti.jsp" class="testoResponsive">Contatti</a></li>
             <!-- mettere disegno omino, posso pensare di mettere sia accedi che carrello nello stesso li -->
             <li class="item-header"><a href="PaginaUtenteServlet" class="testoResponsive">Profilo <ion-icon name="person" style="font-size: 1.55rem; color: #2f2f2f;"></ion-icon></a></li>
-            <li class="item-header"><a href="carrello.jsp">Carrello <ion-icon name="cart-outline" style=" align-items: center; font-size: 1.75rem; color: #2f2f2f;"></ion-icon></a></li>
+            <li class="item-header"><a href="carrello.jsp" class="testoResponsive">Carrello <ion-icon name="cart-outline" style=" align-items: center; font-size: 1.75rem; color: #2f2f2f;"></ion-icon></a></li>
             <!-- per la ricerca fare nuovo li -->
         </ul>
     </div>
@@ -132,7 +136,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
         </div>
        
             <ul class="elenco nav-container-item lista-header">
-                <li class="item-header"><a href="Vaschetta.jsp">Gelateria</a></li>
+                <li class="item-header"><a href="Catalogo-Gelateria.jsp" style="text-decoration:none;">Gelateria</a></li>
                 <li class="item-header"><a href="Catalogo.jsp">Pasticceria</a></li>
                 <li class="item-header"><a href="Storia.jsp">Storia</a></li>
                 <li class="item-header"><a href = "Contatti.jsp">Contatti</a></li>

@@ -14,21 +14,6 @@
   src: url('./font/introscriptdemo-medium.woff') format('woff');
 }
 
-:root {
-
-  background-color: #fcefd4;
-
-  --fs-28: 28px;
-  --fs-24: 24px;
-  --fs-18: 18px;
-  --fs-15: 15px;
-  --fs-14: 14px;
-
-
-  --px: 60px;
-  --radius: 5px;
-
-}
 
 *{
   margin: 0;
@@ -49,6 +34,17 @@
 
 #bonific{
 	display: none;
+}
+
+#svuota-carrello{
+	font-family:"archia-regular";
+	font-size: 1rem;
+}
+
+#svuota-carrello:hover{
+	font-family:"archia-regular";
+
+	font-weight: 999;
 }
 
 .bottone-inserisci{
@@ -271,6 +267,23 @@ input:focus {
   gap: 13px;
 }
 
+
+:root {
+
+  background-color: #fcefd4;
+
+  --fs-28: 28px;
+  --fs-24: 24px;
+  --fs-18: 18px;
+  --fs-15: 15px;
+  --fs-14: 14px;
+
+
+  --px: 60px;
+  --radius: 5px;
+
+}
+
 .expire-date .input-flex input { text-align: center; }
 
 .btn { border-radius: var(--radius); }
@@ -482,6 +495,14 @@ input:focus {
   .input-flex .expire-date,
   .input-flex .cvv { width: 100%; }
 
+	.product-close-btn{
+		right: 0;	
+		margin-top: -10px;
+	}
+
+	.bottone-inserisci{
+		width:100%;
+	}
 }
 
 
@@ -498,7 +519,6 @@ input:focus {
     gap: 20px;
   }
 	
-	}
   .payment-method .method { width: 100%; }
 
   .input-flex .expire-date,
@@ -506,4 +526,16 @@ input:focus {
 
   .expire-date .input-flex { flex-direction: row; }
 
+	.product-close-btn{
+		right: 0;	
+		margin-top: -10px;
+	}
+	
+	.bottone-inserisci{
+		width:100%;
+	}
+
+	.method-1{
+		width:100%;
+	}
 }

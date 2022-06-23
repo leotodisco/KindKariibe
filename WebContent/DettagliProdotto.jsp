@@ -120,6 +120,7 @@
                 <div class="profile">
                     <!--img---->
                     <div class="profile-img">
+                    
                         <img src="https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png" />
                     </div>
                     <!--name-and-username-->
@@ -176,7 +177,7 @@
             	  var n = $(".votoMedio").text();
 			        $(".votoMedio").empty();
 
-			        for (let i = 0; i < n; i++) {
+			        for (let i = 0; i < n-1; i++) {
 			            $(".votoMedio").append("<ion-icon name=star></ion-icon>");
 			        }
 			        

@@ -52,8 +52,7 @@
         <th>Categoria</th>
         <th>Tipo</th>
         <th>Prezzo</th>
-        <th>Quantità Residua</th>
-        <th>Descrizione</th>
+        <th>Quantita Residua</th>
         <th>IVA</th>
         <th>Elimina</th>
         </tr>
@@ -62,6 +61,7 @@
   				for(ProdottoBean prodotto : ListaProdotti)
   				{
   				%>
+  				
   					<tr>
   					<td><a href="CreaCatalogo?action=details&id=<%=prodotto.getId()%>">
   					<img class="immagine" src  = "./immagini/<%=prodotto.getPathImage().get(0)%>"  alt = "immagine"> </a> </td>
@@ -70,7 +70,6 @@
   					<td><%= prodotto.getTipo() %></td>
   					<td>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></td>
   					<td><%=  prodotto.getQuantitaResidua().intValue() %></td>
-  					<td><%= prodotto.getDescrizione() %></td>
   					<td><%= prodotto.getIVA() %>&percnt;</td>
   					<td>
   						<form action="AdminServlet" method="post" enctype="multipart/form-data">
@@ -80,7 +79,6 @@
 						</form>	
   					</td>
   					</tr>
-  					
   				<%}%>
  			
  			
@@ -94,7 +92,7 @@
             </div>
  			
 
-
+<div style="display: flex">
     <div>
         <li>Inserimento</li>
         <button id="myBtn">Inserisci un prodotto</button>
@@ -202,161 +200,130 @@
 	                    <br>
 	<div>
 	
-				<br>
-				<button id= "ordiniB">Mostra Ordini</button><br>
-				<h5 class = "ordini" style = "display:none">Lista Ordini</h5>
+	<br>
+	<button id= "ordiniB">Mostra Ordini</button><br>
+	<h2 class = "ordini" style = "display:none">Lista Ordini</h2>
 				<% 	for(OrdineBean O : ListaOrdini)
 				{ 
 				%>
-					<h5 class = "ordini" style = "display:none">Ordine numero <%= O.getIdOrdine() %></h5>
-						
-					
+					<h5 class = "ordini" style = "display:none">Ordine numero <%= O.getIdOrdine() %></h5>	
 				<%}%>	
 	
-	</div>
-	
-	<br>
+	</div><br>
 	<button id= "CategorieB">Mostra Categorie</button>
 	<div id = "divCategorie" style = "display:none">
-	
-	
-				<h5>ListaCategoria</h5>
-	
-				<% 	for(CategoriaBean C : ListaCategoria)
-				{ 
-				%>
-						<h5 class = "CategorieD"><%=C.getNome() %></h5>
-  						<form action="AdminServlet" method="post" enctype="multipart/form-data" class = "CategorieD">
+	<h2>Lista Categorie</h2>
+	<% 	for(CategoriaBean C : ListaCategoria) { %>
+			<div class="singola-categoria">
+					<h5 class = "CategorieD"><%=C.getNome() %></h5>
+  					<form action="AdminServlet" method="post" enctype="multipart/form-data" class = "CategorieD">
 						<input type="hidden" name="operazione" value="rimuoviC">
 						<input name="nome" type="hidden" value="<%= C.getNome()%>">
 						<input type="submit" value="&times;" class="close-">
-						</form>	
+					</form>	
 						
-						<button class = "nomeCategoria" class = "CategorieD">modifica nome</button>
-					 	<form action="AdminServlet" method = "post" class = "formModificaN" style = "display:none" enctype="multipart/form-data" class = "CategorieD"> 
+					<button class = "nomeCategoria" class = "CategorieD">modifica nome</button>
+				 	<form action="AdminServlet" method = "post" class = "formModificaN" style = "display:none" enctype="multipart/form-data" class = "CategorieD"> 
 					    <label for="valore">nome : </label><br> 
-						<input name="valore" type="text" maxlength="20" required
-                        						placeholder="inserire nome..."><br>
+						<input name="valore" type="text" maxlength="20" required placeholder="inserire nome..."><br>
                        	<input type = "hidden" value="ModificaCategoria" name = "operazione">
-                        <input type = "hidden" value="nome" name = "attributo">
-                        <input type = "hidden" value="<%=C.getNome() %>" name = "nome">
-                        <input type="submit" value="modifica">
-					 
-					 	</form>
+	                    <input type = "hidden" value="nome" name = "attributo">
+	                    <input type = "hidden" value="<%=C.getNome() %>" name = "nome">
+	                    <input type="submit" value="modifica">
+				 	</form>
 					 	
-					 	<h5 class = "CategorieD"><%=C.getDescrizione() %></h5><button class = "descrizioneCategoria" class = "CategorieD">modifica descrizione</button>
-					 	<form action="AdminServlet" method = "post" class = "formModificaD" style = "display:none" enctype="multipart/form-data" > 
+					<h5 class = "CategorieD"><%=C.getDescrizione() %></h5><button class = "descrizioneCategoria" class = "CategorieD">modifica descrizione</button>
+				 	<form action="AdminServlet" method = "post" class = "formModificaD" style = "display:none" enctype="multipart/form-data" > 
 					    <label for="valore">Descrizione : </label><br> 
-						<input name="valore" type="text" maxlength="20" required
-                        						placeholder="inserire desrizione..."><br>
-                        <input type = "hidden" value="ModificaCategoria" name = "operazione">
-                        <input type = "hidden" value="descrizione" name = "attributo">
-                        <input type = "hidden" value="<%=C.getNome() %>" name = "nome">
-                        <input type="submit" value="modifica">
-					 
+			    			<input name="valore" type="text" maxlength="20" required placeholder="inserire desrizione..."><br>
+	                        <input type = "hidden" value="ModificaCategoria" name = "operazione">
+	                        <input type = "hidden" value="descrizione" name = "attributo">
+	                        <input type = "hidden" value="<%=C.getNome() %>" name = "nome">
+	                        <input type="submit" value="modifica">
 					 </form>
-					 
-					 <hr>
-					
-				<%}%>
-		</div>
-	
-	
-	<div>
-	
-	<br>
-	
-	<button id = "bottoneCategoria">Aggiungi Categoria</button>
-	<form action="AdminServlet" method = "post" enctype="multipart/form-data" id = "categoriaForm" style = "display:none">
-	<label for="Categoria">gusto</label><br>
-	<label for="nome">Nome : </label><br> 
-	<input name="nome" type="text" maxlength="20" required
-                        placeholder="inserire nome..."><br>
-                        
-   	<label for="descrizione">Descrizione : </label><br> 
-	<input name="descrizione" type="text" maxlength="20" required
-                        placeholder="inserire desrizione..."><br>
-                        <input type="submit" value="Aggiungi">
-                        
-    <input type="hidden" name="operazione" value="aggiungiCategoria">
-	
-	</form>
-	
-	
-	
-	
-	
+					 </div>
+					 <br>
+		<%}%>
 	</div>
-	
-	<br>
-	
-	<button id= "GustiB">Mostra Gusti</button>
+		
+	<div>
+		<br>
+		<button id = "bottoneCategoria">Aggiungi Categoria</button>
+		<form action="AdminServlet" method = "post" enctype="multipart/form-data" id = "categoriaForm" style = "display:none">
+			<label for="Categoria">Categoria: </label><br>
+			<label for="nome">Nome: </label><br> 
+			<input name="nome" type="text" maxlength="20" required placeholder="inserire nome..."><br>                    
+		   	<label for="descrizione">Descrizione: </label><br> 
+			<input name="descrizione" type="text" maxlength="20" required placeholder="inserire desrizione..."><br>
+		    <input type="submit" value="Aggiungi">
+		    <input type="hidden" name="operazione" value="aggiungiCategoria">
+		</form>
+		</div>
+		<br>
+		<button id= "GustiB">Mostra Gusti</button>
 	<div id = "divGusti" style = "display:none">
-	
-	
-				<h5>ListaGusti</h5>
-	
+	<h2>Lista Gusti</h2>
 				<% 	for(GustoBean G : ListaGusti)
 				{ 
 				%>
+				<div class="singolo-gusto">
+					<div class="nomeGusto">
 						<h5 class = "GustiD"><%=G.getNome() %></h5>
   						<form action="AdminServlet" method="post" enctype="multipart/form-data" class = "GustiD">
-						<input type="hidden" name="operazione" value="rimuoviG">
-						<input name="nome" type="hidden" value="<%= G.getNome()%>">
-						<input type="submit" value="&times;" class="close-">
+							<input type="hidden" name="operazione" value="rimuoviG">
+							<input name="nome" type="hidden" value="<%= G.getNome()%>">
+							<input type="submit" value="&times;" class="close-">
 						</form>	
+					</div>
 						
-						<button class = "nomeGusto" class = "GustoD">modifica nome</button>
-					 	<form action="AdminServlet" method = "post" class = "formModificaNG" style = "display:none" enctype="multipart/form-data" class = "GustoD"> 
-					    <label for="valore">nome : </label><br> 
-						<input name="valore" type="text" maxlength="20" required
-                        						placeholder="inserire nome..."><br>
-                       	<input type = "hidden" value="ModificaGusto" name = "operazione">
-                        <input type = "hidden" value="nome" name = "attributo">
-                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
-                        <input type="submit" value="modifica">
-					 
+						
+					<button id="bottone-modificaNome" class = "nomeGusto GustiD">modifica nome</button>
+					<br><br>
+					 	<form action="AdminServlet" id="nomeGusto1" method = "post" class = "formModificaNG" style = "display:none" enctype="multipart/form-data" class = "GustoD"> 
+						    <label for="valore">nome : </label><br> 
+							<input name="valore" type="text" maxlength="20" required placeholder="inserire nome..."><br>
+	                       	<input type = "hidden" value="ModificaGusto" name = "operazione">
+	                        <input type = "hidden" value="nome" name = "attributo">
+	                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+	                        <input type="submit" value="modifica">
+						 
 					 	</form>
+					 	
 					 	
 					 	<h5 class = "GustiD"><%=G.getDescrizione() %></h5><button class = "descrizioneGusto" class = "GustoD">modifica descrizione</button>
 					 	<form action="AdminServlet" method = "post" class = "formModificaDG" style = "display:none" enctype="multipart/form-data" > 
 					    <label for="valore">Descrizione : </label><br> 
-						<input name="valore" type="text" maxlength="20" required
-                        						placeholder="inserire desrizione..."><br>
-                        <input type = "hidden" value="ModificaGusto" name = "operazione">
-                        <input type = "hidden" value="descrizione" name = "attributo">
-                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
-                        <input type="submit" value="modifica">
-					 
+							<input name="valore" type="text" maxlength="20" required placeholder="inserire desrizione..."><br>
+                        	<input type = "hidden" value="ModificaGusto" name = "operazione">
+                        	<input type = "hidden" value="descrizione" name = "attributo">
+                        	<input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        	<input type="submit" value="modifica">
 					 	</form>
 					 	
 					 	<h5 class = "GustiD"><%=G.getColore() %></h5><button class = "ColoreGusto" class = "GustoD">modifica Colore</button>
 					 	<form action="AdminServlet" method = "post" class = "formModificaCG" style = "display:none" enctype="multipart/form-data" > 
-					    <label for="valore">Colore : </label><br> 
-						<input name="valore" type="text" maxlength="20" required
-                        						placeholder="inserire desrizione..."><br>
-                        <input type = "hidden" value="ModificaGusto" name = "operazione">
-                        <input type = "hidden" value="Colore" name = "attributo">
-                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
-                        <input type="submit" value="modifica">
+					    	<label for="valore">Colore : </label><br> 
+							<input name="valore" type="text" maxlength="20" required placeholder="inserire desrizione..."><br>
+                        	<input type = "hidden" value="ModificaGusto" name = "operazione">
+                        	<input type = "hidden" value="Colore" name = "attributo">
+                        	<input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+                        	<input type="submit" value="modifica">
 					 
 					 	</form>
 					 
 					 	<h5 class = "GustiD"><%=G.getquantitaInMagazzino() %></h5><button class = "QuantitaGusto" class = "GustoD">modifica quantita</button>
 					 	<form action="AdminServlet" method = "post" class = "formModificaQG" style = "display:none" enctype="multipart/form-data" > 
-					    <label for="valore">Colore : </label><br> 
-						<input name="valore" type="number" required><br>
-                        <input type = "hidden" value="ModificaGusto" name = "operazione">
-                        <input type = "hidden" value="Quantita" name = "attributo">
-                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
-                        <input type="submit" value="modifica">
+						    <label for="valore">Quantita: </label><br> 
+							<input name="valore" type="number" required><br>
+	                        <input type = "hidden" value="ModificaGusto" name = "operazione">
+	                        <input type = "hidden" value="Quantita" name = "attributo">
+	                        <input type = "hidden" value="<%=G.getNome() %>" name = "nome">
+	                        <input type="submit" value="modifica">
 					 
-					 	</form>
-					 
-					 
-					 
+					 	</form> 
 					 <hr>
-					
+					</div><!-- fine div gusto -->
+					<br><br>
 				<%}%>
 		</div>
 	
@@ -389,26 +356,10 @@
                     <br>
                 </form>
 	
-	
-	
-	
-	
-	
+	</div>
 	</div>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
     <script>
     
     
@@ -429,73 +380,48 @@
     		
     	})
     	
-    	    $(".descrizioneCategoria").click(function(){
-    		
-        	var form = $(".formModificaD").css("display")
-        	
-        	if(form == "none"){
-        	
-        		$(".formModificaD").show();
-        		
-        	}
-        	else
-			{
-        		$(".formModificaD").hide();
-			}  
-    		
-    		
+    	$(".descrizioneCategoria").click(function(){
+        	$(this).parent().children($(".formModificaD")).show();
     	})
     	
-    	    $(".nomeCategoria").click(function(){
-    		
-    	    	
-
-        	var form = $(".formModificaN").css("display")
-        	
-        	if(form == "none"){
-        	
-        		$(".formModificaN").show();
-        		
-        	}
-        	else
-			{
-        		$(".formModificaN").hide();
-			}  
-    		
-    		
+    	$(".nomeCategoria").click(function(){
+        	$(this).parent().children($(".formModificaN")).show();
     	})
     	
     	
-    	   	$("#ordiniB").click(function(){
+    	$("#ordiniB").click(function(){
     	   		$(".ordini").toggle();
     	})
     	
-    	    	   	$("#CategorieB").click(function(){
+    	$("#CategorieB").click(function(){
     	   		$("#divCategorie").toggle();
     	})
     	
-    	    	    	   	$("#bottoneGusto").click(function(){
+    	
+    	//PARTE DEI GUSTI
+    	
+    	$("#bottoneGusto").click(function(){
     	   		$("#divAggiungiGusto").toggle();
     	})
     	
-    		$("#GustiB").click(function(){
+    	$("#GustiB").click(function(){
     	   		$("#divGusti").toggle();
     	})
     	
-    		$(".nomeGusto").click(function(){
-    	   		$(".formModificaNG").toggle();
+    	$(".GustiD").click(function(){
+    	   	$(this).parent().children($(".formModificaNG")).show();
     	})    	
 
-    	    		$(".descrizioneGusto").click(function(){
-    	   		$(".formModificaDG").toggle();
+    	$(".descrizioneGusto").click(function(){
+    		$(this).parent().children($(".formModificaDG")).show();
     	})
     	
-    	    		$(".ColoreGusto").click(function(){
-    	   		$(".formModificaCG").toggle();
+    	$(".ColoreGusto").click(function(){
+    		$(this).parent().children($(".formModificaCG")).show();
     	})
     	
-    	    	    		$(".QuantitaGusto").click(function(){
-    	   		$(".formModificaQG").toggle();
+    	$(".QuantitaGusto").click(function(){
+    		$(this).parent().children($(".formModificaQG")).show();
     	})
     
         var modal = document.getElementById("myModal");
@@ -509,19 +435,18 @@
 		})
 		
 		$("#Pasticceria").click(function(){
-		
 			$(".vaschetta").hide();
-			
-			
 		})
 		
         
         btn.onclick = function () {
             modal.style.display = "block";
         }
+		
         span.onclick = function () {
             modal.style.display = "none";
         }
+        
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
@@ -535,6 +460,7 @@
         btn1.onclick = function () {
             modl.style.display = "block";
         }
+        
         span1.onclick = function () {
             modl.style.display = "none";
         }

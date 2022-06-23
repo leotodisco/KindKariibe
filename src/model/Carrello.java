@@ -78,9 +78,11 @@ public class Carrello {
 	{
 		double totale = 0;
 		for(ProdottoBean prodotto : this.products.keySet()) {
-			totale+= (prodotto.getIVA()*prodotto.getPrezzo()/100)*products.get(prodotto);
+			totale+=prodotto.getIVA()*this.products.get(prodotto);
+			System.out.println("x questo prod iva = " + prodotto.getIVA());
 		}
 	
+		System.out.println(totale);
 		return totale;
 	}
 

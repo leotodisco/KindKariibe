@@ -72,7 +72,7 @@ public class CreaCatalogo extends HttpServlet {
 				ProdottoDAO Dao = new ProdottoDAO();
 				List<ProdottoBean> ListaPasticceria = null;
 				try {
-					ListaPasticceria = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
+					ListaPasticceria = (ArrayList<ProdottoBean>) Dao.doRetrieveAllVisibili("C.nome");
 					List<OrdineBean> ordini = (List<OrdineBean>) Odao.doRetrieveAll("idOrdine");
 					request.getSession().setAttribute("ordini", ordini);
 					List<CategoriaBean> Categorie= (List<CategoriaBean>) CDAO.doRetrieveAll("idOrdine");
@@ -99,7 +99,7 @@ public class CreaCatalogo extends HttpServlet {
 				ProdottoDAO Dao = new ProdottoDAO();
 				ArrayList<ProdottoBean> ListaProdotti = null;
 				try {
-					ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAll("C.nome");
+					ListaProdotti = (ArrayList<ProdottoBean>) Dao.doRetrieveAllVisibili("C.nome");
 					List<ProdottoBean> ListaPasticceria = ListaProdotti.stream().filter(t -> t.getTipo().equals("Vaschetta")).collect(Collectors.toList());
 					request.setAttribute("prodotti", ListaPasticceria);
 
