@@ -145,21 +145,12 @@ public class AdminServlet extends HttpServlet {
 			//TO DO metodo x diminuire la quantita nel database di quanto vale quantita
 
 			try {
-				ImmagineDAO imDAO = new ImmagineDAO();
-				PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
-				ArrayList<String> immagini = posDAO.retrieveImmagine(name);
-				
-				
-				
-				for(String id : immagini)
-				{
-					imDAO.doDelete(id);
-				}
 				prod.doDelete(name);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			response.sendRedirect("AdminPage.jsp");
 		}
 
 		

@@ -25,6 +25,41 @@ body{
     text-align: center;
 }
 
+.singolo-gusto{
+	display:flex;
+	align-items: center;
+	column-gap:20px;
+	border: 2px solid #2f2f2f;
+}
+
+.singolo-gusto button{
+	width:80px;
+	height: 50px;
+}
+
+
+.nomeGusto{
+	width:130px;
+	display: flex;
+	align-items: center;
+	flex-direction: columns;
+}
+
+.singolo-gusto h5{
+	font-size: 20px;
+}
+
+.singola-categoria{
+	display:flex;
+	align-items: center;
+	column-gap:20px;
+	border: 2px solid #2f2f2f;
+}
+
+.singolo-gusto h5{
+	font-size: 20px;
+}
+
 .immagine{
 	width: 50px;
 	height:50px;

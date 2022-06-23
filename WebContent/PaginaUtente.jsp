@@ -35,9 +35,11 @@
     <script>
         $(document).ready(function () {
             $(".carte-credito").first().hide();
-            $(".carte-credito").eq(1).show();
-            $("#ordini").addClass("attivo");
-
+            $(".carte-credito").eq(3).show();
+            $(".titolo").text($("#profilo").text());
+            $("#profilo").addClass("attivo");
+            $("#modificaPassword").hide();
+            $("#chiudi-Form-Password").hide();
 
             $(".opzione").click(function () {
                 $(".opzione").removeClass("attivo");
@@ -50,24 +52,37 @@
                 $(".carte-credito").first().show();
                 $(".carte-credito").eq(1).hide();
                 $(".carte-credito").eq(2).hide();
+                $(".carte-credito").eq(3).hide();
             });
 
             $("#dati").click(function () {
                 $(".carte-credito").first().hide();
                 $(".carte-credito").hide();
                 $(".carte-credito").eq(2).show();
+                $(".carte-credito").eq(3).hide();
                 $("#mostraIndirizzi").show();
             });
 
             $("#ordini").click(function () {
                 $(".carte-credito").first().hide();
                 $(".carte-credito").eq(2).hide();
+                $(".carte-credito").eq(3).hide();
                 $(".carte-credito").eq(1).show();
+            });
+            
+            $("#profilo").click(function () {
+                $(".carte-credito").first().hide();
+                $(".carte-credito").eq(1).hide();
+                $(".carte-credito").eq(2).hide();
+                $(".carte-credito").eq(3).show();
+                $("#chiudi-Form-Password").hide();
+                $("#modificaPassword").hide();
             });
             
             $("#flag").click(function () {
                 $(".carte-credito").first().hide();
                 $(".carte-credito").eq(1).hide();
+                $(".carte-credito").eq(3).hide();
                 $("#ind").show();
                 $("#flag").hide();
                 $("#mostraIndirizzi").hide();
@@ -79,6 +94,7 @@
                 $(".carte-credito").first().hide();
                 $(".carte-credito").eq(1).hide();
                 $("#container-form-carte").show();
+                $(".carte-credito").eq(3).hide();
                 $("#flag").hide();
                 $("#mostraIndirizzi").hide();
                 $(".titolo").empty();
@@ -89,13 +105,14 @@
             $("#chiudi-indirizzo").click(function () {
                 $(".carte-credito").first().hide();
                 $(".carte-credito").eq(1).hide();
-                $(".carte-credito").eq(2).show();
                 $("#ind").hide();
                 $("#flag").show();
                 $("#mostraIndirizzi").show();
+                $(".carte-credito").eq(3).hide();
                 $("#chiudi-indirizzo").hide();
                 $(".titolo").empty();
                 $(".titolo").text("Dati Personali");
+                $(".carte-credito").eq(2).show();
             });
             
             $("#chiudi-form").click(function () {
@@ -103,6 +120,7 @@
             	$(".carte-credito").eq(2).hide();
                 $(".carte-credito").first().show();
                 $("#chiudi-form").hide();
+                $(".carte-credito").eq(3).hide();
                 $("#ind").hide();
                 $("#flag").hide();
                 $("#flag2").show();                
@@ -110,6 +128,63 @@
                 $(".titolo").empty();
                 $(".titolo").text("Dati Fiscali");
             });
+            
+            $("#flag3").click(function () {
+                $("#modificaPassword").show();
+                $("#chiudi-Form-Password").show();
+                
+            });
+            
+            $("#chiudi-Form-Password").click(function (){
+            	$(".carte-credito").first().hide();
+                $(".carte-credito").eq(1).hide();
+                $(".carte-credito").eq(2).hide();
+                $(".carte-credito").eq(3).show();
+                $("#chiudi-Form-Password").hide();
+                $("#modificaPassword").hide();
+            })
+            
+            
+        	function checkLogin(email, pass) {
+                return $.ajax({
+                    url: "Api/User",
+                    type: 'GET',
+                    async: false,
+                    cache: false,
+                    timeout: 30000,
+                    dataType: "json",
+                    data: {
+                        action: "checkPassword",
+                        password: pass,
+                        email: email
+                    },
+                    success: function (data) {
+                        return data
+                    },
+                    fail: function (msg) {
+                    	return true;
+                    }
+                });
+            }
+            	
+            	$("#inserisci-password").click(function funzioneConvalida(obj) {
+            		var email = $("#email").text();
+            		var password = $("#password-attuale").val()
+            		var res = checkLogin(email, password);
+            		
+    				if (res.responseJSON.message == "taken") {
+    					obj.submit()
+    				}
+    				
+    				else{
+    					$("#password-attuale").css("background-color", "red") //form vecchia password
+    					$("#password-nuova").css("background-color", "red")  //form nuova password
+    					event.preventDefault();
+    				}
+                });
+            
+          
+            
 
         });//chiusura jquery
     </script>
@@ -122,9 +197,14 @@
        <!--quando vai su eclipse si sminchia perchè hai due ul li-->
     <div class="contenitore">
 
+
         <!--MENU LATERALE-->
         <div class="selezione">
+        
             <ul class="opzioni">
+            	<li class="opzione" id="profilo">
+                    <ion-icon name="person" class="icona"></ion-icon>Dati Personali
+                </li>
                 <li class="opzione" id="ordini">
                     <ion-icon name="cart" class="icona"></ion-icon>Ordini Recenti
                 </li>
@@ -132,7 +212,7 @@
                     <ion-icon name="card" class="icona"></ion-icon>Dati Fiscali
                 </li>
                 <li class="opzione" id="dati">
-                    <ion-icon name="person" class="icona"></ion-icon>Dati Personali
+                    <ion-icon name="home" class="icona"></ion-icon>Indirizzi
                 </li>
                 <a href="LogoutServlet">
                 <li class="opzione">
@@ -140,11 +220,14 @@
 				</li>
 				</a>
             </ul>
+            
         </div>
+      
+
 
 
         <!--SEZIONE CARTE DI CREDITO-->
-        <div class="carte-credito elencoCarte" style="display: none" id="carte-utente">
+        <div class="carte-credito elencoCarte" style="display: none;" id="carte-utente">
         
         <% for(MetodoPagamentoBean metodo : elencoMetodi){ %>
             <span class="method-1">
@@ -213,7 +296,29 @@
         <!--SEZIONE ORDINI-->
         <div class="carte-credito" style="display: none">
 
-            <%for(OrdineBean ord : ordini.keySet()){ %>
+            <%
+            Comparator<OrdineBean> ordineComparator = (o1, o2) -> {
+    			int r = o1.getDataEvasione().compareTo(o2.getDataEvasione());
+    			if(r != 0)
+    				return -r;
+    						
+    			else{
+    				r = o1.getIdOrdine().compareTo(o2.getIdOrdine());
+    				return -r;
+    			}
+    		};
+            
+    		Comparator<ProdottoBean> prodottiComparator = (o1, o2) -> {
+    			int r = o1.getNome().compareTo(o2.getNome());
+    			return r;
+    		};
+            
+            ArrayList<OrdineBean> elencoOrdini = new ArrayList<>(ordini.keySet());
+            
+            Collections.sort(elencoOrdini, ordineComparator);
+            
+            
+            for(OrdineBean ord : elencoOrdini){ %>
             <div class="ordine">
                 <span>
                     <ion-icon name="cart"></ion-icon>
@@ -223,11 +328,16 @@
                     <div class="cols">
                         <span><b>Ordine del:</b> <%=ord.getDataEvasioneAsString() %></span>
                         <span><b>Stato:</b> <%=ord.getDataArrivo()==null ? "In transito" : "Consegnato" %></span>
-                        <span><b>IVA:</b> &euro;3,80</span>
-                        <span><b>Totale:</b> &euro;45,50</span>
+                        <span><b>Indirizzo:</b> <%=ord.getIndirizzoSpedizione().getVia() + ord.getIndirizzoSpedizione().getnCivico()  %> </span>
+                        <span><b>Totale:</b> &euro;<%=ord.getCostoTotale() %></span>
                     </div>
                     <div class="row">
-                    	<%for(ProdottoBean pro : ord.getProducts().keySet()){ %>          
+                    	<%
+                    	
+                    	ArrayList<ProdottoBean> elencoProdotti = new ArrayList<>(ord.getProducts().keySet());
+                    	Collections.sort(elencoProdotti, prodottiComparator);
+                    	
+                    	for(ProdottoBean pro : elencoProdotti){ %>          
                         	<img src="./immagini/<%=pro.getPathImage().get(0) %>" class="immagine-ordine-anteprima">
                         <%} %>
                     </div>
@@ -236,7 +346,7 @@
                 	
                 	<form action="FatturaServlet" method="get">
                     	<input type="hidden" name="ordine" value="<%=ord.getIdOrdine()%>">
-                    	<input type="submit" value="Fattura">
+                    	<input type="submit" value="Fattura" class="bottone-Fattura">
             		</form>
             		
             	</div>
@@ -297,14 +407,52 @@
                 </div>
             </form>
             </div> <!-- fine div id=  "ind" -->
-                  
-	
-
         </div> <!-- fine parte utente -->
-
     </div>
     
-
+		<!-- SEZIONE DATI UTENTE -->
+        <div class="carte-credito" style="display: none" >
+        <div id="mostraDati">
+        <!--SEZIONE INDIRIZZI-->
+            <div class="ordine">
+                <span>
+                    <ion-icon name="person"></ion-icon>
+                </span>
+                <div class="container-ordine">
+                    <div class="cols2">
+                        <span><b>Utente:</b> <%=utente.getNome()+" "+utente.getCognome()%></span>
+                        <span><b>Codice Cliente:</b> <%=utente.getNome().hashCode()%></span>
+                        <span><b>Data di Nascita:</b> <%=utente.getDataNascitaAsString()%></span>
+                  		<span><b>Email:</b> <%=utente.getEmail()%></span>
+                    </div>
+                    <!-- IMMAGINE SE RIESCI -->
+                </div>
+            </div>
+            </div> <!-- fine miostraDati -->
+            
+             <!--form cambia password-->
+            <div class="intestazione">
+            	<span id="flag3" class="bottone-submit"><ion-icon name="add-circle-outline" class="icona"></ion-icon>Cambia Password</span>
+            	<ion-icon name="close-circle-outline" style="float:right; font-size: 2.5rem; cursor: pointer;" id="chiudi-Form-Password"></ion-icon>
+            </div>
+            
+            <form id="modificaPassword" Action="ModificaUtente" method="POST" >
+            	<span id="email" style="display:none;"><%=utente.getEmail()%></span>
+            	<br><br>
+            	<input type="text" name="VecchiaP" class="uname" placeholder="Password Attuale" id="password-attuale">
+            	<br><br>
+            	<input type="hidden" name="attributo" value="password">
+            	<input type="text" name="valore" class="uname" placeholder="Nuova Password" id="password-nuova">
+            	<br><br>
+            	<div class="intestazione">
+                	<input type="submit" value="Inserisci" class="bottone-submit" id="inserisci-password">
+                </div>
+            	
+            </form>
+            
+            
+         </div> <!-- fine div id=  carte-credito -->
+                  
 
 		
 

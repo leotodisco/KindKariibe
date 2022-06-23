@@ -111,7 +111,9 @@ a{
     margin-bottom: 20px;
 }
 .client-comment p{
-    font-size: 0.9rem;
+	padding: 5px 5px;
+	font-family: archia-regular;
+    font-size: 1rem;
     color: #4b4b4b;
 }
 .testimonial-box:hover{
@@ -150,9 +152,6 @@ a{
 
 
 /*FINE PARTE RECENSIONI*/
-
-
-
 
 .votoMedio{
 	margin-top:20px;
@@ -195,6 +194,7 @@ body {
 	background-color: transparent;
 	border: 2px solid #555149;
 	border-radius: 10px;
+	padding: 5px 5px;
 }
 
 textarea:hover{
@@ -414,10 +414,12 @@ a:not(.cons) {
 .rate > input:checked ~ label {
     color: #ffc700;    
 }
+
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
     color: #deb217;  
 }
+
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,
 .rate > input:checked ~ label:hover,
@@ -426,7 +428,7 @@ a:not(.cons) {
     color: #c59b08;
 }
 
-@media ( max-width : 1000px) {
+@media all and (min-width : 700px) and (max-width : 1000px) {
 	.categoria {
 		display: none;
 	}
@@ -533,7 +535,7 @@ a:not(.cons) {
 
 }
 
-@media ( max-width : 480px) {
+@media all and ( max-width : 720px) {
 	.image {
 		display: inline-block;
 		border-radius: 25px;

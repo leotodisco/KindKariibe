@@ -101,19 +101,25 @@ public class AcquistaServlet extends HttpServlet {
 				}
 				
 				OrdineBean ordine= new OrdineBean();
-				
+
 				ordine.setDatiFiscali(datiFiscali);
 				ordine.setUtente(utente);
 				Carrello cart=(Carrello)sessione.getAttribute("Carrello");
 				
+
 				//devo salvare prodotto - [quantita - iva - prezzo] 
 				//[quantita - iva - prezzo] è una lista di interi
-				ArrayList<Integer> quantitaIvaPrezzo = new ArrayList<>();
 				//posizione 0 = quantita, pos 1=iva pos2 = prezzo
 				
 				HashMap<ProdottoBean,Integer> contenutoCarrello = cart.getProducts();			                  //setto i prodotti dell'ordine
 				for(ProdottoBean prod : contenutoCarrello.keySet()) {				
-					ordine.addProduct(prod);
+					ArrayList<Double> quantitaIvaPrezzo = new ArrayList<>();
+					quantitaIvaPrezzo.add(0, contenutoCarrello.get(prod).doubleValue());
+					quantitaIvaPrezzo.add(1, prod.getIVA());
+					quantitaIvaPrezzo.add(2, prod.getPrezzo());
+					
+					
+					ordine.addProduct(prod, quantitaIvaPrezzo);
 
 				}
 				

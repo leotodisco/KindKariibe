@@ -36,13 +36,14 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 
 	@Override
 	public void doSave(ProdottoBean bean) throws SQLException {
-		//non usare
+		ProdottoDAO p = new ProdottoDAO();
+		p.doSaveI(bean);
 			
 	}
 
 	@Override
 	public boolean doDelete(String arg) throws SQLException {
-		String sql = "DELETE FROM "+ TABLE_NAME +" WHERE `id`= ?";
+		String sql = "UPDATE "+ TABLE_NAME + " SET visibile = '0' where id = ?";
 		try(Connection con = ds.getConnection()){
 			try(PreparedStatement ps = con.prepareStatement(sql)){
 				ps.setString(1, arg);
@@ -174,6 +175,68 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 		return result;
 	}
 
+	public Collection<ProdottoBean> doRetrieveAllVisibili(String order) throws Exception {
+		String sql = "SELECT prodotto.*, categoria.nome as Cnome, categoria.descrizione as Cdesc "
+				+ "FROM prodotto JOIN categoria "
+				+"ON categoria.nome = prodotto.categoria WHERE visibile = '1'";
+		order = order.isEmpty() ? "C.nome" : order;
+		ArrayList<ProdottoBean> result = new ArrayList<>();
+
+		try(Connection conn = ds.getConnection()){
+			try(PreparedStatement statement = conn.prepareStatement(sql)){
+				//statement.setString(1, order);
+
+				ResultSet rs = statement.executeQuery();
+				while(rs.next()) {
+					CategoriaBean buffer = new CategoriaBean();
+					ProdottoBean bean = new ProdottoBean();
+					bean.setNome(rs.getString("nome"));
+					bean.setId(Integer.parseInt(rs.getString("id")));
+					buffer.setNome(rs.getString("Cnome"));
+					buffer.setDescrizione(rs.getString("Cdesc"));
+					Optional<CategoriaBean> optional = Optional.of(buffer); //categoria può essere null
+					bean.setCategoria(optional);
+					bean.setPrezzo(rs.getDouble("prezzo"));
+					bean.setIVA(rs.getDouble("IVA"));
+					bean.setDescrizione(rs.getString("descrizione"));
+					bean.setTipo(rs.getString("tipo"));
+					bean.setQuantitaResidua(rs.getDouble("quantitaDisponibili"));
+					
+					ArrayList<String> elencoPathImmagini = new ArrayList<>();
+					
+					ImmagineDAO imDAO = new ImmagineDAO();
+					ImmagineBeans imBean = new ImmagineBeans();
+					PossessoImmagineDAO possDAO = new PossessoImmagineDAO();
+					CostituzioneDAO CostDAO = new CostituzioneDAO();
+					GustoDAO GDAO = new GustoDAO();
+					GustoBean GustoB = new GustoBean();
+					
+					for(String immagine : possDAO.retrieveImmagine(rs.getString("id")))
+					{
+						imBean = imDAO.doRetrieveByKey(immagine);
+						elencoPathImmagini.add(imBean.getUrl());
+					}
+
+					bean.setPathImage(elencoPathImmagini);
+
+					
+					if(bean.getTipo().equals("Vaschetta"))
+					{
+						bean.setPeso(rs.getDouble("peso"));
+						for(String gusti : CostDAO.retrieveGusti(rs.getString("id")))
+						{
+							GustoB = GDAO.doRetrieveByKey(gusti);
+							bean.getGusti().add(GustoB);
+						}
+					}
+					result.add(bean);
+				}
+			}	
+		}
+		return result;
+	}
+	
+	
 	@Override
 	public void doUpdate(ProdottoBean bean) throws SQLException {
 		String sql = new String();

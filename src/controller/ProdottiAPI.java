@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -183,6 +184,16 @@ public class ProdottiAPI extends HttpServlet {
 			response.getWriter().print(gson.toJson(result));
 			response.getWriter().flush();
 			return;
+		}
+		
+		else if(action.equals("svuota"))
+		{
+			HttpSession sessione = request.getSession(true);
+			Carrello cart = new Carrello();
+			sessione.setAttribute("Carrello", cart);
+			response.setStatus(200);
+			response.getWriter().print(gson.toJson(cart.getCostoTotale()));
+			response.getWriter().flush();
 		}
 
 		

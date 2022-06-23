@@ -59,7 +59,6 @@ public class AggiungiIndirizzo extends HttpServlet {
 		bean.setVia(via);
 		
 		UserBean utente = (UserBean) request.getSession().getAttribute("utente");
-		
 		IndirizzoDao Idao = new IndirizzoDao();
 		possessoIndirizzoDAO Pdao = new possessoIndirizzoDAO();
 		UserDAO uDAO = new UserDAO();
@@ -71,8 +70,8 @@ public class AggiungiIndirizzo extends HttpServlet {
 			int ID = Idao.doSaveI(bean);
 			bean.setId(ID);
 			Pdao.doSave(utente, bean);
-			utente = uDAO.doRetrieveByKey(utente.getCodiceFiscale());
-			request.getSession().setAttribute("utente", utente);
+			utente.addAddress(bean);;
+			//request.getSession().setAttribute("utente", utente);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

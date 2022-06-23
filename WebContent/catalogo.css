@@ -13,7 +13,7 @@
     padding:0;
     margin:0;
 	box-sizing:border-box;
-    }
+}
         
         
 .nomeUtente{
@@ -110,53 +110,127 @@ button{
 	font-family: 'archia-regular';  
 }
 
+@media all and (min-width: 1255px) and (max-width: 1700px){
 
-@media only screen and (max-width:1000px) {
-    .container{
-        grid-template-columns: repeat(3, 230px);
-        column-gap: 30px;
+	 .container{
+        grid-template-columns: repeat(5, 220px);
+        column-gap: 25px;
     }
 	
+	
 	.pasticceria{
-		margin-top: 20px;
+		margin-top: 5px;
 	}
+	
+	.image{
+    	width: 220px;
+    	height: 220px;
+	}
+	
+	.image:hover{
+		border: 3px solid green;
+		height: 217px;
+	    width: 217px;
+	}
+	
+	
+	
+}
+
+@media all and (min-width: 1025px) and (max-width: 1254px){
+ .container{
+        grid-template-columns: repeat(3, 220px);
+        column-gap: 25px;
+    }
+    
+    .pasticceria{
+		margin-top: 5px;
+	}
+	
+
+	}
+
+@media all and (min-width: 801px) and (max-width: 1024px){
+
+	 .container{
+        grid-template-columns: repeat(2, 220px);
+        column-gap: 25px;
+    }
+	
+	
+	.pasticceria{
+		margin-top: 5px;
+	}
+
 }
 
 
-@media only screen and (max-width: 800px){
+
+@media all and (min-width: 569px) and (max-width: 800px){
 	 .container{
         grid-template-columns: repeat(2, 180px);
         column-gap: 15px;
     }
 	
 	.pasticceria{
-
 		margin-top: 5px;
 	}
 	
 	.image{
-    width: 180px;
-    height: 180px;
+	    width: 180px;
+	    height: 180px;
 	}
 	
 	.image:hover{
-	border: 3px solid green;
-	   height: 178px;
-
-}
+		border: 3px solid green;
+		height: 177px;
+	    width: 177px;
+	}
+		
+	.titolo{
+	    text-align: center;
+	    font-family: 'intro_script_demomedium';
+	    color: #2f2f2f;
+	    font-size:3.7rem;
+	}
 	
-.titolo{
-    text-align: center;
-    font-family: 'intro_script_demomedium';
-    color: #2f2f2f;
-    font-size:3.7rem;
+	img{
+	    border-radius: 18px;
+	}
 }
 
-img{
-    border-radius: 18px;
+@media all and (max-width: 568px){
+	 .container{
+        grid-template-columns: repeat(2, 160px);
+        column-gap: 4px;
+    }
+	
+	.pasticceria{
+		margin-top: 5px;
+	}
+	
+	.image{
+	    width: 160px;
+	    height: 160px;
+	}
+	
+	.image:hover{
+		border: 3px solid green;
+		height: 157px;
+	    width: 157px;
+	}
+		
+	.titolo{
+	    text-align: center;
+	    font-family: 'intro_script_demomedium';
+	    color: #2f2f2f;
+	    font-size:3.3rem;
+	}
+	
+	img{
+	    border-radius: 18px;
+	}
 }
-}
-
 
 
 

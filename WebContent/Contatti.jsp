@@ -40,7 +40,7 @@
       </div> <!-- fine div sinistro -->
       <div class="right-side">
         
-        <form action="https://formsubmit.co/pinuccioiltrapanatore28@gmail.com" method="POST" >
+        <form action="https://formsubmit.co/leopoldo.todiscozte@gmail.com" method="POST" >
         <div class="input-box">
           <input type="text" placeholder="Inserisci il tuo nome">
         </div>

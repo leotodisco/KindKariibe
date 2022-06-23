@@ -139,6 +139,13 @@ body {
 	width: 200px;
 }
 
+.cols2 {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 350px;
+}
+
 .row {
 	display: flex;
 	flex-direction: row;
@@ -216,6 +223,10 @@ body {
 	border-radius: 17px;
 }
 
+.error{
+	background-color: red;
+}
+
 .uname{
 	padding-left: 8px;
 	width: 250px;
@@ -259,9 +270,14 @@ input[type=number] {
 	width:800px;
 }
 
-#flag2{
+#flag3{
 	align-items: center;
 	width:800px;
+}
+
+#flag2{
+	align-items: center;
+	width:1000px;
 }
 
 label{
@@ -314,22 +330,223 @@ label{
 	cursor: pointer;
 }
 
-@media all and (max-width:1024px) {
+.bottone-Fattura {
+    font-family: 'archia-regular';
+	width: 150px;
+	height: 30px;
+	border: 1px solid #2f2f2f;
+	border-radius: 17px;
+	background-color: transparent;
+	color: #2f2f2f;
+	font-size: 17px;
+	cursor:pointer;
+}
+
+.bottone-Fattura:hover {
+    font-family: 'archia-regular';
+	width: 150px;
+	height: 30px;
+	border: 2px solid #2f2f2f;
+	border-radius: 17px;
+	color: #2f2f2f;
+	font-size: 17px;
+	cursor:pointer;
+}
+
+	
+	.centra-2{
+	
+	}
+	
+
+
+@media all and (min-width:721px) and (max-width:1440px) {
 	.immagine-ordine-anteprima {
 		display: none;
 	}
+	
 	.selezione {
 		left: 0;
-		width: 120px;
+		
+		
 	}
+	
+	.opzioni li {
+		font-size: 1rem;
+		margin-left: 0;
+	}
+
 	.ordine {
 		margin-left: 10px;
-		width: 220px;
+		width: 400px;
 	}
+	
 	.contenitore {
 		justify-content: space-around;
 	}
+	
 	.elencoCarte {
 		grid-template-columns: repeat(1, 320px);
+	}
+
+}
+
+
+
+
+
+@media all  and (min-width:569px) and (max-width:850px) {
+	.immagine-ordine-anteprima {
+		display: none;
+	}
+	
+	
+	.titolo{
+		font-size:2.5rem;
+	}
+	
+	.selezione {
+		left: 0;
+		width:100%;
+		display: flex;
+		padding: 0;
+		display:flex;
+		flex-direction: row;
+		margin: 0;
+		justify-content: center;
+		text-align: center;
+	}
+	
+	.opzioni{
+		font-family: "archia-regular";
+		display: grid;
+		list-style: none;
+		font-size: 4px;
+		padding-bottom: 10px;
+		padding-top: 10px;
+		cursor: pointer;
+		font-weight: 10;
+		grid-template-columns: repeat(4, 100px);
+		justify-content: center;
+		text-align: center;
+	}
+	
+	.opzioni li{
+		font-size: 1rem;
+	}
+
+	.opzioni icona{
+		font-size: 1rem;
+	}
+
+	.ordine {
+		width: 200px;
+	}
+	.contenitore {
+		justify-content: center;
+	}
+	.elencoCarte {
+		grid-template-columns: repeat(1, 320px);
+	}
+	
+	.carte-credito{
+		margin-top:70px;
+		display: flex;
+		justify-content: center;
+	}
+	
+	.method-1 {
+		font-family: "archia-regular";
+		margin-top: 40px;
+		border: 1px solid #2f2f2f;
+		background-color: #fbfcd4;
+		border-radius: 25px;
+		display: flex;
+		width: 250px;
+		flex-direction: column;
+		padding: 30px 20px;
+		gap: 15px;
+	}
+
+	#container-form-carte{
+		margin-top:60px;
+	}
+}
+
+@media all and (max-width:568px) {
+	.immagine-ordine-anteprima {
+		display: none;
+	}
+	
+	
+	.titolo{
+		font-size:2.5rem;
+	}
+	
+	.selezione {
+		left: 0;
+		width:100%;
+		display: flex;
+		padding: 0;
+		display:flex;
+		flex-direction: row;
+		margin: 0;
+		justify-content: center;
+		text-align: center;
+	}
+	
+	.opzioni{
+		font-family: "archia-regular";
+		display: grid;
+		list-style: none;
+		font-size: 4px;
+		padding-bottom: 10px;
+		padding-top: 10px;
+		cursor: pointer;
+		font-weight: 10;
+		grid-template-columns: repeat(4, 95px);
+		justify-content: center;
+		text-align: center;
+	}
+	
+	.opzioni li{
+		font-size: 10px;
+	}
+
+	.opzioni icona{
+		font-size: 10px;
+	}
+
+	.ordine {
+		width: 200px;
+	}
+	.contenitore {
+		justify-content: center;
+	}
+	.elencoCarte {
+		grid-template-columns: repeat(1, 320px);
+	}
+	
+	.carte-credito{
+		margin-top:70px;
+		display: flex;
+		justify-content: center;
+	}
+	
+	.method-1 {
+		font-family: "archia-regular";
+		margin-top: 40px;
+		border: 1px solid #2f2f2f;
+		background-color: #fbfcd4;
+		border-radius: 25px;
+		display: flex;
+		width: 250px;
+		flex-direction: column;
+		padding: 30px 20px;
+		gap: 15px;
+	}
+
+	#container-form-carte{
+		margin-top:60px;
 	}
 }

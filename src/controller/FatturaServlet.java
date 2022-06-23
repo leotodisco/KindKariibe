@@ -38,6 +38,7 @@ import com.itextpdf.layout.renderer.IRenderer;
 import beans.OrdineBean;
 import beans.ProdottoBean;
 import model.OrdineDAO;
+import model.ProdottoDAO;
 
 import java.io.*;
 import com.itextpdf.layout.element.Cell;
@@ -77,6 +78,7 @@ public class FatturaServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		
 		String percorsoPDF = getServletContext().getRealPath("/")+"WEB-INF/Fatture";
 		
@@ -85,7 +87,13 @@ public class FatturaServlet extends HttpServlet {
 			System.out.println("si"); 
 		}
 		
-
+		try {
+			bean = dao.doRetrieveByKey(request.getParameter("ordine"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
         PdfFont introScriptDemo = PdfFontFactory.createFont(getServletContext().getRealPath("/") + "font/introscriptdemo-medium.woff2", "UTF8", true);
         
         PdfWriter pdfWriter = new PdfWriter(percorsoPDF + request.getParameter("ordine") + ".pdf");
@@ -146,11 +154,12 @@ public class FatturaServlet extends HttpServlet {
         prodotti.addCell(new Cell().add(new Paragraph(("Quantità")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
         prodotti.addCell(new Cell().add(new Paragraph(("Costo")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
 
-        System.out.println(bean.getProducts().keySet());
+
         for(ProdottoBean p : bean.getProducts().keySet()) {
+        	imponibile += bean.getProducts().get(p).get(2);
             prodotti.addCell(new Cell().add(new Paragraph(p.getNome()).setMarginLeft(2).setMarginTop(1)));
             prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(0))).setMarginLeft(2).setMarginTop(1)));
-            prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(1))).setMarginLeft(2).setMarginTop(1)));
+            prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(2))).setMarginLeft(2).setMarginTop(1)));
         	
         }
         

@@ -86,13 +86,14 @@ public class ProdottoBean {
 		this.quantitaResidua = quantitaResidua;
 	}
 	public Double getPrezzo() {
-		return prezzo;
+		double iva = prezzo*IVA/100;
+		return prezzo+iva;
 	}
 	public void setPrezzo(Double prezzo) {
 		this.prezzo = prezzo;
 	}
 	public Double getIVA() {
-		return IVA;
+		return prezzo*IVA/100;
 	}
 	public void setIVA(Double iVA) {
 		IVA = iVA;

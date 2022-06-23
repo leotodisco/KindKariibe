@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -83,16 +85,18 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					try(PreparedStatement statementDatiOrdine = con.prepareStatement(sqlProdotti)){
 						statementDatiOrdine.setInt(1, ordine.getIdOrdine());
 						ResultSet prodottiSET = statementDatiOrdine.executeQuery();
-						ArrayList<Integer> datiComposizione = new ArrayList<>();
+						ArrayList<Double> datiComposizione = new ArrayList<>();
 						
 						while(prodottiSET.next()) {
-							datiComposizione.add(0, Double.valueOf(prodottiSET.getString("quantita")).intValue());
-							datiComposizione.add(1, Double.valueOf(prodottiSET.getString("prezzo")).intValue());
-							datiComposizione.add(2, Double.valueOf(prodottiSET.getString("IVA")).intValue());
-							//devo inserire nella mappa tutto cio dopo
+							datiComposizione.add(0, Double.valueOf(prodottiSET.getString("quantita")));
+							datiComposizione.add(1, Double.valueOf(prodottiSET.getString("prezzo")));
+							datiComposizione.add(2, Double.valueOf(prodottiSET.getString("IVA")));
+
 							ProdottoBean prod = products.doRetrieveByKey(prodottiSET.getString("prodotto"));
 							ordine.addProduct(prod, datiComposizione);
+
 						}
+						
 
 						ordini.add(ordine);
 					}
@@ -118,7 +122,8 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				ps.setString(3, bean.getUtente().getCodiceFiscale());
 				ps.setDouble(4, bean.getCostoTotale());
 				ps.setString(5, bean.getCodiceSconto());
-				ps.setDate(6, (Date) bean.getDataEvasione());
+				Timestamp data = new Timestamp(bean.getDataEvasione().getTime());
+				ps.setTimestamp(6, data);
 				ps.setString(7, bean.getUrlPdf());
 				ps.setInt(8, bean.getIndirizzoSpedizione().getId());
 
@@ -144,7 +149,7 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 						ps1.setInt(2, idOrdine);
 						ps1.setDouble(3, products.getIVA());
 						ps1.setDouble(4, products.getPrezzo());
-						ps1.setInt(5, bean.getProducts().get(products).get(0)); //in posizione 0 della lista c'è sempre quantita
+						ps1.setInt(5, bean.getProducts().get(products).get(0).intValue()); //in posizione 0 della lista c'è sempre quantita
 
 						ps1.executeUpdate();
 					}
@@ -185,7 +190,11 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					ordine.setCodiceSconto(rs.getString("codiceSconto"));
 					ordine.setCostoTotale(rs.getDouble("costoTotale"));
 					ordine.setUrlPdf(rs.getString("urlPdf"));
-					ordine.setDataEvasione(rs.getDate("dataEvasione"));
+					Timestamp dateTime = rs.getTimestamp("dataEvasione");
+					ordine.setDataEvasione(new Date(dateTime.getTime()));
+					
+					System.out.println(ordine.getDataEvasione());
+					
 					ordine.setDataPartenza(rs.getDate("dataPartenza"));
 					ordine.setDataArrivo(rs.getDate("dataArrivo"));
 
@@ -218,12 +227,12 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 				try(PreparedStatement statementDatiOrdine = con.prepareStatement(sqlProdotti)){
 					statementDatiOrdine.setInt(1, ordine.getIdOrdine());
 					ResultSet prodottiSET = statementDatiOrdine.executeQuery();
-					ArrayList<Integer> datiComposizione = new ArrayList<>();
 					
 					while(prodottiSET.next()) {
-						datiComposizione.add(0, Double.valueOf(prodottiSET.getString("quantita")).intValue());
-						datiComposizione.add(1, Double.valueOf(prodottiSET.getString("prezzo")).intValue());
-						datiComposizione.add(2, Double.valueOf(prodottiSET.getString("IVA")).intValue());
+						ArrayList<Double> datiComposizione = new ArrayList<>();
+						datiComposizione.add(0, Double.valueOf(prodottiSET.getString("quantita")));
+						datiComposizione.add(1, Double.valueOf(prodottiSET.getString("IVA")));
+						datiComposizione.add(2, Double.valueOf(prodottiSET.getString("prezzo")));
 						//devo inserire nella mappa tutto cio dopo
 						ProdottoBean prod = products.doRetrieveByKey(prodottiSET.getString("prodotto"));
 						ordine.addProduct(prod, datiComposizione);
