@@ -16,9 +16,9 @@
     <link rel="stylesheet" href="Vaschette.css" />
   </head>
   <body>
-  <%  
-		UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
-	 %>
+  
+ <jsp:include page="header.jsp"/>
+    
     <div class="wrapper">
       <div class="container">
         <div class="scoop1"></div>
@@ -35,20 +35,148 @@
         <button id="selezione3">1000g</button>
       </div>
       <p>seleziona i tuoi gusti</p>
-      	<% ArrayList<GustoBean> elencoGusti = (ArrayList<GustoBean>)request.getAttribute("gusto");
+  		<form action="CreaVaschetta" method="get" id="primo">
+         	
+         	
+         	<% ArrayList<GustoBean> ListaGusti = (ArrayList<GustoBean>) request.getAttribute("gusti");
+			if(ListaGusti==null){
+				response.sendRedirect("./CreaVaschetta?operazione=mostraGusti");
+				return;
+			}
 	%>
+         <select id="gusto1" class="minimal">
+     
      	  	<%
+     	  	
+     	  	for(GustoBean gusto : ListaGusti)
+  				{
+  				%>
+
+    <option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
+    
+    <%}%>
+  </select>
+  </form>
+      
+    
+    <form action="CreaVaschetta" method="get" id="secondo" style="display:none;">
+  	<% ArrayList<GustoBean> elencoGusti = (ArrayList<GustoBean>) request.getAttribute("gusti");
+			if(elencoGusti==null){
+				response.sendRedirect("./CreaVaschetta?operazione=mostraGusti");
+				return;
+			}
+	%>
+         <select id="gusto2" class="minimal">
+     
+     	  	<%
+     	  	
      	  	for(GustoBean gusto : elencoGusti)
   				{
-  					%>
-      <div class="btns">
-        <button id="btn-scoop1">Cioccolato</button>
-      </div>
-    </div>
+  				%>
+     
+    <option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
+    
     <%}%>
+  </select>
+  
+  <select id="gusto2" class="minimal">
+     
+     	  	<%
+     	  	
+     	  	for(GustoBean gusto : elencoGusti)
+  				{
+  				%>
+      
+    <option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
+    
+    <%}%>
+  </select>
+    </form>
+    
+        <form action="CreaVaschetta" method="get" id="terzo" style="display:none;")>
+  	<% ArrayList<GustoBean> Gusti = (ArrayList<GustoBean>) request.getAttribute("gusti");
+			if(Gusti==null){
+				response.sendRedirect("./CreaVaschetta?operazione=mostraGusti");
+				return;
+			}
+	%>
+         <select id="gusto2" class="minimal">
+     
+     	  	<%
+     	  	
+     	  	for(GustoBean gusto : Gusti)
+  				{
+  				%>
+    <option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
+   
+    <%}%>
+  </select>
+  
+  <select id="gusto2" class="minimal">
+     
+     	  	<%
+     	  	
+     	  	for(GustoBean gusto : Gusti)
+  				{
+  				%>
+     
+    <option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
+      
+    
+    <%}%>
+  </select>
+  
+  <select id="gusto2" class="minimal">
+     
+     	  	<%
+     	  	
+     	  	for(GustoBean gusto : Gusti)
+  				{
+  				%>
+      
+    <option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
+    <%}%>
+  </select>
+  </form>
+    
+    
+    
+    <input type="hidden" value="inserire" name="operazione">
+    <input type="submit" value="Crea">
+    
     <!-- Script -->
+    <script>
+    
+$("#selezione1").click(function(){
+            $(".scoop1").hide();
+            $(".scoop2").hide();
+            $("#primo").show();
+            $("#secondo").hide();
+            $("#terzo").hide();
+            });
 
+        $("#selezione2").click(function(){
+            $(".scoop1").hide();
+            var primo = $(".scoop2");
+            primo.show();
+            $("#primo").hide();
+            $("#secondo").show();
+            $("#terzo").hide();
+            
+        });
+        $("#selezione3").click(function(){
+            
+        	$(".scoop1").show();
+            $(".scoop2").show();
+            $(".scoop3").show();
+            $("#primo").hide();
+            $("#secondo").hide();
+            $("#terzo").show();
+            
+        });
+        
 
+</script>
     
   </body>
 </html>

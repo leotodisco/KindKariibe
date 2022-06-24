@@ -108,7 +108,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
         <!-- fine logo -->
         	<li class="item-header"><a href="home.jsp" class="testoResponsive">Home</a></li>
             <li class="item-header"><a href="Catalogo.jsp" class="testoResponsive">Pasticceria</a></li>
-            <li class="item-header"><a href="Vaschetta.jsp" class="testoResponsive">Gelateria</a></li>
+            <li class="item-header"><a href="CreaVaschetta" class="testoResponsive">Gelateria</a></li>
             <li class="item-header"><a href="Storia.jsp" class="testoResponsive">Storia</a></li>
             <li class="item-header"><a href="Contatti.jsp" class="testoResponsive">Contatti</a></li>
             <!-- mettere disegno omino, posso pensare di mettere sia accedi che carrello nello stesso li -->
