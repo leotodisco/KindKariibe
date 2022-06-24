@@ -445,7 +445,8 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 					return false;
 			}
 }
-	}	public static boolean SingoloUpdate(String Attributo, String valore, String Idprodotto) throws SQLException {
+	}	
+	public static boolean SingoloUpdate(String Attributo, String valore, String Idprodotto) throws SQLException {
 		
 		String sql = "UPDATE " + TABLE_NAME + " SET " + Attributo + " = ?" 
 		 + " WHERE id = ?";

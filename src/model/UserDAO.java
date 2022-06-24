@@ -287,4 +287,34 @@ public class UserDAO implements ModelInterface<UserBean> {
 			}
 		}
 		return result;
-	}}
+	}
+	
+	public static boolean SingoloUpdate(String Attributo, String valore, String Idprodotto) throws SQLException {
+		
+		String sql = "UPDATE utente SET " + Attributo + " = ?" 
+		 + " WHERE codiceFiscale = ?";
+		
+		
+		try(Connection con = ds.getConnection()){
+			try(PreparedStatement preparedStatement2 = con.prepareStatement(sql)){
+				
+				preparedStatement2.setString(1, valore);
+				preparedStatement2.setString(2, Idprodotto);
+			
+				preparedStatement2.executeUpdate();
+		
+			}
+		
+		return true;
+		
+		
+	}
+	
+	
+	
+	}
+	
+	
+
+
+}
