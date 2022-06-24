@@ -447,16 +447,12 @@
             	<br><br>
             	<div class="intestazione">
                 	<input type="submit" value="Inserisci" class="bottone-submit" id="inserisci-password">
-                </div>
-            	
+                </div>          	
             </form>
-            
-            
+          
          </div> <!-- fine div id=  carte-credito -->
-                  
-
 		
-
+<jsp:include page="footer.jsp"/>
 	</body>
 </html>
 

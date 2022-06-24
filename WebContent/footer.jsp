@@ -12,20 +12,21 @@
     
 </head>
 <body>
+ 
+ <div class="super-container">
+	<div style="text-align:center;">
+		<div class="dot-logo-footer">
+		    <span style="z-index:100;" class="testoLogo-header-footer">K</span>
+		    <div class="dotArancione-logo-footer" style="z-index: -100;">
+		    	<span class="testoLogo-header-footer">K</span>
+		    </div>
+		</div>
+	</div>  
+	
     <footer>
         <div class="footer-content">
-            <h3>KindKaribe</h3>
-            <p>Via Francesco Prata Castelmorrone(CE).</p>
-            <ul class="socials">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-            </ul>
-        </div>
-        <div class="footer-bottom">
-                
-                    <div class="footer-menu">
+            <h1>KindKaribe</h1>
+             <div class="footer-menu">
                       <ul class="f-menu">
                         <li><a href="home.jsp">Home</a></li>
                         <li><a href="Catalogo.jsp">Pasticceria</a></li>
@@ -34,7 +35,18 @@
                       </ul>
                     </div>
         </div>
+        <div class="footer-bottom">
+                <ul class="socials">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+            </ul>
+                   
+        </div>
 
     </footer>
+         </div>
 </body>
+
 </html>

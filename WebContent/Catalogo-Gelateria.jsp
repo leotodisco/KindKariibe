@@ -48,6 +48,12 @@
 
 	<%}%>
 	</div>
-
+	<br>
+	
+	<div style="text-align:center; margin-top: 50px;">
+		<span class="uname">Crea una vaschetta!</span>
+	</div>
+	
+<jsp:include page="footer.jsp"/>
 </body>
 </html>
