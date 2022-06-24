@@ -126,14 +126,14 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
 				<!-- QUI INIZIA LA PARTE NORMALE -->
         <nav class="nav-container">
             <div class="nav-container-item-sx">
-            <div class="dot-logo">
-                <span style="z-index:100;" class="testoLogo-header"><a href="home.jsp">K</a></span>
-                
-                <div class="dotArancione-logo" style="z-index: -100;">
-                    <span class="testoLogo-header"><a href="home.jsp">K</a></span>
-                </div>
-            </div>       
-        </div>
+	            <div class="dot-logo">
+	                <span style="z-index:100;" class="testoLogo-header"><a href="home.jsp">K</a></span>
+	                
+	                <div class="dotArancione-logo" style="z-index: -100;">
+	                    <span class="testoLogo-header"><a href="home.jsp">K</a></span>
+	                </div>
+	            </div>       
+        	</div>
        
             <ul class="elenco nav-container-item lista-header">
                 <li class="item-header"><a href="Catalogo-Gelateria.jsp" style="text-decoration:none;">Gelateria</a></li>

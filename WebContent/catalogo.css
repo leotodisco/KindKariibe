@@ -110,6 +110,21 @@ button{
 	font-family: 'archia-regular';  
 }
 
+/*LEO*/
+.uname {
+	font-family: 'archia-regular';
+	width: 350px;
+	height: 40px;
+    border: 1px solid #2f2f2f;
+	border-radius: 17px;
+	padding: 8px 8px;
+	cursor: pointer;
+}
+
+.uname:hover {
+ 	border: 2px solid #2f2f2f;
+}
+
 @media all and (min-width: 1255px) and (max-width: 1700px){
 
 	 .container{
