@@ -442,6 +442,7 @@
             	<input type="text" name="VecchiaP" class="uname" placeholder="Password Attuale" id="password-attuale">
             	<br><br>
             	<input type="hidden" name="attributo" value="password">
+            	<input type="hidden" name="utente" value="<%= utente.getCodiceFiscale() %>">
             	<input type="text" name="valore" class="uname" placeholder="Nuova Password" id="password-nuova">
             	<br><br>
             	<div class="intestazione">
