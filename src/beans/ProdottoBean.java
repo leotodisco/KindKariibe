@@ -91,7 +91,7 @@ public class ProdottoBean {
 		this.prezzo = prezzo;
 	}
 	public Double getIVA() {
-		return prezzo*IVA/100;
+		return IVA;
 	}
 	public void setIVA(Double iVA) {
 		IVA = iVA;
