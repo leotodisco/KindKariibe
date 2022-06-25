@@ -37,8 +37,14 @@
   				{
   					%>
 		<div class="card">
-			<a href="CreaCatalogo?action=details&id=<%= prodotto.getId()%>"><img class="image" src="./immagini/<%= prodotto.getPathImage().get(0)  %>"></a>
-				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>"><ion-icon name="cart-outline" id="iconaCarrello" style="font-size: 1.75rem; color: #2f2f2f; background-color: #fcefd4;"></ion-icon></a>
+			<div class= "prova">
+			<a  id ="panino" href="CreaCatalogo?action=details&id=<%= prodotto.getId()%>"><img class="image" id= "speriamo" src="./immagini/<%= prodotto.getPathImage().get(0)  %>"></a>
+    <span class="text">
+    <a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>">
+    <ion-icon name="cart-outline" id="iconaCarrello" style="font-size: 1.75rem; color: #2f2f2f;  background-color: #fcefd4;">
+    </ion-icon></a></span>
+  </div>
+				
 			<div class="dettagli-card">
 				<div class="nome"><%= prodotto.getNome() %></div>
 				<p>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></p>
@@ -49,19 +55,25 @@
 	
 	<script>
 	 $(document).ready(function () {
-		 /*
-        $(".card").mouseover(function(){
-         $(this).find("#iconaCarrello").show()
+		 
+        $(".prova").mouseover(function(){
+         $(this).find(".text").show()
+         var vari = $(this).children("#panino");
+       		vari.children("#speriamo").css("opacity","0.5").css("transition", ".3s ease")
+       		.css("border","3px solid green");
         	
-        })//chiusura hover
+        });
         
-        $(".card").mouseout(function(){
-        	$(this).find("#iconaCarrello").hide()
+        $(".prova").mouseout(function(){
+        	$(this).find(".text").hide()
+        	var vari = $(this).children("#panino");
+       		vari.children("#speriamo").css("opacity","1").css("transition", ".3s ease")
+       		.css("border","1px solid black");
         	
-        })//chiusura hover
-		 */
+        });
+		 
         
-     }) //chiusura jquery
+     }) 
 	</script>
 
 <jsp:include page="footer.jsp"/>
