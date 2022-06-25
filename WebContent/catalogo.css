@@ -37,12 +37,50 @@ body{
 }
 
 
-.image:hover{
-	border: 3px solid green;
-	height: 218px;
-    width: 218px;
+.sassi{
+border: 3px solid green;
+height: 218px;
+  width: 218px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+  transition: .3s ease;
+  background-color: #008CBA;
 }
 
+
+
+.text {
+	margin-top:33px;
+ height:30px;
+border-bottom:1px solid green;
+border-left:1px solid green;
+border-right:1px solid green;
+width:217px;
+z-index:999;
+border-radius:0px 0px 12px 12px ;
+ background-color:#fcefd4;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  display:none;
+  
+}
+
+
+
+.prova{
+	    width: 220px;
+    height: 220px;
+	  position: relative;
+}
 .dettagli-card{
     display: flex;
     flex-direction: column;

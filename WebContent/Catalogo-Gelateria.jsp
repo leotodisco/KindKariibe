@@ -21,6 +21,8 @@
 
 
 	<div class="pasticceria">
+	
+		
 		<span class="titolo">La Gelateria</span>
 	</div>
 
@@ -36,21 +38,47 @@
   				{
   					%>
 		<div class="card">
-			<a href="CreaCatalogo?action=details&id=<%=prodotto.getId()%>"><img class="image" src="./immagini/<%= prodotto.getPathImage().get(0)  %>"></a>
+			<div class= "prova">
+			<a  id ="panino" href="CreaCatalogo?action=details&id=<%= prodotto.getId()%>"><img class="image" id= "speriamo" src="./immagini/<%= prodotto.getPathImage().get(0)  %>"></a>
+    <span class="text">
+    <a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>">
+    <ion-icon name="cart-outline" id="iconaCarrello" style="font-size: 1.75rem; color: #2f2f2f;  background-color: #fcefd4;">
+    </ion-icon></a></span>
+  </div>
+				
 			<div class="dettagli-card">
 				<div class="nome"><%= prodotto.getNome() %></div>
 				<p>&euro; <%= String.format("%.02f", prodotto.getPrezzo())%></p>
-				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>">Aggiungi al carrello</a>
 			</div>
 		</div>
 	<%}%>
 	</div>
-	<br>
-	
 	<div style="text-align:center; margin-top: 50px;">
-		<span class="uname"><a href="Vaschetta.jsp">Crea una vaschetta!</a></span>
+	<span class="uname"><a href="Vaschetta.jsp">Crea una vaschetta!</a></span>
 	</div>
-	
+	<script>
+	 $(document).ready(function () {
+		 
+        $(".prova").mouseover(function(){
+         $(this).find(".text").show()
+         var vari = $(this).children("#panino");
+       		vari.children("#speriamo").css("opacity","0.5").css("transition", ".3s ease")
+       		.css("border","3px solid green");
+        	
+        });
+        
+        $(".prova").mouseout(function(){
+        	$(this).find(".text").hide()
+        	var vari = $(this).children("#panino");
+       		vari.children("#speriamo").css("opacity","1").css("transition", ".3s ease")
+       		.css("border","1px solid black");
+        	
+        });
+		 
+        
+     }) 
+	</script>
+
 <jsp:include page="footer.jsp"/>
 </body>
 </html>
