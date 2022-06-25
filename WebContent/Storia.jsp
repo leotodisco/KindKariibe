@@ -10,17 +10,18 @@
        
         <link rel="stylesheet" href="Storia.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <!-- da modificare i font e colori credo in te e poi aggiungere immagini quando arrivano-->
     </head>
     <body>
     	<jsp:include page="header.jsp" />
     	
         <section>
             <div class = "image">
-               <img src="https://cdn.pixabay.com/photo/2017/08/26/23/37/business-2684758__340.png" id="foto">
+               <img src="./immagini/castelmorrone.jpg" id="citta" class="image" style="margin-left:10px;">
+               <img src="./immagini/pasticceria.jpeg" id="foto" class="image" style="display:none;">
+               <img src="./immagini/coni.jpeg" id="gelateria" class="image" style="display:none;">
             </div>
             <div class = "content">
-                <h2>Chi siamo</h2>
+                <h2 class="intestazione">Chi siamo</h2>
                 <span><!-- line here --></span>
                 <p id="prima">Una storia che ha origine prima della Seconda Guerra Mondiale una storia raccontata da ogni 
                     singola prelibatezza della pasticceria KindKaribe.
@@ -28,47 +29,82 @@
                     rinomato panificio in cui vigeva una regola fondamentale: l'utilizzo del lievito madre. 
                     Sessant'anni e due generazioni dopo, la stessa regola vive ancora nei lieviti della pasticceria KindKaribe, 
                     oggi capitanata da Marco con l'ausilio della moglie Ester e il figlio Arturo.</p>
-                <p id="seconda" style="display:none;"> Ubicato in via Boh, 
-                    la pasticceria KindKaribe offre ogni giorno una vastissima selezione di prodotti tipici napoletani, fatti con passione e 
+                <p id="seconda" style="display:none;"> La pasticceria KindKaribe offre ogni giorno una vastissima selezione di prodotti tipici napoletani, fatti con passione e 
                     sapienza. Delizie in cui perdersi tra la morbidezza di una pastiera, la croccantezza di una calda sfogliatella, 
-                    fino ad inebriarsi del profumo del rum di un babà appena bagnato. Un'esplosione di piacere non solo partenopeo, 
-                    la pasticceria KindKaribe prepara torte dal design innovativo pronte a regalare un'emozione sia visiva che gustativa.
-                    La lavorazione del cacao, rigorosamente "monorigine", si trasforma in straordinari cioccolatini, praline e 
-                    tavolette dal profumo ed aroma autentico. Cioccolato per golosi ma anche per esteti e intenditori.</p>
-                <p id="terza" style="display:none;">  KindKarive non è solo pasticceria. Gustosi gelati, assolutamente artigianali, 
+                    fino ad inebriarsi del profumo del rum di un babà appena bagnato. 
+                    La pasticceria KindKaribe prepara torte dal design innovativo pronte a regalare un'emozione sia visiva che gustativa.
+                </p>
+                <p id="terza" style="display:none;">  KindKaribe non è solo pasticceria. Gustosi gelati, assolutamente artigianali, 
                     sono preparati con cura utilizzando solo ingredienti freschi e naturali. 
                     Una caffetteria di alta professionalità accompagna ogni piccolo peccato di gola e 
                     piacevoli momenti da concedersi da soli o in compagnia.</p>
+                    
                 <ul class = "links">
-                    <li id="work"><a href = "#">Storia</a></li>
+                    <li id="work">Storia</li>
                     <div class = "vertical-line"></div>
-                    <li id="service"><a href = "#">Pasticceria</a></li>
+                    <li id="service">Pasticceria</li>
                     <div class = "vertical-line"></div>
-                    <li id="contact"><a href = "#">Gelateria</a></li>
+                    <li id="contact">Gelateria</li>
                 </ul>
             </div>
         </section><br><br>
-       <script>
+  <script>   
+  
      $('#work').click(function(){
-   $('#prima').show();
-   $("#seconda").hide();
-   $("#terza").hide();
-   $("#foto").show();
-});
-$('#service').click(function(){
-   $('#seconda').show();
-   $("#prima").hide();
-   $("#terza").hide();
-   $("#foto").hide();
-});    
+		   $('#prima').show();
+		   $("#seconda").hide();
+		   $("#terza").hide();
+		   $("#foto").hide();
+		   $("#citta").show();
+		   $("#gelateria").hide();
+		   $(this).css("border-color","green");
+		   $(this).css("color","green");
+		   $('#service').css("border-color","#2f2f2f");
+		   $('#service').css("color","#2f2f2f");
+		   $('#contact').css("border-color","#2f2f2f");
+		   $('#contact').css("color","#2f2f2f");
+		   $('.content').children(".intestazione").empty();
+		   $('.content').children(".intestazione").append($(this).text());
+	});
+     
+	$('#service').click(function(){
+		   $('#seconda').show();
+		   $("#prima").hide();
+		   $("#terza").hide();
+		   $("#foto").show();
+		   $("#citta").hide();
+		   $("#gelateria").hide();
+		   $(this).css("border-color","green");
+		   $(this).css("color","green");
+		   $('#work').css("border-color","#2f2f2f");
+		   $('#work').css("color","#2f2f2f");
+		   $('#contact').css("border-color","#2f2f2f");
+		   $('#contact').css("color","#2f2f2f");
+		   $('.content').children(".intestazione").empty();
+		   $('.content').children(".intestazione").append($(this).text());
+		   
+	});    
 
-$('#contact').click(function(){
-   $('#terza').show();
-   $("#prima").hide();
-   $("#seconda").hide();
-}); 
-       </script>
-       <jsp:include page="footer.jsp" />
-    </body>
+	$('#contact').click(function(){
+	   $('#terza').show();
+	   $("#prima").hide();
+	   $("#seconda").hide();
+	   $(this).css("border-color","green");
+	   $(this).css("color","green");
+	   $('#work').css("border-color","#2f2f2f");
+	   $('#work').css("color","#2f2f2f");
+	   $('#service').css("border-color","#2f2f2f");
+	   $('#service').css("color","#2f2f2f");
+	   $('.content').children(".intestazione").empty();
+	   $('.content').children(".intestazione").append($(this).text());
+	   $("#foto").hide();
+	   $("#citta").hide();
+	   $("#gelateria").show();
+	});
+	
+  </script>
+  
+<jsp:include page="footer.jsp" />
+</body>
 </html>
     

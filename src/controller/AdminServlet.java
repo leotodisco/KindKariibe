@@ -17,11 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import beans.CategoriaBean;
 import beans.GustoBean;
 import beans.ImmagineBeans;
+import beans.OrdineBean;
 import beans.ProdottoBean;
 import model.CategoriaDAO;
 import model.CostituzioneDAO;
 import model.GustoDAO;
 import model.ImmagineDAO;
+import model.OrdineDAO;
 import model.PossessoImmagineDAO;
 import model.ProdottoDAO;
 
@@ -307,9 +309,6 @@ public class AdminServlet extends HttpServlet {
 			String attributo = multi.getParameter("attributo");
 			String valore = multi.getParameter("valore");
 			String nome = multi.getParameter("nome");
-			
-			
-			
 			try {
 				GustoDAO.SingoloUpdate(attributo, valore, nome);
 				response.sendRedirect("Catalogo.jsp");
@@ -317,6 +316,21 @@ public class AdminServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		
+		
+		if(azioni.equals("Mostra Ordini")){
+			System.out.println("vediamo se va in mostra ordini");
+			OrdineDAO dao = new OrdineDAO();
+			ArrayList<OrdineBean> elencoOrdini = new ArrayList<>();
+			try {
+				elencoOrdini = (ArrayList<OrdineBean>) dao.doRetrieveAll("idOrdine");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			request.setAttribute("ordini", elencoOrdini);
+			response.sendRedirect("PaginaOrdiniAdmin.jsp");
 		}
 		
 		

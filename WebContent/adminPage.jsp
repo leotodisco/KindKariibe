@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="admin.css">
     <meta charset="UTF-8">
     <title>Admin</title>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -38,9 +38,7 @@
 	ArrayList<OrdineBean> ListaOrdini = (ArrayList<OrdineBean>) request.getSession().getAttribute("ordini");
 	if(ListaOrdini == null) {
 		response.sendRedirect("./CreaCatalogo");	
-		return;
-	
-	
+		return;	
 	}
 	
 	ArrayList<CategoriaBean> ListaCategoria = (ArrayList<CategoriaBean>) request.getSession().getAttribute("Categorie");
@@ -212,14 +210,8 @@
 	<div>
 	
 	<br>
-	<button id= "ordiniB">Mostra Ordini</button><br>
-	<h2 class = "ordini" style = "display:none">Lista Ordini</h2>
-				<% 	for(OrdineBean O : ListaOrdini)
-				{ 
-				%>
-					<h5 class = "ordini" style = "display:none">Ordine numero <%= O.getIdOrdine() %></h5>	
-				<%}%>	
-	
+	<button id= "ordiniB"><a href="PaginaOrdiniAdmin.jsp" style="color:#2f2f2f; text-decoration:none">Mostra Ordini</a></button><br>
+
 	</div><br>
 	<button id= "CategorieB">Mostra Categorie</button>
 	<div id = "divCategorie" style = "display:none">
@@ -370,7 +362,6 @@
 	</div>
 	</div>
 	
-
     <script>
     
     

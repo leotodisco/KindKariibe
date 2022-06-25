@@ -22,11 +22,11 @@
     padding: 0;
     margin: 0;
 }
+
 body{
-
     background-color: #fcefd4;
-
 }
+
 section{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -39,12 +39,17 @@ section{
 .image{
     background-color: transparent;
     display: flex;
-    border-radius: 12px 0 0 12px;
+    border-radius: 12px ;
+
 }
+
 .image img{
-height:50vh;
-margin:50px auto
+	height:50vh;
+	margin:50px auto;
+    border:1px solid #2f2f2f;
 }
+
+
 .content{
     background-color: transparent;
     display: flex;
@@ -83,11 +88,14 @@ margin:50px auto
     padding: 10px 15px;
     width: 160px;
     text-align: center;
+    font-family: "archia-regular";
 }
-.links li a{
+.links li {
     text-transform: uppercase;
     color: #2f2f2f;
     text-decoration: none;
+	font-family: "archia-regular";
+	cursor:pointer;
 }
 
 .links li:hover{

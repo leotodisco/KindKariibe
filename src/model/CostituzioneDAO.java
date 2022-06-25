@@ -31,7 +31,7 @@ public class CostituzioneDAO {
 	
 	public void doSave(GustoBean gusto ,ProdottoBean prodotto) throws SQLException{
 	
-		String insertSQL = "insert into kindkaribe.costituzione (prodotto,gusto) \r\n" + 
+		String insertSQL = "insert into kindkaribe.costituzione (prodotto,gusto) " + 
 				"VALUES (?,?)";
 		
 		
@@ -41,6 +41,25 @@ public class CostituzioneDAO {
 				preparedStatement.setString(2, gusto.getNome());
 				
 				preparedStatement.execute();
+			}
+		}
+	}
+	
+	//questo metodo salva tutti i gusti presenti nel bean
+	public void doSaveALL(ProdottoBean prodotto) throws SQLException{
+		
+		String insertSQL = "insert into kindkaribe.costituzione (prodotto,gusto) " + 
+				"VALUES (?,?)";
+		
+		
+		try (Connection con = ds.getConnection()){
+			try(PreparedStatement preparedStatement = con.prepareStatement(insertSQL)){
+				for(GustoBean gusto : prodotto.getGusti()) {
+					preparedStatement.setInt(1, prodotto.getId());
+					preparedStatement.setString(2, gusto.getNome());
+
+					preparedStatement.executeUpdate();
+				}
 			}
 		}
 	}

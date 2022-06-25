@@ -16,10 +16,14 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import beans.OrdineBean;
 import beans.ProdottoBean;
 import beans.ResponseStatusMessage;
+import beans.UserBean;
 import model.Carrello;
+import model.OrdineDAO;
 import model.ProdottoDAO;
+import model.UserDAO;
 
 /**
  * Servlet implementation class ProdottiAPI
@@ -63,7 +67,7 @@ public class ProdottiAPI extends HttpServlet {
 			try {
 				List<ProdottoBean> elencoProdotti = new ArrayList<>();
 				//prendo tutti i prodotti il cui nome contiene il nome passato via ajax
-				elencoProdotti = dao.doRetrieveAll("C.nome").stream().filter(s->s.getNome().toLowerCase().contains(request.getParameter("prodotto").toLowerCase()))
+				elencoProdotti = dao.doRetrieveAllVisibili("C.nome").stream().filter(s->s.getNome().toLowerCase().contains(request.getParameter("prodotto").toLowerCase()))
 														.collect(Collectors.toList());
 				response.setStatus(200);
 				response.getWriter().print(gson.toJson(elencoProdotti));
@@ -194,6 +198,25 @@ public class ProdottiAPI extends HttpServlet {
 			response.setStatus(200);
 			response.getWriter().print(gson.toJson(cart.getCostoTotale()));
 			response.getWriter().flush();
+		}
+		
+		else if(action.equals("getOrdini")) {
+			OrdineDAO daoOrdine = new OrdineDAO();
+			ArrayList<OrdineBean> elenco = new ArrayList<>();
+			UserBean usr = new UserBean();
+			UserDAO daoUSR = new UserDAO();
+			
+			try {
+				usr = daoUSR.doRetrieveByKey((String) request.getParameter("utente"));
+				elenco = (ArrayList<OrdineBean>) daoOrdine.doRetriveByUtente(usr);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			response.setStatus(200);
+			response.getWriter().print(gson.toJson(elenco));
+			response.getWriter().flush();
+			
 		}
 
 		

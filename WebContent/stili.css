@@ -23,10 +23,13 @@
 .titolo-ricerca{
 	  font-family: "archia-regular";
 	  font-size: 1.2rem;
+	  margin-left:10px;
 }
 
 .immagine-ricerca{
+	margin-left:10px;
 	width: 50px;
+	background-color: #fcefd4;
 	height: 50px;
 	border: 1px solid #2f2f2f;
 }
@@ -46,7 +49,7 @@
 	margin-left: 2px; 
 	padding-right: 20px;
 	padding-left: 5px;
-    width: 200px;
+    width: 150px;
     height: 20px;
     border-color: #2f2f2f;
     border: 1px solid #2f2f2f;
@@ -123,7 +126,7 @@ a:link{
   display: inline-block;
   list-style: none;
   font-family: "archia-regular";
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   word-spacing: 6px;
 }
 
@@ -225,7 +228,7 @@ li>a:hover{
     cursor:pointer;
     background-color: transparent; 
     transition:.3s;
-        top: 0;
+    top: 0;
     left: 10px;
 }
 

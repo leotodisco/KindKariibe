@@ -43,15 +43,12 @@
 				<a href="GestioneCarrello?action=aggiungi&id=<%=prodotto.getId()%>">Aggiungi al carrello</a>
 			</div>
 		</div>
-		
-		
-
 	<%}%>
 	</div>
 	<br>
 	
 	<div style="text-align:center; margin-top: 50px;">
-		<span class="uname">Crea una vaschetta!</span>
+		<span class="uname"><a href="Vaschetta.jsp">Crea una vaschetta!</a></span>
 	</div>
 	
 <jsp:include page="footer.jsp"/>

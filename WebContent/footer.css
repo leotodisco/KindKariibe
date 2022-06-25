@@ -16,9 +16,11 @@
     margin: 0;
 }
 
+
 .super-container{
 	margin-top: 100px;
 }
+
 
 footer{
 	margin-top:15px;
@@ -78,7 +80,7 @@ footer{
 .socials a:hover{
     text-decoration: none;
     color: #2f2f2f;
-    border: 1px solid #acd872;
+    border: 1px solid #f27da4;
     transition: color .4s ease;
     padding: 5px;
     border-radius: 50%;
@@ -92,7 +94,7 @@ footer{
 }
 
 .socials a:hover i{
-	color: #acd872;
+	color: #f27da4;
 }
 
 .footer-bottom{
@@ -183,10 +185,12 @@ footer{
 
 
 
-@media (max-width:500px) {
+@media (max-width:568px) {
 .footer-menu ul{
-display: flex;
+
 margin-top: 10px;
 margin-bottom: 20px;
 }
+
+
 }

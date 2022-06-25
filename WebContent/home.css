@@ -18,13 +18,101 @@ body{
   background-color: #fcefd4;
 }
 
+.parteFinaleHome{
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	padding-bottom: 0;
+}
+
+.uname{
+	padding-left: 8px;
+	width: 170px;
+	height: 60px;
+	font-size: 30px;
+	border-color: #2f2f2f;
+	border: 2px solid #2f2f2f;
+	background-color: #FCEFD4;
+	border-radius: 17px;
+	cursor:pointer;
+	text-align:center;
+}
+
+.uname:focus, .uname:hover {
+	outline: none;
+	border: 2.5px solid green;
+}
+
+.parteDestraHome{
+	display: flex;
+	width:50%;
+}
+
+.paragrafo{
+  padding: 10px 10px;
+  font-family:"archia-regular";
+  font-size: 1.4rem;
+  text-justify: initial;
+}
+
 .center{
   margin-top: -50px;
   display: flex;
-  padding-bottom: 700px;
+  padding-bottom: 500px;
   justify-content: center;
 }
 
+.testo-home-pagina2{
+	    font-family: 'intro_script_demomedium';
+	    font-size: 4.5rem;
+	    color: #2B9348;
+}
+
+.parteSinistraHome{
+	width: 850px;
+}
+
+.dotRosa{
+    margin-left: 320px;
+    height: 300px;
+    width: 300px;
+    background-color: #f27da4;
+    border-radius: 50%;
+    border: 1px solid #e27289;
+    position: absolute;
+    display: flex;
+    
+    text-align:center;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+  
+ .dotVerde {
+ 	margin-top: 230px;
+  	margin-left: 85px;
+    height: 250px;
+    width: 250px;
+    background-color: #acd872;
+    border: 1px solid green;
+    border-radius: 50%;
+    position: absolute;
+    
+    display: flex;
+    text-align: center;
+    align-items: center;
+    vertical-align: middle;
+}
+  
+ .scritta-pallina{
+  	color:#2f2f2f;
+  	font-family: "archia-regular";
+  	font-size: 2.2rem;
+  	vertical-align: baseline ;
+  	text-align: center;
+  	align-items: center;
+  }
+  
 .dot {
   margin-top: 230px;
   margin-right: 110px;
@@ -40,6 +128,7 @@ body{
     align-items: center;
     z-index: 0;
   }
+  
 
 .dotArancione{
     margin-top: 45px;
@@ -118,7 +207,26 @@ h4{
 }
 
 @media screen and (max-width:800px){
-	.spanHome{
+.parteSinistraHome{
+	display:flex;
+	justify-content:center;
+}
+
+.parteDestraHome{
+	display: none;
+}
+	
+.dotRosa{
+		display:none;
+}
+	
+.dotVerde{
+		display:none;
+}	
+	
+/*DA RIVEDERE LA PARTE SOPRA*/	
+	
+.spanHome{
   font-size: 5rem;
 }
 
@@ -144,6 +252,9 @@ h4{
     align-items: center;
     z-index: 0;
   }
+  
+
+
 
 .dotArancione{
     margin-top: 37px;
@@ -156,6 +267,8 @@ h4{
     position: absolute;
     z-index: -100;   
 }
+
+
 
 @keyframes slideIn {
   0% {
@@ -189,6 +302,8 @@ h4{
   animation-name: entra;
 }
 
+
+
 @keyframes entra{
   0% {
     margin-top: -800px;
@@ -200,7 +315,27 @@ h4{
 }
 }
 
+
+
 @media (max-width: 480px){
+.parteSinistraHome{
+	display:flex;
+	justify-content:center;
+}
+
+.parteDestraHome{
+	display: none;
+}
+	
+.dotRosa{
+		display:none;
+}
+	
+.dotVerde{
+		display:none;
+}	
+	
+	
 	
 @keyframes slideIn {
   0% {

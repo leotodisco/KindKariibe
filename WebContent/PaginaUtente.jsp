@@ -188,7 +188,6 @@
 
         });//chiusura jquery
     </script>
-    
     	<jsp:include page="header.jsp" />
     	
         <div class="intestazione">
@@ -227,7 +226,7 @@
 
 
         <!--SEZIONE CARTE DI CREDITO-->
-        <div class="carte-credito elencoCarte" style="display: none;" id="carte-utente">
+        <div class="carte-credito elencoCarte" style="display: none; padding-bottom:250px;" id="carte-utente">
         
         <% for(MetodoPagamentoBean metodo : elencoMetodi){ %>
             <span class="method-1">
@@ -294,7 +293,7 @@
         
 
         <!--SEZIONE ORDINI-->
-        <div class="carte-credito" style="display: none">
+        <div class="carte-credito" style="display: none; padding-bottom:250px;">
 
             <%
             Comparator<OrdineBean> ordineComparator = (o1, o2) -> {
@@ -357,7 +356,7 @@
         </div>
 
 		<!-- SEZIONE DATI UTENTE -->
-        <div class="carte-credito" style="display: none" >
+        <div class="carte-credito" style="display: none;padding-bottom:250px;" >
         <div id="mostraIndirizzi">
         <!--SEZIONE INDIRIZZI-->
         <%for(IndirizzoBean i : elencoIndirizzi){%>
@@ -449,7 +448,6 @@
                 	<input type="submit" value="Inserisci" class="bottone-submit" id="inserisci-password">
                 </div>          	
             </form>
-          
          </div> <!-- fine div id=  carte-credito -->
 		
 <jsp:include page="footer.jsp"/>
