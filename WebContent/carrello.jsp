@@ -12,12 +12,9 @@
 </head>
 
 <body>
-  <% HttpSession sessione=request.getSession(true); UserBean utente=(UserBean) sessione.getAttribute("utente");
-  		if(utente==null){ %>
-  		<jsp:forward page="login-form.jsp"/>
-  		
-  	<%		
-  		}
+  <% HttpSession sessione=request.getSession(true);
+  UserBean utente=(UserBean) sessione.getAttribute("utente");
+  ArrayList<MetodoPagamentoBean> result = new ArrayList<>();
   %>
  <jsp:include page = "header.jsp"/>
 
@@ -45,7 +42,8 @@
           <div class="container-indirizzo">
           
               <div class="payment-method" >
-            <% for(IndirizzoBean u : utente.getIndirizziSpedizione()){ %>
+              <%if (utente != null){ 
+               for(IndirizzoBean u : utente.getIndirizziSpedizione()){ %>
                 <!--<ion-icon class="checkmark " name="checkmark-circle"></ion-icon>-->
                 <span class="method indirizzo-">
                 <input type="radio" name="idIndirizzo" value="<%=u.getId()%>" style="display:none;">
@@ -53,7 +51,10 @@
                   <ion-icon name="home"></ion-icon>
                   <%= "Via: "+u.getVia() +" "+u.getnCivico()+" "+"Città: "+u.getCitta()+" "+u.getCAP()+" "+u.getProvincia()%>
                 </span>
-              <%} %>
+              <%} }%>
+              
+              
+              
               </div>
 
           </div>
@@ -78,19 +79,21 @@
 
             </div>
             
-         <% 
+          <%if (utente != null){
               	ArrayList<MetodoPagamentoBean> elenco = new ArrayList<>(utente.getElencoMetodiPagamento());
-				ArrayList<MetodoPagamentoBean> result = new ArrayList<>();
 				for(MetodoPagamentoBean metodo : elenco){
     				if(metodo.getTipo().equals("Carta")){
         			result.add(metodo);
     				}
-				} 
+				}
+          }
+         
 		%>
 	
 	<div id="container-metodi-pagamento" style="display:none;">
     	  <div class="payment-method">
 	<%
+	if (utente != null){
 	for(MetodoPagamentoBean m : result){	
 	%>	
                 <!--<ion-icon class="checkmark " name="checkmark-circle"></ion-icon>-->
@@ -102,11 +105,29 @@
                   	<span><b>Intestatario:</b> <%= m.getNomeIntestatario()%></span>
                 </span>
               
-     <%} %>
+     <%} }%>
               </div>  
     </div>
+    					  
+ <% 
+  		if(utente!=null){ 
+  			if(cart.getProducts().isEmpty() || utente.getIndirizziSpedizione().isEmpty() || result.isEmpty()){	%>
+ 			<input type="submit" value="Conferma Pagamento" class="bottone-inserisci" id="tasto-conferma-pagamento" disabled>
+ 			<%}else{ %>
+ 			
+  		<input type="submit" value="Conferma Pagamento" class="bottone-inserisci" id="tasto-conferma-pagamento"> 
+  	<%}		
+  		}
+  		else
+  		{
+  %>
     					
-                            <input type="submit" value="Conferma Pagamento" class="bottone-inserisci" id="tasto-conferma-pagamento">
+    		<a href = "login-form.jsp" class="bottone-inserisci">Esegui il login</a>			
+    	<%
+    	
+  		}
+    	%>				
+              
                         
               </form>
  

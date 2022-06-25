@@ -11,6 +11,9 @@ public class Carrello {
 		this.products = new HashMap<>();
 	}
 	
+	
+	
+	
 	public void addProduct(ProdottoBean product) {
 		
 		boolean flag = false;
