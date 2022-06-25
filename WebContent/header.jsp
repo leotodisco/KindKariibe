@@ -43,11 +43,12 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             		$("#prova").show();
             		
             		data.forEach(e => {
-						var myvar = '<a href="CreaCatalogo?action=details&id='+e.id+'"><div style=" width: 200px;  border-bottom: 1px solid black; right: 50px;"><h2 class="titolo-ricerca">'+e.nome+'</h2></a> ';
-						var myvar2 = '<a href="CreaCatalogo?action=details&id='+e.id+'"><img class="immagine-ricerca" src="./immagini/'+e.pathImage[0]+'">'+'</a> </div><br><br>';
+						var myvar = '<a href="CreaCatalogo?action=details&id='+e.id+'">'+
+									'<div style=" width:200px; background-color:#fcefd4; right: 50px;">'+
+									'<h2 class="titolo-ricerca">'+e.nome+'</h2></a>'
+									+ '<a href="CreaCatalogo?action=details&id='+e.id+'"><img class="immagine-ricerca" src="./immagini/'+e.pathImage[0]+'">'+'</a></div><hr style="color: #2f2f2f; ">';
 						
 						$("#prova").append(myvar);
-						$("#prova").append(myvar2);
 					})
 				}
             }
@@ -144,7 +145,7 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
            
 
             <div class="nav-container-item-dx">
-                            	<ion-icon name="search" id="cerca" style="font-size: 1.7rem; cursor: pointer; margin-right:5px;"></ion-icon>
+                    <ion-icon name="search" id="cerca" style="font-size: 1.7rem; cursor: pointer; margin-right:5px;"></ion-icon>
                             	
                             	<!-- AGGIUSTARE -->
 					<div class="container-ricerca" >

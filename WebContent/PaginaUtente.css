@@ -15,9 +15,9 @@
 	src: url('./font/introscriptdemo-medium.woff') format('woff');
 }
 
-* {
-	margin: 0;
-	padding: 0;
+*{
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -426,7 +426,7 @@ label{
 		padding-top: 10px;
 		cursor: pointer;
 		font-weight: 10;
-		grid-template-columns: repeat(4, 100px);
+		grid-template-columns: repeat(5, 95px);
 		justify-content: center;
 		text-align: center;
 	}
@@ -440,7 +440,7 @@ label{
 	}
 
 	.ordine {
-		width: 200px;
+		width: 370px;
 	}
 	.contenitore {
 		justify-content: center;
@@ -471,6 +471,7 @@ label{
 	#container-form-carte{
 		margin-top:60px;
 	}
+
 }
 
 @media all and (max-width:568px) {
@@ -504,13 +505,13 @@ label{
 		padding-top: 10px;
 		cursor: pointer;
 		font-weight: 10;
-		grid-template-columns: repeat(4, 95px);
+		grid-template-columns: repeat(5, 90px);
 		justify-content: center;
 		text-align: center;
 	}
 	
 	.opzioni li{
-		font-size: 10px;
+		font-size: 15px;
 	}
 
 	.opzioni icona{
@@ -518,7 +519,7 @@ label{
 	}
 
 	.ordine {
-		width: 200px;
+		width: 370px;
 	}
 	.contenitore {
 		justify-content: center;
@@ -546,7 +547,17 @@ label{
 		gap: 15px;
 	}
 
+	.container-ordine {
+		display: flex;
+		flex-direction: row;
+	}
+
 	#container-form-carte{
 		margin-top:60px;
 	}
+	
+	.cols2 span{
+		font-size:16px;
+	}
+	
 }

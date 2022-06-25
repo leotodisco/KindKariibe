@@ -1,24 +1,32 @@
+@font-face {
+  font-family: "archia-regular";
+  src: url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("truetype");
+}
+
 body {
-  	
     background-color: #fcefd4;
-  }
-  .wrapper {
-    width: 350px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 60%;
-    left: 50%;
-    
+}
+  
+.wrapper {
+    width: 350px;    
     padding: 30px;
-    background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  }
+    display:flex;
+    justify-content: center;
+    text-align:center;
+}
+  
   .container {
     width: 100%;
     height: 350px;
     position: relative;
   }
+  
   .bowl {
     width: 230px;
     height: 90px;
@@ -30,6 +38,7 @@ body {
     bottom: 90px;
     border-radius: 0 0 150px 150px;
   }
+  
   .bowl:before {
     content: "";
     position: absolute;
@@ -39,6 +48,7 @@ body {
     left: -5%;
     border-radius: 20px;
   }
+  
   .base {
     height: 40px;
     width: 20px;
@@ -59,6 +69,7 @@ body {
     top: 30px;
     border-radius: 50px 50px 0 0;
   }
+  
   .scoop1 {
     height: 130px;
     width: 130px;
@@ -74,6 +85,7 @@ body {
     top: 20px;
     left: 108px;
   }
+  
   .scoop2 {
     height: 130px;
     width: 130px;
@@ -83,6 +95,7 @@ body {
     top: 100px;
     right: 70px;
   }
+  
   .scoop3 {
     height: 130px;
     width: 130px;
@@ -98,52 +111,17 @@ body {
       transparent 21px
     );
   }
+  
   .btns {
-    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
+    gap: 25px;
     padding-top: 15px;
-    border-top: 2px dashed #404080;
   }
-  select.minimal {
-  background-image:
-    linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%),
-    linear-gradient(to right, #ccc, #ccc);
-  background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px),
-    calc(100% - 2.5em) 0.5em;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1px 1.5em;
-  background-repeat: no-repeat;
-}
 
-select.minimal:focus {
-  background-image:
-    linear-gradient(45deg, green 50%, transparent 50%),
-    linear-gradient(135deg, transparent 50%, green 50%),
-    linear-gradient(to right, #ccc, #ccc);
-  background-position:
-    calc(100% - 15px) 1em,
-    calc(100% - 20px) 1em,
-    calc(100% - 2.5em) 0.5em;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1px 1.5em;
-  background-repeat: no-repeat;
-  border-color: green;
-  outline: 0;
-}
-
-
-
-  .btns button {
+.btns button {
     width: 150px;
     padding: 12px 0;
     border-radius: 20px;
@@ -154,3 +132,37 @@ select.minimal:focus {
     color: #ffffff;
     cursor: pointer;
   }
+  
+.intestazione {
+	margin-top: 35px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding-bottom: 30px;
+}
+
+select {
+  background-color: transparent;
+  border: 1px solid #2f2f2f;
+  border-radius: 5px;
+}
+
+.titolo {
+	font-family: 'intro_script_demomedium';
+	font-size: 4.5rem;
+	color: #2f2f2f;
+}
+	
+.container-form{
+	display:flex;
+	flex-direction: column;
+	tetx-align: center;
+	
+}
+
+.testo{
+	font-family: "archia-regular";
+	font-size: 2.5rem;
+}

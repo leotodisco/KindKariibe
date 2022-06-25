@@ -93,6 +93,7 @@ body{
   height: 50px;
   width: 100%;
   margin: 12px 0;
+ 
 }
 
 .testo{
@@ -101,26 +102,29 @@ body{
 
 .right-side .input-box input,
 .right-side .input-box textarea{
-	
+
   height: 100%;
   width: 100%;
   border: none;
   outline: none;
   font-size: 16px;
   background: #F0F1F8;
-  border-radius: 6px;
+  border-radius: 90px;
   padding: 0 15px;
 }
 
 .right-side .input-box textarea {
 	padding-top: 6px;
 	border: 2px solid green;
+
 }
 
 .right-side .button{
   display: inline-block;
   margin-top: 12px;
 }
+
+
 
 .right-side .button input[type="submit"]{
   color: #fff;

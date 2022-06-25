@@ -20,9 +20,7 @@ public class ProdottoBean {
 	private CategoriaBean categoria; //può essere null
 	private ArrayList<String> pathImage = new ArrayList<>(); //path immagini
 	private ArrayList<GustoBean> gusti = new ArrayList<>(); //gusti
-	
-	
-	
+
 	
 	@Override
 	public String toString() {

@@ -32,6 +32,17 @@ body{
 	border: 2px solid #2f2f2f;
 }
 
+.centra-testo{
+	text-align:center;
+	display: flex;
+	justify-content:center;
+}
+
+.intestazione{
+    font-family: 'intro_script_demomedium';
+	font-size: 4rem;	
+}
+
 .singolo-gusto button{
 	width:80px;
 	height: 50px;

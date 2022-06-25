@@ -29,6 +29,7 @@
              <div class="footer-menu">
                       <ul class="f-menu">
                         <li><a href="home.jsp">Home</a></li>
+                        <li><a href="Catalogo-Gelateria.jsp">Gelateria</a></li>
                         <li><a href="Catalogo.jsp">Pasticceria</a></li>
                         <li><a href="Storia.jsp">Storia</a></li>
                         <li><a href="Contatti.jsp">Contatti</a></li>
@@ -37,9 +38,9 @@
         </div>
         <div class="footer-bottom">
                 <ul class="socials">
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="https://www.facebook.com/KindKaribe"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="https://www.instagram.com/gelateria_kindkaribe/"><i class="fa fa-instagram"></i></a></li>
                 <li><a href="#"><i class="fa fa-youtube"></i></a></li>
             </ul>
                    
