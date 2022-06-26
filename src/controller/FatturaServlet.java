@@ -66,12 +66,11 @@ public class FatturaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//NON VA BENE CHE MI PRENDE SOLO IL PATH ASSOLUTO MA IN QUALCHE MDODO SI SISTEMA SPEROÃ¹
-		//"/Users/leopoldotodisco/eclipse-workspace/progettoTSW/WebContent/WEB-INF/Fatture/provaOGGI.pdf"
+
 		OrdineDAO dao = new OrdineDAO();
 		OrdineBean bean = new OrdineBean();
 		double imponibile = 0.0;
-		
+
 		try {
 			bean = dao.doRetrieveByKey(request.getParameter("ordine"));
 		} catch (Exception e) {
@@ -160,12 +159,12 @@ public class FatturaServlet extends HttpServlet {
         for(ProdottoBean p : bean.getProducts().keySet()) {
         	imponibile += bean.getProducts().get(p).get(2);
             prodotti.addCell(new Cell().add(new Paragraph(p.getNome()).setMarginLeft(2).setMarginTop(1)));
-            prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(0))).setMarginLeft(2).setMarginTop(1)));
-            prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(2))).setMarginLeft(2).setMarginTop(1)));
+            prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(0).intValue())).setMarginLeft(2).setMarginTop(1)));
+            prodotti.addCell(new Cell().add(new Paragraph("€ " + String.valueOf(bean.getProducts().get(p).get(2).floatValue())).setMarginLeft(2).setMarginTop(1)));
         	
         }
         
-        
+
         
         
         document.add(prodotti);
@@ -183,7 +182,7 @@ public class FatturaServlet extends HttpServlet {
         
 
         	dettagliFiscali.addCell(new Cell().add(new Paragraph("Mastercard").setMarginLeft(2).setMarginTop(1)));
-        	dettagliFiscali.addCell(new Cell().add(new Paragraph("Imponibile: "+imponibile+"\nSpedizione: â‚¬ 0,00\nSconto: â‚¬ 0,00\nIVA: 10%\n").setMarginLeft(2).setMarginTop(1)));
+        	dettagliFiscali.addCell(new Cell().add(new Paragraph("Imponibile: € "+imponibile+"\nSpedizione: € 0,00\nSconto: € 0,00\nIVA: 10%\n").setMarginLeft(2).setMarginTop(1)));
         	document.add(dettagliFiscali);
  
 
@@ -198,11 +197,14 @@ public class FatturaServlet extends HttpServlet {
 
         document.close(); //close salva
 	    
-	    
+
+        
 	    //NON TOCCARE MAI 
 	    response.setContentType("application/pdf");
 	    //dove sta prova oggi devo mettere il nome del file, ossia l'id ordine
 	    response.setHeader( "Content-Disposition", "attachment; filename=\"fattura.pdf\"");
+	    
+	    
 	    
 	    try(InputStream in = new FileInputStream(file)){
 	            try(OutputStream out = response.getOutputStream()) {

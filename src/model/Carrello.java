@@ -1,14 +1,16 @@
 package model;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+
 import beans.ProdottoBean;
 
 public class Carrello {
 
-	private HashMap<ProdottoBean,Integer> products;
+	private ConcurrentHashMap<ProdottoBean,Integer> products;
 	
 	public Carrello() {
-		this.products = new HashMap<>();
+		this.products = new ConcurrentHashMap<>();
 	}
 	
 	
@@ -20,7 +22,7 @@ public class Carrello {
 		
 			for(ProdottoBean prodotto : products.keySet())
 			{
-				if(prodotto.getNome().equals(product.getNome()))
+				if(prodotto.getId().equals(product.getId()))
 				{
 					flag = true;
 					products.replace(prodotto, products.get(prodotto) + 1);
@@ -55,7 +57,7 @@ public class Carrello {
 		
 	}
 		
-	public HashMap<ProdottoBean, Integer> getProducts() {
+	public ConcurrentHashMap<ProdottoBean, Integer> getProducts() {
 		return  products;
 	}
 

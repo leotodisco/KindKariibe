@@ -69,13 +69,6 @@
                 <ion-icon class="checkmark" id="checkmark-carta" name="checkmark-circle"></ion-icon>
               </span>
 
-              <span class="method" id="bottone-bonifico">
-              <!-- QUI INSERIRE UN CHECKBOX PER DIRE CHE E UN BONIFICO  -->
-                <ion-icon name="logo-euro"></ion-icon>
-                <span>Pagamento in Contrassegno</span>
-                <input type="hidden" name="tipoPagamento" value="Contrassegno" class="identifier"> 
-                <ion-icon class="checkmark" id="checkmark-bonifico" name="checkmark-circle"></ion-icon>
-              </span>
 
             </div>
             
@@ -111,7 +104,7 @@
     					  
  <% 
   		if(utente!=null){ 
-  			if(cart.getProducts().isEmpty() || utente.getIndirizziSpedizione().isEmpty() || result.isEmpty()){	%>
+  			if(cart.getProducts().isEmpty() || utente.getIndirizziSpedizione().isEmpty()){	%>
  			<input type="submit" value="Conferma Pagamento" class="bottone-inserisci" id="tasto-conferma-pagamento" disabled>
  			<%}else{ %>
  			
@@ -245,6 +238,9 @@
 
                   <div class="amount">
                     <div class="tax">
+                      <span>Totale Prodotti</span> <span>€ <span id="prodotti-span"><%= String.format("%,.2f", (cart.getCostoTotale() - cart.getTax())) %></span></span>
+                      </div>
+                    <div class="tax">
                       <span>IVA</span> <span>€ <span id="tax-span"><%= String.format("%,.2f", cart.getTax()) %></span></span>
                     </div>
                     <div class="shipping">
@@ -374,6 +370,7 @@ $(document).ready(function () {
     	var id = $(this).parent().parent().parent().children(".product-id").text()
     	var result = incrementa(id)
 		
+    	
     	if(result.responseJSON == "errore"){
     		//#messaggio-errore-quantita
     		$(this).parent().parent().parent().parent().parent().parent().find("#messaggio-errore-quantita").show();
@@ -389,6 +386,9 @@ $(document).ready(function () {
 
 		$("#total").empty()
 		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
+		
+		$("#prodotti-span").empty()
+		$("#prodotti-span").append(parseFloat(parseFloat(result.responseJSON).toFixed(2) - parseFloat(tasse.responseJSON).toFixed(2)).toFixed(2))
 		
 		$(this).parent().children(".quantita").empty();
 		$(this).parent().children(".quantita").append(qt);
@@ -438,6 +438,9 @@ $(document).ready(function () {
 
 		$("#total").empty()
 		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
+		
+		$("#prodotti-span").empty()
+		$("#prodotti-span").append(parseFloat(parseFloat(result.responseJSON).toFixed(2) - parseFloat(tasse.responseJSON).toFixed(2)).toFixed(2))
 		
 		$(this).parent().children(".quantita").empty();
 		$(this).parent().children(".quantita").append(qt);
@@ -519,6 +522,9 @@ $(document).ready(function () {
 
  		$("#total").empty()
 		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
+		
+		$("#prodotti-span").empty()
+		$("#prodotti-span").append(parseFloat(parseFloat(result.responseJSON).toFixed(2) - parseFloat(tasse.responseJSON).toFixed(2)).toFixed(2))
 
      })
      

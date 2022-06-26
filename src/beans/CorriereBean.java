@@ -1,6 +1,12 @@
 package beans;
 
-public class CorriereBean {
+import java.io.Serializable;
+
+public class CorriereBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -545434051788429727L;
 	private Integer id;
 	private String nTelefono;
 	private String azienda;

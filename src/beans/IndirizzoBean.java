@@ -1,7 +1,13 @@
 package beans;
 
-public class IndirizzoBean {
+import java.io.Serializable;
+
+public class IndirizzoBean implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4480183454695488625L;
 	private int id;
 	private String via;
 	private String citta;

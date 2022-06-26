@@ -1,7 +1,14 @@
 package beans;
 
-public class DatiFiscaliBean {
+import java.io.Serializable;
+
+public class DatiFiscaliBean implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1595777949191705525L;
+
 	@Override
 	public String toString() {
 		return "DatiFiscaliBean [idDatiFiscali=" + idDatiFiscali + ", metodoPagamento=" + idMetodoPagamento

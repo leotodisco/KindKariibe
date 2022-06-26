@@ -51,6 +51,7 @@ public class CreaVaschetta extends HttpServlet {
 		
 		if(azioni.equals("inserire")) {
 			String name = request.getParameter("nome");
+			name = name + ("\n");
 			String description = request.getParameter("descrizione");
 			Double price = Double.valueOf(request.getParameter("prezzo"));
 			Double quantity = Double.valueOf(request.getParameter("quantita"));
@@ -60,6 +61,10 @@ public class CreaVaschetta extends HttpServlet {
 			String tipo = request.getParameter("tipo");
 			
 			String Gusto1 = request.getParameter("gusto1");
+			if(Gusto1 == null)
+			{
+				Gusto1 = "Cioccolato";
+			}
 			String Gusto2 = new String();
 			
 			if(request.getParameter("gusto2") != null) {
@@ -71,14 +76,18 @@ public class CreaVaschetta extends HttpServlet {
 			
 			String Gusto3 = new String();
 			if(request.getParameter("gusto3") != null) {
-				Gusto2 = request.getParameter("gusto3");
+				Gusto3 = request.getParameter("gusto3");
 			}
 			else {
 				Gusto3=null;
 			}
-			System.out.println("provaprova");
 		
-		
+			
+			
+			name = name + ("\n");
+			
+			
+			
 			ImmagineBeans immagine = new ImmagineBeans();
 			ImmagineDAO imDAO = new ImmagineDAO();
 			PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
@@ -120,12 +129,20 @@ public class CreaVaschetta extends HttpServlet {
 						
 						if(Gusto2 != null)
 						{
-							bean.getGusti().add(gDAO.doRetrieveByKey(Gusto2));
+							if(!Gusto2.equals(Gusto1))
+							{
+								System.out.println("boh1");
+								bean.getGusti().add(gDAO.doRetrieveByKey(Gusto2));
+							}
+							
 						}
 						
 						if(Gusto3 != null)
 						{
-							bean.getGusti().add(gDAO.doRetrieveByKey(Gusto3));
+							if(!Gusto3.equals(Gusto2) && !Gusto3.equals(Gusto1))
+							{
+								bean.getGusti().add(gDAO.doRetrieveByKey(Gusto3));		
+							}
 						}
 						 
 					} catch (Exception e) {
@@ -142,6 +159,12 @@ public class CreaVaschetta extends HttpServlet {
 				//per far sì che la vaschetta non sia visibile nel catalogo
 				prod.doDelete(bean.getId().toString());
 				
+				for(GustoBean G : bean.getGusti())
+				{
+					System.out.println(G);
+					cDAO.doSave(G, bean);
+				}
+				
 				Carrello cart = (Carrello) request.getSession().getAttribute("Carrello");
 				
 				if(cart == null)
@@ -149,15 +172,13 @@ public class CreaVaschetta extends HttpServlet {
 					cart = new Carrello();
 				}
 				cart.addProduct(bean);
-				cDAO.doSaveALL(bean);
 				request.getSession().setAttribute("Carrello", cart);	
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			RequestDispatcher view = request.getRequestDispatcher("carrello.jsp");
-			view.forward(request, response);
+			response.sendRedirect("Catalogo-Gelateria.jsp");
 			
 			
 		}
@@ -192,148 +213,8 @@ public class CreaVaschetta extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		ProdottoDAO prod = new ProdottoDAO();
-		String azioni = request.getParameter("operazione");
-		
-		if(azioni.equals("inserire")) {
-			String name = request.getParameter("nome");
-			String description = request.getParameter("descrizione");
-			Double price = Double.valueOf(request.getParameter("prezzo"));
-			Double quantity = Double.valueOf(request.getParameter("quantita"));
-			String catNome = request.getParameter("categoria");
-			Double iva = Double.valueOf(request.getParameter("IVA"));
-			Double peso = Double.valueOf(request.getParameter("peso"));
-			String tipo = request.getParameter("tipo");
-			
-			String Gusto1 = request.getParameter("gusto1");
-			
-			String Gusto2 = new String();
-			if(request.getParameter("gusto2") != null) {
-				Gusto2 = request.getParameter("gusto2");
-			}
-			else {
-				Gusto2 = null;
-			}
-			
-			String Gusto3 = new String();
-			if(request.getParameter("gusto3") != null) {
-				Gusto3 = request.getParameter("gusto3");
-			}
-			else {
-				Gusto3=null;
-			}
-		
-		
-			ImmagineBeans immagine = new ImmagineBeans();
-			ImmagineDAO imDAO = new ImmagineDAO();
-			PossessoImmagineDAO posDAO = new PossessoImmagineDAO();
-			GustoDAO gDAO = new GustoDAO();
-			CostituzioneDAO cDAO = new CostituzioneDAO();
-			CategoriaDAO buffer = new CategoriaDAO();
-			Optional<CategoriaBean> cat;
-			ProdottoBean bean = new ProdottoBean();
-			try {
-				immagine.setNome("Vaschetta");
-				immagine.setUrl("Vaschetta.jpeg");
-				immagine.setTestoAlt("immagine mancante");
-				cat = Optional.of(buffer.doRetrieveByKey(catNome));
-				bean.setNome(name);
-				bean.setDescrizione(description);
-				bean.setPrezzo(price);
-				bean.setQuantitaResidua(quantity);
-				bean.setCategoria(cat);
-				bean.setIVA(iva);
-				bean.setTipo(tipo);
-				
-				
-		
-	/*			Collection<GustoBean> g = gDAO.doRetrieveAll(name);
-				request.setAttribute("gusti",g);*/
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			try {
-				if(tipo.equals("Vaschetta"))
-				{
-					
-					try {
-						bean.setPeso(peso);
-						bean.getGusti().add(gDAO.doRetrieveByKey(Gusto1));
-						
-						if(Gusto2 != null)
-						{
-							bean.getGusti().add(gDAO.doRetrieveByKey(Gusto2));
-						}
-						
-						if(Gusto3 != null)
-						{
-							bean.getGusti().add(gDAO.doRetrieveByKey(Gusto3));
-						}
-						 
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				int ID2 = prod.doSaveI(bean);
-				bean.setId(ID2);
-				int ID = imDAO.doSaveI(immagine);
-				immagine.setIdImmagine(ID);
-
-				
-				
-				System.out.println("Immagine: " + bean.getPathImage());
-				
-				posDAO.doSave(immagine, bean);
-				
-				//per far sì che la vaschetta non sia visibile nel catalogo
-				prod.doDelete(bean.getId().toString());
-				
-				Carrello cart = (Carrello) request.getSession().getAttribute("Carrello");
-				
-				if(cart == null)
-				{
-					cart = new Carrello();
-				}
-				cart.addProduct(bean);
-				cDAO.doSaveALL(bean);
-				request.getSession().setAttribute("Carrello", cart);	
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			RequestDispatcher view = request.getRequestDispatcher("carrello.jsp");
-			view.forward(request, response);
-			
-		}
-
-		else if(azioni.equals("mostraGusti")) {
-			GustoDAO gDAO=new GustoDAO();
-			ArrayList<GustoBean> gusti = new ArrayList<>();
-			try {
-				gusti = (ArrayList<GustoBean>) gDAO.doRetrieveAll("nome");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			Comparator<GustoBean> gustiComparator = (o1, o2) -> {
-    			int r = o1.getNome().compareTo(o2.getNome());
-    				return r;
-    		};
-    		//i gusti saranno presentati in ordine alfabetico
-    		gusti.sort(gustiComparator);
-    		
-			request.setAttribute("gusti", gusti);
-			RequestDispatcher view = request.getRequestDispatcher("Vaschetta.jsp");
-			view.forward(request, response);
-		}
-
-
+	
+		doGet(request,response);
 		
 	}
 

@@ -1,6 +1,12 @@
 package beans;
 
-public class CategoriaBean {
+import java.io.Serializable;
+
+public class CategoriaBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 946407622763758347L;
 	private String nome;
 	private String descrizione;
 	

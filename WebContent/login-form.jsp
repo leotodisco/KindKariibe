@@ -76,9 +76,9 @@ response.setDateHeader("Expires", 0);
                     </span>
                     <span class="via">
                         <label for="Provincia"></label>
-                        <input type="text" id="input2" placeholder=" Provincia" class="uname4" name="provincia" required><br><br>
+                        <input type="text" id="input2" placeholder="Provincia (XX)" class="uname4" name="provincia" required maxlength="2"><br><br>
                         <label for="CAP"></label>
-                        <input type="text" id="input2" placeholder=" CAP" class="uname4" name="CAP"  required><br><br>
+                        <input type="text" id="input2" placeholder=" CAP" class="uname4" name="CAP"  required maxlength="5"><br><br>
                         <label for="Sesso"></label>
                     </span>
                 </div>
@@ -102,7 +102,7 @@ response.setDateHeader("Expires", 0);
 
             <div id="classe3">
                 <label for="Numero Telefono"></label>
-                <input class="pass" id="nTelefono" type="text" name="nTelefono" placeholder="Numero Telefono" required><br><br>
+                <input class="pass" id="nTelefono" type="text" name="nTelefono" placeholder="Numero Telefono" required maxlength="10"><br><br>
                 <label for="email"></label>
                 <input type="text" name="emailr" class="uname" placeholder="Email" id="email" required>
                 <br><br>
@@ -157,8 +157,8 @@ response.setDateHeader("Expires", 0);
 
             else {
                 event.preventDefault();
-                $("#email-login").addClass("error");
-                $("#password-login").addClass("error");
+                $("#email-login").addClass(".error");
+                $("#password-login").addClass(".error");
             }
         });
 
@@ -195,16 +195,16 @@ response.setDateHeader("Expires", 0);
             var regExpCodFiscale = new RegExp("^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$", "i"); //la i serve per essere case sensitive
             if (!regExpNomeCognome.test($('#nome').val())) {
                 if (!regExpNomeCognome.test($('#cognome').val())) {
-                    $('#cognome').addClass('error');
+                    $('#cognome').addClass('.error');
                 }
-                $('#nome').addClass('error');
+                $('#nome').addClass('.error');
                 if (!regExpCodFiscale.test($('#codFiscale').val())) {
-                    $('#codFiscale').toggleClass("error");
+                    $('#codFiscale').toggleClass(".error");
                     $('#codFiscaleErrato').show();
                 }
             } //test nome
             else if (!regExpNomeCognome.test($('#cognome').val())) {
-                $('#cognome').addClass('error');
+                $('#cognome').addClass('.error');
                 //far mostrare "inserire cognome corretto"
                 if (!regExpCodFiscale.test($('#codFiscale').val())) {
                     $('#codFiscale').toggleClass('.error');
@@ -246,11 +246,11 @@ response.setDateHeader("Expires", 0);
             var res = checkIfCodiceFiscaleExists($("#codFiscale").val());
             if (res.responseJSON.message == "taken") {
                 flag = false;
-                $('#codFiscale').addClass("error");
+                $('#codFiscale').addClass(".error");
                 $('#codFiscaleAjaxError').show();
             }
             else {
-                $("#codFiscale").toggleClass("error");
+                $("#codFiscale").toggleClass(".error");
                 $("#codFiscaleAjaxError").hide();
             }
             if (flag == false) {
