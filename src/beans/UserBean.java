@@ -1,12 +1,15 @@
 package beans;
 
 import java.util.ArrayList;
-import java.sql.*;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class UserBean {
+public class UserBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7944910593758926568L;
 	private String nome;
 	private String cognome;
 	private String codiceFiscale;

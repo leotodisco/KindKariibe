@@ -1,5 +1,6 @@
 package beans;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,8 +9,13 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class OrdineBean {
+public class OrdineBean implements Serializable{
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4662743800295467743L;
 	private Integer idOrdine;
 	private DatiFiscaliBean datiFiscali;
 	private CorriereBean corriere;

@@ -193,7 +193,6 @@ public class OrdineDAO implements ModelInterface<OrdineBean>{
 					Timestamp dateTime = rs.getTimestamp("dataEvasione");
 					ordine.setDataEvasione(new Date(dateTime.getTime()));
 					
-					System.out.println(ordine.getDataEvasione());
 					
 					ordine.setDataPartenza(rs.getDate("dataPartenza"));
 					ordine.setDataArrivo(rs.getDate("dataArrivo"));

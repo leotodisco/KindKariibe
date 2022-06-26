@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import beans.*;
@@ -87,57 +88,15 @@ public class AcquistaServlet extends HttpServlet {
 			
 			else if(azione.equals("conferma")) {
 				//creo l'oggetto datiFiscali
-				String tipoMetodoPagamento = (String)request.getParameter("tipoPagamento");
 				DatiFiscaliBean datiFiscali= new DatiFiscaliBean();
 				String idIndirizzo= (String)request.getParameter("idIndirizzo");
 				
-				if(tipoMetodoPagamento.equals("Contrassegno")) {
-					MetodoPagamentoBean metodo = new MetodoPagamentoBean();
-					metodo.setNomeIntestatario(utente.getNome() + utente.getCognome());
-					metodo.setTipo("Contrassegno");
-					
-					MetodoPagamentoDAO mp = new MetodoPagamentoDAO();
-					try {
-						mp.doSave(metodo);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					int maxID = 0;
-					try {
-						maxID = mp.doRetrieveAll("idMetodoPagamento").stream()
-								.mapToInt(s->s.getidMetodoPagamento())
-								.max().getAsInt();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					metodo.setidMetodoPagamento(maxID);
-					
-					datiFiscali.setIdIndirizzoFatturazione(Integer.valueOf(idIndirizzo));
-					datiFiscali.setIdMetodoPagamento(metodo.getidMetodoPagamento());
-					
-					DatiFiscaliDAO datiFiscaliDao= new DatiFiscaliDAO();
-					try {
-						datiFiscaliDao.doSave(datiFiscali);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					try {
-						datiFiscali= datiFiscaliDao.theLastInsert();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
+				datiFiscali.setIdIndirizzoFatturazione(Integer.valueOf(idIndirizzo));
 				
-				else {	
-					datiFiscali.setIdIndirizzoFatturazione(Integer.valueOf(idIndirizzo));
-					datiFiscali.setIdMetodoPagamento(Integer.parseInt((String)request.getParameter("idMetodo")));
+
+				
+						datiFiscali.setIdMetodoPagamento(Integer.parseInt((String)request.getParameter("idMetodo")));
+				
 					
 					DatiFiscaliDAO datiFiscaliDao= new DatiFiscaliDAO();
 					try {
@@ -153,7 +112,7 @@ public class AcquistaServlet extends HttpServlet {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}
+				
 				
 				
 				OrdineBean ordine= new OrdineBean();
@@ -167,7 +126,7 @@ public class AcquistaServlet extends HttpServlet {
 				//[quantita - iva - prezzo] è una lista di interi
 				//posizione 0 = quantita, pos 1=iva pos2 = prezzo
 				
-				HashMap<ProdottoBean,Integer> contenutoCarrello = cart.getProducts();	//setto i prodotti dell'ordine
+				ConcurrentHashMap<ProdottoBean, Integer> contenutoCarrello = cart.getProducts();	//setto i prodotti dell'ordine
 				for(ProdottoBean prod : contenutoCarrello.keySet()) {				
 					ArrayList<Double> quantitaIvaPrezzo = new ArrayList<>();
 					quantitaIvaPrezzo.add(0, contenutoCarrello.get(prod).doubleValue());
@@ -216,7 +175,7 @@ public class AcquistaServlet extends HttpServlet {
 			        
 				java.sql.Date date = new java.sql.Date(millis);
 				ordine.setDataEvasione(date);
-				ordine.setUrlPdf("placeolder");
+				ordine.setUrlPdf("placeholder");
 				
 				OrdineDAO ordineDao= new OrdineDAO();
 				try {

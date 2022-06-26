@@ -71,8 +71,8 @@
 	  			<input type="hidden" value="inserire" name="operazione">
 	  			<input type="hidden" value="1" name="quantita">
 	  			<input type="hidden" value="5.00" name="prezzo">
-	  			<input type="hidden" value="5.00" name="IVA">
-	  			<input type="hidden" value="Vaschetta custom" name="nome">
+	  			<input type="hidden" value="10.00" name="IVA">
+	  			<input type="hidden" value="Vaschetta singolo gusto" name="nome">
 	  			<input type="hidden" value="Vaschetta dal peso di 500g, composta da un solo gusto." name="descrizione">
 	  			<input type="hidden" value="Gelato" name="categoria">
 	  			<input type="hidden" value="Vaschetta" name="tipo">
@@ -105,12 +105,12 @@
 		  		
 	  			<input type="hidden" value="1" name="quantita">
 	  			<input type="hidden" value="10.00" name="prezzo">
-	  			<input type="hidden" value="5.00" name="IVA">
-	  			<input type="hidden" value="Vaschetta custom" name="nome">
-	  			<input type="hidden" value="Vaschetta dal peso di 500g, composta da un solo gusto." name="descrizione">
+	  			<input type="hidden" value="10.00" name="IVA">
+	  			<input type="hidden" value="Vaschetta doppio gusto" name="nome">
+	  			<input type="hidden" value="Vaschetta dal peso di 750g, composta da due gusti." name="descrizione">
 	  			<input type="hidden" value="Gelato" name="categoria">
 	  			<input type="hidden" value="Vaschetta" name="tipo">
-	  			<input type="hidden" value="500" name="peso">
+	  			<input type="hidden" value="750" name="peso">
 	  			<br><br>
 	  			
 		  		<div style="text-align:center">
@@ -124,15 +124,15 @@
 		      	<input type="hidden" value="inserire" name="operazione">
 	  			<input type="hidden" value="1" name="quantita">
 	  			<input type="hidden" value="15.00" name="prezzo">
-	  			<input type="hidden" value="5.00" name="IVA">
-	  			<input type="hidden" value="Vaschetta custom" name="nome">
-	  			<input type="hidden" value="Vaschetta dal peso di 500g, composta da un solo gusto." name="descrizione">
+	  			<input type="hidden" value="10.00" name="IVA">
+	  			<input type="hidden" value="Vaschetta triplo gusto" name="nome">
+	  			<input type="hidden" value="Vaschetta dal peso di 1000g, composta da 3 gusti." name="descrizione">
 	  			<input type="hidden" value="Gelato" name="categoria">
 	  			<input type="hidden" value="Vaschetta" name="tipo">
-	  			<input type="hidden" value="500" name="peso">
+	  			<input type="hidden" value="1000" name="peso">
 	  			
 		  		 <div style="text-align:center">
-		         <select id="gusto2" class="minimal" name="gusto1">
+		         <select id="gusto2" class="minimal" name="gusto1" required>
 		     	 <%for(GustoBean gusto : ListaGusti){%>
 		    		<option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
 				 <%}%>

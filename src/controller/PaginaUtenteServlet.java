@@ -47,8 +47,9 @@ public class PaginaUtenteServlet extends HttpServlet {
 		
 		UserBean utente= (UserBean)sessione.getAttribute("utente");
 		if(utente==null) {
-			RequestDispatcher fail= request.getRequestDispatcher("login-form.jsp");
-			fail.forward(request, response);
+			//RequestDispatcher fail= request.getRequestDispatcher("login-form.jsp");
+			//fail.forward(request, response);
+			response.sendRedirect("login-form.jsp");
 		}
 		else {
 			OrdineDAO ordineDao= new OrdineDAO();
@@ -71,6 +72,9 @@ public class PaginaUtenteServlet extends HttpServlet {
 				}
 				
 				request.setAttribute("ordini", elenco);
+				RequestDispatcher view = request.getRequestDispatcher("PaginaUtente.jsp");
+				view.forward(request, response);
+				
 				//request.setAttribute("ordini", ordineDao.doRetriveByUtente(utente)); SE VOGLIO TORNARE A PRIMA BASTA
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -79,8 +83,6 @@ public class PaginaUtenteServlet extends HttpServlet {
 
 		}
 
-		RequestDispatcher success= request.getRequestDispatcher("PaginaUtente.jsp");
-		success.forward(request, response);
 	}
 
 }

@@ -402,7 +402,7 @@
                     <br><br>
                     <span class="via">
                         <label for="Provincia"></label>
-                        <input type="text" placeholder=" Provincia" class="uname4" name="provincia" required><br><br>
+                        <input type="text" placeholder=" Provincia" class="uname4" name="provincia" required maxlength= "2"><br><br>
                         <label for="CAP"></label>
                         <input type="text" placeholder=" CAP" class="uname4" name="CAP"  required><br><br>
                     </span>
