@@ -70,8 +70,9 @@ public class AggiungiIndirizzo extends HttpServlet {
 			int ID = Idao.doSaveI(bean);
 			bean.setId(ID);
 			Pdao.doSave(utente, bean);
-			utente.addAddress(bean);;
-			//request.getSession().setAttribute("utente", utente);
+			utente.addAddress(bean);
+			utente = uDAO.doRetriveByEmail(utente.getEmail());
+			request.getSession().setAttribute("utente", utente);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

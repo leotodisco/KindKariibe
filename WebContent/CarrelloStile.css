@@ -32,6 +32,11 @@
 	color: green;
 }
 
+
+#tasto-conferma-pagamento{
+	cursor:pointer;
+}
+
 #bonific{
 	display: none;
 }

@@ -81,7 +81,7 @@ public class Carrello {
 	{
 		double totale = 0;
 		for(ProdottoBean prodotto : this.products.keySet()) {
-			totale+=prodotto.getIVA()*this.products.get(prodotto);
+			totale+=prodotto.getIVACarrello()*this.products.get(prodotto);
 		}
 	
 		System.out.println(totale);

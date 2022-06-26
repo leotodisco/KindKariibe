@@ -45,7 +45,7 @@ response.setDateHeader("Expires", 0);
             <h2>Crea Account</h2>
         </div>
         <br>
-        <form id="reg" method="post" action="RegistrazioneServlet" onsubmit="event.preventDefault(); validate(this);">
+        <form id="reg" method="post" action="RegistrazioneServlet" onsubmit="validate(this);">
             <div id="classe1">
                 <label for="Nome"></label>
                 <input type="text" id="nome" name="nome" placeholder="Nome" class="uname" required><br><br>
@@ -56,7 +56,7 @@ response.setDateHeader("Expires", 0);
                 <span class="messaggio-errore" id="codFiscaleAjaxError">Codice fiscale già presente nel database...</span>
                 <span class="messaggio-errore" id="codFiscaleErrato">Inserire un codice corretto...</span>
                 <span class="container-bottoni">
-                	<button id="avanti" class="bottone-Schermata-Login">Avanti</button>
+                	<button id="avanti" class="bottone-Schermata-Login">Avanti</button> <!-- id = avanti è il primo vottone -->
                 </span>
             </div>
 
@@ -114,7 +114,7 @@ response.setDateHeader("Expires", 0);
                     <span class="container-bottoni">
                 	<!-- FARE JAVASCRIPT PER BOTTONE INDIETRO1 -->
 	                	<button id="indietro2" class="bottone-Schermata-Login">Indietro</button>
-    	                <input type="submit" value="Registrati" class="bottone-Schermata-Login" id="last" />
+    	                <input type="submit" value="Registrati" class="bottone-Schermata-Login" id="last"/>
        		        </span>
                 </span>
             </div>
@@ -122,10 +122,109 @@ response.setDateHeader("Expires", 0);
     </div>
 
 	
+
     <script>
-        $(document).ready(function () {
-        	
-        	function checkLogin(email, pass) {
+    $(document).ready(function () {
+        function checkLogin(email, pass) {
+            return $.ajax({
+                url: "Api/User",
+                type: 'GET',
+                async: false,
+                cache: false,
+                timeout: 30000,
+                dataType: "json",
+                data: {
+                    action: "checkPassword",
+                    password: pass,
+                    email: email
+                },
+                success: function (data) {
+
+                    return data
+                },
+                fail: function (msg) {
+                    return true;
+                }
+            });
+        }
+        $("#login-submitt").click(function funzioneConvalida(obj) {
+            var email = $("#email-login").val();
+            var password = $("#password-login").val()
+            var res = checkLogin(email, password);
+
+            if (res.responseJSON.message == "taken") {
+                obj.submit()
+            }
+
+            else {
+                event.preventDefault();
+                $("#email-login").addClass("error");
+                $("#password-login").addClass("error");
+            }
+        });
+
+
+        $("#log").click(function () {
+            $("#registrationDiv").show();
+            $("#registrationDiv").addClass('animate');
+            $("#loginDiv").hide();
+            $("#classe").hide();
+            $("#avanti2").hide();
+            $("#classe3").hide();
+            $("#last").hide();
+        });
+        
+        $("#indietro1").click(function fun() {
+            $("#registrationDiv").show();
+            $("#classe1").show();
+            $("#classe").hide();
+        });
+        
+        $("#indietro2").click(function fun() {
+            $("#registrationDiv").show();
+            $("#classe").show();
+            $("#classe3").hide();
+            $("#avanti2").show();
+        });
+
+        //inizia la parte del crea account
+        $("#avanti").click(function fun() {
+            //espressione regolare in JQUERY non richiede che ci siano '/'
+            //e si usa il metodo test anzichè match
+            var flag = true;
+            var regExpNomeCognome = new RegExp("^[A-Za-z]+$");
+            var regExpCodFiscale = new RegExp("^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$", "i"); //la i serve per essere case sensitive
+            if (!regExpNomeCognome.test($('#nome').val())) {
+                if (!regExpNomeCognome.test($('#cognome').val())) {
+                    $('#cognome').addClass('error');
+                }
+                $('#nome').addClass('error');
+                if (!regExpCodFiscale.test($('#codFiscale').val())) {
+                    $('#codFiscale').toggleClass("error");
+                    $('#codFiscaleErrato').show();
+                }
+            } //test nome
+            else if (!regExpNomeCognome.test($('#cognome').val())) {
+                $('#cognome').addClass('error');
+                //far mostrare "inserire cognome corretto"
+                if (!regExpCodFiscale.test($('#codFiscale').val())) {
+                    $('#codFiscale').toggleClass('.error');
+                    $('#codFiscaleErrato').show();
+                }
+            }//test cognome
+            if (!regExpCodFiscale.test($("#codFiscale").val())) {
+                $('#codFiscale').toggleClass('.error');
+                $("#codFiscaleErrato").show();
+            }
+            else {
+                $("#classe1").hide();
+                $("#last").hide();
+                $("#classe3").hide();
+                $("#classe").show();
+                $("#avanti2").show();
+            }
+            //cod fiscale check
+            function checkIfCodiceFiscaleExists(codFiscale) {
                 return $.ajax({
                     url: "Api/User",
                     type: 'GET',
@@ -134,252 +233,143 @@ response.setDateHeader("Expires", 0);
                     timeout: 30000,
                     dataType: "json",
                     data: {
-                        action: "checkPassword",
-                        password: pass,
-                        email: email
+                        action: "checkCodFiscale",
+                        CodiceFiscale: codFiscale
                     },
                     success: function (data) {
-                    	
                         return data
                     },
                     fail: function (msg) {
-                    	return true;
+                        return true;
                     }
                 });
             }
-        	
-        	$("#login-submitt").click(function funzioneConvalida(obj) {
-        		var email = $("#email-login").val();
-        		var password = $("#password-login").val()
-        		var res = checkLogin(email, password);
-        		
-				if (res.responseJSON.message == "taken") {
-					obj.submit()
-				}
-				
-				else{
-					event.preventDefault();
-					$("#email-login").addClass("error");
-					$("#password-login").addClass("error");
-				}
-        	
-            });
-        	
-            
-            $(log).click(function () {
-                $(registrationDiv).show();
-                $(registrationDiv).addClass('animate');
-                $(loginDiv).hide();
-                $(classe).hide();
-                $(avanti2).hide();
-                $(classe3).hide();
-                $(last).hide();
-            });
-
-            $(indietro1).click(function fun() {
-                $(registrationDiv).show();
-                $(classe1).show();
-                $(classe).hide();
-
-            });
-
-            $(indietro2).click(function fun() {
-                $(registrationDiv).show();
-                $(classe).show();
-                $(classe3).hide();
-                $(avanti2).show();
-            });
-
-            $(avanti).click(function fun() {
-                //espressione regolare in JQUERY non richiede che ci siano '/'
-                //e si usa il metodo test anzichè match
-                var flag = true;
-                var regExpNomeCognome = new RegExp("^[A-Za-z]+$");
-                var regExpCodFiscale = new RegExp("^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$", "i"); //la i serve per essere case sensitive
-
-                if (!regExpNomeCognome.test($('#nome').val())) {
-                    if (!regExpNomeCognome.test($('#cognome').val())) {
-                        $('#cognome').addClass('error');
-                    }
-                    $('#nome').addClass('error');
-
-                    if (!regExpCodFiscale.test($('#codFiscale').val())) {
-                        $('#codFiscale').toggleClass("error");
-                        $('#codFiscaleErrato').show();
-                    }
-                } //test nome
-
-                else if (!regExpNomeCognome.test($('#cognome').val())) {
-                    $('#cognome').addClass('error');
-                    //far mostrare "inserire cognome corretto"
-
-                    if (!regExpCodFiscale.test($('#codFiscale').val())) {
-                        $('#codFiscale').toggleClass('.error');
-                        $('#codFiscaleErrato').show();
-                    }
-                }//test cognome
-
-                if (!regExpCodFiscale.test($("#codFiscale").val())) {
-                    $('#codFiscale').toggleClass('.error');
-                    $("#codFiscaleErrato").show();
-                }
-
-                else {
-                    $(classe1).hide();
-                    $(last).hide();
-                    $(classe3).hide();
-                    $(classe).show();
-                    $(avanti2).show();
-                }
-                //cod fiscale check
-                function checkIfCodiceFiscaleExists(codFiscale) {
-                    return $.ajax({
-                        url: "Api/User",
-                        type: 'GET',
-                        async: false,
-                        cache: false,
-                        timeout: 30000,
-                        dataType: "json",
-                        data: {
-                            action: "checkCodFiscale",
-                            CodiceFiscale: codFiscale
-                        },
-                        success: function (data) {
-                            return data
-                        },
-                        fail: function (msg) {
-                            return true;
-                        }
-                    });
-                }
-                var res = checkIfCodiceFiscaleExists($("#codFiscale").val());
-                if (res.responseJSON.message == "taken") {
-                    flag = false;
-                    $('#codFiscale').addClass('error');
-                    $('#codFiscaleAjaxError').show();
-                }
-                else {
-                    $('#codFiscale').toggleClass('error');
-                    $('#codFiscaleAjaxError').hide();
-                }
-
-                if (flag == false) {
-                    $(registrationDiv).show();
-                    $(classe1).show();
-                    $(classe).hide();
-                }
-
-            
-            });
-
-            $(avanti2).click(function funct() {
-                $(classe3).show();
-                $(avanti2).hide();
-                $(classe).hide();
-                $(last).show();
-            });
+            var res = checkIfCodiceFiscaleExists($("#codFiscale").val());
+            if (res.responseJSON.message == "taken") {
+            	alert("la risposta");
+                flag = false;
+                $('#codFiscale').addClass("error");
+                $('#codFiscaleAjaxError').show();
+            }
+            else {
+                $("#codFiscale").toggleClass("error");
+                $("#codFiscaleAjaxError").hide();
+            }
+            if (flag == false) {
+                $("#registrationDiv").show();
+                $("#classe1").show();
+                $("#classe").hide();
+            }
         });
 
-            function checkEmail(inputtxt) {
-                var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        $("#avanti2").click(function funct() {
+            $("#classe3").show();
+            $("#avanti2").hide();
+            $("#classe").hide();
+            $("#last").show();
+        });
 
-                if (inputtxt.value.match(email))
-                    return true;
-                else {
-
-                    return false;
-                }
-            }
-
-            function checkPhonenumber(inputtxt) {
-                var phoneno = /^([0-9]{10})$/;
-                if (inputtxt.value.match(phoneno))
-                    return true;
-
+        function checkEmail(inputtxt) {
+            var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (inputtxt.value.match(email))
+                return true;
+            else {
                 return false;
             }
-            
-            function validate(obj) {
-			  	var valid = true;
-				var email = document.getElementsByName("emailr")[0];
-				if (!checkEmail(email)) {
-					email.classList.add("error");
-					valid = false;
-				} else {
-					email.classList.remove("error");
-				}
-				var numbers = document.getElementsByName("nTelefono")[0];
-				if (!checkPhonenumber(numbers)) {
-					valid = false;
-					numbers.classList.add("error");
-				} else {
-					numbers.classList.remove("error");
-				}
-				
-				function checkIfEmailExists(email) {
-						return $.ajax({
-							url : "Api/User",
-							type : 'GET',
-							async : false,
-							cache : false,
-							timeout : 30000,
-							dataType : "json",
-							data : {
-								action : "checkEmail",
-								email : email
-							},
-							success : function(data) {
-								return data
-							},
-							fail : function(msg) {
-								return true;
-							}
-						});
-					}
-					var res = checkIfEmailExists($("#email").val());
-					if (res.responseJSON.message == "taken") {
-						valid = false;
-						email.classList.add("error");
-				 
-					} else {
-						email.classList.remove("error");
-					}
-					//nTelefono
-					function controllaNTelefono(numero) {
-							return $.ajax({
-								url : "Api/User",
-								type : 'GET',
-								async : false,
-								cache : false,
-								timeout : 30000,
-								dataType : "json",
-								data : {
-									action : "checkNumero",
-									nTelefono : numero
-								},
-								success : function(data) {
-									return data;
-								},
-								fail : function(msg) {
-									return true;
-								}
-							});
-						}
-					var variabile = controllaNTelefono($("#nTelefono").val());
-					if (variabile.responseJSON.message == "taken") {
-						alert("prova2");
-						valid = false;
-						$("#nTelefono").classList.add("error");
-				 
-					} else {	
-					}
-				
-					if (valid)
-						obj.submit();
-						
-					}
-            
-				</script>
+        }
+        function checkPhonenumber(inputtxt) {
+            var phoneno = /^([0-9]{10})$/;
+            if (inputtxt.value.match(phoneno))
+                return true;
+            return false;
+        }
+
+        function checkIfEmailExists(email) {
+            return $.ajax({
+                url: "Api/User",
+                type: 'GET',
+                async: false,
+                cache: false,
+                timeout: 30000,
+                dataType: "json",
+                data: {
+                    action: "checkEmail",
+                    email: email
+                },
+                success: function (data) {
+                    return data
+                },
+                fail: function (msg) {
+                    return true;
+                }
+            });
+        }
+
+        //nTelefono
+        function controllaNTelefono(numero) {
+            return $.ajax({
+                url: "Api/User",
+                type: 'GET',
+                async: false,
+                cache: false,
+                timeout: 30000,
+                dataType: "json",
+                data: {
+                    action: "checkNumero",
+                    nTelefono: numero
+                },
+                success: function (data) {
+                    return data;
+                },
+                fail: function (msg) {
+                    return true;
+                }
+            });
+        }
+
+        function validate(obj) {
+            alert("vaaaaaa?")
+            var valid = true;
+            var email = $("#email");
+
+            if (!checkEmail(email)) {
+                email.addClass("error");
+                valid = false;
+            } else {
+                email.toggleClass("error");
+            }
+            var numbers = $("#nTelefono");
+            if (!checkPhonenumber(numbers)) {
+                valid = false;
+                numbers.classList.add("error");
+            } else {
+                numbers.classList.remove("error");
+            }
+
+            var res = checkIfEmailExists($("#email").val());
+            if (res.responseJSON.message == "taken") {
+                valid = false;
+                email.addClass("error");
+
+            } else {
+                alert("controllo email corretto");
+                email.classList.remove("error");
+            }
+
+            var variabile = controllaNTelefono($("#nTelefono").val());
+            if (variabile.responseJSON.message == "taken") {
+                $("#nTelefono").addClass("error");
+                valid = false;
+            }
+
+            if (valid == true)
+                obj.submit();
+        }
+
+    });
+
+</script>
+
 
 </body>
 

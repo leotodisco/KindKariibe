@@ -20,6 +20,7 @@ import beans.IndirizzoBean;
 import beans.UserBean;
 import model.IndirizzoDao;
 import model.UserDAO;
+import model.possessoIndirizzoDAO;
 
 /**
  * Servlet implementation class RegistrazioneServlet
@@ -74,8 +75,9 @@ public class RegistrazioneServlet extends HttpServlet {
 		ArrayList<IndirizzoBean> elenco = new ArrayList<>();
 		IndirizzoDao addressDao = new IndirizzoDao();
 		try {
-			addressDao.doSave(indirizzo);
-			indirizzo.setId(addressDao.ottieniKeyAutoIncrement());
+			int ID = addressDao.doSaveI(indirizzo);
+			indirizzo.setId(ID);
+			
 
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -110,11 +112,14 @@ public class RegistrazioneServlet extends HttpServlet {
 
 		try {
 			dao.doSave(utente);
+			possessoIndirizzoDAO Pdao = new possessoIndirizzoDAO();
+			Pdao.doSave(utente, indirizzo);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		request.getSession().setAttribute("utente", utente);
 		RequestDispatcher view = getServletContext().getRequestDispatcher("/Catalogo.jsp");
 		view.forward(request, response);
 		

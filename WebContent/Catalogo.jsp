@@ -60,7 +60,7 @@
          $(this).find(".text").show()
          var vari = $(this).children("#panino");
        		vari.children("#speriamo").css("opacity","0.5").css("transition", ".3s ease")
-       		.css("border","3px solid green");
+       		.css("border","3px solid #acd872");
         	
         });
         

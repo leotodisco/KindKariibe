@@ -5,8 +5,10 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import beans.*;
 import model.*;
@@ -85,28 +87,74 @@ public class AcquistaServlet extends HttpServlet {
 			
 			else if(azione.equals("conferma")) {
 				//creo l'oggetto datiFiscali
-				
+				String tipoMetodoPagamento = (String)request.getParameter("tipoPagamento");
 				DatiFiscaliBean datiFiscali= new DatiFiscaliBean();
 				String idIndirizzo= (String)request.getParameter("idIndirizzo");
 				
-				
-				datiFiscali.setIdIndirizzoFatturazione(Integer.valueOf(idIndirizzo));
-				datiFiscali.setIdMetodoPagamento(Integer.parseInt((String)request.getParameter("idMetodo")));
-				
-				DatiFiscaliDAO datiFiscaliDao= new DatiFiscaliDAO();
-				try {
-					datiFiscaliDao.doSave(datiFiscali);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if(tipoMetodoPagamento.equals("Contrassegno")) {
+					MetodoPagamentoBean metodo = new MetodoPagamentoBean();
+					metodo.setNomeIntestatario(utente.getNome() + utente.getCognome());
+					metodo.setTipo("Contrassegno");
+					
+					MetodoPagamentoDAO mp = new MetodoPagamentoDAO();
+					try {
+						mp.doSave(metodo);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					int maxID = 0;
+					try {
+						maxID = mp.doRetrieveAll("idMetodoPagamento").stream()
+								.mapToInt(s->s.getidMetodoPagamento())
+								.max().getAsInt();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					metodo.setidMetodoPagamento(maxID);
+					
+					datiFiscali.setIdIndirizzoFatturazione(Integer.valueOf(idIndirizzo));
+					datiFiscali.setIdMetodoPagamento(metodo.getidMetodoPagamento());
+					
+					DatiFiscaliDAO datiFiscaliDao= new DatiFiscaliDAO();
+					try {
+						datiFiscaliDao.doSave(datiFiscali);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					try {
+						datiFiscali= datiFiscaliDao.theLastInsert();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 				
-				try {
-					datiFiscali= datiFiscaliDao.theLastInsert();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				else {	
+					datiFiscali.setIdIndirizzoFatturazione(Integer.valueOf(idIndirizzo));
+					datiFiscali.setIdMetodoPagamento(Integer.parseInt((String)request.getParameter("idMetodo")));
+					
+					DatiFiscaliDAO datiFiscaliDao= new DatiFiscaliDAO();
+					try {
+						datiFiscaliDao.doSave(datiFiscali);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					try {
+						datiFiscali= datiFiscaliDao.theLastInsert();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
+				
 				
 				OrdineBean ordine= new OrdineBean();
 

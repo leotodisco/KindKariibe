@@ -21,6 +21,7 @@
 		<%}
 			ArrayList<MetodoPagamentoBean> elencoMetodi = utente.getElencoMetodiPagamento();
 			ArrayList<IndirizzoBean> elencoIndirizzi = utente.getIndirizziSpedizione();
+			
 			HashMap<OrdineBean, ArrayList<String>> ordini=(HashMap<OrdineBean, ArrayList<String>>)request.getAttribute("ordini");
    			
 			response.setHeader( "Cache-Control", "no-store, no-cache, must-revalidate");  //HTTP 1.1
@@ -61,6 +62,8 @@
                 $(".carte-credito").eq(2).show();
                 $(".carte-credito").eq(3).hide();
                 $("#mostraIndirizzi").show();
+                $("#container-form-carte").hide();
+                $("#chiudi-form").hide();
             });
 
             $("#ordini").click(function () {
@@ -68,6 +71,8 @@
                 $(".carte-credito").eq(2).hide();
                 $(".carte-credito").eq(3).hide();
                 $(".carte-credito").eq(1).show();
+                $("#container-form-carte").hide();
+                $("#chiudi-form").hide();
             });
             
             $("#profilo").click(function () {
@@ -77,6 +82,8 @@
                 $(".carte-credito").eq(3).show();
                 $("#chiudi-Form-Password").hide();
                 $("#modificaPassword").hide();
+                $("#container-form-carte").hide();
+                $("#chiudi-form").hide();
             });
             
             $("#flag").click(function () {
@@ -94,6 +101,7 @@
                 $(".carte-credito").first().hide();
                 $(".carte-credito").eq(1).hide();
                 $("#container-form-carte").show();
+                $("#chiudi-form").show();
                 $(".carte-credito").eq(3).hide();
                 $("#flag").hide();
                 $("#mostraIndirizzi").hide();
@@ -223,8 +231,6 @@
         </div>
       
 
-
-
         <!--SEZIONE CARTE DI CREDITO-->
         <div class="carte-credito elencoCarte" style="display: none; padding-bottom:250px;" id="carte-utente">
         
@@ -253,7 +259,7 @@
             <div>
             <form action="AggiungiMetodoPagamento" method="get" id="form-carta">
             	<br><br>
-            	<ion-icon name="close-circle-outline" style="float:right; font-size: 2.5rem; cursor: pointer;" id="chiudi-form"></ion-icon>
+            	<ion-icon name="close-circle-outline" style="float:right; font-size: 2.5rem; cursor: pointer;display:show;" id="chiudi-form"></ion-icon>
             	<input type="hidden" name="tipo" value="carta"> 
               	<div>
               	<br><br>
@@ -383,7 +389,7 @@
             
             <div id="ind" style="display:none">
 		    <form action="AggiungiIndirizzo" method="post" id="form-indirizzo">
-		    <ion-icon name="close-circle-outline" style="float:right; font-size: 2.5rem; cursor: pointer;" id="chiudi-indirizzo"></ion-icon>
+		    <ion-icon name="close-circle-outline" style="float:right; font-size: 2.5rem; cursor: pointer; display:block;" id="chiudi-indirizzo"></ion-icon>
     			<div class="indirizzo">
                     <span class="via">
                         <label for="Via"></label>

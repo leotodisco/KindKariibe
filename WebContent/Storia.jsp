@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="beans.*"%>
 
 <!DOCTYPE html>
 <html>
@@ -13,6 +13,13 @@
     </head>
     <body>
     	<jsp:include page="header.jsp" />
+	<%  UserBean utente = (UserBean) request.getSession().getAttribute("utente");
+	
+		if(utente != null && utente.getAdmin())
+		{
+		%>
+		<jsp:forward page="adminPage.jsp"/>
+	<% } %>
     	
         <section>
             <div class = "image">

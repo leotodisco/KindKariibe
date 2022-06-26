@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="beans.*"%>
 <!DOCTYPE html>
 
 <html>
@@ -15,6 +15,13 @@
 <body>
 <jsp:include page="header.jsp"/>
 
+	<%  UserBean utente = (UserBean) request.getSession().getAttribute("utente");
+	
+		if(utente != null && utente.getAdmin())
+		{
+		%>
+		<jsp:forward page="adminPage.jsp"/>
+	<% } %>
 
     <div class="center">
         <div class="dot">

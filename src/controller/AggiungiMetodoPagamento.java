@@ -73,9 +73,8 @@ public class AggiungiMetodoPagamento extends HttpServlet {
 				int ID = mDao.doSaveI(bean);
 				bean.setidMetodoPagamento(ID);
 				dDAO.doSave(utente, bean);
-				utente = uDAO.doRetrieveByKey(utente.getCodiceFiscale());
+				utente = uDAO.doRetriveByEmail(utente.getEmail());
 				request.getSession().setAttribute("utente", utente);
-				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -91,6 +90,7 @@ public class AggiungiMetodoPagamento extends HttpServlet {
 		
 		
 		String vecchioURL=request.getHeader("referer");
+		
 		response.sendRedirect(vecchioURL);
 		
 		

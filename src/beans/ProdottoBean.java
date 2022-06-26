@@ -90,9 +90,15 @@ public class ProdottoBean {
 	public void setPrezzo(Double prezzo) {
 		this.prezzo = prezzo;
 	}
+	
 	public Double getIVA() {
 		return IVA;
 	}
+	
+	public Double getIVACarrello() {
+		return prezzo*IVA/100;
+	}
+	
 	public void setIVA(Double iVA) {
 		IVA = iVA;
 	}

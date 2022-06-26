@@ -57,9 +57,9 @@ height: 218px;
 .text {
 	margin-top:33px;
  height:30px;
-border-bottom:1px solid green;
-border-left:1px solid green;
-border-right:1px solid green;
+border-bottom:1px solid #acd872;
+border-left:1px solid #acd872;
+border-right:1px solid #acd872;
 width:217px;
 z-index:999;
 border-radius:0px 0px 12px 12px ;
@@ -71,7 +71,7 @@ border-radius:0px 0px 12px 12px ;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   display:none;
-  
+  border-color: rgba(172, 216, 114, .5);
 }
 
 
@@ -180,6 +180,7 @@ button{
     	height: 220px;
 	}
 	
+	
 
 	
 	
@@ -228,6 +229,15 @@ button{
 	    width: 180px;
 	    height: 180px;
 	}
+	
+	.text {
+		width:176px;
+		margin-top: -7px;
+ 		height:30px;
+ 		border-radius:0px 0px 18px 18px ;
+ 		border-color: rgba(172, 216, 114, .5);
+
+	}
 
 	.titolo{
 	    text-align: center;
@@ -254,6 +264,14 @@ button{
 	.image{
 	    width: 160px;
 	    height: 160px;
+	}
+	
+	.text {
+		width:156px;
+		margin-top: -7px;
+ 		height:30px;
+ 		border-radius:0px 0px 18px 18px ;
+ 		border-color: rgba(172, 216, 114, .5);
 	}
 
 		

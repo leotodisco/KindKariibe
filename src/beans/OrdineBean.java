@@ -21,7 +21,8 @@ public class OrdineBean {
 	private String urlPdf;
 	private IndirizzoBean indirizzoSpedizione;
 	private ConcurrentHashMap<ProdottoBean,ArrayList<Double>> products; //ci serve una lista di interi per indicare anche l'iva
-													  //in posizione 0 abbiamo quanita, in posizione 1 abbiamo IVA
+													  //in posizione 0 abbiamo quanita, 
+														//in posizione 1 abbiamo IVA
 													  //in posizione 2 si salva il prezzo.
 	
 	public OrdineBean() {

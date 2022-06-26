@@ -13,6 +13,15 @@
   <body>
   
  <jsp:include page="header.jsp"/>
+
+	<%  UserBean utente = (UserBean) request.getSession().getAttribute("utente");
+	
+		if(utente != null && utente.getAdmin())
+		{
+		%>
+		<jsp:forward page="adminPage.jsp"/>
+	<% } %>
+ 
  <% ArrayList<GustoBean> ListaGusti = (ArrayList<GustoBean>) request.getAttribute("gusti");	
 			if(ListaGusti==null){
 				response.sendRedirect("./CreaVaschetta?operazione=mostraGusti");

@@ -34,7 +34,6 @@
 <title><%= bean.getNome()%></title>
 </head>
 <body>
-<jsp:include page="header.jsp" />
 
 <p class = "product-title-nascosto"><%= bean.getNome() %></p>
          <p class = "categoria-nascosto"><%= bean.getTipo()%> </p>

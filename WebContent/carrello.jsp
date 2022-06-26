@@ -46,7 +46,7 @@
                for(IndirizzoBean u : utente.getIndirizziSpedizione()){ %>
                 <!--<ion-icon class="checkmark " name="checkmark-circle"></ion-icon>-->
                 <span class="method indirizzo-">
-                <input type="radio" name="idIndirizzo" value="<%=u.getId()%>" style="display:none;">
+                <input type="radio" name="idIndirizzo" value="<%=u.getId()%>" style="display:none;" required>
                   <!--INDICA UN INDIRIZZO-->
                   <ion-icon name="home"></ion-icon>
                   <%= "Via: "+u.getVia() +" "+u.getnCivico()+" "+"Città: "+u.getCitta()+" "+u.getCAP()+" "+u.getProvincia()%>
@@ -73,7 +73,7 @@
               <!-- QUI INSERIRE UN CHECKBOX PER DIRE CHE E UN BONIFICO  -->
                 <ion-icon name="logo-euro"></ion-icon>
                 <span>Pagamento in Contrassegno</span>
-                <input type="hidden" name="tipo" value="bonifico" class="identifier"> 
+                <input type="hidden" name="tipoPagamento" value="Contrassegno" class="identifier"> 
                 <ion-icon class="checkmark" id="checkmark-bonifico" name="checkmark-circle"></ion-icon>
               </span>
 
@@ -99,7 +99,7 @@
                 <!--<ion-icon class="checkmark " name="checkmark-circle"></ion-icon>-->
                  <!-- capire per quale motivo mi passa sempre solo il primo elemento che compare -->
                 <span class="method-1" >
-                 <input type="radio" name="idMetodo" value="<%=m.getidMetodoPagamento()%>" class="identifier" style="display:none;">
+                 <input type="radio" name="idMetodo" value="<%=m.getidMetodoPagamento()%>" class="identifier" style="display:none;" required>
                     <span><ion-icon name="card"></ion-icon><ion-icon class="checkmark" name="checkmark-circle" style="display:none;"></ion-icon></span>
                   	<span><b>Numero:</b> <%= "XXXX XXXX XXXX " + m.getNumeroCarta().substring(m.getNumeroCarta().length()-4) %></span>
                   	<span><b>Intestatario:</b> <%= m.getNomeIntestatario()%></span>
@@ -186,7 +186,7 @@
 </div>
           <%  for(ProdottoBean prodotto : cart.getProducts().keySet()) {%>
              
-              <div class="cart-item-box">
+              <div class="cart-item-box ">
                 <div class="product-card">
                   <div class="card">
                     <div class="img-box">
@@ -239,12 +239,8 @@
            		</div>
            		
                 <div class="wrapper">
-                  <div class="discount-token">
-                    <label for="discount-token" class="label-default">Codice Sconto</label>
-                    <div class="wrapper-flex">
-                      <input type="text" name="discount-token" id="discount-token" class="input-default">
-                      <button class="btn btn-outline">Applica</button>
-                    </div>
+                  <div class="discount-token" >
+                   
                   </div>
 
                   <div class="amount">
@@ -527,7 +523,11 @@ $(document).ready(function () {
      })
      
      $("#tasto-conferma-pagamento").click(
+    		
      function postAcquisto(){
+    	 if(document.getElementByTagName("input[type=radio][name=idIndirizzo]").prop("checked")){
+ 			return;
+ 		}
       	//devo nascondere la div in cui sono tutti i prodotti
       	$(".product-card").hide();
       	$("#svuota-carrello").hide();

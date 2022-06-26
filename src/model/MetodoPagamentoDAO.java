@@ -236,7 +236,4 @@ public class MetodoPagamentoDAO implements ModelInterface<MetodoPagamentoBean>{
 	}
 	
 	
-	
-	
-	
 }

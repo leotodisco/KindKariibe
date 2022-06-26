@@ -83,10 +83,7 @@ public class FatturaServlet extends HttpServlet {
 		String percorsoPDF = getServletContext().getRealPath("/")+"WEB-INF/Fatture";
 		
 		File file = new File(percorsoPDF + request.getParameter("ordine") + ".pdf"); 
-		if(file.createNewFile()) {
-			System.out.println("si"); 
-		}
-		
+
 		try {
 			bean = dao.doRetrieveByKey(request.getParameter("ordine"));
 		} catch (Exception e) {
@@ -94,11 +91,11 @@ public class FatturaServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		//inizio parte della fattura
         PdfFont introScriptDemo = PdfFontFactory.createFont(getServletContext().getRealPath("/") + "font/introscriptdemo-medium.woff2", "UTF8", true);
-        
         PdfWriter pdfWriter = new PdfWriter(percorsoPDF + request.getParameter("ordine") + ".pdf");
-        
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+        
         String imgPath = getServletContext().getRealPath("/") + "immagini/kk senza sfondo.png";
         ImageData imagedata = ImageDataFactory.create(imgPath);
         Image image = new Image(imagedata);
@@ -108,10 +105,12 @@ public class FatturaServlet extends HttpServlet {
         float x = pdfDocument.getDefaultPageSize().getWidth() / 2;
         float y = pdfDocument.getDefaultPageSize().getHeight() / 2;
 
+       //inizio creazione del pdf
         Document document = new Document(pdfDocument);
         float threecol = 190f;
         float colonnaUno = 85f;
         float colonnaPerTitolo = 216f;
+        //array dove ogni elemento indica la dimensione della i-esima colonna
         float threeColumnWidth2[] = {colonnaUno, colonnaPerTitolo, threecol};
         float twocol = 285f;
         float twocol150 = 550f; //435f start point
@@ -122,13 +121,16 @@ public class FatturaServlet extends HttpServlet {
         com.itextpdf.kernel.colors.Color rosaLogo = new DeviceRgb(242, 125, 164);
         Color verdeScuro = new DeviceRgb(141, 184, 85);
 
+        //il costruttore della tabella prende in input l'array di float
         Table headerTable = new Table(threeColumnWidth2);
         headerTable.addCell(new Cell().add(image).setBorder(Border.NO_BORDER));
+        //paragraph è come <p> di html
         headerTable.addCell(new Cell().add(new Paragraph("KindKaribe").setFont(introScriptDemo).setFontSize(38).setMarginTop(2)).setBorder(Border.NO_BORDER));
-        headerTable.addCell(new Cell().add( new Paragraph("KindKaribe,\nVia dei Gigli 88, Caserta (CS),\nTel: 0818734028\nkindkaribe@kindkaribe.com")).setBorder(Border.NO_BORDER));
+        headerTable.addCell(new Cell().add( new Paragraph("KindKaribe,\nVia Francesco Prata 6, Castel Morrone (CS),\nTel: 0818734028\nkindkaribe@kindkaribe.com")).setBorder(Border.NO_BORDER));
+        //aggiunge al documento la tabella
         document.add(headerTable);
 
-        //linea di separazione
+        //linea di separazione come <hr> di html
         LineSeparator ls = new LineSeparator(new SolidLine(1f));
         ls.setMarginTop((float) 2.0);
         document.add(ls);
@@ -154,7 +156,7 @@ public class FatturaServlet extends HttpServlet {
         prodotti.addCell(new Cell().add(new Paragraph(("Quantità")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
         prodotti.addCell(new Cell().add(new Paragraph(("Costo")).setBold().setTextAlignment(TextAlignment.CENTER)).setBackgroundColor(verdePistacchio));
 
-
+        //nella posizione 0 della lista ci sta qt, pos 1 iva e pos 3 della lista c'è prezzo
         for(ProdottoBean p : bean.getProducts().keySet()) {
         	imponibile += bean.getProducts().get(p).get(2);
             prodotti.addCell(new Cell().add(new Paragraph(p.getNome()).setMarginLeft(2).setMarginTop(1)));
@@ -194,7 +196,7 @@ public class FatturaServlet extends HttpServlet {
         note.addCell(new Cell().add(new Paragraph("Grazie per averci preferito!")).setBorder(Border.NO_BORDER));
         document.add(note);
 
-        document.close();
+        document.close(); //close salva
 	    
 	    
 	    //NON TOCCARE MAI 
