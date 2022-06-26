@@ -191,7 +191,7 @@
                   <div class="card">
                     <div class="img-box">
                       <img class="product-img" width="80px" src="./immagini/<%= prodotto.getPathImage().get(0)%>">
-                    </div>
+                    </div> <!-- immagine -->
                     <div class="detail">
                       <h4 class="product-name">
                         <%=prodotto.getNome()%>
@@ -227,7 +227,9 @@
                   </div>
                 </div>
            	
+              <span id="messaggio-errore-quantita" style="display:none; text-align:center;">Non è possibile incrementare la quantità.</span>
               </div>
+              
               
               <%}  %>
               
@@ -344,8 +346,7 @@ $(document).ready(function () {
 
 			},
 			fail : function(msg) {
-				
-				return false;
+				return true;
 			}
 		});
     }
@@ -377,6 +378,13 @@ $(document).ready(function () {
     	var id = $(this).parent().parent().parent().children(".product-id").text()
     	var result = incrementa(id)
 		
+    	if(result.responseJSON == "errore"){
+    		//#messaggio-errore-quantita
+    		$(this).parent().parent().parent().parent().parent().parent().find("#messaggio-errore-quantita").show();
+    		
+    		//mostra la span che dice che la qt non va bene
+    		return;
+    	}
     	
     	
 		var tasse = ottieniTasse();

@@ -14,7 +14,7 @@ public class Carrello {
 	
 	
 	
-	public void addProduct(ProdottoBean product) {
+	public synchronized  void addProduct(ProdottoBean product) {
 		
 		boolean flag = false;
 		
@@ -82,7 +82,6 @@ public class Carrello {
 		double totale = 0;
 		for(ProdottoBean prodotto : this.products.keySet()) {
 			totale+=prodotto.getIVA()*this.products.get(prodotto);
-			System.out.println("x questo prod iva = " + prodotto.getIVA());
 		}
 	
 		System.out.println(totale);
@@ -92,7 +91,6 @@ public class Carrello {
 	public synchronized void eliminaProdotto(ProdottoBean product) {
 		for(ProdottoBean p : this.products.keySet()) {
 			if(product.getId().equals(p.getId())) {
-				System.out.println("ora lo trova?");
 				products.remove(p);
 			}
 		}

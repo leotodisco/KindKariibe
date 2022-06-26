@@ -87,7 +87,6 @@ public class ProdottiAPI extends HttpServlet {
 		
 		//incrementa quantita
 		if(action.equals("incrementa")) {
-			System.out.println("ha capito che voglio?\n");
 			if((String) request.getParameter("prodotto") == null)
 				return;
 			
@@ -100,9 +99,25 @@ public class ProdottiAPI extends HttpServlet {
 			double totaleIVA = 0;
 			try {
 				p = prod.doRetrieveByNome((String) request.getParameter("prodotto"));
+			
 				cart.addProduct(p); // questo metodo controlla se un prodotto è gia presente, in tal caso incrementa solo
+
+				for(ProdottoBean pk : cart.getProducts().keySet()) {
+					if(pk.getNome().equals(p.getNome()))
+					{
+						if(cart.getProducts().get(pk) > prod.doRetrieveByNome((String) request.getParameter("prodotto")).getQuantitaResidua().intValue())
+						{
+							response.setStatus(200);
+							response.getWriter().print(gson.toJson("errore"));
+							response.getWriter().flush();
+							return;
+						}
+					}
+				}
+
 				result = cart.getCostoTotale();
 				totaleIVA = cart.getTax();
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -129,7 +144,7 @@ public class ProdottiAPI extends HttpServlet {
 			double totaleIVA = 0;
 			
 			try {
-				p = prod.doRetrieveByNome((String) request.getParameter("prodotto"));
+				p = prod.doRetrieveByKey((String) request.getParameter("prodotto"));
 				cart.deleteProduct(p); // questo metodo controlla se un prodotto è gia presente, in tal caso incrementa solo
 				result = cart.getCostoTotale();
 				totaleIVA = cart.getTax();
