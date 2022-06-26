@@ -432,6 +432,15 @@ a:not(.cons) {
 	.categoria {
 		display: none;
 	}
+	
+		.item-descrizione {
+		display: flex;
+		flex-direction: column;
+		padding-left: 10px;
+		text-align:center;
+		backgroubd-color: red;
+		justify-content:center;
+	}
 	.prodotti-consigliati-header {
 		margin-left: 0;
 		font-size: 2.5rem;
@@ -536,32 +545,223 @@ a:not(.cons) {
 }
 
 @media all and ( max-width : 720px) {
+	.categoria {
+		display: none;
+	}
+	.prodotti-consigliati-header {
+		margin-left: 0;
+		font-size: 2.5rem;
+		margin-top: 50px;
+		font-family: 'intro_script_demomedium';
+	}
+	.categoria-nascosto {
+		display: block;
+		font-family: 'archia-regular';
+		text-align: center;
+		text-decoration: none;
+		align-items: center;
+		height: 22px;
+		width: 100px;
+		background-color: #ea97b3;
+		border-radius: 5px;
+		margin-left: 10%;
+	}
+	.container-bottone {
+		margin-top: 5rem;
+		text-align: center;
+		align-items: center;
+	}
+	.container {
+		margin-top: 0rem;
+		display: flex;
+		flex-direction: column;
+		gap: 20%;
+		align-items: center;
+		justify-content: center;
+	}
+	.item {
+		margin-top: 2rem;
+		display: inline-block;
+		background: transparent;
+		justify-content: center;
+		text-align: center;
+		padding-left: 0;
+	}
+	.item-descrizione {
+		display: flex;
+		flex-direction: column;
+		padding-left: 10px;
+		text-align:center;
+		backgroubd-color: red;
+		justify-content:center;
+	}
 	.image {
 		display: inline-block;
 		border-radius: 25px;
 		text-align: center;
 		align-items: center;
 		justify-content: center;
-		width: 75%;
+		width: 85%;
 		height: 85%;
 	}
-	.intestazione {
-		margin-top:15px;
-		text-align: center;
-	}
-	prodotti-consigliati-header {
-		position: absolute;
-		font-size: 2.5rem;
-		margin-top: 35px;
-		font-family: 'intro_script_demomedium';
+	.product-title {
+		display: none;
+		font-family: "archia-regular";
 		font-size: 2.5rem;
 	}
 	.consigliati {
-		margin-top: 30px;
+		margin-top: 35px;
 		display: grid;
 		justify-content: center;
 		text-align: center;
-		column-gap: 15px;
-		grid-template-columns: repeat(2, 180px);
+		row-gap:20px;
+		column-gap: 80px;
+		grid-template-columns: repeat(2, 150px);
 	}
+	.aggiungi {
+		box-shadow: 0px 4px #DBD3C0;
+		font-family: "archia-regular";
+		font-size: 18px;
+		color: #2f2f2f;
+		cursor: pointer;
+		float: left;
+		border: 3px solid green;
+		border-radius: 30px;
+		background-color: transparent;
+	}
+	.product-title-nascosto {
+		display: block;
+		margin-top: 15px;
+		margin-left: 10%;
+	}
+	.intestazione {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		margin-top: 30px;
+	}
+	.card {
+		text-align: center;
+		align-items: center;
+	}
+	.immagine-item-consigliato {
+		display: inline-block;
+		border-radius: 25px;
+		width: 100%px;
+		height: 100%px;
+	}
+}
+
+
+@media all and ( max-width : 680px) {
+	.categoria {
+		display: none;
+	}
+	.prodotti-consigliati-header {
+		margin-left: 0;
+		font-size: 2.5rem;
+		margin-top: 50px;
+		font-family: 'intro_script_demomedium';
+	}
+	.categoria-nascosto {
+		display: block;
+		font-family: 'archia-regular';
+		text-align: center;
+		text-decoration: none;
+		align-items: center;
+		height: 22px;
+		width: 100px;
+		background-color: #ea97b3;
+		border-radius: 5px;
+		margin-left: 10%;
+	}
+	.container-bottone {
+		margin-top: 5rem;
+		text-align: center;
+		align-items: center;
+	}
+	.container {
+		margin-top: 0rem;
+		display: flex;
+		flex-direction: column;
+		gap: 20%;
+		align-items: center;
+		justify-content: center;
+	}
+	.item {
+		margin-top: 2rem;
+		display: inline-block;
+		background: transparent;
+		justify-content: center;
+		text-align: center;
+		padding-left: 0;
+	}
+		.item-descrizione {
+		display: flex;
+		flex-direction: column;
+		padding-left: 10px;
+		text-align:center;
+		backgroubd-color: red;
+		justify-content:center;
+	}
+	
+	
+	.image {
+		display: inline-block;
+		border-radius: 25px;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+		width: 85%;
+		height: 85%;
+	}
+	.product-title {
+		display: none;
+		font-family: "archia-regular";
+		font-size: 2.5rem;
+	}
+	.consigliati {
+		margin-top: 35px;
+		display: grid;
+		justify-content: center;
+		text-align: center;
+		row-gap:20px;
+		column-gap: 80px;
+		grid-template-columns: repeat(2, 150px);
+	}
+	.aggiungi {
+		box-shadow: 0px 4px #DBD3C0;
+		font-family: "archia-regular";
+		font-size: 18px;
+		color: #2f2f2f;
+		cursor: pointer;
+		float: left;
+		border: 3px solid green;
+		border-radius: 30px;
+		background-color: transparent;
+	}
+	.product-title-nascosto {
+		display: block;
+		margin-top: 15px;
+		margin-left: 10%;
+	}
+	.intestazione {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		margin-top: 30px;
+	}
+	.card {
+		text-align: center;
+		align-items: center;
+	}
+	.immagine-item-consigliato {
+		display: inline-block;
+		border-radius: 25px;
+		width: 100%px;
+		height: 100%px;
+	}
+
 }

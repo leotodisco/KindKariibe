@@ -127,16 +127,27 @@ section{
         width: 100%;
         border-radius: none;
     }
+    
     .image{
-        height: 100vh;
+        height: 300px;
+        width: 450px;
+        
+        display:flex;
+        text-align:center;
+        justify-content: center;
+        
         border-radius: none;
     }
+    
+    .intestazione{
+    	font-size: 3rem;
+    }
+    
     .content{
         height: 100vh;
         border-radius: none;
     }
     .content h2{
-        font-size: 20px;
         margin-top: 50px;
     }
     .content span{

@@ -4,7 +4,6 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="loginCss.css">
-<link href="https://www.dafontfree.net/embed/dmxhZGltaXItc2NyaXB0LXJlZ3VsYXImZGF0YS8xMy92LzY1NTU2L1ZMQURJTUlSLlRURg" rel="stylesheet" type="text/css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Benvenuto!</title>
@@ -45,7 +44,7 @@ response.setDateHeader("Expires", 0);
             <h2>Crea Account</h2>
         </div>
         <br>
-        <form id="reg" method="post" action="RegistrazioneServlet" onsubmit="validate(this);">
+        <form id="reg" method="post" action="RegistrazioneServlet" >
             <div id="classe1">
                 <label for="Nome"></label>
                 <input type="text" id="nome" name="nome" placeholder="Nome" class="uname" required><br><br>
@@ -114,7 +113,7 @@ response.setDateHeader("Expires", 0);
                     <span class="container-bottoni">
                 	<!-- FARE JAVASCRIPT PER BOTTONE INDIETRO1 -->
 	                	<button id="indietro2" class="bottone-Schermata-Login">Indietro</button>
-    	                <input type="submit" value="Registrati" class="bottone-Schermata-Login" id="last"/>
+    	                <button value="Registrati" class="bottone-Schermata-Login" id="last">Registrati</button>
        		        </span>
                 </span>
             </div>
@@ -246,7 +245,6 @@ response.setDateHeader("Expires", 0);
             }
             var res = checkIfCodiceFiscaleExists($("#codFiscale").val());
             if (res.responseJSON.message == "taken") {
-            	alert("la risposta");
                 flag = false;
                 $('#codFiscale').addClass("error");
                 $('#codFiscaleAjaxError').show();
@@ -269,22 +267,35 @@ response.setDateHeader("Expires", 0);
             $("#last").show();
         });
 
+
         function checkEmail(inputtxt) {
-            var email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            if (inputtxt.value.match(email))
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+            
+            if (inputtxt.match(mailformat)){
                 return true;
+            }
+            
             else {
                 return false;
             }
         }
+        
         function checkPhonenumber(inputtxt) {
-            var phoneno = /^([0-9]{10})$/;
-            if (inputtxt.value.match(phoneno))
+
+        	
+        	 var phoneno = /^([0-9]{10})$/
+            
+            if (inputtxt.match(phoneno)){
                 return true;
-            return false;
+	           	
+            }
+            
+            else
+            	return false;
         }
 
         function checkIfEmailExists(email) {
+        	
             return $.ajax({
                 url: "Api/User",
                 type: 'GET',
@@ -326,47 +337,54 @@ response.setDateHeader("Expires", 0);
                 }
             });
         }
-
-        function validate(obj) {
-            alert("vaaaaaa?")
+        
+        $("#last").click(function () {
+        
             var valid = true;
-            var email = $("#email");
-
-            if (!checkEmail(email)) {
-                email.addClass("error");
+        	
+            var email = $("#email").val();
+            if (checkEmail($("#email").val())==false) {
+            	$("#email").addClass("error");
                 valid = false;
-            } else {
-                email.toggleClass("error");
-            }
-            var numbers = $("#nTelefono");
-            if (!checkPhonenumber(numbers)) {
-                valid = false;
-                numbers.classList.add("error");
-            } else {
-                numbers.classList.remove("error");
-            }
-
-            var res = checkIfEmailExists($("#email").val());
+            } 
+            
+  
+            
+            var res = checkIfEmailExists(email);
             if (res.responseJSON.message == "taken") {
+            	$("#email").addClass("error");
                 valid = false;
-                email.addClass("error");
+            }
 
-            } else {
-                alert("controllo email corretto");
-                email.classList.remove("error");
+            
+            
+            
+            if (checkPhonenumber($("#nTelefono").val()) == false) {
+                valid = false;
+                $("#nTelefono").addClass("error");
             }
 
             var variabile = controllaNTelefono($("#nTelefono").val());
+       
             if (variabile.responseJSON.message == "taken") {
-                $("#nTelefono").addClass("error");
+            	$("#nTelefono").addClass("error");
                 valid = false;
             }
 
-            if (valid == true)
-                obj.submit();
-        }
+            if(valid == true){            	
+                $("#reg").submit();
+            }
+            
+            else{
+            	event.preventDefault();
+            	
+            }
+        });
+ 
+        
+    });//fine ajax
+    
 
-    });
 
 </script>
 

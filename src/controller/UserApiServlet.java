@@ -48,19 +48,19 @@ public class UserApiServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("unused")
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(action.equals("checkEmail")) {
 			UserDAO dao = new UserDAO();
 			try {
-				UserBean u = dao.doRetriveByEmail(request.getParameter("email"));
+				UserBean u = dao.doRetriveByEmail( request.getParameter("email"));
+				System.out.println(u.toString());
+				
 				response.setStatus(200);
-				String messaggio;
+				String messaggio = new String();
 
 				if(u.getEmail() == null) {
-
 					messaggio = "free";
-
 				}
 
 				else
@@ -142,7 +142,8 @@ public class UserApiServlet extends HttpServlet {
 			try {
 				UserBean u = dao.doRetriveByNumero(request.getParameter("nTelefono"));
 				String messaggio;
-
+				System.out.println(u.toString());
+				
 				if(u.getCodiceFiscale() == null) {
 					messaggio = "free";
 				}
@@ -150,6 +151,7 @@ public class UserApiServlet extends HttpServlet {
 				else
 					messaggio = "taken";
 
+				response.setStatus(200);
 				response.getWriter().print(gson.toJson(new ResponseStatusMessage(200, messaggio)));
 				response.getWriter().flush();
 				return;

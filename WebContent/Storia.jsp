@@ -27,6 +27,8 @@
                <img src="./immagini/pasticceria.jpeg" id="foto" class="image" style="display:none;">
                <img src="./immagini/coni.jpeg" id="gelateria" class="image" style="display:none;">
             </div>
+         
+         
             <div class = "content">
                 <h2 class="intestazione">Chi siamo</h2>
                 <span><!-- line here --></span>

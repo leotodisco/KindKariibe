@@ -217,7 +217,7 @@ button{
 
 @media all and (min-width: 569px) and (max-width: 800px){
 	 .container{
-        grid-template-columns: repeat(2, 180px);
+        grid-template-columns: repeat(2, 220px);
         column-gap: 15px;
     }
 	
@@ -228,6 +228,14 @@ button{
 	.image{
 	    width: 180px;
 	    height: 180px;
+	}
+	
+	.dettagli-card{
+	    display: flex;
+	    text-align: center;
+	    padding: 0;
+	    margin-top: -30px;
+	    justify-content: center;
 	}
 	
 	.text {
@@ -253,9 +261,17 @@ button{
 
 @media all and (max-width: 568px){
 	 .container{
-        grid-template-columns: repeat(2, 160px);
+        grid-template-columns: repeat(2, 220px);
         column-gap: 4px;
     }
+    
+    .dettagli-card{
+	    display: flex;
+	    text-align: center;
+	    padding: 0;
+	    margin-top: -40px;
+	    justify-content: center;
+	}
 	
 	.pasticceria{
 		margin-top: 5px;

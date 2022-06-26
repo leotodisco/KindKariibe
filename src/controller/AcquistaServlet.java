@@ -87,9 +87,9 @@ public class AcquistaServlet extends HttpServlet {
 			
 			else if(azione.equals("conferma")) {
 				//creo l'oggetto datiFiscali
-				String tipoMetodoPagamento = (String)request.getParameter("tipoPagamento");
+				String tipoMetodoPagamento = request.getParameter("tipoPagamento");
 				DatiFiscaliBean datiFiscali= new DatiFiscaliBean();
-				String idIndirizzo= (String)request.getParameter("idIndirizzo");
+				String idIndirizzo= request.getParameter("idIndirizzo");
 				
 				if(tipoMetodoPagamento.equals("Contrassegno")) {
 					MetodoPagamentoBean metodo = new MetodoPagamentoBean();
@@ -114,6 +114,7 @@ public class AcquistaServlet extends HttpServlet {
 						e.printStackTrace();
 					}
 					
+					System.out.println("pagamento in contrassegno");
 					metodo.setidMetodoPagamento(maxID);
 					
 					datiFiscali.setIdIndirizzoFatturazione(Integer.valueOf(idIndirizzo));
@@ -133,6 +134,7 @@ public class AcquistaServlet extends HttpServlet {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					
 				}
 				
 				else {	

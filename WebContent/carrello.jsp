@@ -522,8 +522,7 @@ $(document).ready(function () {
 
      })
      
-     $("#tasto-conferma-pagamento").click(
-    		
+     $("#tasto-conferma-pagamento").click(   		
      function postAcquisto(){
     	 if(document.getElementByTagName("input[type=radio][name=idIndirizzo]").prop("checked")){
  			return;
