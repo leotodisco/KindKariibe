@@ -237,6 +237,8 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 	}
 	
 	
+
+	
 	@Override
 	public void doUpdate(ProdottoBean bean) throws SQLException {
 		String sql = new String();
@@ -427,7 +429,7 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 		}
 		return bean;
 	}
-	
+
 	public static boolean isAcquired(ProdottoBean bean, UserBean user) throws SQLException {
 		String controllaAcquisto = "SELECT * FROM utente U JOIN (SELECT * FROM ordine O JOIN composizione C ON O.idOrdine=C.ordine WHERE C.prodotto = ?) J "+
 				"ON U.codiceFiscale= J.utente WHERE U.codiceFiscale=?";
@@ -444,10 +446,10 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 				else 
 					return false;
 			}
-}
+		}
 	}	
+
 	public static boolean SingoloUpdate(String Attributo, String valore, String Idprodotto) throws SQLException {
-		
 		String sql = "UPDATE " + TABLE_NAME + " SET " + Attributo + " = ?" 
 		 + " WHERE id = ?";
 		
@@ -463,13 +465,33 @@ public class ProdottoDAO implements ModelInterface<ProdottoBean> {
 			}
 		
 		return true;
-		
-		
+	}
 	}
 	
-	
-	
+
+	public static boolean doDecrementaQuantita(ProdottoBean bean, Integer quantita_in_carrello) throws Exception {
+		ProdottoDAO dao = new ProdottoDAO();
+		ProdottoBean buffer = new ProdottoBean();
+		
+		buffer = dao.doRetrieveByKey(bean.getId().toString()); //nel DB
+		
+		Double result = buffer.getQuantitaResidua() - quantita_in_carrello;
+		
+		String sql = "UPDATE " + TABLE_NAME + " SET quantitaDisponibili = ? " 
+				 + " WHERE id = ?";
+		
+
+		try(Connection con = ds.getConnection()){
+			try(PreparedStatement preparedStatement2 = con.prepareStatement(sql)){
+				
+				preparedStatement2.setDouble(1, result);
+				preparedStatement2.setString(2, bean.getId().toString());
+			
+				preparedStatement2.executeUpdate();
+			}
+		}
+		
+		return true;
 	}
-	
 	
 }

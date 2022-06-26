@@ -180,12 +180,7 @@ button{
     	height: 220px;
 	}
 	
-	.image:hover{
-		border: 3px solid green;
-		height: 217px;
-	    width: 217px;
-	}
-	
+
 	
 	
 }
@@ -233,13 +228,7 @@ button{
 	    width: 180px;
 	    height: 180px;
 	}
-	
-	.image:hover{
-		border: 3px solid green;
-		height: 177px;
-	    width: 177px;
-	}
-		
+
 	.titolo{
 	    text-align: center;
 	    font-family: 'intro_script_demomedium';
@@ -266,12 +255,7 @@ button{
 	    width: 160px;
 	    height: 160px;
 	}
-	
-	.image:hover{
-		border: 3px solid green;
-		height: 157px;
-	    width: 157px;
-	}
+
 		
 	.titolo{
 	    text-align: center;

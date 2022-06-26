@@ -37,7 +37,7 @@
       <div class="item-flex">
         <section class="checkout">
           <h2 class="section-heading" >Indirizzo di Spedizione</h2>
-          <form action="AcquistaServlet" method="get" >
+          <form action="AcquistaServlet" method="post" >
           <input type="hidden" name="action" value="conferma">
           <div class="container-indirizzo">
           
@@ -516,8 +516,21 @@ $(document).ready(function () {
  		$("#total").empty()
 		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
 
-
      })
+     
+     $("#tasto-conferma-pagamento").click(
+     function postAcquisto(){
+      	//devo nascondere la div in cui sono tutti i prodotti
+      	$(".product-card").hide();
+      	$("#svuota-carrello").hide();
+      	
+  		var tasse = ottieniTasse();
+  		$("#tax-span").empty();
+  		$("#tax-span").append("€0.00")
+
+  		$("#total").empty()
+ 		$("#total").append("0.00")
+     });
     
     
 })//chiusura jquery totale

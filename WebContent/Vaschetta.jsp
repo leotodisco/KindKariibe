@@ -52,11 +52,13 @@
       
       <div style="display: flex; justify-content:center;">
   		 <form action="CreaVaschetta" method="get" id="primo">
+  		 <div style="text-align:center">
 	         	<select id="gusto1" class="minimal" name="gusto1">
 	     	  		<%for(GustoBean gusto : ListaGusti){%>
 	    				<option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
 	   				<%}%>
 	  		 	</select>
+	  		 	</div>
 	  			<input type="hidden" value="inserire" name="operazione">
 	  			<input type="hidden" value="1" name="quantita">
 	  			<input type="hidden" value="5.00" name="prezzo">
@@ -69,7 +71,7 @@
 	  			
 	  			<br><br>
 		  		<div style="text-align:center;">
-		  			<input type="submit" value="Crea">
+		  			<input type="submit" value="Crea" class="crea-bottone">
 		  		</div>
 	  	    </form> <!-- FINE FORM PER UN SOLO GUSTO -->
 	      
@@ -77,6 +79,7 @@
 		    <!-- FORM PER DUE GUSTI -->
 		    <form action="CreaVaschetta" method="get" id="secondo" style="display:none;">
 		    	 <input type="hidden" value="inserire" name="operazione">
+		    	 <div style="text-align:center">
 		         <select id="gusto2" class="minimal" name="gusto1">
 		     	  	<%for(GustoBean gusto : ListaGusti){%>
 		    	 		<option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
@@ -88,6 +91,7 @@
 		    		<option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option> 
 		    	<%}%>
 		  		</select>
+		  		</div>
 		  		
 		  		
 	  			<input type="hidden" value="1" name="quantita">
@@ -101,7 +105,7 @@
 	  			<br><br>
 	  			
 		  		<div style="text-align:center">
-		  			<input type="submit" value="Crea">
+		  			<input type="submit" value="Crea" class="crea-bottone">
 		  		</div>
 		    </form><!-- FINE FORM PER DUE GUSTI -->
 		    
@@ -118,7 +122,7 @@
 	  			<input type="hidden" value="Vaschetta" name="tipo">
 	  			<input type="hidden" value="500" name="peso">
 	  			
-		  		 
+		  		 <div style="text-align:center">
 		         <select id="gusto2" class="minimal" name="gusto1">
 		     	 <%for(GustoBean gusto : ListaGusti){%>
 		    		<option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
@@ -136,9 +140,10 @@
 		    			<option value="<%= gusto.getNome()%>"><%= gusto.getNome()%></option>
 		    		<%}%>
 		  		</select>
+		  		</div>
 		  		<br><br>
 		  		<div style="text-align:center">
-		  			<input type="submit" value="Crea">
+		  			<input type="submit" value="Crea" class="crea-bottone">
 		  		</div>
 		  	</form>
 	  	</div>

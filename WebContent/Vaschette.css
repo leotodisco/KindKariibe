@@ -133,6 +133,18 @@ body {
     cursor: pointer;
   }
   
+.crea-bottone{
+	    width: 150px;
+    padding: 12px 0;
+    border-radius: 20px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    background-color: #acd872;
+    color: #ffffff;
+    cursor: pointer;
+}
+  
 .intestazione {
 	margin-top: 35px;
 	display: flex;

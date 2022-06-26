@@ -40,6 +40,13 @@ public class AcquistaServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String azione= request.getParameter("action");
 		
@@ -112,7 +119,7 @@ public class AcquistaServlet extends HttpServlet {
 				//[quantita - iva - prezzo] è una lista di interi
 				//posizione 0 = quantita, pos 1=iva pos2 = prezzo
 				
-				HashMap<ProdottoBean,Integer> contenutoCarrello = cart.getProducts();			                  //setto i prodotti dell'ordine
+				HashMap<ProdottoBean,Integer> contenutoCarrello = cart.getProducts();	//setto i prodotti dell'ordine
 				for(ProdottoBean prod : contenutoCarrello.keySet()) {				
 					ArrayList<Double> quantitaIvaPrezzo = new ArrayList<>();
 					quantitaIvaPrezzo.add(0, contenutoCarrello.get(prod).doubleValue());
@@ -146,8 +153,16 @@ public class AcquistaServlet extends HttpServlet {
 				}
 				
 				ordine.setCostoTotale(cart.getCostoTotale());
-				
 				ordine.setCodiceSconto("");
+				
+				for(ProdottoBean p : cart.getProducts().keySet()) {
+					try {
+						ProdottoDAO.doDecrementaQuantita(p, cart.getProducts().get(p));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				
 				long millis = System.currentTimeMillis();  
 			        
@@ -160,7 +175,7 @@ public class AcquistaServlet extends HttpServlet {
 					ordineDao.doSave(ordine);
 					cart = new Carrello();
 					sessione.setAttribute("Carrello", cart);
-					RequestDispatcher succesfull= request.getRequestDispatcher("home.jsp"); //leopoldo ha modificato
+					RequestDispatcher succesfull= request.getRequestDispatcher("Ringraziamento.jsp"); //leopoldo ha modificato
 					succesfull.forward(request, response);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -168,14 +183,7 @@ public class AcquistaServlet extends HttpServlet {
 				}
 			}
 		}
-	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

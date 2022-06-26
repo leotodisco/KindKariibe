@@ -52,8 +52,10 @@
           
         </div>
         <div class="button">
-          <input type="submit" class="button" value="Invia" >
-          <input type="hidden" name="_next" value="ringraziamento.html"> <!--da vedere questo next-->
+        	<input type="hidden" name="_captcha" value="false">
+          	<input type="submit" class="button" value="Invia">
+          	<input type="hidden" name="_next" value="http://localhost:8080/progettoTSW/Ringraziamento.jsp"> <!--da vedere questo next-->
+        	
         </div>
       </form>
     </div>

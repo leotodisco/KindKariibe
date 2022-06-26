@@ -1,8 +1,28 @@
 @charset "ISO-8859-1";
+
+@font-face {
+  font-family: "archia-regular";
+  src: url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("woff"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("opentype"),
+    url("https://dafonttop.com/wp-data/a/21/8021/file/Archia-Regular.otf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: 'intro_script_demomedium';
+  src: url('./font/introscriptdemo-medium.woff2') format('woff2');
+  src: url('./font/introscriptdemo-medium.woff') format('woff');
+}
+
+
+
 *{
     box-sizing:border-box;
    /* outline:1px solid ;*/
   }
+
   body{
   background: #fcefd4;
       height: 100%;
@@ -25,11 +45,12 @@
     background-color: white;
     border-radius: 50px;
   }
+  
   h1{
-      font-family: 'Kaushan Script', cursive;
-    font-size:4em;
+    font-family: 'intro_script_demomedium';
+    font-size:3rem;
     letter-spacing:3px;
-    color:#acd872;
+    color:#2f2f2f;
     margin:0;
     margin-bottom:20px;
   }

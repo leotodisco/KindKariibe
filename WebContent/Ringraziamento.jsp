@@ -16,7 +16,7 @@
                 <p>Grazie per averci scelto!</p>
                 <p>Speriamo di rivederti presto.</p>
                 <button class="go-home">
-                 <a href="ritornaallahome" style="text-decoration: none; color: white;">Ritorna alla home</a>
+                 <a href="home.jsp" style="text-decoration: none; color: white;">Ritorna alla home</a>
                 </button>
               </div>
               
