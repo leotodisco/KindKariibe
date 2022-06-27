@@ -1,6 +1,12 @@
 package beans;
 
-public class MetodoPagamentoBean {
+import java.io.Serializable;
+
+public class MetodoPagamentoBean implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1834298588744476937L;
 	private Integer idMetodoPagamento;
 	private String tipo;
 	private String nomeIntestatario;

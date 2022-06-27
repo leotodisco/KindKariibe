@@ -295,7 +295,6 @@ response.setDateHeader("Expires", 0);
         }
 
         function checkIfEmailExists(email) {
-        	
             return $.ajax({
                 url: "Api/User",
                 type: 'GET',
@@ -339,7 +338,7 @@ response.setDateHeader("Expires", 0);
         }
         
         $("#last").click(function () {
-        
+
             var valid = true;
         	
             var email = $("#email").val();
@@ -349,36 +348,41 @@ response.setDateHeader("Expires", 0);
             } 
             
   
-            
-            var res = checkIfEmailExists(email);
-            if (res.responseJSON.message == "taken") {
+		 
+            var res1 = checkIfEmailExists(email);
+	
+ 
+            if (res1.responseJSON.message == "taken") {
             	$("#email").addClass("error");
                 valid = false;
             }
 
-            
-            
-            
+     
+         /*
             if (checkPhonenumber($("#nTelefono").val()) == false) {
                 valid = false;
                 $("#nTelefono").addClass("error");
             }
+*/
 
-            var variabile = controllaNTelefono($("#nTelefono").val());
-       
+			var numero = $("#nTelefono").val()
+
+			var variabile = controllaNTelefono(numero);
+
             if (variabile.responseJSON.message == "taken") {
             	$("#nTelefono").addClass("error");
                 valid = false;
             }
 
+            alert(valid);
+            
             if(valid == true){            	
                 $("#reg").submit();
             }
-            
             else{
             	event.preventDefault();
-            	
             }
+
         });
  
         

@@ -250,6 +250,7 @@ public class UserDAO implements ModelInterface<UserBean> {
 
 				ResultSet rs = preparedStatement.executeQuery();
 				while (rs.next()) {
+					bean = new UserBean();
 					bean.setCodiceFiscale(rs.getString("CodiceFiscale"));
 					bean.setNome(rs.getString("nome"));
 					bean.setCognome(rs.getString("cognome"));
@@ -259,13 +260,15 @@ public class UserDAO implements ModelInterface<UserBean> {
 					bean.setSesso(rs.getString("genere"));	
 					bean.setnTelefono(rs.getString("nTelefono"));
 					bean.setAdmin(rs.getBoolean("admin"));	
+					
+					MetodoPagamentoDAO daoPagamenti= new MetodoPagamentoDAO();
+					bean.setElencoMetodiPagamento(daoPagamenti.doRetriveByUtente(bean.getCodiceFiscale()));
+
+					IndirizzoDao daoIndirizzi= new IndirizzoDao();
+					bean.setIndirizziSpedizione(daoIndirizzi.doRetriveByUtente(bean.getCodiceFiscale()));
 				}
 
-				MetodoPagamentoDAO daoPagamenti= new MetodoPagamentoDAO();
-				bean.setElencoMetodiPagamento(daoPagamenti.doRetriveByUtente(bean.getCodiceFiscale()));
 
-				IndirizzoDao daoIndirizzi= new IndirizzoDao();
-				bean.setIndirizziSpedizione(daoIndirizzi.doRetriveByUtente(bean.getCodiceFiscale()));
 
 
 			}

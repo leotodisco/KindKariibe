@@ -50,32 +50,31 @@ public class UserApiServlet extends HttpServlet {
 	 */
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+
 		if(action.equals("checkEmail")) {
 			UserDAO dao = new UserDAO();
-			try {
-				UserBean u = dao.doRetriveByEmail( request.getParameter("email"));
-				System.out.println(u.toString());
-				
-				response.setStatus(200);
-				String messaggio = new String();
-
-				if(u.getEmail() == null) {
-					messaggio = "free";
-				}
-
-				else
-					messaggio = "taken";
-
-				response.getWriter().print(gson.toJson(new ResponseStatusMessage(200, messaggio)));
-				response.getWriter().flush();
-				return;
-			} catch (Exception e) {
-				response.setStatus(500);
-
-				response.getWriter().flush();
-				return;
-			}
-		}
+		            try {
+		                var u = dao.doRetriveByEmail(request.getParameter("email"));
+		                response.setStatus(200);
+		                String risposta = (u == null ? "free" : "taken");
+		                response.getWriter().print(gson.toJson(new ResponseStatusMessage(200, risposta)));
+		                response.getWriter().flush();
+		                return;
+		            } catch (SQLException e) {
+		                response.setStatus(500);
+		                response.getWriter().print(gson.toJson(new ResponseStatusMessage(500, "error")));
+		                response.getWriter().flush();
+		                return;
+		            } catch (NumberFormatException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        }
 		
 		if(action.equals("checkCodFiscale")) {
 			UserDAO dao = new UserDAO();
@@ -139,27 +138,26 @@ public class UserApiServlet extends HttpServlet {
 		
 		if(action.equals("checkNumero")) {
 			UserDAO dao = new UserDAO();
-			try {
-				UserBean u = dao.doRetriveByNumero(request.getParameter("nTelefono"));
-				String messaggio;
-				System.out.println(u.toString());
-				
-				if(u.getCodiceFiscale() == null) {
-					messaggio = "free";
-				}
-				
-				else
-					messaggio = "taken";
+            try {
+                var u = dao.doRetriveByNumero(request.getParameter("nTelefono"));
+                
+                String risposta = (u.getCodiceFiscale()  == null ? "free" : "taken");
 
-				response.setStatus(200);
-				response.getWriter().print(gson.toJson(new ResponseStatusMessage(200, messaggio)));
-				response.getWriter().flush();
-				return;
+                response.setStatus(200);
+                response.getWriter().print(gson.toJson(new ResponseStatusMessage(200, risposta)));
+                response.getWriter().flush();
+                return;
+            } catch (SQLException e) {
+                response.setStatus(500);
+                response.getWriter().print(gson.toJson(new ResponseStatusMessage(500, "error")));
+                response.getWriter().flush();
+                return;
+            } catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			} catch (Exception e) {
-				response.setStatus(500);
-
-				response.getWriter().flush();
-				return;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
