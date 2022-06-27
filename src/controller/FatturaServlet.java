@@ -125,7 +125,7 @@ public class FatturaServlet extends HttpServlet {
         headerTable.addCell(new Cell().add(image).setBorder(Border.NO_BORDER));
         //paragraph Ã¨ come <p> di html
         headerTable.addCell(new Cell().add(new Paragraph("KindKaribe").setFont(introScriptDemo).setFontSize(38).setMarginTop(2)).setBorder(Border.NO_BORDER));
-        headerTable.addCell(new Cell().add( new Paragraph("KindKaribe,\nVia Francesco Prata 6, Castel Morrone (CS),\nTel: 0818734028\nkindkaribe@kindkaribe.com")).setBorder(Border.NO_BORDER));
+        headerTable.addCell(new Cell().add( new Paragraph("KindKaribe,\nVia Francesco Prata 6,\n Castel Morrone (CE),\nTel: 0818734028\nkindkaribe@kindkaribe.com")).setBorder(Border.NO_BORDER));
         //aggiunge al documento la tabella
         document.add(headerTable);
 
@@ -160,7 +160,7 @@ public class FatturaServlet extends HttpServlet {
         	imponibile += bean.getProducts().get(p).get(2);
             prodotti.addCell(new Cell().add(new Paragraph(p.getNome()).setMarginLeft(2).setMarginTop(1)));
             prodotti.addCell(new Cell().add(new Paragraph(String.valueOf(bean.getProducts().get(p).get(0).intValue())).setMarginLeft(2).setMarginTop(1)));
-            prodotti.addCell(new Cell().add(new Paragraph("€ " + String.valueOf(bean.getProducts().get(p).get(2).floatValue())).setMarginLeft(2).setMarginTop(1)));
+            prodotti.addCell(new Cell().add(new Paragraph("â‚¬ " + String.valueOf(bean.getProducts().get(p).get(2).floatValue())).setMarginLeft(2).setMarginTop(1)));
         	
         }
         
@@ -182,12 +182,12 @@ public class FatturaServlet extends HttpServlet {
         
 
         	dettagliFiscali.addCell(new Cell().add(new Paragraph("Mastercard").setMarginLeft(2).setMarginTop(1)));
-        	dettagliFiscali.addCell(new Cell().add(new Paragraph("Imponibile: € "+imponibile+"\nSpedizione: € 0,00\nSconto: € 0,00\nIVA: 10%\n").setMarginLeft(2).setMarginTop(1)));
+        	dettagliFiscali.addCell(new Cell().add(new Paragraph("Imponibile: â‚¬ "+imponibile+"\nSpedizione: â‚¬ 0,00\nSconto: â‚¬ 0,00\nIVA: 10%\n").setMarginLeft(2).setMarginTop(1)));
         	document.add(dettagliFiscali);
  
 
         Table totale = new Table(fullWidth);
-        totale.addCell(new Cell().add(new Paragraph("Totale: "+bean.getCostoTotale()).setBold().setFontSize(16).setTextAlignment(TextAlignment.RIGHT).setMarginRight(25)).setBackgroundColor(verdeScuro));
+        totale.addCell(new Cell().add(new Paragraph("Totale: â‚¬ "+bean.getCostoTotale()).setBold().setFontSize(16).setTextAlignment(TextAlignment.RIGHT).setMarginRight(25)).setBackgroundColor(verdeScuro));
         document.add(totale);
         //note
         Table note = new Table(fullWidth);

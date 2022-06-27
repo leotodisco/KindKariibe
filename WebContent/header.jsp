@@ -44,10 +44,10 @@ UserBean utente = (UserBean) request.getSession(true).getAttribute("utente");
             		
             		data.forEach(e => {
 						var myvar = '<a href="CreaCatalogo?action=details&id='+e.id+'">'+
-									'<div style=" width:200px; background-color:#fcefd4; right: 50px; z-index:"9999">'+
+									'<div style="border:1px solid brown; width:200px; background-color:#fcefd4; right: 50px; z-index:"9999">'+
 									'<h2 class="titolo-ricerca">'+e.nome+'</h2></a>'
 									+ '<a href="CreaCatalogo?action=details&id='+e.id+'"><img class="immagine-ricerca" src="./immagini/'+e.pathImage[0]+'">'+
-										'</a></div><hr style="color: #2f2f2f; ">';
+										'</a></div>';
 						
 						$("#prova").append(myvar);
 					})

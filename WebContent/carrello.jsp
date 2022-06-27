@@ -483,6 +483,9 @@ $(document).ready(function () {
 		$("#total").empty()
 		$("#total").append(parseFloat(result.responseJSON).toFixed(2))
 		
+		$("#prodotti-span").empty()
+		$("#prodotti-span").append(parseFloat(parseFloat(result.responseJSON).toFixed(2) - parseFloat(tasse.responseJSON).toFixed(2)).toFixed(2))
+			
 		$(this).parent().children(".quantita").empty();
 		$(this).parent().children(".quantita").append(qt);
 

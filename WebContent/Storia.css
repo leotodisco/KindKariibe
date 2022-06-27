@@ -34,19 +34,19 @@ section{
     width: 75vw;
     margin: 0 auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 12px
+    
 }
 .image{
     background-color: transparent;
     display: flex;
     border-radius: 12px ;
-
 }
 
 .image img{
 	height:50vh;
 	margin:50px auto;
     border:1px solid #2f2f2f;
+margin-left:10px;
 }
 
 
@@ -117,26 +117,26 @@ section{
     margin: 0 auto;
 }
 
-
-
-/*****************/
-
-@media(max-width: 900px){
-    section{
+@media all and (min-width:800px) and (max-width: 1080px){
+	section{
         grid-template-columns: 1fr;
         width: 100%;
         border-radius: none;
     }
     
     .image{
-        height: 300px;
-        width: 450px;
-        
-        display:flex;
-        text-align:center;
+        display: flex;
+        text-align: center;
         justify-content: center;
-        
-        border-radius: none;
+        border-radius: 12px;
+        width: 100%;
+    }
+    
+    .image img{
+    	width: 50%;
+    	text-align:center;
+    	border-radius: 12px;
+    	margin-left:50px;
     }
     
     .intestazione{
@@ -144,11 +144,83 @@ section{
     }
     
     .content{
-        height: 100vh;
+        height: 100%;
+        border-radius: none;
+    }
+    
+    .content h2{
+        margin-top: 20px;
+    }
+    
+    .content span{
+        margin: 20px 0;
+    }
+    
+    .content p{
+        font-size: 14px;
+    }
+    
+    .links li a{
+        font-size: 14px;
+    }
+    
+    .links{
+        margin: 5px 0;
+    }
+    
+    .links li{
+        padding: 6px 10px;
+    }
+    .icons li i{
+        font-size: 15px;
+    }
+	
+	.credit{
+	    text-align: center;
+	    color: #000;
+	    font-family: "archia-regular";
+  	}
+  
+  .credit a{
+    text-decoration: none;
+    color:#000;
+    font-weight: bold;
+  } 
+}
+
+/*****************/
+
+@media all and (max-width: 800px){
+    section{
+        grid-template-columns: 1fr;
+        width: 100%;
+        border-radius: none;
+    }
+    
+    .image{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        border-radius: 12px;
+        
+  
+    }
+    
+    .image img{
+    	
+    	border-radius: 12px;
+    }
+    
+    .intestazione{
+    	font-size: 3rem;
+    }
+    
+    .content{
+        height: 100%;
         border-radius: none;
     }
     .content h2{
-        margin-top: 50px;
+        margin-top: 20px;
     }
     .content span{
         margin: 20px 0;
@@ -168,11 +240,10 @@ section{
     .icons li i{
         font-size: 15px;
     }
-}
 .credit{
     text-align: center;
     color: #000;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: "archia-regular";
   }
   
   .credit a{
@@ -180,4 +251,5 @@ section{
     color:#000;
     font-weight: bold;
   } 
+}
 

@@ -29,12 +29,14 @@ response.setDateHeader("Expires", 0);
             <label for="password"></label>
             <input class="pass" id="password-login" type="password" name="password" placeholder="Password">
             <br><br>
+                <span style="display:none;" id="stringa-errore">Email o password errati</span>
+                <br><br>
         		<input type="submit" value="Login" class="bottone-Schermata-Login" id="login-submitt"/>
         	<br>
 
         </form>
+                
             <div class="container-bottoni">
-	
                 <button id="log" class="bottone-Schermata-Login">Crea Account</button>
             </div>
     </div>
@@ -156,9 +158,10 @@ response.setDateHeader("Expires", 0);
             }
 
             else {
+                $("#email-login").addClass("error");
+                $("#password-login").addClass("error");
+                $("#stringa-errore").show();
                 event.preventDefault();
-                $("#email-login").addClass(".error");
-                $("#password-login").addClass(".error");
             }
         });
 
@@ -374,7 +377,7 @@ response.setDateHeader("Expires", 0);
                 valid = false;
             }
 
-            alert(valid);
+
             
             if(valid == true){            	
                 $("#reg").submit();
